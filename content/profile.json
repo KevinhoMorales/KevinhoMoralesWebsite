@@ -1,0 +1,40 @@
+{
+  "name": "Kevin Morales",
+  "title": "Sr. iOS Engineer",
+  "bio": "You can call me Kevinho. I studied Electronic, Automation, and Control Engineering at the University of the Armed Forces – ESPE.\n\nFor over 7 years, I've worked professionally as an iOS developer, specializing in Swift. I've also built Android apps using Kotlin and Java, and I enjoy diving into UX/UI design during my free time. Some of my apps are published under my own name on the App Store and Play Store, while others have benefited from my contribution behind the scenes.\n\nI'm an active member of the Google Developer Group (GDG) Ecuador, where I regularly teach and mentor others, helping spark interest in the world of software development. I'm a big believer in lifelong learning — one of my favorite mottos is: \"DON'T STOP LEARNING!\"",
+  "shortBio": "Sr. iOS Engineer at Galileo Financial Technologies · Host of DevLokos · GDG Tsáchilas Organizer · iOS Certified by Meta · Speaker · Cursor Ambassador · GitKraken Ambassador",
+  "education": "Electronic, Automation, and Control Engineering - University of the Armed Forces (ESPE)",
+  "cvLinks": {
+    "english": "/Kevin-Morales-Resume.pdf",
+    "spanish": "/Kevin-Morales-Resume.pdf"
+  },
+  "motto": "Be DIFFERENT and leave a legacy to the world that everything is possible when you have it in your mind.",
+  "aboutMe": "Highly skilled Senior iOS Engineer with over 8 years of experience specializing in high-performance mobile architectures for the fintech and startup sectors. Proven track record in leading distributed engineering teams, scaling applications from MVP to mass-market adoption, and modernizing legacy codebases.\n\nPassionate community leader and mentor, dedicated to fostering technological growth through Google Developer Groups (GDG) and educational content creation. Committed to code quality, collaborative problem-solving, and continuous learning.\n\nPodcast host and founder of DevLokos.",
+  "images": [
+    "/images/notion-001-1920-quality-90-fit-scale-down.jpg",
+    "/images/notion-002-1920-quality-90-fit-scale-down.jpg",
+    "/images/notion-003-1920-quality-90-fit-scale-down.jpg",
+    "/images/notion-004-1920-quality-90-fit-scale-down.jpg",
+    "/images/notion-005-1920-quality-90-fit-scale-down.jpg",
+    "/images/notion-006-1920-quality-90-fit-scale-down.jpg",
+    "/images/notion-007-1920-quality-90-fit-scale-down.jpg",
+    "/images/notion-008-1920-quality-90-fit-scale-down.jpg",
+    "/images/notion-009-1920-quality-90-fit-scale-down.jpg",
+    "/images/notion-010-1920-quality-90-fit-scale-down.jpg"
+  ],
+  "socialLinks": {
+    "linkedin": "https://www.linkedin.com/in/kevinhomorales/",
+    "twitter": "https://x.com/kevinhomorales",
+    "github": "https://github.com/kevinhomorales",
+    "youtube": "https://www.youtube.com/@kevinhomorales",
+    "instagram": "https://www.instagram.com/kevinhomorales/",
+    "medium": "https://medium.com/@kevinhomorales",
+    "calendly": "https://calendly.com/kevinmorales/one-on-one",
+    "buymeacoffee": "http://buymeacoffee.com/KevinhoMorales",
+    "website": "https://kevinhomorales.notion.site/website",
+    "sessionize": "https://sessionize.com/kevinhomorales/"
+  },
+  "profileImageLocal": "/images/profile-main.png",
+  "heroImage": "/images/profile-hero.png",
+  "familyImage": "/images/family.png"
+}

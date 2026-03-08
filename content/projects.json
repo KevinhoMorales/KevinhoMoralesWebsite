@@ -1,0 +1,277 @@
+[
+  {
+    "id": "security-force-residentes",
+    "title": "Security Force Residentes",
+    "description": "Resident security management app",
+    "technologies": [
+      "Swift",
+      "Kotlin"
+    ],
+    "category": "ios",
+    "links": [
+      {
+        "type": "appStore",
+        "url": "https://apps.apple.com/ec/app/security-force-residentes/id1621974359"
+      },
+      {
+        "type": "playStore",
+        "url": "https://play.google.com/store/apps/details?id=com.kevinhomorales.urbamsresidentkotlin"
+      }
+    ],
+    "experience": "Freelance",
+    "platforms": [
+      "iPhone",
+      "Android"
+    ],
+    "tags": [
+      "Security"
+    ]
+  },
+  {
+    "id": "macro-empresas",
+    "title": "Macro Empresas",
+    "description": "Enterprise banking app",
+    "technologies": [
+      "Swift",
+      "Java"
+    ],
+    "category": "ios",
+    "links": [
+      {
+        "type": "appStore",
+        "url": "https://apps.apple.com/us/app/macro-empresas/id1465765093"
+      },
+      {
+        "type": "playStore",
+        "url": "https://play.google.com/store/apps/details?id=ar.macro.companies"
+      }
+    ],
+    "experience": "Technisys",
+    "platforms": [
+      "iPhone",
+      "iPad",
+      "Android"
+    ],
+    "tags": [
+      "Finance"
+    ]
+  },
+  {
+    "id": "meniuz",
+    "title": "Meniuz",
+    "description": "Food & drink ordering app",
+    "technologies": [
+      "Swift",
+      "Kotlin"
+    ],
+    "category": "ios",
+    "links": [
+      {
+        "type": "appStore",
+        "url": "https://apps.apple.com/us/app/meniuz/id1563662812"
+      },
+      {
+        "type": "playStore",
+        "url": "https://play.google.com/store/apps/details?id=com.kevinhomorales.meniuzkotlin"
+      }
+    ],
+    "experience": "Freelance",
+    "platforms": [
+      "iPhone",
+      "Android"
+    ],
+    "tags": [
+      "Food & Drink"
+    ]
+  },
+  {
+    "id": "devlokos",
+    "title": "DevLokos",
+    "description": "Tech podcast app",
+    "technologies": [
+      "React",
+      "Swift",
+      "Dart"
+    ],
+    "category": "web",
+    "links": [
+      {
+        "type": "website",
+        "url": "https://devlokos.com/"
+      },
+      {
+        "type": "appStore",
+        "url": "https://apps.apple.com/ec/app/devlokos/id6754109507"
+      },
+      {
+        "type": "playStore",
+        "url": "https://play.google.com/store/apps/details?id=com.devlokos.devlokosdart"
+      }
+    ],
+    "experience": "DevLokos Enterprise",
+    "platforms": [
+      "iPhone",
+      "iPad"
+    ],
+    "tags": [
+      "Podcast"
+    ]
+  },
+  {
+    "id": "padeltrack",
+    "title": "PadelTrack",
+    "description": "Padel sports tracking app",
+    "technologies": [
+      "SwiftUI",
+      "Jetpack Compose",
+      "Dart"
+    ],
+    "category": "flutter",
+    "links": [
+      {
+        "type": "appStore",
+        "url": "https://apps.apple.com/ec/app/padeltrack/id6749497707"
+      },
+      {
+        "type": "playStore",
+        "url": "https://play.google.com/store/apps/details?id=com.devlokosenterprise.padeltrackjetpackcompose"
+      }
+    ],
+    "experience": "DevLokos Enterprise",
+    "platforms": [
+      "iPhone",
+      "iPad",
+      "Android"
+    ],
+    "tags": [
+      "Sport",
+      "Padel"
+    ]
+  },
+  {
+    "id": "banco-de-loja",
+    "title": "Banco de Loja",
+    "description": "Banking reference app",
+    "technologies": [
+      "Swift"
+    ],
+    "category": "ios",
+    "links": [
+      {
+        "type": "appStore",
+        "url": "https://apps.apple.com/ec/app/banco-de-loja/id1396238600"
+      }
+    ],
+    "experience": "Bayteq",
+    "platforms": [
+      "iPhone"
+    ],
+    "tags": [
+      "Reference"
+    ]
+  },
+  {
+    "id": "calcustom",
+    "title": "Calcustom",
+    "description": "Customizable calendar utility",
+    "technologies": [
+      "Swift"
+    ],
+    "category": "ios",
+    "links": [
+      {
+        "type": "appStore",
+        "url": "https://apps.apple.com/us/app/calcustom/id1561896744"
+      }
+    ],
+    "experience": "Freelance",
+    "platforms": [
+      "iPhone",
+      "Mac",
+      "iPad",
+      "Apple Watch"
+    ],
+    "tags": [
+      "Utilities"
+    ]
+  },
+  {
+    "id": "yippy-cerca-de-ti",
+    "title": "Yippy: Cerca de ti",
+    "description": "Local shopping app",
+    "technologies": [
+      "Swift",
+      "Java"
+    ],
+    "category": "ios",
+    "links": [
+      {
+        "type": "appStore",
+        "url": "https://apps.apple.com/us/app/yippy-cerca-de-ti/id1506152885"
+      },
+      {
+        "type": "playStore",
+        "url": "https://play.google.com/store/apps/details?id=com.yippy.app"
+      }
+    ],
+    "experience": "Freelance",
+    "platforms": [
+      "iPhone",
+      "Android"
+    ],
+    "tags": [
+      "Shopping"
+    ]
+  },
+  {
+    "id": "livo-home",
+    "title": "Livo Home",
+    "description": "Property management lifestyle app",
+    "technologies": [
+      "Swift",
+      "Jetpack Compose"
+    ],
+    "category": "android",
+    "links": [
+      {
+        "type": "appStore",
+        "url": "https://apps.apple.com/es/app/livo-home/id1669247260"
+      },
+      {
+        "type": "playStore",
+        "url": "https://play.google.com/store/apps/details?id=com.livoHomeProperty"
+      }
+    ],
+    "experience": "Freelance",
+    "platforms": [
+      "iPhone",
+      "Android"
+    ],
+    "tags": [
+      "Lifestyle"
+    ]
+  },
+  {
+    "id": "elite-padel",
+    "title": "Élite Padel: Ranking Oficial",
+    "description": "Official padel ranking app",
+    "technologies": [
+      "Jetpack Compose"
+    ],
+    "category": "android",
+    "links": [
+      {
+        "type": "playStore",
+        "url": "https://play.google.com/store/apps/details?id=com.kevinhomorales.padelhubjetpackcompose"
+      }
+    ],
+    "experience": "DevLokos Enterprise",
+    "platforms": [
+      "Android"
+    ],
+    "tags": [
+      "Sports",
+      "Padel"
+    ]
+  }
+]

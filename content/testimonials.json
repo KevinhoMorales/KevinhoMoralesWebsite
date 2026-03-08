@@ -1,0 +1,66 @@
+[
+  {
+    "id": "1",
+    "quote": "Kevin es un desarrollador de software proactivo que se enfoca no solo en lo técnico sino también en los temas funcionales, esta actitud promueve mejores resultados dentro de los proyectos que ha participado. Una excelente actitud de trabajo. Muy recomendado.",
+    "author": "Etna Estrella",
+    "role": "Project Manager",
+    "company": "Bayteq",
+    "linkedinUrl": "https://www.linkedin.com/in/etna-estrella-ec1/"
+  },
+  {
+    "id": "2",
+    "quote": "Trabajamos en el desarrollo de una aplicación para delivery. Kevin diseño la arquitectura y desarrolló la aplicación para iOS, yo implemente la solución para Android. La aplicación no salió a producción pero aprendi mucho sobre programación bajo su supervisión. También me enseño como hacer valer nuestro trabajo como desarrolladores. Gran lider técnico 👍",
+    "author": "José Guambo",
+    "role": "Jr. Developer",
+    "company": "PPM",
+    "linkedinUrl": "https://www.linkedin.com/in/jos%C3%A9-guambo-28031117a/"
+  },
+  {
+    "id": "3",
+    "quote": "I had the pleasure of knowing Kevin since 2022, he is a great persistent developer with great analytics skills and perfect communication skills. He can lead any team of developers and readapt projects to meet user needs. Not to mention that due to his high performance, he has had the honor of being interviewed by TV channels.",
+    "author": "Natalia Mayorquin Cuestas",
+    "role": "Human Resource",
+    "company": "Rappi",
+    "linkedinUrl": "https://www.linkedin.com/in/natalia-mayorquin-cuestas/"
+  },
+  {
+    "id": "4",
+    "quote": "I highly recommend Kevin for their outstanding support in rapidly addressing issues with our iOS and Android applications. They demonstrated exceptional communication, consistently met deadlines, and worked seamlessly within tight timelines. Their proactive approach and professionalism made the collaboration enjoyable. Kevin showcased impressive time management skills, delivering high-quality results promptly. In summary, Kevin is a skilled and reliable professional who exceeded our expectations. I wholeheartedly endorse them and look forward to future collaborations.",
+    "author": "Mayra Rodriguez",
+    "role": "CTO",
+    "company": "LIVO Home",
+    "linkedinUrl": "https://www.linkedin.com/in/mayrascript/"
+  },
+  {
+    "id": "5",
+    "quote": "Kevin es un gran ser humano y un profesional en todo el sentido de la palabra. Sus cualidades son extensas y su vasta experiencia lo convierten en un desarrollador completo. Pro actividad y trabajo en equipo son cosas que destaco mucho en él, así como su liderazgo. Mis mejores deseos para el. Cualquier equipo estaría gustoso en tenerlo.",
+    "author": "Alexis Poveda",
+    "role": "Sr. Backend Developer",
+    "company": "Technisys",
+    "linkedinUrl": "https://www.linkedin.com/in/alexis-poveda-233a4720b/"
+  },
+  {
+    "id": "6",
+    "quote": "Kevin ingresó hace casi un año y medio a la empresa y desde el inicio demostró curiosidad por aprender, siempre en busca de la mejora continua. Es un profesional responsable y autodidacta, como así también sabe utilizar perfectamente todos los canales de comunicación y aprovechar las oportunidades de capacitación que brinda la compañía. No tengo dudas que Kevin tiene un camino para recorrer lleno de desafíos y todavía no está ni cerca de su techo. Kevin, es un placer trabajar con vos!",
+    "author": "Florencia Pellegrino",
+    "role": "Project Manager",
+    "company": "Technisys",
+    "linkedinUrl": "https://www.linkedin.com/in/florencia-pellegrino-05008664/"
+  },
+  {
+    "id": "7",
+    "quote": "Llevo 1 Año trabajando con Kevin en proyectos personales y desde un comienzo se notó el entusiasmo y ganas de poder hacer el Ecuador un lugar mejor para la gastronomía, es un excelente compañero y ayuda a crecer personalmente. 🤝",
+    "author": "Andrés Roberto Coello Goyes",
+    "role": "Full Stack",
+    "company": "GGTECH Entertainment",
+    "linkedinUrl": "https://www.linkedin.com/in/andr%C3%A9s-roberto-coello-goyes/"
+  },
+  {
+    "id": "8",
+    "quote": "Me toco compartir un Scrum Team con Kevin en Banco Macro. Se genero un equipo desde 0 y me toco asumir el Rol de Scrum master. Puedo decir que Kevin siempre tuvo actitud positiva, siempre con ganas de aprender de la metodologia que implementamos en el equipo. Se destaca su conocimiento en su rol de desarrollador y el compañerismo por el equipo. Siempre desde un primer momento apoyo la idea de ser un One team, rompiendo las barreras de Proveedor-Cliente.",
+    "author": "Martín Mateos",
+    "role": "Scrum Master",
+    "company": "Banco Macro",
+    "linkedinUrl": "https://www.linkedin.com/in/mmateos-agile"
+  }
+]
