@@ -5,7 +5,11 @@ export interface Conference {
   type: 'conference' | 'virtual' | 'talk' | 'meetup';
   date?: string;
   location?: string;
+  city?: string;
+  country?: string;
+  audience?: number;
   videoUrl?: string;
   eventUrl?: string;
   tags?: string[];
+  images?: string[];
 }

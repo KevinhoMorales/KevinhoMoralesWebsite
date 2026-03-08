@@ -58,6 +58,7 @@ export function Hero({ profile }: HeroProps) {
                   cursor={true}
                   repeat={0}
                   className="inline-block"
+                  preRenderFirstString
                 />
               </h1>
             </div>

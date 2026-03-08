@@ -4,6 +4,7 @@ import {
   getExperience,
   getConferences,
   getTestimonials,
+  getAchievements,
 } from '@/lib/content';
 import { Hero } from '@/components/sections/hero';
 import { About } from '@/components/sections/about';
@@ -22,6 +23,7 @@ export default function Home() {
   const experience = getExperience();
   const conferences = getConferences();
   const testimonials = getTestimonials();
+  const achievements = getAchievements();
 
   return (
     <main className="min-h-screen">
@@ -31,7 +33,7 @@ export default function Home() {
       <ProjectsSection projects={projects} />
       <ArticlesSection />
       <PodcastSectionUI />
-      <ConferencesSection conferences={conferences} />
+      <ConferencesSection conferences={conferences} achievements={achievements} />
       <Recommendations testimonials={testimonials} />
       <Connect profile={profile} />
       <Footer profile={profile} />

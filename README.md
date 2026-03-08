@@ -32,7 +32,7 @@ cp .env.example .env.local
 npm run dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000).
+Open [http://localhost:3000](http://localhost:3000) **en Chrome, Safari o Firefox** (no uses el Simple Browser de VS Code; puede mostrar la página en blanco).
 
 ### Build for Production
 

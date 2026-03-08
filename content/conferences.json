@@ -1,8 +1,8 @@
 [
-  {"id":"1","title":"Google I/O Extended, Machala 2023","topic":"El futuro del nativo Jetpack Compose vs SwiftUI","type":"conference","location":"Machala","tags":["Android"]},
-  {"id":"2","title":"Google I/O Extended, Ecuador 2023","topic":"El futuro del nativo Jetpack Compose vs SwiftUI","type":"virtual","videoUrl":"https://youtu.be/SC4RrJGtIX4","tags":["Android"]},
-  {"id":"3","title":"DevFest Lima, Perú 2023","topic":"El futuro de los paradigmas, Jetpack Compose vs SwiftUI","type":"conference","location":"Lima","tags":["Android"]},
-  {"id":"4","title":"DevFest Cuenca, Ecuador 2023","topic":"Patrones de diseño en Kotlin","type":"conference","location":"Cuenca","videoUrl":"https://youtu.be/4rfx-ySiD3U","tags":["Android"]},
+  {"id":"1","title":"Google I/O Extended, Machala 2023","topic":"El futuro del nativo Jetpack Compose vs SwiftUI","type":"conference","location":"Machala, Ecuador","city":"Machala","country":"Ecuador","audience":100,"tags":["Android"],"images":["/images/conferences/google-io-machala-2023-2.png"]},
+  {"id":"2","title":"Google I/O Extended, Ecuador 2023","topic":"El futuro del nativo Jetpack Compose vs SwiftUI","type":"virtual","location":"Ecuador","city":"Machala","country":"Ecuador","audience":100,"videoUrl":"https://youtu.be/SC4RrJGtIX4","tags":["Android"],"images":["/images/conferences/google-io-ecuador-2023.png"]},
+  {"id":"3","title":"DevFest Lima, Perú 2023","topic":"El futuro de los paradigmas, Jetpack Compose vs SwiftUI","type":"conference","location":"Lima, Perú","city":"Lima","country":"Perú","audience":500,"tags":["Android"],"images":["/images/conferences/devfest-lima-2023.png"]},
+  {"id":"4","title":"DevFest Cuenca, Ecuador 2023","topic":"Patrones de diseño en Kotlin","type":"conference","location":"Cuenca, Ecuador","city":"Cuenca","country":"Ecuador","audience":200,"videoUrl":"https://youtu.be/4rfx-ySiD3U","tags":["Android"],"images":["/images/conferences/devfest-cuenca-2023.png"]},
   {"id":"5","title":"DevFest Quito, Ecuador 2023","topic":"CRUD con Firebase y Kotlin usando Jetpack Compose","type":"conference","location":"Quito","tags":["Android"]},
   {"id":"6","title":"DevFest San Pedro Sula, Honduras 2023","topic":"Genera una librería con Kotlin para tus apps","type":"conference","location":"San Pedro Sula","tags":["Android"]},
   {"id":"7","title":"DevFest Panama, Panama 2023","topic":"Diseña tus Apps con Material Design","type":"virtual","videoUrl":"https://youtu.be/Id7t5wLVTq8","tags":["Android"]},

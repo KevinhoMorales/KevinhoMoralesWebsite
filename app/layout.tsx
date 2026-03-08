@@ -5,6 +5,7 @@ import { ThemeProvider } from '@/components/theme-provider';
 import { FirebaseAnalytics } from '@/components/firebase-analytics';
 import { CalendlyWidget } from '@/components/calendly-widget';
 import { Navigation } from '@/components/sections/navigation';
+import { ErrorBoundary } from '@/components/error-boundary';
 
 const inter = Inter({
   subsets: ['latin'],
@@ -87,13 +88,13 @@ export default function RootLayout({
           rel="stylesheet"
         />
       </head>
-      <body className={`${inter.variable} font-sans antialiased`}>
+      <body className={`${inter.variable} font-sans antialiased`} suppressHydrationWarning>
         <ThemeProvider>
           <FirebaseAnalytics />
           <CalendlyWidget />
           <Navigation />
           <div className="pt-14 sm:pt-16">
-            {children}
+            <ErrorBoundary>{children}</ErrorBoundary>
           </div>
         </ThemeProvider>
       </body>

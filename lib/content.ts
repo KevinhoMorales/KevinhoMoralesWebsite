@@ -1,6 +1,6 @@
 import * as fs from 'fs';
 import * as path from 'path';
-import type { Profile, Experience, Project, Conference, Testimonial } from '@/types';
+import type { Profile, Experience, Project, Conference, Testimonial, Achievement } from '@/types';
 
 const CONTENT_DIR = path.join(process.cwd(), 'content');
 
@@ -28,6 +28,10 @@ export function getConferences(): Conference[] {
 
 export function getTestimonials(): Testimonial[] {
   return readJson<Testimonial[]>('testimonials.json');
+}
+
+export function getAchievements(): Achievement[] {
+  return readJson<Achievement[]>('achievements.json');
 }
 
 export function getProjectsByCategory(category?: string): Project[] {
