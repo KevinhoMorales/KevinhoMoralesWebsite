@@ -90,11 +90,13 @@ export default function RootLayout({
       </head>
       <body className={`${inter.variable} font-sans antialiased`} suppressHydrationWarning>
         <ThemeProvider>
-          <FirebaseAnalytics />
-          <CalendlyWidget />
-          <Navigation />
-          <div className="pt-14 sm:pt-16">
-            <ErrorBoundary>{children}</ErrorBoundary>
+          <div className="overflow-x-wrapper">
+            <FirebaseAnalytics />
+            <CalendlyWidget />
+            <Navigation />
+            <div className="pt-14 sm:pt-16">
+              <ErrorBoundary>{children}</ErrorBoundary>
+            </div>
           </div>
         </ThemeProvider>
       </body>

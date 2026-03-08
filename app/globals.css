@@ -83,6 +83,7 @@
   html {
     scroll-behavior: smooth;
     scroll-padding-top: 5rem;
+    -webkit-overflow-scrolling: touch;
   }
   body {
     background-color: var(--background);
@@ -90,9 +91,14 @@
     /* Safe area for notched devices (iPhone X+, etc.) */
     padding-left: env(safe-area-inset-left);
     padding-right: env(safe-area-inset-right);
+    min-height: 100dvh;
+    -webkit-overflow-scrolling: touch;
+    overscroll-behavior-y: auto;
   }
-  /* Prevent horizontal overflow on mobile */
-  html, body {
+  /* Wrapper para overflow-x: evita bloquear scroll en móvil (html/body con overflow-x: hidden lo bloquea en iOS) */
+  .overflow-x-wrapper {
     overflow-x: hidden;
+    min-height: 100dvh;
+    width: 100%;
   }
 }
