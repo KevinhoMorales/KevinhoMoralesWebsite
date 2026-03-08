@@ -2,6 +2,7 @@
 
 import { useState, useRef } from 'react'
 import { Button } from '@/components/ui/button'
+import { ScrollReveal } from '@/components/scroll-reveal'
 import { Card, CardContent } from '@/components/ui/card'
 import { Coffee } from 'lucide-react'
 import { BuyMeACoffeeModal } from '@/components/buymeacoffee-modal'
@@ -62,7 +63,7 @@ export function Connect({ profile }: ConnectProps) {
   return (
     <section id="connect" className="scroll-mt-20 py-4 sm:py-5 md:py-6 px-4 sm:px-6 md:px-8 lg:px-12 xl:px-24 bg-secondary/30">
       <div className="max-w-4xl mx-auto text-center">
-        <div className="mb-6 sm:mb-8">
+        <ScrollReveal className="mb-6 sm:mb-8">
           <p className="text-primary font-medium tracking-wide uppercase text-xs sm:text-sm mb-3 sm:mb-4">Contact</p>
           <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold mb-4 sm:mb-6 text-balance">
             Let&apos;s build something amazing together
@@ -71,8 +72,9 @@ export function Connect({ profile }: ConnectProps) {
             Whether you have a project in mind, want to collaborate, or just want to say
             hi—I&apos;d love to hear from you.
           </p>
-        </div>
+        </ScrollReveal>
 
+        <ScrollReveal delay={0.1} variant="scale">
         <Card className="bg-card/50 border-border/50 max-w-2xl mx-auto mb-6">
           <CardContent className="p-4 sm:p-6 md:p-8">
             <form onSubmit={handleSubmit} className="space-y-4 text-left">
@@ -149,9 +151,10 @@ export function Connect({ profile }: ConnectProps) {
             </form>
           </CardContent>
         </Card>
+        </ScrollReveal>
 
         {links.buymeacoffee && (
-          <div className="pt-4">
+          <ScrollReveal delay={0.2} className="pt-4">
             <Button
               size="lg"
               className="gap-2 bg-[#FFDD00] hover:bg-[#FFE44D] text-black"
@@ -160,7 +163,7 @@ export function Connect({ profile }: ConnectProps) {
               <Coffee className="h-5 w-5" />
               Buy me a Coffee
             </Button>
-          </div>
+          </ScrollReveal>
         )}
         <BuyMeACoffeeModal open={bmcModalOpen} onClose={() => setBmcModalOpen(false)} />
       </div>

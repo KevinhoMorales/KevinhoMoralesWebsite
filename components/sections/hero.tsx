@@ -1,5 +1,6 @@
 'use client'
 
+import { motion } from 'framer-motion'
 import Image from 'next/image'
 import { TypeAnimation } from 'react-type-animation'
 import { Button } from '@/components/ui/button'
@@ -22,7 +23,12 @@ export function Hero({ profile }: HeroProps) {
   return (
     <section className="min-h-[60vh] sm:min-h-[65vh] lg:min-h-[50vh] xl:min-h-[45vh] flex flex-col justify-center px-4 sm:px-6 md:px-8 lg:px-12 xl:px-24 py-3 sm:py-4 md:py-4">
       <div className="max-w-6xl mx-auto w-full">
-        <div className="grid lg:grid-cols-2 gap-6 lg:gap-8 xl:gap-10 items-center">
+        <motion.div
+          className="grid lg:grid-cols-2 gap-6 lg:gap-8 xl:gap-10 items-center"
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6, ease: [0.25, 0.4, 0.25, 1] }}
+        >
           {/* Avatar primero en móvil para mejor jerarquía visual */}
           <div className="flex justify-center lg:hidden order-first">
             <div className="relative">
@@ -133,7 +139,7 @@ export function Hero({ profile }: HeroProps) {
               </div>
             </div>
           </div>
-        </div>
+        </motion.div>
       </div>
     </section>
   )

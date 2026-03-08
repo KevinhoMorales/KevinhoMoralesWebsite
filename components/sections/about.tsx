@@ -1,5 +1,6 @@
 import Image from 'next/image'
 import { Card, CardContent } from '@/components/ui/card'
+import { ScrollReveal, StaggerContainer, StaggerItem } from '@/components/scroll-reveal'
 import { Heart, Code, Users, Mic } from 'lucide-react'
 import type { Profile } from '@/types'
 
@@ -18,15 +19,15 @@ export function About({ profile }: AboutProps) {
   return (
     <section id="about" className="scroll-mt-20 py-3 sm:py-4 md:py-6 px-4 sm:px-6 md:px-8 lg:px-12 xl:px-24 bg-secondary/30">
       <div className="max-w-6xl mx-auto">
-        <div className="mb-4 sm:mb-6">
+        <ScrollReveal className="mb-4 sm:mb-6">
           <p className="text-primary font-medium tracking-wide uppercase text-xs sm:text-sm mb-3 sm:mb-4">About Me</p>
           <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold mb-3 sm:mb-4 text-balance">
             Crafting digital experiences with purpose
           </h2>
-        </div>
+        </ScrollReveal>
 
         <div className="grid lg:grid-cols-2 gap-8 lg:gap-10 lg:items-stretch">
-          <div className="space-y-4 sm:space-y-6">
+          <ScrollReveal variant="fade-right" delay={0.1} className="space-y-4 sm:space-y-6">
             <p className="text-base sm:text-lg text-muted-foreground leading-relaxed">
               {profile.aboutMe?.split('\n')[0] || profile.bio.split('\n')[0]}
             </p>
@@ -39,20 +40,22 @@ export function About({ profile }: AboutProps) {
               </p>
             )}
 
-            <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-4 gap-3 sm:gap-4 pt-4 sm:pt-6">
+            <StaggerContainer className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-4 gap-3 sm:gap-4 pt-4 sm:pt-6">
               {highlights.map((item) => (
-                <Card key={item.title} className="bg-card/50 border-border/50">
+                <StaggerItem key={item.title}>
+                <Card className="bg-card/50 border-border/50">
                   <CardContent className="p-3 sm:p-4 text-center">
                     <item.icon className="h-5 w-5 sm:h-6 sm:w-6 text-primary mx-auto mb-1 sm:mb-2" />
                     <p className="font-semibold text-xs sm:text-sm">{item.title}</p>
                     <p className="text-[10px] sm:text-xs text-muted-foreground">{item.description}</p>
                   </CardContent>
                 </Card>
+                </StaggerItem>
               ))}
-            </div>
-          </div>
+            </StaggerContainer>
+          </ScrollReveal>
 
-          <div className="flex">
+          <ScrollReveal variant="fade-left" delay={0.2} className="flex">
             <Card className="bg-card/50 border-border/50 overflow-hidden flex flex-col flex-1 min-h-0">
               <CardContent className="p-0 flex flex-col flex-1 min-h-0">
                 {profile.familyImage ? (
@@ -102,7 +105,7 @@ export function About({ profile }: AboutProps) {
                 )}
               </CardContent>
             </Card>
-          </div>
+          </ScrollReveal>
         </div>
       </div>
     </section>

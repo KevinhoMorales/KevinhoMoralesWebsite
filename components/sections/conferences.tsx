@@ -3,6 +3,7 @@
 import { useState } from 'react'
 import Image from 'next/image'
 import { Card, CardContent } from '@/components/ui/card'
+import { ScrollReveal, StaggerContainer, StaggerItem } from '@/components/scroll-reveal'
 import { Button } from '@/components/ui/button'
 import { MapPin, ChevronRight } from 'lucide-react'
 import { ConferencesModal } from '@/components/conferences-modal'
@@ -21,14 +22,14 @@ export function ConferencesSection({ conferences }: ConferencesProps) {
     <section id="conferences" className="scroll-mt-20 py-4 sm:py-5 md:py-6 px-4 sm:px-6 md:px-8 lg:px-12 xl:px-24 bg-secondary/30">
       <div className="max-w-6xl mx-auto">
         <div>
-            <div className="mb-4 sm:mb-6">
+            <ScrollReveal className="mb-4 sm:mb-6">
               <p className="text-primary font-medium tracking-wide uppercase text-xs sm:text-sm mb-3">
                 Speaking
               </p>
               <h2 className="text-xl sm:text-2xl md:text-3xl font-bold text-balance">Conferences</h2>
-            </div>
+            </ScrollReveal>
 
-            <div className="mb-6 sm:mb-8">
+            <ScrollReveal delay={0.1} className="mb-6 sm:mb-8">
               <p className="text-primary font-medium tracking-wide uppercase text-xs sm:text-sm mb-3">
                 Achievements
               </p>
@@ -49,12 +50,12 @@ export function ConferencesSection({ conferences }: ConferencesProps) {
                   />
                 </a>
               </div>
-            </div>
+            </ScrollReveal>
 
-            <div className="space-y-3 sm:space-y-4">
+            <StaggerContainer className="space-y-3 sm:space-y-4">
               {conferences.slice(0, PREVIEW_COUNT).map((conf) => (
+                <StaggerItem key={conf.id}>
                 <Card
-                  key={conf.id}
                   className="bg-card/50 border-border/50 hover:border-primary/50 transition-colors"
                 >
                   <CardContent className="p-4 sm:p-5">
@@ -86,6 +87,7 @@ export function ConferencesSection({ conferences }: ConferencesProps) {
                     </div>
                   </CardContent>
                 </Card>
+                </StaggerItem>
               ))}
               {conferences.length > PREVIEW_COUNT && (
                 <Button
@@ -97,7 +99,7 @@ export function ConferencesSection({ conferences }: ConferencesProps) {
                   <ChevronRight className="h-4 w-4" />
                 </Button>
               )}
-            </div>
+            </StaggerContainer>
         </div>
       </div>
 

@@ -1,15 +1,16 @@
 'use client'
 
 import { Separator } from '@/components/ui/separator'
+import { ScrollReveal } from '@/components/scroll-reveal'
+import { FaLinkedinIn } from 'react-icons/fa'
 import {
-  Linkedin,
-  X,
-  Github,
-  Youtube,
-  Instagram,
-  BookOpen,
-  Mic,
-} from 'lucide-react'
+  SiX,
+  SiGithub,
+  SiYoutube,
+  SiInstagram,
+  SiMedium,
+  SiSessionize,
+} from 'react-icons/si'
 import type { Profile } from '@/types'
 
 interface FooterProps {
@@ -19,12 +20,12 @@ interface FooterProps {
 const SOCIAL_USERNAME = 'kevinhomorales'
 
 const socialIconConfig = [
-  { name: 'LinkedIn', icon: Linkedin, key: 'linkedin' as const },
-  { name: 'X', icon: X, key: 'twitter' as const },
-  { name: 'GitHub', icon: Github, key: 'github' as const },
-  { name: 'YouTube', icon: Youtube, key: 'youtube' as const },
-  { name: 'Instagram', icon: Instagram, key: 'instagram' as const },
-  { name: 'Sessionize', icon: Mic, key: 'sessionize' as const },
+  { name: 'LinkedIn', icon: FaLinkedinIn, key: 'linkedin' as const },
+  { name: 'X', icon: SiX, key: 'twitter' as const },
+  { name: 'GitHub', icon: SiGithub, key: 'github' as const },
+  { name: 'YouTube', icon: SiYoutube, key: 'youtube' as const },
+  { name: 'Instagram', icon: SiInstagram, key: 'instagram' as const },
+  { name: 'Sessionize', icon: SiSessionize, key: 'sessionize' as const },
 ]
 
 export function Footer({ profile }: FooterProps) {
@@ -34,7 +35,7 @@ export function Footer({ profile }: FooterProps) {
   return (
     <footer className="py-4 sm:py-6 px-4 sm:px-6 md:px-8 lg:px-12 xl:px-24 bg-secondary/20">
       <div className="max-w-6xl mx-auto">
-        <div className="mb-6">
+        <ScrollReveal className="mb-6">
           <div>
             <h3 className="font-semibold text-base sm:text-lg mb-2 sm:mb-3">{profile.name}</h3>
             <div className="mb-4 sm:mb-6">
@@ -51,7 +52,7 @@ export function Footer({ profile }: FooterProps) {
                       href={href}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="flex items-center justify-center w-9 h-9 rounded-full bg-secondary/50 hover:bg-primary/20 hover:text-primary transition-colors"
+                      className="flex items-center justify-center w-9 h-9 rounded-full bg-secondary/50 hover:scale-110 transition-transform duration-200 text-black dark:text-white"
                       title={name}
                       aria-label={name}
                     >
@@ -64,23 +65,25 @@ export function Footer({ profile }: FooterProps) {
                     href={links.medium}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="flex items-center justify-center w-9 h-9 rounded-full bg-secondary/50 hover:bg-primary/20 hover:text-primary transition-colors"
+                    className="flex items-center justify-center w-9 h-9 rounded-full bg-secondary/50 hover:scale-110 transition-transform duration-200 text-black dark:text-white"
                     title="Medium"
                     aria-label="Medium"
                   >
-                    <BookOpen className="h-4 w-4" />
+                    <SiMedium className="h-4 w-4" />
                   </a>
                 )}
               </div>
             </div>
           </div>
-        </div>
+        </ScrollReveal>
 
+        <ScrollReveal delay={0.1}>
         <Separator className="mb-6" />
 
         <div className="text-center text-xs sm:text-sm text-muted-foreground">
           <p>© {currentYear} {profile.name}. All rights reserved.</p>
         </div>
+        </ScrollReveal>
       </div>
     </footer>
   )

@@ -1,5 +1,6 @@
 import Image from 'next/image'
 import { Card, CardContent } from '@/components/ui/card'
+import { ScrollReveal, StaggerContainer, StaggerItem } from '@/components/scroll-reveal'
 import { ExternalLink } from 'lucide-react'
 import type { Experience } from '@/types'
 
@@ -11,17 +12,17 @@ export function ExperienceSection({ experiences }: ExperienceProps) {
   return (
     <section id="experience" className="scroll-mt-20 py-4 sm:py-5 md:py-6 px-4 sm:px-6 md:px-8 lg:px-12 xl:px-24">
       <div className="max-w-6xl mx-auto">
-        <div className="mb-8 sm:mb-10">
+        <ScrollReveal className="mb-8 sm:mb-10">
           <p className="text-primary font-medium tracking-wide uppercase text-xs sm:text-sm mb-3">Experience</p>
           <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold text-balance">
             Where I&apos;ve worked
           </h2>
-        </div>
+        </ScrollReveal>
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-4">
+        <StaggerContainer className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-4">
           {experiences.map((exp) => (
+            <StaggerItem key={exp.id}>
             <Card
-              key={exp.id}
               className="bg-card/50 border-border/50 hover:bg-card/80 transition-colors group"
             >
               <CardContent className="p-3 sm:p-4">
@@ -61,8 +62,9 @@ export function ExperienceSection({ experiences }: ExperienceProps) {
                 </div>
               </CardContent>
             </Card>
+            </StaggerItem>
           ))}
-        </div>
+        </StaggerContainer>
       </div>
     </section>
   )
