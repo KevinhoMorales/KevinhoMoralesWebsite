@@ -3,9 +3,14 @@
 import { useState } from 'react'
 import { Button } from '@/components/ui/button'
 import { ScrollReveal } from '@/components/scroll-reveal'
-import { Card, CardContent } from '@/components/ui/card'
-import { Coffee } from 'lucide-react'
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
+import { Input } from '@/components/ui/input'
+import { Textarea } from '@/components/ui/textarea'
+import { Label } from '@/components/ui/label'
+import { Calendar, Mail } from 'lucide-react'
+import { BmcThemedButtonGraphic } from '@/components/bmc-themed-button-graphic'
 import { BuyMeACoffeeModal } from '@/components/buymeacoffee-modal'
+import { calendlyPopupButtonClassName, openCalendlyPopup } from '@/components/calendly-widget'
 import { useI18n } from '@/components/i18n/locale-provider'
 import { cn } from '@/lib/utils'
 import { getPublicWeb3FormsAccessKey } from '@/lib/web3forms-submit'
@@ -15,15 +20,24 @@ interface ConnectProps {
   profile: Profile
 }
 
-const inputClassName =
-  'flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50'
+const fieldClass = 'rounded-xl h-11 border-border/80 bg-background/50 shadow-sm'
+const textareaClass = 'rounded-xl min-h-[128px] resize-y border-border/80 bg-background/50 shadow-sm'
 
 export function Connect({ profile }: ConnectProps) {
   const { t } = useI18n()
   const links = profile.socialLinks || {}
+  const hasSchedulingAside = Boolean(links.calendly || links.buymeacoffee)
+  const asideRowWithCalendlyAndBmc = Boolean(links.calendly && links.buymeacoffee)
   const [status, setStatus] = useState<'idle' | 'sending' | 'success' | 'error'>('idle')
   const [result, setResult] = useState('')
   const [bmcModalOpen, setBmcModalOpen] = useState(false)
+
+  function onCalendlyClick() {
+    if (!links.calendly) return
+    if (typeof window !== 'undefined' && window.confirm(t('hero.calendlyConfirm'))) {
+      openCalendlyPopup(links.calendly)
+    }
+  }
 
   async function onSubmit(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault()
@@ -71,103 +85,170 @@ export function Connect({ profile }: ConnectProps) {
   }
 
   return (
-    <section id="connect" className="scroll-mt-20 py-4 sm:py-5 md:py-6 px-4 sm:px-6 md:px-8 lg:px-12 xl:px-24 bg-secondary/30">
-      <div className="max-w-4xl mx-auto text-center">
-        <ScrollReveal className="mb-6 sm:mb-8">
-          <p className="text-primary font-medium tracking-wide uppercase text-xs sm:text-sm mb-3 sm:mb-4">{t('connect.kicker')}</p>
-          <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold mb-4 sm:mb-6 text-balance">
+    <section
+      id="connect"
+      className="scroll-mt-20 relative overflow-hidden py-16 sm:py-20 md:py-24 px-4 sm:px-6 md:px-8 lg:px-12 xl:px-24"
+    >
+      <div
+        className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_80%_60%_at_50%_-30%,rgba(13,148,136,0.18),transparent_55%)] dark:bg-[radial-gradient(ellipse_80%_60%_at_50%_-30%,rgba(13,148,136,0.12),transparent_55%)]"
+        aria-hidden
+      />
+      <div className="pointer-events-none absolute inset-0 bg-gradient-to-b from-secondary/25 via-background to-background dark:from-secondary/15" aria-hidden />
+
+      <div className="relative max-w-6xl mx-auto">
+        <ScrollReveal className="text-center mb-12 sm:mb-14 lg:mb-16">
+          <p className="text-primary font-semibold tracking-wide uppercase text-xs sm:text-sm mb-3">
+            {t('connect.kicker')}
+          </p>
+          <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold mb-4 text-balance tracking-tight">
             {t('connect.title')}
           </h2>
-          <p className="text-base sm:text-lg md:text-xl text-muted-foreground max-w-2xl mx-auto px-1">
+          <p className="text-base sm:text-lg text-muted-foreground max-w-2xl mx-auto leading-relaxed">
             {t('connect.subtitle')}
           </p>
         </ScrollReveal>
 
-        <ScrollReveal delay={0.1} variant="scale">
-        <Card className="bg-card/50 border-border/50 max-w-2xl mx-auto mb-6">
-          <CardContent className="p-4 sm:p-6 md:p-8">
-            <form onSubmit={onSubmit} className="space-y-4 text-left">
-              <div>
-                <label htmlFor="connect-name" className="block text-sm font-medium mb-2">
-                  {t('connect.name')}
-                </label>
-                <input
-                  id="connect-name"
-                  name="name"
-                  type="text"
-                  required
-                  placeholder={t('connect.namePh')}
-                  className={inputClassName}
-                  disabled={status === 'sending'}
-                  autoComplete="name"
-                />
-              </div>
-              <div>
-                <label htmlFor="connect-email" className="block text-sm font-medium mb-2">
-                  {t('connect.email')}
-                </label>
-                <input
-                  id="connect-email"
-                  name="email"
-                  type="email"
-                  required
-                  placeholder={t('connect.emailPh')}
-                  className={inputClassName}
-                  disabled={status === 'sending'}
-                  autoComplete="email"
-                />
-              </div>
-              <div>
-                <label htmlFor="connect-message" className="block text-sm font-medium mb-2">
-                  {t('connect.message')}
-                </label>
-                <textarea
-                  id="connect-message"
-                  name="message"
-                  required
-                  placeholder={t('connect.messagePh')}
-                  rows={4}
-                  className={cn(inputClassName, 'min-h-[100px] resize-y')}
-                  disabled={status === 'sending'}
-                />
-              </div>
-              {result ? (
-                <p
+        <div
+          className={cn(
+            'grid gap-6 lg:gap-8 items-stretch',
+            hasSchedulingAside ? 'lg:grid-cols-2' : 'lg:grid-cols-1 max-w-2xl mx-auto w-full'
+          )}
+        >
+          <ScrollReveal variant="scale" className="h-full min-w-0">
+            <Card className="h-full border-border/60 bg-card/85 backdrop-blur-md shadow-xl shadow-black/5 dark:shadow-black/20 rounded-2xl overflow-hidden">
+              <CardHeader className="space-y-1 pb-2">
+                <div className="flex items-center gap-2 text-primary">
+                  <Mail className="h-5 w-5 shrink-0" aria-hidden />
+                  <CardTitle className="text-lg sm:text-xl font-semibold">{t('connect.formCardTitle')}</CardTitle>
+                </div>
+                <CardDescription className="text-sm leading-relaxed">{t('connect.formCardHint')}</CardDescription>
+              </CardHeader>
+              <CardContent className="pt-2 pb-6 sm:pb-8 px-5 sm:px-6">
+                <form onSubmit={onSubmit} className="space-y-5">
+                  <div className="space-y-2">
+                    <Label htmlFor="connect-name">{t('connect.name')}</Label>
+                    <Input
+                      id="connect-name"
+                      name="name"
+                      type="text"
+                      required
+                      placeholder={t('connect.namePh')}
+                      disabled={status === 'sending'}
+                      autoComplete="name"
+                      className={fieldClass}
+                    />
+                  </div>
+                  <div className="space-y-2">
+                    <Label htmlFor="connect-email">{t('connect.email')}</Label>
+                    <Input
+                      id="connect-email"
+                      name="email"
+                      type="email"
+                      required
+                      placeholder={t('connect.emailPh')}
+                      disabled={status === 'sending'}
+                      autoComplete="email"
+                      className={fieldClass}
+                    />
+                  </div>
+                  <div className="space-y-2">
+                    <Label htmlFor="connect-message">{t('connect.message')}</Label>
+                    <Textarea
+                      id="connect-message"
+                      name="message"
+                      required
+                      placeholder={t('connect.messagePh')}
+                      disabled={status === 'sending'}
+                      className={textareaClass}
+                    />
+                  </div>
+                  {result ? (
+                    <p
+                      className={cn(
+                        'text-sm rounded-lg px-3 py-2',
+                        status === 'success'
+                          ? 'bg-primary/10 text-primary border border-primary/20'
+                          : 'bg-destructive/10 text-destructive border border-destructive/20'
+                      )}
+                    >
+                      {result}
+                    </p>
+                  ) : null}
+                  <Button type="submit" size="lg" className="w-full rounded-xl h-12 font-semibold gap-2" disabled={status === 'sending'}>
+                    {status === 'sending' ? t('connect.sending') : t('connect.send')}
+                  </Button>
+                </form>
+              </CardContent>
+            </Card>
+          </ScrollReveal>
+
+          {hasSchedulingAside ? (
+            <ScrollReveal delay={0.08} variant="scale" className="h-full min-w-0">
+              <Card className="h-full border-border/60 bg-card/85 backdrop-blur-md shadow-xl shadow-black/5 dark:shadow-black/20 rounded-2xl overflow-hidden flex flex-col">
+                <CardHeader className="space-y-2 pb-4">
+                  <div className="flex items-center gap-2 text-primary">
+                    <Calendar className="h-5 w-5 shrink-0" aria-hidden />
+                    <CardTitle className="text-lg sm:text-xl font-semibold">{t('connect.asideTitle')}</CardTitle>
+                  </div>
+                  <CardDescription className="text-sm leading-relaxed">{t('connect.asideBody')}</CardDescription>
+                </CardHeader>
+                <CardContent
                   className={cn(
-                    'text-sm',
-                    status === 'success' ? 'text-primary' : 'text-destructive'
+                    'flex flex-col gap-3 pt-0 pb-6 sm:pb-8 px-5 sm:px-6 flex-1',
+                    asideRowWithCalendlyAndBmc && 'sm:flex-row sm:items-center sm:gap-3'
                   )}
                 >
-                  {result}
-                </p>
-              ) : null}
-              <Button
-                type="submit"
-                size="lg"
-                className="w-full gap-2"
-                disabled={status === 'sending'}
-              >
-                {status === 'sending' ? t('connect.sending') : t('connect.send')}
-              </Button>
-            </form>
-          </CardContent>
-        </Card>
-        </ScrollReveal>
+                  {links.calendly ? (
+                    <button
+                      type="button"
+                      className={cn(
+                        calendlyPopupButtonClassName,
+                        'w-full justify-center px-4 py-2.5 text-sm leading-snug min-h-11 rounded-md',
+                        asideRowWithCalendlyAndBmc && 'sm:flex-1 sm:min-w-0 sm:max-w-none shrink-0 h-auto'
+                      )}
+                      onClick={onCalendlyClick}
+                    >
+                      {t('connect.calendlyCta')}
+                    </button>
+                  ) : null}
 
-        {links.buymeacoffee && (
-          <ScrollReveal delay={0.2} className="pt-4">
-            <Button
-              size="lg"
-              className="gap-2 bg-[#FFDD00] hover:bg-[#FFE44D] text-black"
-              onClick={() => setBmcModalOpen(true)}
-            >
-              <Coffee className="h-5 w-5" />
-              {t('connect.bmc')}
-            </Button>
-          </ScrollReveal>
-        )}
-        <BuyMeACoffeeModal open={bmcModalOpen} onClose={() => setBmcModalOpen(false)} />
+                  {links.buymeacoffee ? (
+                    <button
+                      type="button"
+                      aria-label={t('connect.bmc')}
+                      onClick={() => setBmcModalOpen(true)}
+                      className={cn(
+                        'flex w-full min-h-11 items-center justify-center overflow-hidden rounded-full border-0 bg-transparent px-1 py-1 shadow-sm ring-1 ring-black/10 transition hover:opacity-95 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-card dark:ring-white/15',
+                        asideRowWithCalendlyAndBmc && 'sm:flex-1 sm:min-w-0 sm:max-w-none shrink-0 h-auto'
+                      )}
+                    >
+                      <BmcThemedButtonGraphic
+                        sizes={
+                          asideRowWithCalendlyAndBmc
+                            ? '(max-width:640px) 100vw, min(50vw, 260px)'
+                            : '(max-width: 768px) 100vw, 400px'
+                        }
+                        className={cn(
+                          'block w-full max-w-full object-contain object-center',
+                          asideRowWithCalendlyAndBmc
+                            ? 'h-9 max-h-11 sm:h-10 sm:max-h-12'
+                            : 'mx-auto h-10 max-h-12 sm:h-11'
+                        )}
+                      />
+                    </button>
+                  ) : null}
+                </CardContent>
+              </Card>
+            </ScrollReveal>
+          ) : null}
+        </div>
       </div>
+
+      <BuyMeACoffeeModal
+        open={bmcModalOpen}
+        onClose={() => setBmcModalOpen(false)}
+        href={links.buymeacoffee}
+      />
     </section>
   )
 }

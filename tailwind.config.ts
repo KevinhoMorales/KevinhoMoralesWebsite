@@ -46,10 +46,15 @@ const config: Config = {
           "0%, 100%": { backgroundPosition: "0% 50%" },
           "50%": { backgroundPosition: "100% 50%" },
         },
+        "testimonials-marquee": {
+          "0%": { transform: "translateX(0)" },
+          "100%": { transform: "translateX(-50%)" },
+        },
       },
       animation: {
         "typing-cursor": "typing-cursor 1s step-end infinite",
         shimmer: "shimmer 4s ease-in-out infinite",
+        "testimonials-marquee": "testimonials-marquee 45s linear infinite",
       },
     },
   },

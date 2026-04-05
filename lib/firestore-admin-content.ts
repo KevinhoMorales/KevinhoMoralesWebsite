@@ -75,6 +75,7 @@ function normalizeProject(data: Record<string, unknown>, docId: string): Project
     technologies: asStringArray(data.technologies) ?? [],
     category,
     links: asLinks(data.links),
+    sortOrder: asNumber(data.sortOrder),
     experience: asString(data.experience),
     platforms: asStringArray(data.platforms),
     tags: asStringArray(data.tags),

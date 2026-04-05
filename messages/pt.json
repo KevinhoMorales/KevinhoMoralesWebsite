@@ -64,6 +64,8 @@
   "projects": {
     "kicker": "Projetos",
     "title": "Trabalhos em destaque",
+    "seeMore": "Ver mais",
+    "emptyCategory": "Não há projetos nesta categoria.",
     "all": "Todos",
     "viewProject": "Ver projeto",
     "ios": "iOS",
@@ -76,6 +78,7 @@
     "title": "Firebase, Cursor, GitKraken & mobile",
     "subtitle": "Artigos técnicos sobre Firebase, Cursor, GitKraken e desenvolvimento mobile com Swift, Kotlin e Dart.",
     "viewMedium": "Ver tudo no Medium",
+    "seeMore": "Ver todos os artigos",
     "unavailable": "Artigos indisponíveis."
   },
   "podcastUi": {
@@ -141,7 +144,12 @@
     "fail": "Não foi possível enviar. Tente novamente.",
     "network": "Erro de conexão. Tente novamente.",
     "missingWeb3Key": "Falta NEXT_PUBLIC_WEB3FORMS_ACCESS_KEY (a mesma chave do Web3Forms / Remote Config). Configure no provedor e faça um novo deploy.",
-    "bmc": "Pague um café"
+    "bmc": "Pague um café",
+    "formCardTitle": "Mensagem direta",
+    "formCardHint": "Costumo responder em 24–48 h.",
+    "asideTitle": "Agende uma call",
+    "asideBody": "Escolha um horário no Calendly para uma videchamada objetiva.",
+    "calendlyCta": "Abrir Calendly"
   },
   "footer": {
     "at": "@"
@@ -343,6 +351,7 @@
         "firebaseAdmin": "Firebase Admin não configurado (FIREBASE_ADMIN_SDK_KEY ou GOOGLE_APPLICATION_CREDENTIALS no servidor).",
         "unauthorized": "Não autorizado",
         "emailNotAllowed": "Seu e-mail não está em ADMIN_ALLOWED_EMAILS ou a sessão é inválida. Verifique as variáveis do servidor ou entre novamente.",
+        "tokenRejected": "O servidor rejeitou o token do Firebase Auth. Normalmente FIREBASE_ADMIN_SDK_KEY no host não é do mesmo projeto que NEXT_PUBLIC_FIREBASE_PROJECT_ID. Confirme o JSON da conta de serviço (private_key com \\n). Sair não resolve até corrigir o ambiente.",
         "storageBucket": "NEXT_PUBLIC_FIREBASE_STORAGE_BUCKET não configurado",
         "invalidMultipart": "Multipart inválido",
         "fileRequired": "Arquivo obrigatório (campo file)",

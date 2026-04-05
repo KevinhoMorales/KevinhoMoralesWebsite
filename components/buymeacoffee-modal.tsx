@@ -2,14 +2,21 @@
 
 import { useEffect } from 'react'
 import Script from 'next/script'
+import { BmcThemedButtonGraphic } from '@/components/bmc-themed-button-graphic'
 import { useI18n } from '@/components/i18n/locale-provider'
 
 interface BuyMeACoffeeModalProps {
   open: boolean
   onClose: () => void
+  /** Buy Me a Coffee profile URL (e.g. from profile.socialLinks.buymeacoffee) */
+  href?: string
 }
 
-export function BuyMeACoffeeModal({ open, onClose }: BuyMeACoffeeModalProps) {
+export function BuyMeACoffeeModal({
+  open,
+  onClose,
+  href = 'https://www.buymeacoffee.com/KevinhoMorales',
+}: BuyMeACoffeeModalProps) {
   const { t } = useI18n()
   useEffect(() => {
     const handleEscape = (e: KeyboardEvent) => {
@@ -59,12 +66,16 @@ export function BuyMeACoffeeModal({ open, onClose }: BuyMeACoffeeModalProps) {
             {t('bmc.body')}
           </p>
           <a
-            href="https://buymeacoffee.com/KevinhoMorales"
+            href={href}
             target="_blank"
             rel="noopener noreferrer"
-            className="inline-flex items-center justify-center gap-2 h-10 px-6 rounded-md bg-[#FFDD00] hover:bg-[#FFE44D] text-[#000] font-medium transition-colors"
+            aria-label={t('connect.bmc')}
+            className="mx-auto block overflow-hidden rounded-full shadow-sm ring-1 ring-black/10 transition hover:opacity-95 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background dark:ring-white/15"
           >
-            {t('bmc.continue')}
+            <BmcThemedButtonGraphic
+              className="h-auto w-full max-w-full"
+              sizes="(max-width: 768px) 100vw, 400px"
+            />
           </a>
           <button
             type="button"

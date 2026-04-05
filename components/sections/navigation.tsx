@@ -106,19 +106,19 @@ export function Navigation() {
 
   const navMain = useMemo(
     () => [
-      { name: t('nav.about'), href: '/#about' },
-      { name: t('nav.experience'), href: '/#experience' },
-      { name: t('nav.projects'), href: '/#projects' },
-      { name: t('nav.contact'), href: '/#connect' },
+      { name: t('nav.about'), href: '/about' },
+      { name: t('nav.experience'), href: '/experience' },
+      { name: t('nav.projects'), href: '/projects' },
+      { name: t('nav.contact'), href: '/contact' },
     ],
     [t]
   )
 
   const navMore = useMemo(
     () => [
-      { name: t('nav.articles'), href: '/#articles' },
-      { name: t('nav.podcast'), href: '/#podcast' },
-      { name: t('nav.speaking'), href: '/#conferences' },
+      { name: t('nav.articles'), href: '/articles' },
+      { name: t('nav.podcast'), href: '/podcast' },
+      { name: t('nav.speaking'), href: '/conferences' },
     ],
     [t]
   )

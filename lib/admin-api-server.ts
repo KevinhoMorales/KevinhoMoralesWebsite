@@ -52,7 +52,9 @@ export async function assertAdminUser(req: Request): Promise<{ uid: string; emai
   let decoded: DecodedIdToken;
   try {
     decoded = await auth.verifyIdToken(idToken);
-  } catch {
+  } catch (err) {
+    const msg = err instanceof Error ? err.message : String(err);
+    console.warn('[admin-auth] verifyIdToken failed:', msg.slice(0, 200));
     throw new AdminUnauthorized('invalid_token');
   }
 

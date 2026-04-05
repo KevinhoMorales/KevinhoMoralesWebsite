@@ -9,6 +9,7 @@ import {
   getAchievements,
 } from '@/lib/content';
 import { withCanonical } from '@/lib/site';
+import { orderProjectsForDisplay } from '@/lib/projects-order';
 import { Hero } from '@/components/sections/hero';
 import { About } from '@/components/sections/about';
 import { ExperienceSection } from '@/components/sections/experience';
@@ -32,7 +33,8 @@ export default async function Home() {
   const experience = getExperience();
   const testimonials = getTestimonials();
   const achievements = getAchievements();
-  const [projects, conferences] = await Promise.all([getProjects(), getConferences()]);
+  const [projectsRaw, conferences] = await Promise.all([getProjects(), getConferences()]);
+  const projects = orderProjectsForDisplay(projectsRaw);
 
   return (
     <main className="min-h-screen">

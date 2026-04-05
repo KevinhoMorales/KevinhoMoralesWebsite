@@ -64,6 +64,8 @@
   "projects": {
     "kicker": "Proyectos",
     "title": "Trabajos destacados",
+    "seeMore": "Ver más",
+    "emptyCategory": "No hay proyectos en esta categoría.",
     "all": "Todos",
     "viewProject": "Ver proyecto",
     "ios": "iOS",
@@ -76,6 +78,7 @@
     "title": "Firebase, Cursor, GitKraken y mobile",
     "subtitle": "Artículos técnicos sobre Firebase, Cursor, GitKraken y desarrollo mobile con Swift, Kotlin y Dart.",
     "viewMedium": "Ver todo en Medium",
+    "seeMore": "Ver todos los artículos",
     "unavailable": "Artículos no disponibles."
   },
   "podcastUi": {
@@ -141,7 +144,12 @@
     "fail": "No se pudo enviar. Inténtalo de nuevo.",
     "network": "Error de conexión. Inténtalo de nuevo.",
     "missingWeb3Key": "Falta NEXT_PUBLIC_WEB3FORMS_ACCESS_KEY (misma clave que en Web3Forms / Remote Config). Configúrala en el hosting y vuelve a desplegar.",
-    "bmc": "Cómprame un café"
+    "bmc": "Cómprame un café",
+    "formCardTitle": "Mensaje directo",
+    "formCardHint": "Respondo lo antes posible; normalmente en 24–48 h.",
+    "asideTitle": "Agenda una llamada",
+    "asideBody": "Elige un horario en Calendly si quieres una videollamada sin idas y venidas por correo.",
+    "calendlyCta": "Abrir Calendly"
   },
   "footer": {
     "at": "@"
@@ -343,6 +351,7 @@
         "firebaseAdmin": "Firebase Admin no configurado (FIREBASE_ADMIN_SDK_KEY o GOOGLE_APPLICATION_CREDENTIALS en el servidor).",
         "unauthorized": "No autorizado",
         "emailNotAllowed": "Tu correo no está en ADMIN_ALLOWED_EMAILS (o la sesión no es válida). Revisa variables en el servidor o vuelve a iniciar sesión.",
+        "tokenRejected": "El servidor rechazó el token de Firebase Auth. Suele ocurrir si en Vercel el JSON de FIREBASE_ADMIN_SDK_KEY no es del mismo proyecto que NEXT_PUBLIC_FIREBASE_PROJECT_ID (misma consola Firebase, mismas credenciales de app web). Revisa también que el JSON lleve private_key con saltos como \\n. Cierra sesión no soluciona esto hasta corregir el entorno.",
         "storageBucket": "NEXT_PUBLIC_FIREBASE_STORAGE_BUCKET no configurado",
         "invalidMultipart": "Multipart inválido",
         "fileRequired": "Archivo requerido (campo file)",

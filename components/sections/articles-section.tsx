@@ -1,13 +1,18 @@
 'use client'
 
 import { useEffect, useState } from 'react'
+import Link from 'next/link'
 import Image from 'next/image'
 import { Card, CardContent } from '@/components/ui/card'
 import { ScrollReveal, StaggerContainer, StaggerItem } from '@/components/scroll-reveal'
 import { Button } from '@/components/ui/button'
 import { useI18n } from '@/components/i18n/locale-provider'
 import { toBcp47 } from '@/lib/i18n/bcp47'
-import { ExternalLink, FileText } from 'lucide-react'
+import { ArrowRight, ExternalLink, FileText } from 'lucide-react'
+
+/** Request one extra item to know if the RSS feed has more than we show on the home. */
+const HOME_ARTICLES = 4
+const FETCH_LIMIT = HOME_ARTICLES + 1
 
 interface Article {
   title: string
@@ -24,7 +29,7 @@ export function ArticlesSection() {
   const [loadFailed, setLoadFailed] = useState(false)
 
   useEffect(() => {
-    fetch('/api/articles?limit=6')
+    fetch(`/api/articles?limit=${FETCH_LIMIT}`)
       .then((res) => {
         if (!res.ok) throw new Error('Failed to fetch')
         return res.json()
@@ -44,8 +49,8 @@ export function ArticlesSection() {
               {t('articles.title')}
             </h2>
           </div>
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6">
-            {Array.from({ length: 6 }).map((_, i) => (
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6">
+            {Array.from({ length: HOME_ARTICLES }).map((_, i) => (
               <div key={i} className="aspect-[4/3] rounded-lg bg-muted animate-pulse" />
             ))}
           </div>
@@ -69,6 +74,9 @@ export function ArticlesSection() {
       </section>
     )
   }
+
+  const displayed = articles.slice(0, HOME_ARTICLES)
+  const hasMoreOnSite = articles.length > HOME_ARTICLES
 
   return (
     <section id="articles" className="scroll-mt-20 py-4 sm:py-5 md:py-6 px-4 sm:px-6 md:px-8 lg:px-12 xl:px-24 bg-secondary/30">
@@ -96,8 +104,8 @@ export function ArticlesSection() {
           </Button>
         </ScrollReveal>
 
-        <StaggerContainer className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6">
-          {articles.map((article, index) => (
+        <StaggerContainer className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6">
+          {displayed.map((article, index) => (
             <StaggerItem key={article.link} delay={index * 0.05}>
             <Card
               className="bg-card/50 border-border/50 overflow-hidden group hover:border-primary/50 transition-colors"
@@ -115,7 +123,7 @@ export function ArticlesSection() {
                       alt=""
                       fill
                       className="object-cover group-hover:scale-105 transition-transform duration-300"
-                      sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                      sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 25vw"
                       unoptimized
                     />
                   ) : (
@@ -140,6 +148,17 @@ export function ArticlesSection() {
             </StaggerItem>
           ))}
         </StaggerContainer>
+
+        {hasMoreOnSite ? (
+          <ScrollReveal delay={0.1} className="mt-8 sm:mt-10 flex justify-center">
+            <Button variant="outline" size="lg" className="gap-2 rounded-xl" asChild>
+              <Link href="/articles">
+                {t('articles.seeMore')}
+                <ArrowRight className="h-4 w-4" aria-hidden />
+              </Link>
+            </Button>
+          </ScrollReveal>
+        ) : null}
       </div>
     </section>
   )

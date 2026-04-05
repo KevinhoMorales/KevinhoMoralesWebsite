@@ -2,9 +2,9 @@
 
 import Image from 'next/image'
 import { TypeAnimation } from 'react-type-animation'
+import Link from 'next/link'
 import { Button } from '@/components/ui/button'
 import { ArrowDown, MessageCircle, FileText } from 'lucide-react'
-import { openCalendlyPopup } from '@/components/calendly-widget'
 import { useI18n } from '@/components/i18n/locale-provider'
 import type { Profile } from '@/types'
 
@@ -61,43 +61,18 @@ export function Hero({ profile }: HeroProps) {
             </div>
 
             <div className="flex flex-col xs:flex-row flex-wrap gap-2 sm:gap-3 pt-1">
-              <Button
-                size="lg"
-                className="gap-2"
-                onClick={() => document.getElementById('projects')?.scrollIntoView({ behavior: 'smooth' })}
-              >
-                {t('hero.exploreWork')}
-                <ArrowDown className="h-4 w-4" />
+              <Button size="lg" className="gap-2" asChild>
+                <Link href="/projects">
+                  {t('hero.exploreWork')}
+                  <ArrowDown className="h-4 w-4" aria-hidden />
+                </Link>
               </Button>
-              {profile.socialLinks?.calendly ? (
-                <Button
-                  variant="outline"
-                  size="lg"
-                  className="gap-2"
-                  onClick={() => {
-                    if (window.confirm(t('hero.calendlyConfirm'))) {
-                      openCalendlyPopup()
-                    }
-                  }}
-                >
-                  <MessageCircle className="h-4 w-4" />
+              <Button variant="outline" size="lg" className="gap-2" asChild>
+                <Link href="/contact">
+                  <MessageCircle className="h-4 w-4" aria-hidden />
                   {t('hero.letsTalk')}
-                </Button>
-              ) : (
-                <Button
-                  variant="outline"
-                  size="lg"
-                  className="gap-2"
-                  onClick={() => {
-                    if (window.confirm(t('hero.contactConfirm'))) {
-                      document.getElementById('connect')?.scrollIntoView({ behavior: 'smooth' })
-                    }
-                  }}
-                >
-                  <MessageCircle className="h-4 w-4" />
-                  {t('hero.letsTalk')}
-                </Button>
-              )}
+                </Link>
+              </Button>
               {(profile.cvLinks?.english || profile.socialLinks?.website) && (
                 <Button
                   variant="outline"

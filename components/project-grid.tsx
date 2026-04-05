@@ -1,6 +1,6 @@
 'use client';
 
-import { useMemo, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
 import { Button } from '@/components/ui/button';
@@ -9,11 +9,17 @@ import type { Project, ProjectCategory } from '@/types';
 
 interface ProjectGridProps {
   projects: Project[];
+  /** From /projects?category= when coming from the home preview */
+  initialCategory?: ProjectCategory | 'all';
 }
 
-export function ProjectGrid({ projects }: ProjectGridProps) {
+export function ProjectGrid({ projects, initialCategory = 'all' }: ProjectGridProps) {
   const { t } = useI18n();
-  const [category, setCategory] = useState<ProjectCategory | 'all'>('all');
+  const [category, setCategory] = useState<ProjectCategory | 'all'>(initialCategory);
+
+  useEffect(() => {
+    setCategory(initialCategory);
+  }, [initialCategory]);
 
   const CATEGORIES: { value: ProjectCategory | 'all'; label: string }[] = useMemo(
     () => [
@@ -52,55 +58,59 @@ export function ProjectGrid({ projects }: ProjectGridProps) {
         ))}
       </div>
 
-      <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-        {filtered.map((project) => (
-          <article
-            key={project.id}
-            className="group rounded-lg border bg-card p-4 transition-shadow hover:shadow-md"
-          >
-            {project.image && (
-              <div className="relative aspect-video mb-4 overflow-hidden rounded-md">
-                <Image
-                  src={project.image}
-                  alt={project.title}
-                  fill
-                  className="object-cover transition-transform group-hover:scale-105"
-                  sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
-                />
+      {filtered.length === 0 ? (
+        <p className="text-sm text-muted-foreground py-8">{t('projects.emptyCategory')}</p>
+      ) : (
+        <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+          {filtered.map((project) => (
+            <article
+              key={project.id}
+              className="group rounded-lg border bg-card p-4 transition-shadow hover:shadow-md"
+            >
+              {project.image && (
+                <div className="relative aspect-video mb-4 overflow-hidden rounded-md">
+                  <Image
+                    src={project.image}
+                    alt={project.title}
+                    fill
+                    className="object-cover transition-transform group-hover:scale-105"
+                    sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
+                  />
+                </div>
+              )}
+              <div className="space-y-2">
+                <h3 className="font-semibold">{project.title}</h3>
+                <p className="text-sm text-muted-foreground line-clamp-2">
+                  {project.description}
+                </p>
+                <div className="flex flex-wrap gap-1">
+                  {project.technologies.slice(0, 4).map((tech) => (
+                    <span
+                      key={tech}
+                      className="rounded bg-muted px-2 py-0.5 text-xs"
+                    >
+                      {tech}
+                    </span>
+                  ))}
+                </div>
+                <div className="flex flex-wrap gap-2 pt-2">
+                  {project.links.map((link) => (
+                    <Link
+                      key={link.url}
+                      href={link.url}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="text-sm text-primary hover:underline"
+                    >
+                      {linkLabel(link.type, link.label)}
+                    </Link>
+                  ))}
+                </div>
               </div>
-            )}
-            <div className="space-y-2">
-              <h3 className="font-semibold">{project.title}</h3>
-              <p className="text-sm text-muted-foreground line-clamp-2">
-                {project.description}
-              </p>
-              <div className="flex flex-wrap gap-1">
-                {project.technologies.slice(0, 4).map((tech) => (
-                  <span
-                    key={tech}
-                    className="rounded bg-muted px-2 py-0.5 text-xs"
-                  >
-                    {tech}
-                  </span>
-                ))}
-              </div>
-              <div className="flex flex-wrap gap-2 pt-2">
-                {project.links.map((link) => (
-                  <Link
-                    key={link.url}
-                    href={link.url}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="text-sm text-primary hover:underline"
-                  >
-                    {linkLabel(link.type, link.label)}
-                  </Link>
-                ))}
-              </div>
-            </div>
-          </article>
-        ))}
-      </div>
+            </article>
+          ))}
+        </div>
+      )}
     </section>
   );
 }

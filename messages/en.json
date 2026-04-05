@@ -64,6 +64,8 @@
   "projects": {
     "kicker": "Projects",
     "title": "Selected work",
+    "seeMore": "See more",
+    "emptyCategory": "No projects in this category yet.",
     "all": "All",
     "viewProject": "View Project",
     "ios": "iOS",
@@ -76,6 +78,7 @@
     "title": "Firebase, Cursor, GitKraken & mobile",
     "subtitle": "Technical articles on Firebase, Cursor, GitKraken, and mobile development with Swift, Kotlin, and Dart.",
     "viewMedium": "View all on Medium",
+    "seeMore": "See all articles",
     "unavailable": "Articles unavailable."
   },
   "podcastUi": {
@@ -141,7 +144,12 @@
     "fail": "Failed to send. Please try again.",
     "network": "Connection error. Please try again.",
     "missingWeb3Key": "NEXT_PUBLIC_WEB3FORMS_ACCESS_KEY is missing (same key as in Web3Forms / Remote Config). Add it to your host and redeploy.",
-    "bmc": "Buy me a Coffee"
+    "bmc": "Buy me a Coffee",
+    "formCardTitle": "Send a message",
+    "formCardHint": "I usually reply within 24–48 hours.",
+    "asideTitle": "Book a call",
+    "asideBody": "Pick a time on Calendly if you prefer a quick video chat.",
+    "calendlyCta": "Open Calendly"
   },
   "footer": {
     "at": "@"
@@ -343,6 +351,7 @@
         "firebaseAdmin": "Firebase Admin isn’t configured (FIREBASE_ADMIN_SDK_KEY or GOOGLE_APPLICATION_CREDENTIALS on the server).",
         "unauthorized": "Unauthorized",
         "emailNotAllowed": "Your email is not listed in ADMIN_ALLOWED_EMAILS, or the session is invalid. Check server env vars or sign in again.",
+        "tokenRejected": "The server rejected your Firebase Auth token. Usually FIREBASE_ADMIN_SDK_KEY on the host is not from the same Firebase project as NEXT_PUBLIC_FIREBASE_PROJECT_ID (same Firebase console / web app). Ensure the service account JSON private_key newlines are \\n. Signing out will not fix this until the env is corrected.",
         "storageBucket": "NEXT_PUBLIC_FIREBASE_STORAGE_BUCKET is not set",
         "invalidMultipart": "Invalid multipart request",
         "fileRequired": "File required (field file)",

@@ -68,13 +68,34 @@ export function ConferencesPanel() {
   async function uploadImage(file: File) {
     const fd = new FormData();
     fd.append('file', file);
-    const token = await getAdminIdToken();
-    const res = await fetch('/api/admin/upload', {
+    let token = await getAdminIdToken(false);
+    let res = await fetch('/api/admin/upload', {
       method: 'POST',
       body: fd,
       headers: { Authorization: `Bearer ${token}` },
     });
     if (res.status === 401) {
+      token = await getAdminIdToken(true);
+      res = await fetch('/api/admin/upload', {
+        method: 'POST',
+        body: fd,
+        headers: { Authorization: `Bearer ${token}` },
+      });
+    }
+    if (res.status === 401) {
+      let code: string | undefined;
+      try {
+        const j = (await res.json()) as { code?: string };
+        code = typeof j?.code === 'string' ? j.code : undefined;
+      } catch {
+        /*  */
+      }
+      if (code === 'invalid_token' || code === 'no_email' || code === 'missing_token') {
+        throw new Error('TOKEN_REJECTED_BY_SERVER');
+      }
+      if (code === 'email_not_allowed') {
+        throw new Error('Correo no autorizado para el panel');
+      }
       window.location.href = '/admin/login';
       throw new Error('No autorizado');
     }

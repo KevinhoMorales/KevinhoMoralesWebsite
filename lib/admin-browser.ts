@@ -50,6 +50,10 @@ export async function adminFetch<T>(path: string, init?: RequestInit): Promise<T
     if (code === 'email_not_allowed') {
       throw new Error('Correo no autorizado para el panel');
     }
+    // Sesión cliente válida pero el servidor no validó el JWT (p. ej. FIREBASE_ADMIN_SDK_KEY de otro proyecto).
+    if (code === 'invalid_token' || code === 'no_email' || code === 'missing_token') {
+      throw new Error('TOKEN_REJECTED_BY_SERVER');
+    }
     if (typeof window !== 'undefined' && !path.includes('/login')) {
       window.location.href = '/admin/login';
     }

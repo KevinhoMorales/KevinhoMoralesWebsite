@@ -88,3 +88,49 @@ Si hay **Deployment Protection** (password, Vercel Auth):
 
 - Puede que tengas que iniciar sesión para ver el sitio
 - Prueba en modo incógnito o desactívala temporalmente
+
+## 8. Recomendaciones del panel «Deployment settings» (builds y runtime)
+
+Parte de lo que muestra Vercel en **Project → Settings** (pestañas tipo **Build and Deployment**, **Deployment Settings** o **Advanced**) **no se configura en el repo**: hay que activarlo en el dashboard (y a menudo requiere plan **Pro** u **Enterprise**). Este proyecto ya usa **Next.js 14.2.x**, compatible con [Skew Protection](https://vercel.com/docs/deployments/skew-protection) sin cambios de código extra.
+
+### Builds más rápidos y sin cola
+
+1. **On-Demand Concurrent Builds** (evitar builds encolados)  
+   - Ruta típica: **Settings** del proyecto → **Build and Deployment** → sección **On-Demand Concurrent Builds**.  
+   - Elige *Run all builds immediately* o *up to one build per branch* según tu flujo.  
+   - Documentación: [Managing builds / On-demand concurrent builds](https://vercel.com/docs/deployments/concurrent-builds#on-demand-concurrent-builds).
+
+2. **Máquina de build más grande** (hasta ~40 % más rápido según Vercel)  
+   - Misma área: **Build Machine** a nivel de [proyecto](https://vercel.com/docs/deployments/concurrent-builds#larger-build-machines) o [equipo](https://vercel.com/docs/deployments/concurrent-builds).  
+   - Opciones comunes: **Enhanced**, **Turbo** o **Elastic** (más vCPU/RAM; pueden implicar coste según plan).  
+   - Si estás en **Hobby**, muchas de estas opciones no aplican; [upgrade a Pro](https://vercel.com/docs/plans/pro-plan) es lo que sugiere Vercel para builds paralelos y máquinas mayores.
+
+3. **Prioritize Production Builds**  
+   - Si ya está **Enabled**, no hace falta tocar nada. Si no, actívalo en **Build and Deployment** para que producción no quede detrás de muchos previews.  
+   - [Prioritize production builds](https://vercel.com/docs/deployments/concurrent-builds#prioritize-production-builds).
+
+### Evitar desajuste cliente / servidor (Skew Protection)
+
+Útil cuando despliegas seguido y quieres que las peticiones del navegador sigan apuntando al **mismo deployment** que sirvió la página.
+
+1. **Settings** → **Advanced** → **Skew Protection** → activar.  
+2. Comprueba que esté habilitado [exponer automáticamente las variables de entorno del sistema](https://vercel.com/docs/environment-variables/system-environment-variables#automatically-expose-system-environment-variables) en el proyecto.  
+3. Vuelve a desplegar producción tras el cambio.  
+4. Guía: [Skew Protection](https://vercel.com/docs/deployments/skew-protection).
+
+> En planes **Pro/Enterprise**; en proyectos nuevos a partir de cierta fecha puede venir activado por defecto.
+
+### Runtime (Fluid Compute, région, etc.)
+
+- **Node.js**: en el dashboard puedes fijar **24.x** (o la LTS que prefieras); alinea con `engines.node` en `package.json` si quieres paridad local/CI.  
+- **Cold Start Prevention**: opcional; sube el coste o el uso de cómpute a cambio de menos cold starts en funciones. Actívalo solo si notas latencia al despertar rutas/serverless.  
+- **Function region** (`iad1`, etc.): déjala cerca de tus usuarios o de tus APIs si la latencia importa.
+
+### Resumen rápido
+
+| Sugerencia en Vercel | Dónde | Nota |
+|----------------------|--------|------|
+| Builds en paralelo | Project → Settings → Build and Deployment | Suele requerir Pro |
+| Máquina Enhanced / Turbo / Elastic | Misma sección (o Team settings) | Revisa facturación |
+| Skew Protection | Project → Settings → Advanced | Next 14.1.4+ OK en esta app |
+| Priorizar producción | Build and Deployment | Recomendado si hay muchos previews |
