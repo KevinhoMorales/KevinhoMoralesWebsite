@@ -1,6 +1,7 @@
 'use client';
 
 import { useEffect } from 'react';
+import { useI18n } from '@/components/i18n/locale-provider';
 import type { PodcastEpisode } from '@/lib/youtube';
 
 interface EpisodeModalProps {
@@ -9,6 +10,7 @@ interface EpisodeModalProps {
 }
 
 export function EpisodeModal({ episode, onClose }: EpisodeModalProps) {
+  const { t } = useI18n();
   useEffect(() => {
     const handleEscape = (e: KeyboardEvent) => {
       if (e.key === 'Escape') onClose();
@@ -41,7 +43,7 @@ export function EpisodeModal({ episode, onClose }: EpisodeModalProps) {
           type="button"
           onClick={onClose}
           className="absolute top-4 right-4 z-10 rounded-full bg-black/50 p-2 text-white hover:bg-black/70 transition-colors"
-          aria-label="Cerrar"
+          aria-label={t('common.close')}
         >
           <svg
             xmlns="http://www.w3.org/2000/svg"

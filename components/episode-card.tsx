@@ -1,6 +1,8 @@
 'use client';
 
 import Image from 'next/image';
+import { useI18n } from '@/components/i18n/locale-provider';
+import { toBcp47 } from '@/lib/i18n/bcp47';
 import type { PodcastEpisode } from '@/lib/youtube';
 
 interface EpisodeCardProps {
@@ -16,6 +18,7 @@ function normalizeForSearch(text: string): string {
 }
 
 export function EpisodeCard({ episode, onClick }: EpisodeCardProps) {
+  const { t, locale } = useI18n();
   return (
     <button
       type="button"
@@ -42,10 +45,10 @@ export function EpisodeCard({ episode, onClick }: EpisodeCardProps) {
           {episode.episodeTitle}
         </h3>
         {episode.guest && (
-          <p className="text-sm text-muted-foreground">Con {episode.guest}</p>
+          <p className="text-sm text-muted-foreground">{t('podcast.withGuest', { guest: episode.guest })}</p>
         )}
         <p className="text-xs text-muted-foreground">
-          {new Date(episode.publishDate).toLocaleDateString('es-ES', {
+          {new Date(episode.publishDate).toLocaleDateString(toBcp47(locale), {
             year: 'numeric',
             month: 'short',
             day: 'numeric',

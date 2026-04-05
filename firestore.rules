@@ -16,5 +16,11 @@ service cloud.firestore {
       allow read: if true;
       allow create, update, delete: if isSignedIn();
     }
+
+    // Lista de espera: solo lectura autenticada; escritura vía Admin SDK (API pública)
+    match /prod/admin/waitlist/{docId} {
+      allow read: if isSignedIn();
+      allow create, update, delete: if false;
+    }
   }
 }

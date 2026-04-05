@@ -1,0 +1,349 @@
+{
+  "common": {
+    "loading": "Loading…",
+    "close": "Close",
+    "present": "Present",
+    "watchArrow": "Watch →",
+    "adminAccess": "Admin access",
+    "access": "Access",
+    "rights": "All rights reserved."
+  },
+  "nav": {
+    "about": "About",
+    "experience": "Experience",
+    "projects": "Projects",
+    "contact": "Contact",
+    "more": "More",
+    "moreAria": "More navigation",
+    "articles": "Articles",
+    "podcast": "Podcast",
+    "speaking": "Speaking",
+    "adminLogin": "Access",
+    "waitlist": "Get the book",
+    "waitlistBook": "Get the book",
+    "openMenu": "Open menu",
+    "toggleMenu": "Toggle menu",
+    "site": "Site",
+    "content": "Content"
+  },
+  "hero": {
+    "hiIm": "Hi, I'm {{name}}",
+    "exploreWork": "Explore my work",
+    "letsTalk": "Let's talk",
+    "downloadResume": "Download Resume",
+    "calendlyConfirm": "Calendly will open to schedule a meeting. Continue?",
+    "contactConfirm": "You'll be taken to the contact section. Continue?",
+    "cvConfirm": "Kevin Morales's résumé (PDF) will download. Continue?"
+  },
+  "about": {
+    "kicker": "About Me",
+    "title": "Crafting digital experiences with purpose",
+    "hYears": "7+ Years",
+    "hYearsDesc": "Building mobile apps",
+    "hCommunity": "Community",
+    "hCommunityDesc": "DevLokos founder",
+    "hSpeaker": "Speaker",
+    "hSpeakerDesc": "International conferences",
+    "hPassion": "Passion",
+    "hPassionDesc": "Open source contributor",
+    "familyAlt": "My family",
+    "myFamily": "My Family",
+    "familyBlurb": "They inspire everything I do. Building a better future, one line of code at a time.",
+    "partner": "Partner",
+    "son": "Son",
+    "daughter": "Daughter",
+    "bioP1": "Highly skilled Senior iOS Engineer with over 8 years of experience specializing in high-performance mobile architectures for the fintech and startup sectors. Proven track record in leading distributed engineering teams, scaling applications from MVP to mass-market adoption, and modernizing legacy codebases.",
+    "bioP2": "Passionate community leader and mentor, dedicated to fostering technological growth through Google Developer Groups (GDG) and educational content creation. Committed to code quality, collaborative problem-solving, and continuous learning.",
+    "bioP3": "Podcast host and founder of DevLokos.",
+    "motto": "Be DIFFERENT and leave a legacy to the world that everything is possible when you have it in your mind."
+  },
+  "experience": {
+    "kicker": "Experience",
+    "title": "Where I've worked"
+  },
+  "projects": {
+    "kicker": "Projects",
+    "title": "Selected work",
+    "all": "All",
+    "viewProject": "View Project",
+    "ios": "iOS",
+    "android": "Android",
+    "web": "Web",
+    "flutter": "Flutter"
+  },
+  "articles": {
+    "kicker": "Articles",
+    "title": "Firebase, Cursor, GitKraken & mobile",
+    "subtitle": "Technical articles on Firebase, Cursor, GitKraken, and mobile development with Swift, Kotlin, and Dart.",
+    "viewMedium": "View all on Medium",
+    "unavailable": "Articles unavailable."
+  },
+  "podcastUi": {
+    "kicker": "Podcast",
+    "title": "DevLokos Podcast",
+    "subtitle": "Conversations with developers, designers, and tech leaders about building great products and growing your career.",
+    "listenYoutube": "Listen on YouTube"
+  },
+  "podcast": {
+    "withGuest": "With {{guest}}",
+    "searchPlaceholder": "Search by title or guest...",
+    "all": "All",
+    "season1": "Season 1",
+    "season2": "Season 2",
+    "prev": "Previous",
+    "next": "Next",
+    "pageOf": "Page {{page}} of {{total}}",
+    "errorUnexpected": "Unexpected response format",
+    "errorUnavailable": "Episodes unavailable. Add YOUTUBE_API_KEY to .env.local",
+    "apiHelpTitle": "To load podcast episodes from YouTube:",
+    "apiHelpStep1": "Open Google Cloud Console (APIs & credentials).",
+    "apiHelpStep2": "In APIs & Services → Library, enable YouTube Data API v3.",
+    "apiHelpStep3": "Create an API key in Credentials.",
+    "apiHelpStep4": "In .env.local add: YOUTUBE_API_KEY=your_real_key",
+    "apiHelpStep5": "Restart the dev server (npm run dev).",
+    "apiHelpListen": "Meanwhile, you can listen on YouTube."
+  },
+  "conferences": {
+    "kicker": "Speaking",
+    "title": "Conferences",
+    "seeMore": "See more ({{count}} talks)",
+    "achievements": "Achievements",
+    "watchVideo": "Watch video",
+    "event": "Event",
+    "attendees": "{{count}} attendees"
+  },
+  "conferenceType": {
+    "conference": "Conference",
+    "virtual": "Virtual",
+    "talk": "Talk",
+    "meetup": "Meetup"
+  },
+  "recommendations": {
+    "kicker": "Testimonials",
+    "title": "What people say"
+  },
+  "connect": {
+    "kicker": "Contact",
+    "title": "Let's build something amazing together",
+    "subtitle": "Whether you have a project in mind, want to collaborate, or just want to say hi—I'd love to hear from you.",
+    "name": "Name *",
+    "namePh": "Your name",
+    "linkedin": "LinkedIn",
+    "optional": "(optional)",
+    "linkedinPh": "https://linkedin.com/in/your-profile",
+    "message": "Message *",
+    "messagePh": "How can I help you?",
+    "sending": "Sending...",
+    "send": "Send message",
+    "success": "Message sent! I'll get back to you soon.",
+    "fail": "Failed to send. Please try again.",
+    "network": "Connection error. Please try again.",
+    "bmc": "Buy me a Coffee"
+  },
+  "footer": {
+    "at": "@"
+  },
+  "pages": {
+    "articles": {
+      "title": "Articles",
+      "desc": "Firebase, Cursor, GitKraken, and hands-on mobile engineering with Swift, Kotlin, and Dart."
+    },
+    "podcast": {
+      "title": "DevLokos Podcast",
+      "desc": "The wildest tech and software podcast. Interviews with IT leaders and developers across Latin America."
+    },
+    "projects": {
+      "title": "Projects",
+      "desc": "Apps published on the App Store, Play Store, and web platforms."
+    },
+    "conferences": {
+      "title": "Conferences & Talks",
+      "desc": "Speaker engagements at DevFest, Google I/O Extended, GDG events, and more."
+    },
+    "testimonials": {
+      "title": "Testimonials",
+      "desc": "What colleagues and clients say about working with me."
+    }
+  },
+  "projectLinks": {
+    "appStore": "App Store",
+    "playStore": "Play Store",
+    "website": "Website",
+    "github": "GitHub",
+    "other": "Link"
+  },
+  "waitlist": {
+    "title": "Join the waitlist",
+    "description": "Be among the first to know when the book on Kotlin, Swift, and Dart comes out. No spam—only important updates.",
+    "editionNote": "This waitlist is for the Spanish-language edition of the book.",
+    "closedNotice": "Signups will open soon while we finalize payments. You can still read the pre-sale info below.",
+    "email": "Email",
+    "emailPh": "you@email.com",
+    "firstName": "First name",
+    "firstNamePh": "Your first name",
+    "lastName": "Last name",
+    "lastNamePh": "Your last name",
+    "submit": "Reserve my spot",
+    "submitClosed": "Coming soon",
+    "submitting": "Sending…",
+    "thanks": "Thank you!",
+    "thanksMsg": "You're on the list!",
+    "close": "Close",
+    "errorSend": "Couldn't sign you up. Please try again.",
+    "errorNetwork": "Network error. Please try again.",
+    "preorder": {
+      "badge": "Early supporters only",
+      "offerTitle": "🎉 Exclusive pre-order offer",
+      "offerBody": "Because you're on the waitlist, you get early access to the book at a special price before the official launch.",
+      "until": "Pre-order through:",
+      "launch": "Official launch:",
+      "prices": "Digital edition",
+      "countdownOne": "{{days}} day left — {{time}}",
+      "countdownMany": "{{days}} days left — {{time}}",
+      "countdownSoon": "Closing in {{time}}",
+      "ended": "Pre-order has ended; the official launch is almost here.",
+      "gratitude": "Thanks for supporting this project from the start 💙"
+    }
+  },
+  "bmc": {
+    "title": "Thank you for your support!",
+    "body": "Your support means the world to me. Thank you! ☕",
+    "continue": "Continue to Buy Me a Coffee"
+  },
+  "conferencesModal": {
+    "title": "All conferences",
+    "closeAria": "Close"
+  },
+  "admin": {
+    "shell": {
+      "home": "Home",
+      "waitlist": "Waitlist",
+      "conferences": "Talks",
+      "projects": "Projects",
+      "viewSite": "View site",
+      "signOut": "Sign out"
+    },
+    "authGate": {
+      "loading": "Loading…",
+      "redirecting": "Redirecting to sign-in…"
+    },
+    "login": {
+      "title": "Admin",
+      "intro": "Sign in with the same email and password as your Firebase Authentication user.",
+      "missingFirebase": "Firebase isn’t initialized in the browser: check NEXT_PUBLIC_FIREBASE_* in .env.local and restart the dev server.",
+      "email": "Email",
+      "password": "Password",
+      "signingIn": "Signing in…",
+      "signIn": "Sign in",
+      "backToSite": "Back to site",
+      "genericError": "Couldn’t sign in"
+    },
+    "home": {
+      "title": "Dashboard",
+      "intro": "Manage talks and projects published on the site (Firestore + Storage).",
+      "waitlistTitle": "Waitlist",
+      "waitlistDesc": "Book signups (Firestore prod/admin/waitlist).",
+      "conferencesTitle": "Talks",
+      "conferencesDesc": "Create, edit, and delete conference entries (site admin in Firestore).",
+      "projectsTitle": "Projects",
+      "projectsDesc": "Create, edit, and delete project entries (site admin in Firestore)."
+    },
+    "waitlistPanel": {
+      "title": "Waitlist",
+      "intro": "Signups from the book popup (Firestore prod/admin/waitlist). Up to 500 most recent.",
+      "refresh": "Refresh",
+      "loading": "Loading…",
+      "colEmail": "Email",
+      "colFirstName": "First name",
+      "colLastName": "Last name",
+      "colCreated": "Created",
+      "colUpdated": "Updated",
+      "empty": "No entries yet.",
+      "loadFailed": "Couldn’t load data"
+    },
+    "conferences": {
+      "title": "Talks",
+      "new": "New",
+      "list": "List",
+      "delete": "Delete",
+      "formNew": "New talk",
+      "formEdit": "Edit",
+      "labelTitle": "Title",
+      "labelTopic": "Topic",
+      "labelType": "Type",
+      "typeConference": "Conference",
+      "typeVirtual": "Virtual",
+      "typeTalk": "Talk",
+      "typeMeetup": "Meetup",
+      "labelDate": "Date",
+      "labelAudience": "Audience",
+      "labelLocation": "Location",
+      "labelCity": "City",
+      "labelCountry": "Country",
+      "labelVideoUrl": "Video URL",
+      "labelEventUrl": "Event URL",
+      "labelTags": "Tags (comma-separated)",
+      "labelImages": "Images (one URL per line)",
+      "uploadImage": "Upload image",
+      "saving": "Saving…",
+      "save": "Save",
+      "confirmDelete": "Delete this talk?",
+      "loadFailed": "Couldn’t load list",
+      "uploadFailed": "Upload failed",
+      "saveFailed": "Couldn’t save",
+      "deleteFailed": "Couldn’t delete"
+    },
+    "projects": {
+      "title": "Projects",
+      "new": "New",
+      "list": "List",
+      "delete": "Delete",
+      "formNew": "New project",
+      "formEdit": "Edit",
+      "labelTitle": "Title",
+      "labelDescription": "Description",
+      "labelImageUrl": "Image (URL)",
+      "labelCategory": "Category",
+      "categoryIos": "iOS",
+      "categoryAndroid": "Android",
+      "categoryWeb": "Web",
+      "categoryFlutter": "Flutter",
+      "labelTech": "Technologies (comma-separated)",
+      "labelExperience": "Experience / client",
+      "labelPlatforms": "Platforms (comma-separated)",
+      "labelTags": "Tags (comma-separated)",
+      "linksHeading": "Links",
+      "addLink": "Add",
+      "labelLinkType": "Type",
+      "labelLinkUrl": "URL",
+      "removeLink": "Remove",
+      "saving": "Saving…",
+      "save": "Save",
+      "confirmDelete": "Delete this project?",
+      "loadFailed": "Couldn’t load list",
+      "uploadFailed": "Upload failed",
+      "saveFailed": "Couldn’t save",
+      "deleteFailed": "Couldn’t delete"
+    },
+    "errors": {
+      "notAuthenticated": "Not authenticated",
+      "network": "Network error",
+      "noUrl": "No URL returned",
+      "api": {
+        "firebaseAdmin": "Firebase Admin isn’t configured (FIREBASE_ADMIN_SDK_KEY or GOOGLE_APPLICATION_CREDENTIALS on the server).",
+        "unauthorized": "Unauthorized",
+        "storageBucket": "NEXT_PUBLIC_FIREBASE_STORAGE_BUCKET is not set",
+        "invalidMultipart": "Invalid multipart request",
+        "fileRequired": "File required (field file)",
+        "idRequired": "ID required",
+        "invalidJson": "Invalid JSON",
+        "dataRequired": "data field required"
+      }
+    }
+  },
+  "errorPage": {
+    "title": "Something went wrong",
+    "fallback": "Couldn't render this page.",
+    "retry": "Try again"
+  }
+}

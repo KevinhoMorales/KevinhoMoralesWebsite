@@ -1,25 +1,37 @@
 'use client';
 
-import { useState } from 'react';
+import { useMemo, useState } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
 import { Button } from '@/components/ui/button';
+import { useI18n } from '@/components/i18n/locale-provider';
 import type { Project, ProjectCategory } from '@/types';
-
-const CATEGORIES: { value: ProjectCategory | 'all'; label: string }[] = [
-  { value: 'all', label: 'All' },
-  { value: 'ios', label: 'iOS' },
-  { value: 'android', label: 'Android' },
-  { value: 'web', label: 'Web' },
-  { value: 'flutter', label: 'Flutter' },
-];
 
 interface ProjectGridProps {
   projects: Project[];
 }
 
 export function ProjectGrid({ projects }: ProjectGridProps) {
+  const { t } = useI18n();
   const [category, setCategory] = useState<ProjectCategory | 'all'>('all');
+
+  const CATEGORIES: { value: ProjectCategory | 'all'; label: string }[] = useMemo(
+    () => [
+      { value: 'all', label: t('projects.all') },
+      { value: 'ios', label: t('projects.ios') },
+      { value: 'android', label: t('projects.android') },
+      { value: 'web', label: t('projects.web') },
+      { value: 'flutter', label: t('projects.flutter') },
+    ],
+    [t]
+  );
+
+  function linkLabel(type: string, label?: string): string {
+    if (label) return label;
+    const allowed = ['appStore', 'playStore', 'website', 'github', 'other'] as const;
+    const lk = (allowed as readonly string[]).includes(type) ? type : 'other';
+    return t(`projectLinks.${lk}`);
+  }
 
   const filtered = category === 'all'
     ? projects
@@ -81,7 +93,7 @@ export function ProjectGrid({ projects }: ProjectGridProps) {
                     rel="noopener noreferrer"
                     className="text-sm text-primary hover:underline"
                   >
-                    {link.type === 'appStore' ? 'App Store' : link.type === 'playStore' ? 'Play Store' : link.label || 'Link'}
+                    {linkLabel(link.type, link.label)}
                   </Link>
                 ))}
               </div>

@@ -6,6 +6,7 @@ import { ScrollReveal } from '@/components/scroll-reveal'
 import { Card, CardContent } from '@/components/ui/card'
 import { Coffee } from 'lucide-react'
 import { BuyMeACoffeeModal } from '@/components/buymeacoffee-modal'
+import { useI18n } from '@/components/i18n/locale-provider'
 import { cn } from '@/lib/utils'
 import type { Profile } from '@/types'
 
@@ -17,6 +18,7 @@ const inputClassName =
   'flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50'
 
 export function Connect({ profile }: ConnectProps) {
+  const { t } = useI18n()
   const links = profile.socialLinks || {}
   const [name, setName] = useState('')
   const [linkedin, setLinkedin] = useState('')
@@ -46,17 +48,17 @@ export function Connect({ profile }: ConnectProps) {
 
       if (data.success) {
         setStatus('success')
-        setStatusMessage(data.message || 'Message sent! I\'ll get back to you soon.')
+        setStatusMessage(data.message || t('connect.success'))
         setName('')
         setLinkedin('')
         setMessage('')
       } else {
         setStatus('error')
-        setStatusMessage(data.message || 'Failed to send. Please try again.')
+        setStatusMessage(data.message || t('connect.fail'))
       }
     } catch {
       setStatus('error')
-      setStatusMessage('Connection error. Please try again.')
+      setStatusMessage(t('connect.network'))
     }
   }
 
@@ -64,13 +66,12 @@ export function Connect({ profile }: ConnectProps) {
     <section id="connect" className="scroll-mt-20 py-4 sm:py-5 md:py-6 px-4 sm:px-6 md:px-8 lg:px-12 xl:px-24 bg-secondary/30">
       <div className="max-w-4xl mx-auto text-center">
         <ScrollReveal className="mb-6 sm:mb-8">
-          <p className="text-primary font-medium tracking-wide uppercase text-xs sm:text-sm mb-3 sm:mb-4">Contact</p>
+          <p className="text-primary font-medium tracking-wide uppercase text-xs sm:text-sm mb-3 sm:mb-4">{t('connect.kicker')}</p>
           <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold mb-4 sm:mb-6 text-balance">
-            Let&apos;s build something amazing together
+            {t('connect.title')}
           </h2>
           <p className="text-base sm:text-lg md:text-xl text-muted-foreground max-w-2xl mx-auto px-1">
-            Whether you have a project in mind, want to collaborate, or just want to say
-            hi—I&apos;d love to hear from you.
+            {t('connect.subtitle')}
           </p>
         </ScrollReveal>
 
@@ -80,7 +81,7 @@ export function Connect({ profile }: ConnectProps) {
             <form onSubmit={handleSubmit} className="space-y-4 text-left">
               <div>
                 <label htmlFor="name" className="block text-sm font-medium mb-2">
-                  Name *
+                  {t('connect.name')}
                 </label>
                 <input
                   id="name"
@@ -88,35 +89,35 @@ export function Connect({ profile }: ConnectProps) {
                   required
                   value={name}
                   onChange={(e) => setName(e.target.value)}
-                  placeholder="Your name"
+                  placeholder={t('connect.namePh')}
                   className={inputClassName}
                   disabled={status === 'sending'}
                 />
               </div>
               <div>
                 <label htmlFor="linkedin" className="block text-sm font-medium mb-2">
-                  LinkedIn <span className="text-muted-foreground">(optional)</span>
+                  {t('connect.linkedin')} <span className="text-muted-foreground">{t('connect.optional')}</span>
                 </label>
                 <input
                   id="linkedin"
                   type="url"
                   value={linkedin}
                   onChange={(e) => setLinkedin(e.target.value)}
-                  placeholder="https://linkedin.com/in/your-profile"
+                  placeholder={t('connect.linkedinPh')}
                   className={inputClassName}
                   disabled={status === 'sending'}
                 />
               </div>
               <div>
                 <label htmlFor="message" className="block text-sm font-medium mb-2">
-                  Message *
+                  {t('connect.message')}
                 </label>
                 <textarea
                   id="message"
                   required
                   value={message}
                   onChange={(e) => setMessage(e.target.value)}
-                  placeholder="How can I help you?"
+                  placeholder={t('connect.messagePh')}
                   rows={4}
                   className={cn(inputClassName, 'min-h-[100px] resize-y')}
                   disabled={status === 'sending'}
@@ -146,7 +147,7 @@ export function Connect({ profile }: ConnectProps) {
                 className="w-full gap-2"
                 disabled={status === 'sending'}
               >
-                {status === 'sending' ? 'Sending...' : 'Send message'}
+                {status === 'sending' ? t('connect.sending') : t('connect.send')}
               </Button>
             </form>
           </CardContent>
@@ -161,7 +162,7 @@ export function Connect({ profile }: ConnectProps) {
               onClick={() => setBmcModalOpen(true)}
             >
               <Coffee className="h-5 w-5" />
-              Buy me a Coffee
+              {t('connect.bmc')}
             </Button>
           </ScrollReveal>
         )}

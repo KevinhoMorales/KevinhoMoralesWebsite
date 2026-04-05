@@ -5,6 +5,8 @@ import Image from 'next/image'
 import { Card, CardContent } from '@/components/ui/card'
 import { ScrollReveal, StaggerContainer, StaggerItem } from '@/components/scroll-reveal'
 import { Button } from '@/components/ui/button'
+import { useI18n } from '@/components/i18n/locale-provider'
+import { toBcp47 } from '@/lib/i18n/bcp47'
 import { ExternalLink, FileText } from 'lucide-react'
 
 interface Article {
@@ -16,9 +18,10 @@ interface Article {
 }
 
 export function ArticlesSection() {
+  const { t, locale } = useI18n()
   const [articles, setArticles] = useState<Article[]>([])
   const [loading, setLoading] = useState(true)
-  const [error, setError] = useState<string | null>(null)
+  const [loadFailed, setLoadFailed] = useState(false)
 
   useEffect(() => {
     fetch('/api/articles?limit=6')
@@ -27,7 +30,7 @@ export function ArticlesSection() {
         return res.json()
       })
       .then(setArticles)
-      .catch(() => setError('Artículos no disponibles.'))
+      .catch(() => setLoadFailed(true))
       .finally(() => setLoading(false))
   }, [])
 
@@ -36,9 +39,9 @@ export function ArticlesSection() {
       <section id="articles" className="scroll-mt-20 py-4 sm:py-5 md:py-6 px-4 sm:px-6 md:px-8 lg:px-12 xl:px-24">
         <div className="max-w-6xl mx-auto">
           <div className="mb-8 sm:mb-10">
-            <p className="text-primary font-medium tracking-wide uppercase text-xs sm:text-sm mb-3 sm:mb-4">Articles</p>
+            <p className="text-primary font-medium tracking-wide uppercase text-xs sm:text-sm mb-3 sm:mb-4">{t('articles.kicker')}</p>
             <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold text-balance">
-              Firebase, Cursor, GitKraken & mobile
+              {t('articles.title')}
             </h2>
           </div>
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6">
@@ -51,17 +54,17 @@ export function ArticlesSection() {
     )
   }
 
-  if (error) {
+  if (loadFailed) {
     return (
       <section id="articles" className="scroll-mt-20 py-4 sm:py-5 md:py-6 px-4 sm:px-6 md:px-8 lg:px-12 xl:px-24 bg-secondary/30">
         <div className="max-w-6xl mx-auto">
           <div className="mb-8 sm:mb-10">
-            <p className="text-primary font-medium tracking-wide uppercase text-xs sm:text-sm mb-3 sm:mb-4">Articles</p>
+            <p className="text-primary font-medium tracking-wide uppercase text-xs sm:text-sm mb-3 sm:mb-4">{t('articles.kicker')}</p>
             <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold text-balance">
-              Firebase, Cursor, GitKraken & mobile
+              {t('articles.title')}
             </h2>
           </div>
-          <p className="text-sm sm:text-base text-muted-foreground">{error}</p>
+          <p className="text-sm sm:text-base text-muted-foreground">{t('articles.unavailable')}</p>
         </div>
       </section>
     )
@@ -72,13 +75,12 @@ export function ArticlesSection() {
       <div className="max-w-6xl mx-auto">
         <ScrollReveal className="flex flex-col sm:flex-row sm:items-end sm:justify-between gap-4 sm:gap-6 mb-8 sm:mb-10">
           <div>
-            <p className="text-primary font-medium tracking-wide uppercase text-xs sm:text-sm mb-3 sm:mb-4">Articles</p>
+            <p className="text-primary font-medium tracking-wide uppercase text-xs sm:text-sm mb-3 sm:mb-4">{t('articles.kicker')}</p>
             <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold text-balance">
-              Firebase, Cursor, GitKraken & mobile
+              {t('articles.title')}
             </h2>
             <p className="text-sm sm:text-base text-muted-foreground mt-3 sm:mt-4 max-w-xl">
-              Technical articles on Firebase, Cursor, GitKraken, and mobile development with Swift,
-              Kotlin, and Dart.
+              {t('articles.subtitle')}
             </p>
           </div>
           <Button variant="outline" className="gap-2 shrink-0" asChild>
@@ -88,7 +90,7 @@ export function ArticlesSection() {
               rel="noopener noreferrer"
             >
               <FileText className="h-4 w-4" />
-              View all on Medium
+              {t('articles.viewMedium')}
               <ExternalLink className="h-4 w-4" />
             </a>
           </Button>
@@ -130,7 +132,7 @@ export function ArticlesSection() {
                     {article.excerpt}
                   </p>
                   <p className="text-xs text-muted-foreground mt-3">
-                    {new Date(article.publishDate).toLocaleDateString()}
+                    {new Date(article.publishDate).toLocaleDateString(toBcp47(locale))}
                   </p>
                 </CardContent>
               </a>

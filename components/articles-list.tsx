@@ -3,6 +3,8 @@
 import { useEffect, useState } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
+import { useI18n } from '@/components/i18n/locale-provider';
+import { toBcp47 } from '@/lib/i18n/bcp47';
 
 interface Article {
   title: string;
@@ -17,9 +19,10 @@ interface ArticlesListProps {
 }
 
 export function ArticlesList({ limit = 10 }: ArticlesListProps) {
+  const { t, locale } = useI18n();
   const [articles, setArticles] = useState<Article[]>([]);
   const [loading, setLoading] = useState(true);
-  const [error, setError] = useState<string | null>(null);
+  const [loadFailed, setLoadFailed] = useState(false);
 
   useEffect(() => {
     fetch(`/api/articles?limit=${limit}`)
@@ -28,12 +31,12 @@ export function ArticlesList({ limit = 10 }: ArticlesListProps) {
         return res.json();
       })
       .then(setArticles)
-      .catch(() => setError('Articles unavailable.'))
+      .catch(() => setLoadFailed(true))
       .finally(() => setLoading(false));
   }, [limit]);
 
   if (loading) return <div className="animate-pulse h-48 rounded-lg bg-muted" />;
-  if (error) return <p className="text-muted-foreground">{error}</p>;
+  if (loadFailed) return <p className="text-muted-foreground">{t('articles.unavailable')}</p>;
 
   return (
     <div className="space-y-6">
@@ -65,7 +68,7 @@ export function ArticlesList({ limit = 10 }: ArticlesListProps) {
               {article.excerpt}
             </p>
             <p className="text-xs text-muted-foreground mt-2">
-              {new Date(article.publishDate).toLocaleDateString()}
+              {new Date(article.publishDate).toLocaleDateString(toBcp47(locale))}
             </p>
           </div>
         </Link>

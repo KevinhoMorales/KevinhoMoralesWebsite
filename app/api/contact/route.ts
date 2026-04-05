@@ -1,25 +1,10 @@
 import { NextRequest, NextResponse } from 'next/server'
-import { getWeb3FormsAccessKeyFromRemoteConfig } from '@/lib/firebase-admin'
+import { resolveWeb3FormsAccessKey } from '@/lib/web3forms-access-key'
 
 export const dynamic = 'force-dynamic'
 
 export async function POST(request: NextRequest) {
-  let accessKey: string | undefined
-  let remoteConfigError: string | undefined
-
-  // 1. Firebase Remote Config (prioridad)
-  try {
-    accessKey = await getWeb3FormsAccessKeyFromRemoteConfig()
-  } catch (error) {
-    const err = error instanceof Error ? error : new Error(String(error))
-    remoteConfigError = err.message
-    console.error('Web3Forms Remote Config error:', err)
-  }
-
-  // 2. Fallback a env
-  if (!accessKey) {
-    accessKey = (process.env.WEB3FORMS_ACCESS_KEY || '').trim()
-  }
+  const { key: accessKey, remoteConfigError } = await resolveWeb3FormsAccessKey()
 
   if (!accessKey) {
     const hint = remoteConfigError?.includes('not configured')

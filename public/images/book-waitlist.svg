@@ -1,0 +1,20 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="600" height="840" viewBox="0 0 600 840" fill="none">
+  <rect width="600" height="840" rx="24" fill="url(#bg)"/>
+  <path d="M0 120 L120 0 H600 V200 L480 120 Z" fill="#7C3AED" opacity="0.35"/>
+  <path d="M600 200 L600 720 L480 840 H0 V640 L120 520 Z" fill="#0891B2" opacity="0.25"/>
+  <rect x="72" y="96" width="456" height="648" rx="12" fill="white" fill-opacity="0.95"/>
+  <text x="300" y="220" text-anchor="middle" font-family="system-ui,sans-serif" font-size="28" font-weight="800" fill="#0f172a">DOMINANDO</text>
+  <text x="300" y="268" text-anchor="middle" font-family="system-ui,sans-serif" font-size="32" font-weight="900">
+    <tspan fill="#7F52FF">KOTLIN</tspan><tspan fill="#0f172a">, </tspan><tspan fill="#F05138">SWIFT</tspan><tspan fill="#0f172a"> Y </tspan><tspan fill="#0175C2">DART</tspan>
+  </text>
+  <text x="300" y="330" text-anchor="middle" font-family="system-ui,sans-serif" font-size="15" fill="#64748b" width="360">Lista de espera · Kevin Morales</text>
+  <rect x="180" y="400" width="60" height="60" rx="8" fill="#7F52FF"/>
+  <rect x="270" y="400" width="60" height="60" rx="8" fill="#F05138"/>
+  <rect x="360" y="400" width="60" height="60" rx="8" fill="#0175C2"/>
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="600" y2="840" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#f8fafc"/>
+      <stop offset="1" stop-color="#e2e8f0"/>
+    </linearGradient>
+  </defs>
+</svg>

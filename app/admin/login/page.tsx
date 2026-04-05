@@ -3,12 +3,15 @@
 import { useState, FormEvent, useEffect } from 'react';
 import Link from 'next/link';
 import { useAdminAuth } from '@/components/admin/admin-auth-provider';
+import { LocaleSwitcher } from '@/components/i18n/locale-switcher';
+import { useI18n } from '@/components/i18n/locale-provider';
 import { getFirebaseAuth } from '@/lib/firebase';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 
 export default function AdminLoginPage() {
+  const { t } = useI18n();
   const { signIn, isAdmin, loading } = useAdminAuth();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -33,7 +36,7 @@ export default function AdminLoginPage() {
       await signIn(email, password);
       window.location.assign('/admin');
     } catch (err) {
-      const msg = err instanceof Error ? err.message : 'Error al iniciar sesión';
+      const msg = err instanceof Error ? err.message : t('admin.login.genericError');
       setError(msg);
     } finally {
       setSubmitting(false);
@@ -42,19 +45,17 @@ export default function AdminLoginPage() {
 
   return (
     <main className="container mx-auto flex min-h-[70vh] max-w-sm flex-col justify-center px-4 py-12">
-      <h1 className="text-2xl font-semibold mb-1">Admin</h1>
-      <p className="text-muted-foreground text-sm mb-6">
-        Inicia sesión con el mismo correo y contraseña de tu usuario en Firebase Authentication.
-      </p>
+      <div className="flex items-center justify-between gap-3 mb-4">
+        <h1 className="text-2xl font-semibold">{t('admin.login.title')}</h1>
+        <LocaleSwitcher />
+      </div>
+      <p className="text-muted-foreground text-sm mb-6">{t('admin.login.intro')}</p>
       {missingFirebase && (
-        <p className="text-sm text-destructive mb-4">
-          Firebase no está inicializado en el cliente: revisa NEXT_PUBLIC_FIREBASE_* en .env.local y reinicia el
-          servidor.
-        </p>
+        <p className="text-sm text-destructive mb-4">{t('admin.login.missingFirebase')}</p>
       )}
       <form onSubmit={onSubmit} className="space-y-4">
         <div className="space-y-2">
-          <Label htmlFor="email">Correo</Label>
+          <Label htmlFor="email">{t('admin.login.email')}</Label>
           <Input
             id="email"
             type="email"
@@ -65,7 +66,7 @@ export default function AdminLoginPage() {
           />
         </div>
         <div className="space-y-2">
-          <Label htmlFor="password">Contraseña</Label>
+          <Label htmlFor="password">{t('admin.login.password')}</Label>
           <Input
             id="password"
             type="password"
@@ -81,12 +82,12 @@ export default function AdminLoginPage() {
           </p>
         )}
         <Button type="submit" className="w-full" disabled={submitting}>
-          {submitting ? 'Entrando…' : 'Entrar'}
+          {submitting ? t('admin.login.signingIn') : t('admin.login.signIn')}
         </Button>
       </form>
       <p className="mt-6 text-center text-sm text-muted-foreground">
         <Link href="/" className="underline hover:text-foreground">
-          Volver al sitio
+          {t('admin.login.backToSite')}
         </Link>
       </p>
     </main>

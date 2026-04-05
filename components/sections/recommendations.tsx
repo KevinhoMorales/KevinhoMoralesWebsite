@@ -1,4 +1,7 @@
+'use client'
+
 import { Card, CardContent } from '@/components/ui/card'
+import { useI18n } from '@/components/i18n/locale-provider'
 import { ScrollReveal, StaggerContainer, StaggerItem } from '@/components/scroll-reveal'
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar'
 import { Quote } from 'lucide-react'
@@ -18,14 +21,15 @@ function getInitials(name: string): string {
 }
 
 export function Recommendations({ testimonials }: RecommendationsProps) {
+  const { t } = useI18n()
   return (
     <section id="recommendations" className="scroll-mt-20 py-4 sm:py-5 md:py-6 px-4 sm:px-6 md:px-8 lg:px-12 xl:px-24">
       <div className="max-w-6xl mx-auto">
         <ScrollReveal className="mb-8 sm:mb-10 text-center">
           <p className="text-primary font-medium tracking-wide uppercase text-xs sm:text-sm mb-3 sm:mb-4">
-            Testimonials
+            {t('recommendations.kicker')}
           </p>
-          <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold text-balance">What people say</h2>
+          <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold text-balance">{t('recommendations.title')}</h2>
         </ScrollReveal>
 
         <StaggerContainer className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-3 sm:gap-4">

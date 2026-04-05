@@ -3,6 +3,8 @@
 import { useCallback, useEffect, useState } from 'react';
 import { adminFetch, getAdminIdToken } from '@/lib/admin-browser';
 import type { Conference } from '@/types';
+import { useI18n } from '@/components/i18n/locale-provider';
+import { translateAdminError } from '@/lib/i18n/admin-errors';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
@@ -25,6 +27,7 @@ const emptyForm: Conference = {
 };
 
 export function ConferencesPanel() {
+  const { t } = useI18n();
   const [list, setList] = useState<Conference[]>([]);
   const [loadError, setLoadError] = useState('');
   const [form, setForm] = useState<Conference>(emptyForm);
@@ -39,9 +42,10 @@ export function ConferencesPanel() {
       const rows = await adminFetch<Conference[]>('/api/admin/conferences');
       setList(rows.sort((a, b) => a.title.localeCompare(b.title)));
     } catch (e) {
-      setLoadError(e instanceof Error ? e.message : 'Error al cargar');
+      const raw = e instanceof Error ? e.message : t('admin.conferences.loadFailed');
+      setLoadError(translateAdminError(raw, t));
     }
-  }, []);
+  }, [t]);
 
   useEffect(() => {
     refresh();
@@ -75,7 +79,9 @@ export function ConferencesPanel() {
       throw new Error('No autorizado');
     }
     const json = (await res.json()) as { url?: string; error?: string };
-    if (!res.ok) throw new Error(json.error || 'Error al subir');
+    if (!res.ok) {
+      throw new Error(json.error || t('admin.conferences.uploadFailed'));
+    }
     if (!json.url) throw new Error('Sin URL');
     const lines = imagesInput.split('\n').map((s) => s.trim()).filter(Boolean);
     setImagesInput([...lines, json.url].join('\n'));
@@ -126,36 +132,38 @@ export function ConferencesPanel() {
       await refresh();
       startNew();
     } catch (e) {
-      alert(e instanceof Error ? e.message : 'Error al guardar');
+      const raw = e instanceof Error ? e.message : t('admin.conferences.saveFailed');
+      alert(translateAdminError(raw, t));
     } finally {
       setSaving(false);
     }
   }
 
   async function del(id: string) {
-    if (!confirm('¿Eliminar esta charla?')) return;
+    if (!confirm(t('admin.conferences.confirmDelete'))) return;
     try {
       await adminFetch(`/api/admin/conferences/${encodeURIComponent(id)}`, { method: 'DELETE' });
       await refresh();
       if (form.id === id) startNew();
     } catch (e) {
-      alert(e instanceof Error ? e.message : 'Error al eliminar');
+      const raw = e instanceof Error ? e.message : t('admin.conferences.deleteFailed');
+      alert(translateAdminError(raw, t));
     }
   }
 
   return (
     <div className="space-y-8">
       <div className="flex items-center justify-between gap-4">
-        <h1 className="text-xl font-semibold">Charlas</h1>
+        <h1 className="text-xl font-semibold">{t('admin.conferences.title')}</h1>
         <Button type="button" variant="outline" size="sm" onClick={() => startNew()}>
-          Nueva
+          {t('admin.conferences.new')}
         </Button>
       </div>
       {loadError && <p className="text-sm text-destructive">{loadError}</p>}
 
       <div className="grid gap-8 lg:grid-cols-2">
         <Card className="p-4 space-y-4 max-h-[70vh] overflow-y-auto">
-          <h2 className="font-medium text-sm text-muted-foreground">Listado</h2>
+          <h2 className="font-medium text-sm text-muted-foreground">{t('admin.conferences.list')}</h2>
           <ul className="space-y-2">
             {list.map((c) => (
               <li
@@ -170,7 +178,7 @@ export function ConferencesPanel() {
                   {c.title}
                 </button>
                 <Button type="button" variant="ghost" size="sm" onClick={() => del(c.id)}>
-                  Borrar
+                  {t('admin.conferences.delete')}
                 </Button>
               </li>
             ))}
@@ -178,9 +186,11 @@ export function ConferencesPanel() {
         </Card>
 
         <Card className="p-4 space-y-4">
-          <h2 className="font-medium text-sm text-muted-foreground">{isNew ? 'Nueva charla' : 'Editar'}</h2>
+          <h2 className="font-medium text-sm text-muted-foreground">
+            {isNew ? t('admin.conferences.formNew') : t('admin.conferences.formEdit')}
+          </h2>
           <div className="space-y-2">
-            <Label htmlFor="t">Título</Label>
+            <Label htmlFor="t">{t('admin.conferences.labelTitle')}</Label>
             <Input
               id="t"
               value={form.title}
@@ -188,7 +198,7 @@ export function ConferencesPanel() {
             />
           </div>
           <div className="space-y-2">
-            <Label htmlFor="topic">Tema</Label>
+            <Label htmlFor="topic">{t('admin.conferences.labelTopic')}</Label>
             <Input
               id="topic"
               value={form.topic ?? ''}
@@ -196,7 +206,7 @@ export function ConferencesPanel() {
             />
           </div>
           <div className="space-y-2">
-            <Label htmlFor="type">Tipo</Label>
+            <Label htmlFor="type">{t('admin.conferences.labelType')}</Label>
             <select
               id="type"
               className="flex h-9 w-full rounded-md border border-input bg-background px-3 text-sm"
@@ -205,15 +215,15 @@ export function ConferencesPanel() {
                 setForm((f) => ({ ...f, type: e.target.value as Conference['type'] }))
               }
             >
-              <option value="conference">conference</option>
-              <option value="virtual">virtual</option>
-              <option value="talk">talk</option>
-              <option value="meetup">meetup</option>
+              <option value="conference">{t('admin.conferences.typeConference')}</option>
+              <option value="virtual">{t('admin.conferences.typeVirtual')}</option>
+              <option value="talk">{t('admin.conferences.typeTalk')}</option>
+              <option value="meetup">{t('admin.conferences.typeMeetup')}</option>
             </select>
           </div>
           <div className="grid grid-cols-2 gap-3">
             <div className="space-y-2">
-              <Label htmlFor="date">Fecha</Label>
+              <Label htmlFor="date">{t('admin.conferences.labelDate')}</Label>
               <Input
                 id="date"
                 value={form.date ?? ''}
@@ -221,7 +231,7 @@ export function ConferencesPanel() {
               />
             </div>
             <div className="space-y-2">
-              <Label htmlFor="audience">Audiencia</Label>
+              <Label htmlFor="audience">{t('admin.conferences.labelAudience')}</Label>
               <Input
                 id="audience"
                 type="number"
@@ -236,7 +246,7 @@ export function ConferencesPanel() {
             </div>
           </div>
           <div className="space-y-2">
-            <Label htmlFor="loc">Ubicación</Label>
+            <Label htmlFor="loc">{t('admin.conferences.labelLocation')}</Label>
             <Input
               id="loc"
               value={form.location ?? ''}
@@ -245,11 +255,11 @@ export function ConferencesPanel() {
           </div>
           <div className="grid grid-cols-2 gap-3">
             <div className="space-y-2">
-              <Label htmlFor="city">Ciudad</Label>
+              <Label htmlFor="city">{t('admin.conferences.labelCity')}</Label>
               <Input id="city" value={form.city ?? ''} onChange={(e) => setForm((f) => ({ ...f, city: e.target.value }))} />
             </div>
             <div className="space-y-2">
-              <Label htmlFor="country">País</Label>
+              <Label htmlFor="country">{t('admin.conferences.labelCountry')}</Label>
               <Input
                 id="country"
                 value={form.country ?? ''}
@@ -258,7 +268,7 @@ export function ConferencesPanel() {
             </div>
           </div>
           <div className="space-y-2">
-            <Label htmlFor="video">Video URL</Label>
+            <Label htmlFor="video">{t('admin.conferences.labelVideoUrl')}</Label>
             <Input
               id="video"
               value={form.videoUrl ?? ''}
@@ -266,7 +276,7 @@ export function ConferencesPanel() {
             />
           </div>
           <div className="space-y-2">
-            <Label htmlFor="event">Event URL</Label>
+            <Label htmlFor="event">{t('admin.conferences.labelEventUrl')}</Label>
             <Input
               id="event"
               value={form.eventUrl ?? ''}
@@ -274,15 +284,15 @@ export function ConferencesPanel() {
             />
           </div>
           <div className="space-y-2">
-            <Label htmlFor="tags">Tags (coma)</Label>
+            <Label htmlFor="tags">{t('admin.conferences.labelTags')}</Label>
             <Input id="tags" value={tagsInput} onChange={(e) => setTagsInput(e.target.value)} />
           </div>
           <div className="space-y-2">
-            <Label htmlFor="images">Imágenes (URL por línea)</Label>
+            <Label htmlFor="images">{t('admin.conferences.labelImages')}</Label>
             <Textarea id="images" rows={4} value={imagesInput} onChange={(e) => setImagesInput(e.target.value)} />
             <div className="flex flex-wrap items-center gap-2">
               <Label htmlFor="img-up" className="text-xs text-muted-foreground cursor-pointer">
-                Subir imagen
+                {t('admin.conferences.uploadImage')}
               </Label>
               <input
                 id="img-up"
@@ -296,14 +306,15 @@ export function ConferencesPanel() {
                   try {
                     await uploadImage(f);
                   } catch (err) {
-                    alert(err instanceof Error ? err.message : 'Error al subir');
+                    const raw = err instanceof Error ? err.message : t('admin.conferences.uploadFailed');
+                    alert(translateAdminError(raw, t));
                   }
                 }}
               />
             </div>
           </div>
           <Button type="button" onClick={() => save()} disabled={saving || !form.title.trim()}>
-            {saving ? 'Guardando…' : 'Guardar'}
+            {saving ? t('admin.conferences.saving') : t('admin.conferences.save')}
           </Button>
         </Card>
       </div>

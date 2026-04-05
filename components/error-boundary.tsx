@@ -26,16 +26,27 @@ export class ErrorBoundary extends Component<Props, State> {
     if (this.state.hasError) {
       if (this.props.fallback) return this.props.fallback
       return (
-        <div className="min-h-[50vh] flex flex-col items-center justify-center px-6 py-12 text-center gap-3">
-          <p className="text-muted-foreground max-w-md">
-            El panel embebido de Cursor/VS Code a veces falla con Next.js (cookies, hidratación). Abre el
-            sitio en Chrome, Safari o Firefox usando el puerto que muestre tu terminal (3000, 3001, etc.).
+        <div className="min-h-[50vh] flex flex-col items-center justify-center px-6 py-12 text-center gap-3 max-w-lg mx-auto">
+          <p className="text-muted-foreground">
+            Algo falló al renderizar la página. Si la terminal muestra un error distinto, corrígelo primero.
           </p>
-          <p className="text-xs text-muted-foreground">
-            La primera carga tras <code className="rounded bg-muted px-1">npm run dev</code> puede tardar
-            unos segundos mientras compila; espera o usa{' '}
-            <code className="rounded bg-muted px-1">npm run dev:turbo</code>.
-          </p>
+          <ul className="text-xs text-muted-foreground text-left list-disc pl-5 space-y-2">
+            <li>
+              Limpia caché y arranca de nuevo:{' '}
+              <code className="rounded bg-muted px-1">npm run dev:clean</code>
+            </li>
+            <li>
+              Usa el puerto que indique Next (3000, 3001…):{' '}
+              <code className="rounded bg-muted px-1">http://localhost:PUERTO</code>
+            </li>
+            <li>
+              El panel embebido del editor a veces no carga bien; prueba Chrome o Safari.
+            </li>
+            <li>
+              La primera compilación puede tardar ~10–30 s; espera o prueba{' '}
+              <code className="rounded bg-muted px-1">npm run dev:turbo</code>.
+            </li>
+          </ul>
         </div>
       )
     }

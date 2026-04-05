@@ -1,19 +1,20 @@
 import { ArticlesList } from '@/components/articles-list';
+import { TranslatedPageHeader } from '@/components/i18n/translated-page-header';
 import type { Metadata } from 'next';
+
+import { withCanonical } from '@/lib/site';
 
 export const metadata: Metadata = {
   title: 'Articles | Kevin Morales',
   description:
     'Technical articles on Firebase, Cursor, GitKraken, and mobile development with Swift, Kotlin, and Dart.',
+  ...withCanonical('/articles'),
 };
 
 export default function ArticlesPage() {
   return (
     <main className="container mx-auto px-4 py-12 max-w-6xl">
-      <h1 className="text-3xl font-bold mb-2">Articles</h1>
-      <p className="text-muted-foreground mb-8">
-        Firebase, Cursor, GitKraken, and hands-on mobile engineering with Swift, Kotlin, and Dart.
-      </p>
+      <TranslatedPageHeader titleKey="pages.articles.title" descKey="pages.articles.desc" />
       <ArticlesList />
     </main>
   );

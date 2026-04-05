@@ -1,0 +1,349 @@
+{
+  "common": {
+    "loading": "Carregando…",
+    "close": "Fechar",
+    "present": "Atual",
+    "watchArrow": "Assistir →",
+    "adminAccess": "Acesso de administração",
+    "access": "Acesso",
+    "rights": "Todos os direitos reservados."
+  },
+  "nav": {
+    "about": "Sobre",
+    "experience": "Experiência",
+    "projects": "Projetos",
+    "contact": "Contato",
+    "more": "Mais",
+    "moreAria": "Mais navegação",
+    "articles": "Artigos",
+    "podcast": "Podcast",
+    "speaking": "Palestras",
+    "adminLogin": "Acesso",
+    "waitlist": "Garanta o livro",
+    "waitlistBook": "Garanta o livro",
+    "openMenu": "Abrir menu",
+    "toggleMenu": "Menu",
+    "site": "Site",
+    "content": "Conteúdo"
+  },
+  "hero": {
+    "hiIm": "Oi, eu sou {{name}}",
+    "exploreWork": "Ver meu trabalho",
+    "letsTalk": "Vamos conversar",
+    "downloadResume": "Baixar currículo",
+    "calendlyConfirm": "O Calendly abrirá para agendar uma reunião. Continuar?",
+    "contactConfirm": "Você irá para a seção de contato. Continuar?",
+    "cvConfirm": "O currículo do Kevin Morales (PDF) será baixado. Continuar?"
+  },
+  "about": {
+    "kicker": "Sobre mim",
+    "title": "Experiências digitais com propósito",
+    "hYears": "7+ anos",
+    "hYearsDesc": "Apps mobile",
+    "hCommunity": "Comunidade",
+    "hCommunityDesc": "Fundador DevLokos",
+    "hSpeaker": "Palestrante",
+    "hSpeakerDesc": "Conferências internacionais",
+    "hPassion": "Paixão",
+    "hPassionDesc": "Open source",
+    "familyAlt": "Minha família",
+    "myFamily": "Minha família",
+    "familyBlurb": "Eles inspiram tudo o que faço. Construindo um futuro melhor, uma linha de código por vez.",
+    "partner": "Parceira",
+    "son": "Filho",
+    "daughter": "Filha",
+    "bioP1": "Engenheiro iOS sênior com mais de 8 anos de experiência em arquiteturas móveis de alto desempenho para fintechs e startups. Trajetória comprovada liderando equipes distribuídas, escalando apps do MVP à adoção em massa e modernizando bases legadas.",
+    "bioP2": "Líder comunitário e mentor, dedicado ao crescimento tech por meio dos Google Developer Groups (GDG) e de conteúdo educacional. Comprometido com qualidade de código, resolução colaborativa de problemas e aprendizado contínuo.",
+    "bioP3": "Host do podcast e fundador do DevLokos.",
+    "motto": "Seja DIFERENTE e deixe um legado ao mundo: tudo é possível quando você mantém isso na mente."
+  },
+  "experience": {
+    "kicker": "Experiência",
+    "title": "Onde trabalhei"
+  },
+  "projects": {
+    "kicker": "Projetos",
+    "title": "Trabalhos em destaque",
+    "all": "Todos",
+    "viewProject": "Ver projeto",
+    "ios": "iOS",
+    "android": "Android",
+    "web": "Web",
+    "flutter": "Flutter"
+  },
+  "articles": {
+    "kicker": "Artigos",
+    "title": "Firebase, Cursor, GitKraken & mobile",
+    "subtitle": "Artigos técnicos sobre Firebase, Cursor, GitKraken e desenvolvimento mobile com Swift, Kotlin e Dart.",
+    "viewMedium": "Ver tudo no Medium",
+    "unavailable": "Artigos indisponíveis."
+  },
+  "podcastUi": {
+    "kicker": "Podcast",
+    "title": "DevLokos Podcast",
+    "subtitle": "Conversas com devs, designers e líderes tech sobre produtos e carreira.",
+    "listenYoutube": "Ouvir no YouTube"
+  },
+  "podcast": {
+    "withGuest": "Com {{guest}}",
+    "searchPlaceholder": "Buscar por título ou convidado...",
+    "all": "Todos",
+    "season1": "Temporada 1",
+    "season2": "Temporada 2",
+    "prev": "Anterior",
+    "next": "Próxima",
+    "pageOf": "Página {{page}} de {{total}}",
+    "errorUnexpected": "Formato de resposta inesperado",
+    "errorUnavailable": "Episódios indisponíveis. Adicione YOUTUBE_API_KEY ao .env.local",
+    "apiHelpTitle": "Para carregar episódios do YouTube:",
+    "apiHelpStep1": "Abra o Google Cloud Console (credenciais).",
+    "apiHelpStep2": "Em APIs e serviços → Biblioteca, ative YouTube Data API v3.",
+    "apiHelpStep3": "Crie uma API key em Credenciais.",
+    "apiHelpStep4": "No .env.local adicione: YOUTUBE_API_KEY=sua_chave",
+    "apiHelpStep5": "Reinicie o servidor (npm run dev).",
+    "apiHelpListen": "Enquanto isso, ouça no YouTube."
+  },
+  "conferences": {
+    "kicker": "Palestras",
+    "title": "Conferências",
+    "seeMore": "Ver mais ({{count}} palestras)",
+    "achievements": "Conquistas",
+    "watchVideo": "Ver vídeo",
+    "event": "Evento",
+    "attendees": "{{count}} participantes"
+  },
+  "conferenceType": {
+    "conference": "Conferência",
+    "virtual": "Virtual",
+    "talk": "Palestra",
+    "meetup": "Meetup"
+  },
+  "recommendations": {
+    "kicker": "Depoimentos",
+    "title": "O que dizem"
+  },
+  "connect": {
+    "kicker": "Contato",
+    "title": "Vamos criar algo incrível juntos",
+    "subtitle": "Se você tem um projeto, quer colaborar ou só dizer oi—adoraria ouvir você.",
+    "name": "Nome *",
+    "namePh": "Seu nome",
+    "linkedin": "LinkedIn",
+    "optional": "(opcional)",
+    "linkedinPh": "https://linkedin.com/in/seu-perfil",
+    "message": "Mensagem *",
+    "messagePh": "Como posso ajudar?",
+    "sending": "Enviando...",
+    "send": "Enviar mensagem",
+    "success": "Mensagem enviada! Respondo em breve.",
+    "fail": "Não foi possível enviar. Tente novamente.",
+    "network": "Erro de conexão. Tente novamente.",
+    "bmc": "Pague um café"
+  },
+  "footer": {
+    "at": "@"
+  },
+  "pages": {
+    "articles": {
+      "title": "Artigos",
+      "desc": "Firebase, Cursor, GitKraken e engenharia mobile prática com Swift, Kotlin e Dart."
+    },
+    "podcast": {
+      "title": "DevLokos Podcast",
+      "desc": "O podcast mais maluco de tech e software. Entrevistas com líderes e devs da América Latina."
+    },
+    "projects": {
+      "title": "Projetos",
+      "desc": "Apps na App Store, Play Store e web."
+    },
+    "conferences": {
+      "title": "Conferências e palestras",
+      "desc": "Palestras em DevFest, Google I/O Extended, GDG e mais."
+    },
+    "testimonials": {
+      "title": "Depoimentos",
+      "desc": "O que colegas e clientes dizem sobre trabalhar comigo."
+    }
+  },
+  "projectLinks": {
+    "appStore": "App Store",
+    "playStore": "Play Store",
+    "website": "Site",
+    "github": "GitHub",
+    "other": "Link"
+  },
+  "waitlist": {
+    "title": "Entre na lista de espera",
+    "description": "Seja um dos primeiros a saber quando o livro sobre Kotlin, Swift e Dart sair. Sem spam — só novidades importantes.",
+    "editionNote": "Esta lista é para a edição em espanhol do livro.",
+    "closedNotice": "As inscrições abrirão em breve enquanto finalizamos o pagamento. Você ainda pode ver as informações de pré-venda abaixo.",
+    "email": "E-mail",
+    "emailPh": "voce@email.com",
+    "firstName": "Nome",
+    "firstNamePh": "Seu nome",
+    "lastName": "Sobrenome",
+    "lastNamePh": "Seu sobrenome",
+    "submit": "Garantir minha vaga",
+    "submitClosed": "Em breve",
+    "submitting": "Enviando…",
+    "thanks": "Obrigado!",
+    "thanksMsg": "Você está na lista!",
+    "close": "Fechar",
+    "errorSend": "Não foi possível registrar. Tente novamente.",
+    "errorNetwork": "Erro de rede. Tente novamente.",
+    "preorder": {
+      "badge": "Só para early supporters",
+      "offerTitle": "🎉 Oferta exclusiva de pré-venda",
+      "offerBody": "Por estar na lista de espera, você tem acesso antecipado ao livro com preço especial antes do lançamento oficial.",
+      "until": "Pré-venda até:",
+      "launch": "Lançamento oficial:",
+      "prices": "Edição digital",
+      "countdownOne": "Falta {{days}} dia — {{time}}",
+      "countdownMany": "Faltam {{days}} dias — {{time}}",
+      "countdownSoon": "Encerra em {{time}}",
+      "ended": "A pré-venda encerrou; o lançamento oficial está chegando.",
+      "gratitude": "Obrigado por apoiar este projeto desde o início 💙"
+    }
+  },
+  "bmc": {
+    "title": "Obrigado pelo apoio!",
+    "body": "Seu apoio significa muito para mim. Obrigado! ☕",
+    "continue": "Ir ao Buy Me a Coffee"
+  },
+  "conferencesModal": {
+    "title": "Todas as conferências",
+    "closeAria": "Fechar"
+  },
+  "admin": {
+    "shell": {
+      "home": "Início",
+      "waitlist": "Lista de espera",
+      "conferences": "Palestras",
+      "projects": "Projetos",
+      "viewSite": "Ver site",
+      "signOut": "Sair"
+    },
+    "authGate": {
+      "loading": "Carregando…",
+      "redirecting": "Redirecionando para o login…"
+    },
+    "login": {
+      "title": "Admin",
+      "intro": "Entre com o mesmo e-mail e senha do seu usuário no Firebase Authentication.",
+      "missingFirebase": "O Firebase não foi inicializado no navegador: verifique NEXT_PUBLIC_FIREBASE_* no .env.local e reinicie o servidor.",
+      "email": "E-mail",
+      "password": "Senha",
+      "signingIn": "Entrando…",
+      "signIn": "Entrar",
+      "backToSite": "Voltar ao site",
+      "genericError": "Não foi possível entrar"
+    },
+    "home": {
+      "title": "Painel",
+      "intro": "Gerencie palestras e projetos publicados no site (Firestore + Storage).",
+      "waitlistTitle": "Lista de espera",
+      "waitlistDesc": "Inscrições do livro (Firestore prod/admin/waitlist).",
+      "conferencesTitle": "Palestras",
+      "conferencesDesc": "Criar, editar e excluir entradas de conferências (admin do site no Firestore).",
+      "projectsTitle": "Projetos",
+      "projectsDesc": "Criar, editar e excluir entradas de projetos (admin do site no Firestore)."
+    },
+    "waitlistPanel": {
+      "title": "Lista de espera",
+      "intro": "Registros do popup do livro (Firestore prod/admin/waitlist). Até 500 mais recentes.",
+      "refresh": "Atualizar",
+      "loading": "Carregando…",
+      "colEmail": "E-mail",
+      "colFirstName": "Nome",
+      "colLastName": "Sobrenome",
+      "colCreated": "Criado",
+      "colUpdated": "Atualizado",
+      "empty": "Ainda não há registros.",
+      "loadFailed": "Erro ao carregar"
+    },
+    "conferences": {
+      "title": "Palestras",
+      "new": "Nova",
+      "list": "Lista",
+      "delete": "Excluir",
+      "formNew": "Nova palestra",
+      "formEdit": "Editar",
+      "labelTitle": "Título",
+      "labelTopic": "Tema",
+      "labelType": "Tipo",
+      "typeConference": "Conferência",
+      "typeVirtual": "Virtual",
+      "typeTalk": "Palestra",
+      "typeMeetup": "Meetup",
+      "labelDate": "Data",
+      "labelAudience": "Público",
+      "labelLocation": "Local",
+      "labelCity": "Cidade",
+      "labelCountry": "País",
+      "labelVideoUrl": "URL do vídeo",
+      "labelEventUrl": "URL do evento",
+      "labelTags": "Tags (vírgula)",
+      "labelImages": "Imagens (uma URL por linha)",
+      "uploadImage": "Enviar imagem",
+      "saving": "Salvando…",
+      "save": "Salvar",
+      "confirmDelete": "Excluir esta palestra?",
+      "loadFailed": "Erro ao carregar",
+      "uploadFailed": "Erro ao enviar",
+      "saveFailed": "Erro ao salvar",
+      "deleteFailed": "Erro ao excluir"
+    },
+    "projects": {
+      "title": "Projetos",
+      "new": "Novo",
+      "list": "Lista",
+      "delete": "Excluir",
+      "formNew": "Novo projeto",
+      "formEdit": "Editar",
+      "labelTitle": "Título",
+      "labelDescription": "Descrição",
+      "labelImageUrl": "Imagem (URL)",
+      "labelCategory": "Categoria",
+      "categoryIos": "iOS",
+      "categoryAndroid": "Android",
+      "categoryWeb": "Web",
+      "categoryFlutter": "Flutter",
+      "labelTech": "Tecnologias (vírgula)",
+      "labelExperience": "Experiência / cliente",
+      "labelPlatforms": "Plataformas (vírgula)",
+      "labelTags": "Tags (vírgula)",
+      "linksHeading": "Links",
+      "addLink": "Adicionar",
+      "labelLinkType": "Tipo",
+      "labelLinkUrl": "URL",
+      "removeLink": "Remover",
+      "saving": "Salvando…",
+      "save": "Salvar",
+      "confirmDelete": "Excluir este projeto?",
+      "loadFailed": "Erro ao carregar",
+      "uploadFailed": "Erro ao enviar",
+      "saveFailed": "Erro ao salvar",
+      "deleteFailed": "Erro ao excluir"
+    },
+    "errors": {
+      "notAuthenticated": "Não autenticado",
+      "network": "Erro de rede",
+      "noUrl": "Sem URL",
+      "api": {
+        "firebaseAdmin": "Firebase Admin não configurado (FIREBASE_ADMIN_SDK_KEY ou GOOGLE_APPLICATION_CREDENTIALS no servidor).",
+        "unauthorized": "Não autorizado",
+        "storageBucket": "NEXT_PUBLIC_FIREBASE_STORAGE_BUCKET não configurado",
+        "invalidMultipart": "Multipart inválido",
+        "fileRequired": "Arquivo obrigatório (campo file)",
+        "idRequired": "ID obrigatório",
+        "invalidJson": "JSON inválido",
+        "dataRequired": "Campo data obrigatório"
+      }
+    }
+  },
+  "errorPage": {
+    "title": "Algo deu errado",
+    "fallback": "Não foi possível renderizar esta página.",
+    "retry": "Tentar de novo"
+  }
+}

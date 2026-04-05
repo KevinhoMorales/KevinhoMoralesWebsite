@@ -1,10 +1,11 @@
 'use client'
 
-import { useState } from 'react'
+import { useMemo, useState } from 'react'
 import { Card, CardContent } from '@/components/ui/card'
 import { ScrollReveal, StaggerContainer, StaggerItem } from '@/components/scroll-reveal'
 import { Badge } from '@/components/ui/badge'
 import { Button } from '@/components/ui/button'
+import { useI18n } from '@/components/i18n/locale-provider'
 import Image from 'next/image'
 import { ExternalLink, Smartphone, Globe, Layers } from 'lucide-react'
 import type { Project, ProjectCategory } from '@/types'
@@ -17,20 +18,24 @@ const categoryIcons: Record<string, typeof Smartphone> = {
   flutter: Smartphone,
 }
 
-const categories: { id: ProjectCategory | 'all'; label: string }[] = [
-  { id: 'all', label: 'All' },
-  { id: 'ios', label: 'iOS' },
-  { id: 'android', label: 'Android' },
-  { id: 'web', label: 'Web' },
-  { id: 'flutter', label: 'Flutter' },
-]
-
 interface ProjectsProps {
   projects: Project[]
 }
 
 export function ProjectsSection({ projects }: ProjectsProps) {
+  const { t } = useI18n()
   const [activeCategory, setActiveCategory] = useState<ProjectCategory | 'all'>('all')
+
+  const categories: { id: ProjectCategory | 'all'; label: string }[] = useMemo(
+    () => [
+      { id: 'all', label: t('projects.all') },
+      { id: 'ios', label: t('projects.ios') },
+      { id: 'android', label: t('projects.android') },
+      { id: 'web', label: t('projects.web') },
+      { id: 'flutter', label: t('projects.flutter') },
+    ],
+    [t]
+  )
 
   const filteredProjects =
     activeCategory === 'all'
@@ -41,9 +46,9 @@ export function ProjectsSection({ projects }: ProjectsProps) {
     <section id="projects" className="scroll-mt-20 py-4 sm:py-5 md:py-6 px-4 sm:px-6 md:px-8 lg:px-12 xl:px-24 bg-secondary/30">
       <div className="max-w-6xl mx-auto">
         <ScrollReveal className="mb-8 sm:mb-10">
-          <p className="text-primary font-medium tracking-wide uppercase text-xs sm:text-sm mb-3">Projects</p>
+          <p className="text-primary font-medium tracking-wide uppercase text-xs sm:text-sm mb-3">{t('projects.kicker')}</p>
           <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold text-balance">
-            Selected work
+            {t('projects.title')}
           </h2>
         </ScrollReveal>
 
@@ -93,7 +98,7 @@ export function ProjectsSection({ projects }: ProjectsProps) {
                   <div className="absolute inset-0 bg-background/80 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
                     <Button variant="secondary" size="sm" className="gap-2" asChild>
                       <a href={mainLink} target="_blank" rel="noopener noreferrer">
-                        View Project <ExternalLink className="h-4 w-4" />
+                        {t('projects.viewProject')} <ExternalLink className="h-4 w-4" />
                       </a>
                     </Button>
                   </div>

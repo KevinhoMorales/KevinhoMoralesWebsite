@@ -5,14 +5,8 @@ import Image from 'next/image'
 import { Card, CardContent } from '@/components/ui/card'
 import { Badge } from '@/components/ui/badge'
 import { MapPin, ExternalLink, Video, Users } from 'lucide-react'
+import { useI18n } from '@/components/i18n/locale-provider'
 import type { Conference } from '@/types'
-
-const TYPE_LABELS: Record<string, string> = {
-  conference: 'Conference',
-  virtual: 'Virtual',
-  talk: 'Talk',
-  meetup: 'Meetup',
-}
 
 const TAG_COLORS: Record<string, string> = {
   Android: 'bg-emerald-500/20 text-emerald-600 dark:text-emerald-400',
@@ -33,6 +27,13 @@ interface ConferencesModalProps {
 }
 
 export function ConferencesModal({ conferences, open, onClose }: ConferencesModalProps) {
+  const { t } = useI18n()
+  const confType = (type: string) => {
+    const k = `conferenceType.${type}`
+    const s = t(k)
+    return s === k ? type : s
+  }
+
   useEffect(() => {
     const handleEscape = (e: KeyboardEvent) => {
       if (e.key === 'Escape') onClose()
@@ -61,13 +62,13 @@ export function ConferencesModal({ conferences, open, onClose }: ConferencesModa
       >
         <div className="flex items-center justify-between p-4 sm:p-6 border-b border-border shrink-0">
           <h2 id="conferences-modal-title" className="text-lg sm:text-xl font-bold">
-            Todas las conferencias
+            {t('conferencesModal.title')}
           </h2>
           <button
             type="button"
             onClick={onClose}
             className="rounded-full p-2 hover:bg-secondary transition-colors"
-            aria-label="Cerrar"
+            aria-label={t('conferencesModal.closeAria')}
           >
             <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -109,7 +110,7 @@ export function ConferencesModal({ conferences, open, onClose }: ConferencesModa
                           variant="secondary"
                           className="bg-background/90 text-xs [text-shadow:0_1px_3px_rgba(0,0,0,0.9)]"
                         >
-                          {TYPE_LABELS[conf.type] ?? conf.type}
+                          {confType(conf.type)}
                         </Badge>
                         {conf.country && (
                           <Badge
@@ -126,7 +127,7 @@ export function ConferencesModal({ conferences, open, onClose }: ConferencesModa
                     {!mainImage && (
                       <div className="flex gap-2 flex-wrap mb-2">
                         <Badge variant="secondary" className="text-xs">
-                          {TYPE_LABELS[conf.type] ?? conf.type}
+                          {confType(conf.type)}
                         </Badge>
                         {conf.country && (
                           <Badge variant="outline" className="text-xs">
@@ -151,7 +152,7 @@ export function ConferencesModal({ conferences, open, onClose }: ConferencesModa
                       {conf.audience != null && (
                         <span className="flex items-center gap-1">
                           <Users className="h-3 w-3" />
-                          {conf.audience} asistentes
+                          {t('conferences.attendees', { count: String(conf.audience) })}
                         </span>
                       )}
                     </div>
@@ -165,7 +166,7 @@ export function ConferencesModal({ conferences, open, onClose }: ConferencesModa
                           onClick={(e) => e.stopPropagation()}
                         >
                           <Video className="h-3 w-3" />
-                          Ver video
+                          {t('conferences.watchVideo')}
                         </a>
                       )}
                       {conf.eventUrl && !conf.videoUrl && (
@@ -177,7 +178,7 @@ export function ConferencesModal({ conferences, open, onClose }: ConferencesModa
                           onClick={(e) => e.stopPropagation()}
                         >
                           <ExternalLink className="h-3 w-3" />
-                          Evento
+                          {t('conferences.event')}
                         </a>
                       )}
                     </div>

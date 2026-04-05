@@ -3,6 +3,7 @@
 import Link from 'next/link'
 import { Separator } from '@/components/ui/separator'
 import { ScrollReveal } from '@/components/scroll-reveal'
+import { useI18n } from '@/components/i18n/locale-provider'
 import { FaLinkedinIn } from 'react-icons/fa'
 import {
   SiX,
@@ -30,6 +31,7 @@ const socialIconConfig = [
 ]
 
 export function Footer({ profile }: FooterProps) {
+  const { t } = useI18n()
   const links = profile.socialLinks || {}
   const currentYear = new Date().getFullYear()
 
@@ -83,16 +85,18 @@ export function Footer({ profile }: FooterProps) {
 
         <div className="text-center text-xs sm:text-sm text-muted-foreground">
           <p className="inline-flex flex-wrap items-center justify-center gap-x-2 gap-y-1">
-            <span>© {currentYear} {profile.name}. All rights reserved.</span>
+            <span>
+              © {currentYear} {profile.name}. {t('common.rights')}
+            </span>
             <span className="text-muted-foreground/25 select-none" aria-hidden>
               ·
             </span>
             <Link
               href="/admin/login"
               className="text-[10px] uppercase tracking-widest text-muted-foreground/35 hover:text-muted-foreground/70 transition-colors"
-              aria-label="Acceso de administración"
+              aria-label={t('common.adminAccess')}
             >
-              Acceso
+              {t('common.access')}
             </Link>
           </p>
         </div>

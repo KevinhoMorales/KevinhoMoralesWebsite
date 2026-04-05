@@ -8,5 +8,6 @@ export const PROD_ADMIN_DOC_ID = 'admin';
 
 export const CONFERENCES_SUBCOLLECTION = 'conferences';
 export const PROJECTS_SUBCOLLECTION = 'projects';
+export const WAITLIST_SUBCOLLECTION = 'waitlist';
 
 export const STORAGE_ADMIN_PREFIX = `${PROD_COLLECTION}/admin/uploads`;

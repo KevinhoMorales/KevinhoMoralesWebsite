@@ -1,6 +1,9 @@
+'use client'
+
 import Image from 'next/image'
 import { Card, CardContent } from '@/components/ui/card'
 import { ScrollReveal, StaggerContainer, StaggerItem } from '@/components/scroll-reveal'
+import { useI18n } from '@/components/i18n/locale-provider'
 import { ExternalLink } from 'lucide-react'
 import type { Experience } from '@/types'
 
@@ -9,13 +12,14 @@ interface ExperienceProps {
 }
 
 export function ExperienceSection({ experiences }: ExperienceProps) {
+  const { t } = useI18n()
   return (
     <section id="experience" className="scroll-mt-20 py-4 sm:py-5 md:py-6 px-4 sm:px-6 md:px-8 lg:px-12 xl:px-24">
       <div className="max-w-6xl mx-auto">
         <ScrollReveal className="mb-8 sm:mb-10">
-          <p className="text-primary font-medium tracking-wide uppercase text-xs sm:text-sm mb-3">Experience</p>
+          <p className="text-primary font-medium tracking-wide uppercase text-xs sm:text-sm mb-3">{t('experience.kicker')}</p>
           <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold text-balance">
-            Where I&apos;ve worked
+            {t('experience.title')}
           </h2>
         </ScrollReveal>
 
@@ -56,7 +60,7 @@ export function ExperienceSection({ experiences }: ExperienceProps) {
                       )}
                     </p>
                     <p className="text-xs text-muted-foreground mt-1">
-                      {exp.startDate} — {exp.current ? 'Present' : exp.endDate || '—'} · {exp.type}
+                      {exp.startDate} — {exp.current ? t('common.present') : exp.endDate || '—'} · {exp.type}
                     </p>
                   </div>
                 </div>

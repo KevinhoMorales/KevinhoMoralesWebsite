@@ -3,6 +3,8 @@
 import { useCallback, useEffect, useState } from 'react';
 import { adminFetch, getAdminIdToken } from '@/lib/admin-browser';
 import type { Project, ProjectLink } from '@/types';
+import { useI18n } from '@/components/i18n/locale-provider';
+import { translateAdminError } from '@/lib/i18n/admin-errors';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
@@ -22,6 +24,7 @@ const emptyForm: Project = {
 };
 
 export function ProjectsPanel() {
+  const { t } = useI18n();
   const [list, setList] = useState<Project[]>([]);
   const [loadError, setLoadError] = useState('');
   const [form, setForm] = useState<Project>(emptyForm);
@@ -37,9 +40,10 @@ export function ProjectsPanel() {
       const rows = await adminFetch<Project[]>('/api/admin/projects');
       setList(rows.sort((a, b) => a.title.localeCompare(b.title)));
     } catch (e) {
-      setLoadError(e instanceof Error ? e.message : 'Error al cargar');
+      const raw = e instanceof Error ? e.message : t('admin.projects.loadFailed');
+      setLoadError(translateAdminError(raw, t));
     }
-  }, []);
+  }, [t]);
 
   useEffect(() => {
     refresh();
@@ -97,7 +101,9 @@ export function ProjectsPanel() {
       throw new Error('No autorizado');
     }
     const json = (await res.json()) as { url?: string; error?: string };
-    if (!res.ok) throw new Error(json.error || 'Error al subir');
+    if (!res.ok) {
+      throw new Error(json.error || t('admin.projects.uploadFailed'));
+    }
     if (!json.url) throw new Error('Sin URL');
     setForm((f) => ({ ...f, image: json.url }));
   }
@@ -147,36 +153,45 @@ export function ProjectsPanel() {
       await refresh();
       startNew();
     } catch (e) {
-      alert(e instanceof Error ? e.message : 'Error al guardar');
+      const raw = e instanceof Error ? e.message : t('admin.projects.saveFailed');
+      alert(translateAdminError(raw, t));
     } finally {
       setSaving(false);
     }
   }
 
   async function del(id: string) {
-    if (!confirm('¿Eliminar este proyecto?')) return;
+    if (!confirm(t('admin.projects.confirmDelete'))) return;
     try {
       await adminFetch(`/api/admin/projects/${encodeURIComponent(id)}`, { method: 'DELETE' });
       await refresh();
       if (form.id === id) startNew();
     } catch (e) {
-      alert(e instanceof Error ? e.message : 'Error al eliminar');
+      const raw = e instanceof Error ? e.message : t('admin.projects.deleteFailed');
+      alert(translateAdminError(raw, t));
     }
   }
+
+  const categoryLabel: Record<Project['category'], string> = {
+    ios: t('admin.projects.categoryIos'),
+    android: t('admin.projects.categoryAndroid'),
+    web: t('admin.projects.categoryWeb'),
+    flutter: t('admin.projects.categoryFlutter'),
+  };
 
   return (
     <div className="space-y-8">
       <div className="flex items-center justify-between gap-4">
-        <h1 className="text-xl font-semibold">Proyectos</h1>
+        <h1 className="text-xl font-semibold">{t('admin.projects.title')}</h1>
         <Button type="button" variant="outline" size="sm" onClick={() => startNew()}>
-          Nuevo
+          {t('admin.projects.new')}
         </Button>
       </div>
       {loadError && <p className="text-sm text-destructive">{loadError}</p>}
 
       <div className="grid gap-8 lg:grid-cols-2">
         <Card className="p-4 space-y-4 max-h-[70vh] overflow-y-auto">
-          <h2 className="font-medium text-sm text-muted-foreground">Listado</h2>
+          <h2 className="font-medium text-sm text-muted-foreground">{t('admin.projects.list')}</h2>
           <ul className="space-y-2">
             {list.map((p) => (
               <li
@@ -191,7 +206,7 @@ export function ProjectsPanel() {
                   {p.title}
                 </button>
                 <Button type="button" variant="ghost" size="sm" onClick={() => del(p.id)}>
-                  Borrar
+                  {t('admin.projects.delete')}
                 </Button>
               </li>
             ))}
@@ -199,9 +214,11 @@ export function ProjectsPanel() {
         </Card>
 
         <Card className="p-4 space-y-4 max-h-[85vh] overflow-y-auto">
-          <h2 className="font-medium text-sm text-muted-foreground">{isNew ? 'Nuevo proyecto' : 'Editar'}</h2>
+          <h2 className="font-medium text-sm text-muted-foreground">
+            {isNew ? t('admin.projects.formNew') : t('admin.projects.formEdit')}
+          </h2>
           <div className="space-y-2">
-            <Label htmlFor="pt">Título</Label>
+            <Label htmlFor="pt">{t('admin.projects.labelTitle')}</Label>
             <Input
               id="pt"
               value={form.title}
@@ -209,7 +226,7 @@ export function ProjectsPanel() {
             />
           </div>
           <div className="space-y-2">
-            <Label htmlFor="pd">Descripción</Label>
+            <Label htmlFor="pd">{t('admin.projects.labelDescription')}</Label>
             <Textarea
               id="pd"
               rows={3}
@@ -218,7 +235,7 @@ export function ProjectsPanel() {
             />
           </div>
           <div className="space-y-2">
-            <Label htmlFor="pi">Imagen (URL)</Label>
+            <Label htmlFor="pi">{t('admin.projects.labelImageUrl')}</Label>
             <Input
               id="pi"
               value={form.image ?? ''}
@@ -235,13 +252,14 @@ export function ProjectsPanel() {
                 try {
                   await uploadCover(f);
                 } catch (err) {
-                  alert(err instanceof Error ? err.message : 'Error al subir');
+                  const raw = err instanceof Error ? err.message : t('admin.projects.uploadFailed');
+                  alert(translateAdminError(raw, t));
                 }
               }}
             />
           </div>
           <div className="space-y-2">
-            <Label htmlFor="pcat">Categoría</Label>
+            <Label htmlFor="pcat">{t('admin.projects.labelCategory')}</Label>
             <select
               id="pcat"
               className="flex h-9 w-full rounded-md border border-input bg-background px-3 text-sm"
@@ -250,18 +268,19 @@ export function ProjectsPanel() {
                 setForm((f) => ({ ...f, category: e.target.value as Project['category'] }))
               }
             >
-              <option value="ios">ios</option>
-              <option value="android">android</option>
-              <option value="web">web</option>
-              <option value="flutter">flutter</option>
+              {(['ios', 'android', 'web', 'flutter'] as const).map((cat) => (
+                <option key={cat} value={cat}>
+                  {categoryLabel[cat]}
+                </option>
+              ))}
             </select>
           </div>
           <div className="space-y-2">
-            <Label htmlFor="ptech">Tecnologías (coma)</Label>
+            <Label htmlFor="ptech">{t('admin.projects.labelTech')}</Label>
             <Input id="ptech" value={techInput} onChange={(e) => setTechInput(e.target.value)} />
           </div>
           <div className="space-y-2">
-            <Label htmlFor="pexp">Experiencia / cliente</Label>
+            <Label htmlFor="pexp">{t('admin.projects.labelExperience')}</Label>
             <Input
               id="pexp"
               value={form.experience ?? ''}
@@ -269,38 +288,38 @@ export function ProjectsPanel() {
             />
           </div>
           <div className="space-y-2">
-            <Label htmlFor="pplat">Plataformas (coma)</Label>
+            <Label htmlFor="pplat">{t('admin.projects.labelPlatforms')}</Label>
             <Input id="pplat" value={platformsInput} onChange={(e) => setPlatformsInput(e.target.value)} />
           </div>
           <div className="space-y-2">
-            <Label htmlFor="ptags">Tags (coma)</Label>
+            <Label htmlFor="ptags">{t('admin.projects.labelTags')}</Label>
             <Input id="ptags" value={tagsInput} onChange={(e) => setTagsInput(e.target.value)} />
           </div>
           <div className="space-y-2">
             <div className="flex items-center justify-between">
-              <Label>Enlaces</Label>
+              <Label>{t('admin.projects.linksHeading')}</Label>
               <Button type="button" variant="outline" size="sm" onClick={addLink}>
-                Añadir
+                {t('admin.projects.addLink')}
               </Button>
             </div>
             {(form.links ?? []).map((link, i) => (
               <div key={i} className="flex flex-wrap gap-2 items-end border rounded-md p-2">
                 <div className="space-y-1">
-                  <Label className="text-xs">Tipo</Label>
+                  <Label className="text-xs">{t('admin.projects.labelLinkType')}</Label>
                   <select
                     className="flex h-8 rounded-md border border-input bg-background px-2 text-xs"
                     value={link.type}
                     onChange={(e) => setLink(i, { type: e.target.value as ProjectLink['type'] })}
                   >
-                    {linkTypes.map((t) => (
-                      <option key={t} value={t}>
-                        {t}
+                    {linkTypes.map((lt) => (
+                      <option key={lt} value={lt}>
+                        {t(`projectLinks.${lt}` as const)}
                       </option>
                     ))}
                   </select>
                 </div>
                 <div className="flex-1 min-w-[120px] space-y-1">
-                  <Label className="text-xs">URL</Label>
+                  <Label className="text-xs">{t('admin.projects.labelLinkUrl')}</Label>
                   <Input
                     className="h-8 text-xs"
                     value={link.url}
@@ -308,13 +327,13 @@ export function ProjectsPanel() {
                   />
                 </div>
                 <Button type="button" variant="ghost" size="sm" onClick={() => removeLink(i)}>
-                  Quitar
+                  {t('admin.projects.removeLink')}
                 </Button>
               </div>
             ))}
           </div>
           <Button type="button" onClick={() => save()} disabled={saving || !form.title.trim()}>
-            {saving ? 'Guardando…' : 'Guardar'}
+            {saving ? t('admin.projects.saving') : t('admin.projects.save')}
           </Button>
         </Card>
       </div>

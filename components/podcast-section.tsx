@@ -4,6 +4,7 @@ import { useEffect, useState, useMemo } from 'react';
 import { EpisodeCard, normalizeForSearch } from './episode-card';
 import { EpisodeModal } from './episode-modal';
 import { Button } from '@/components/ui/button';
+import { useI18n } from '@/components/i18n/locale-provider';
 import type { PodcastEpisode } from '@/lib/youtube';
 
 const EPISODES_PER_PAGE = 6;
@@ -13,6 +14,7 @@ interface PodcastSectionProps {
 }
 
 export function PodcastSection({ preview = false }: PodcastSectionProps) {
+  const { t } = useI18n();
   const [episodes, setEpisodes] = useState<PodcastEpisode[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
@@ -30,7 +32,7 @@ export function PodcastSection({ preview = false }: PodcastSectionProps) {
         if (!res.ok) {
           const msg = data?.details
             ? `${data.error}: ${data.details}`
-            : data?.error || 'Error al cargar episodios';
+            : data?.error || t('podcast.errorUnavailable');
           throw new Error(msg);
         }
         return data;
@@ -39,16 +41,14 @@ export function PodcastSection({ preview = false }: PodcastSectionProps) {
         if (Array.isArray(data)) {
           setEpisodes(data);
         } else {
-          setError('Formato de respuesta inesperado');
+          setError(t('podcast.errorUnexpected'));
         }
       })
       .catch((err) =>
-        setError(
-          err?.message ||
-            'Episodios no disponibles. Agrega YOUTUBE_API_KEY a .env.local'
-        )
+        setError(err?.message || t('podcast.errorUnavailable'))
       )
       .finally(() => setLoading(false));
+    // eslint-disable-next-line react-hooks/exhaustive-deps -- initial load only; locale change need not refetch YouTube
   }, []);
 
   const filteredEpisodes = useMemo(() => {
@@ -112,16 +112,22 @@ export function PodcastSection({ preview = false }: PodcastSectionProps) {
         <p className="text-muted-foreground font-medium">{error}</p>
         {(isApiKeyError || isFetchError) && (
           <div className="text-sm text-muted-foreground space-y-2">
-            <p>Para cargar los episodios del podcast desde YouTube:</p>
+            <p>{t('podcast.apiHelpTitle')}</p>
             <ol className="list-decimal list-inside space-y-1 ml-2">
-              <li>Ve a <a href="https://console.cloud.google.com/apis/credentials" target="_blank" rel="noopener noreferrer" className="text-primary hover:underline">Google Cloud Console</a></li>
-              <li>En &quot;APIs &amp; Services&quot; → &quot;Library&quot;, busca y activa <strong>YouTube Data API v3</strong></li>
-              <li>Crea una API key en &quot;Credentials&quot; → &quot;Create Credentials&quot; → &quot;API key&quot;</li>
-              <li>En <code className="bg-muted px-1 rounded">.env.local</code> agrega: <code className="bg-muted px-1 rounded">YOUTUBE_API_KEY=tu_api_key_real</code></li>
-              <li>Reinicia el servidor (<code className="bg-muted px-1 rounded">npm run dev</code>)</li>
+              <li>
+                <a href="https://console.cloud.google.com/apis/credentials" target="_blank" rel="noopener noreferrer" className="text-primary hover:underline">
+                  {t('podcast.apiHelpStep1')}
+                </a>
+              </li>
+              <li>{t('podcast.apiHelpStep2')}</li>
+              <li>{t('podcast.apiHelpStep3')}</li>
+              <li>
+                <code className="bg-muted px-1 rounded">.env.local</code> — {t('podcast.apiHelpStep4')}
+              </li>
+              <li>{t('podcast.apiHelpStep5')}</li>
             </ol>
             <p className="pt-2">
-              Mientras tanto, puedes escuchar en{' '}
+              {t('podcast.apiHelpListen')}{' '}
               <a href="https://www.youtube.com/@DevLokos/podcasts" target="_blank" rel="noopener noreferrer" className="text-primary hover:underline">
                 YouTube
               </a>
@@ -144,7 +150,7 @@ export function PodcastSection({ preview = false }: PodcastSectionProps) {
         <div className="flex flex-col sm:flex-row gap-4 flex-wrap">
         <input
           type="search"
-          placeholder="Search by title or guest..."
+          placeholder={t('podcast.searchPlaceholder')}
           value={search}
           onChange={(e) => setSearch(e.target.value)}
           className="flex h-9 w-full max-w-md rounded-md border border-input bg-background px-3 py-1 text-sm shadow-sm transition-colors placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring"
@@ -155,21 +161,21 @@ export function PodcastSection({ preview = false }: PodcastSectionProps) {
             size="sm"
             onClick={() => setSeason('all')}
           >
-            All
+            {t('podcast.all')}
           </Button>
           <Button
             variant={season === 1 ? 'default' : 'outline'}
             size="sm"
             onClick={() => setSeason(1)}
           >
-            Season 1
+            {t('podcast.season1')}
           </Button>
           <Button
             variant={season === 2 ? 'default' : 'outline'}
             size="sm"
             onClick={() => setSeason(2)}
           >
-            Season 2
+            {t('podcast.season2')}
           </Button>
         </div>
       </div>
@@ -195,10 +201,10 @@ export function PodcastSection({ preview = false }: PodcastSectionProps) {
             onClick={() => setPage((p) => Math.max(1, p - 1))}
             disabled={page <= 1}
           >
-            Anterior
+            {t('podcast.prev')}
           </Button>
           <span className="text-sm text-muted-foreground">
-            Página {page} de {totalPages}
+            {t('podcast.pageOf', { page: String(page), total: String(totalPages) })}
           </span>
           <Button
             variant="outline"
@@ -206,7 +212,7 @@ export function PodcastSection({ preview = false }: PodcastSectionProps) {
             onClick={() => setPage((p) => Math.min(totalPages, p + 1))}
             disabled={page >= totalPages}
           >
-            Siguiente
+            {t('podcast.next')}
           </Button>
         </div>
       )}

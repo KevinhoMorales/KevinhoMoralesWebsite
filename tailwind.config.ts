@@ -42,9 +42,14 @@ const config: Config = {
           "0%, 50%": { opacity: "1" },
           "51%, 100%": { opacity: "0" },
         },
+        shimmer: {
+          "0%, 100%": { backgroundPosition: "0% 50%" },
+          "50%": { backgroundPosition: "100% 50%" },
+        },
       },
       animation: {
         "typing-cursor": "typing-cursor 1s step-end infinite",
+        shimmer: "shimmer 4s ease-in-out infinite",
       },
     },
   },

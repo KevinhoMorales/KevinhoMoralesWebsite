@@ -2,6 +2,7 @@
 
 import { useEffect } from 'react'
 import Script from 'next/script'
+import { useI18n } from '@/components/i18n/locale-provider'
 
 interface BuyMeACoffeeModalProps {
   open: boolean
@@ -9,6 +10,7 @@ interface BuyMeACoffeeModalProps {
 }
 
 export function BuyMeACoffeeModal({ open, onClose }: BuyMeACoffeeModalProps) {
+  const { t } = useI18n()
   useEffect(() => {
     const handleEscape = (e: KeyboardEvent) => {
       if (e.key === 'Escape') onClose()
@@ -51,10 +53,10 @@ export function BuyMeACoffeeModal({ open, onClose }: BuyMeACoffeeModalProps) {
           onClick={(e) => e.stopPropagation()}
         >
           <h2 id="bmc-modal-title" className="text-xl sm:text-2xl font-bold mb-3">
-            Thank you for your support!
+            {t('bmc.title')}
           </h2>
           <p className="text-muted-foreground mb-6">
-            Your support means the world to me. Thank you! ☕
+            {t('bmc.body')}
           </p>
           <a
             href="https://buymeacoffee.com/KevinhoMorales"
@@ -62,14 +64,14 @@ export function BuyMeACoffeeModal({ open, onClose }: BuyMeACoffeeModalProps) {
             rel="noopener noreferrer"
             className="inline-flex items-center justify-center gap-2 h-10 px-6 rounded-md bg-[#FFDD00] hover:bg-[#FFE44D] text-[#000] font-medium transition-colors"
           >
-            Continue to Buy Me a Coffee
+            {t('bmc.continue')}
           </a>
           <button
             type="button"
             onClick={onClose}
             className="block w-full mt-4 text-sm text-muted-foreground hover:text-foreground transition-colors"
           >
-            Close
+            {t('common.close')}
           </button>
         </div>
       </div>

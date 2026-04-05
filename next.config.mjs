@@ -15,6 +15,13 @@ const nextConfig = {
     /** Evita que webpack empaquete firebase-admin (gRPC); sin esto suele fallar el SSR con 500. */
     serverComponentsExternalPackages: ['firebase-admin'],
   },
+  /** Caché en disco de webpack a veces queda corrupta y `next dev` falla al restaurar (p. ej. hasStartTime). Memoria evita ese fallo. */
+  webpack: (config, { dev }) => {
+    if (dev) {
+      config.cache = { type: 'memory' };
+    }
+    return config;
+  },
 };
 
 export default nextConfig;

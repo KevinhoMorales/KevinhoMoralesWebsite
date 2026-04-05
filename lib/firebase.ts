@@ -64,6 +64,23 @@ export async function getFirebaseAnalytics(): Promise<Analytics | null> {
   return analytics;
 }
 
+/** Vista de página en navegación cliente (App Router); el primer paint lo cubre el SDK de Analytics. */
+export async function logAnalyticsPageView(pathWithSearch: string): Promise<void> {
+  if (typeof window === 'undefined') return;
+  try {
+    const a = await getFirebaseAnalytics();
+    if (!a) return;
+    const { logEvent } = await import('firebase/analytics');
+    logEvent(a, 'page_view', {
+      page_path: pathWithSearch,
+      page_location: window.location.href,
+      page_title: typeof document !== 'undefined' ? document.title : undefined,
+    });
+  } catch {
+    /* opcional */
+  }
+}
+
 export const COLLECTIONS = {
   PODCAST_CACHE: 'podcast_cache',
   ANALYTICS: 'analytics',
