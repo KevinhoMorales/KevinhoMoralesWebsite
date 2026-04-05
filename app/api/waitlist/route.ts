@@ -1,5 +1,8 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { adminSaveWaitlistSignup } from '@/lib/firestore-admin-waitlist';
+import {
+  adminCountWaitlistSignupsAfterWrite,
+  adminSaveWaitlistSignup,
+} from '@/lib/firestore-admin-waitlist';
 import { sendWaitlistThankYouEmail } from '@/lib/send-waitlist-thank-you';
 import {
   assertWaitlistJsonSize,
@@ -72,7 +75,12 @@ export async function POST(request: NextRequest) {
     }
 
     if (saved?.status === 'created') {
-      void sendWaitlistThankYouEmail({ to: e, firstName: fn });
+      const signupsCount = await adminCountWaitlistSignupsAfterWrite();
+      void sendWaitlistThankYouEmail({
+        to: e,
+        firstName: fn,
+        ...(signupsCount != null ? { signupsCount } : {}),
+      });
       return NextResponse.json({
         success: true,
         message: '¡Listo! Te avisaremos cuando haya novedades.',

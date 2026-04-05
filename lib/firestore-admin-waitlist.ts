@@ -116,6 +116,27 @@ export async function adminCountWaitlistSignups(): Promise<number | null> {
   }
 }
 
+const WAITLIST_COUNT_AFTER_WRITE_ATTEMPTS = 4;
+const WAITLIST_COUNT_AFTER_WRITE_DELAY_MS = 85;
+
+/**
+ * Tras un alta nuevo, el agregado `count()` a veces tarda un instante en reflejar el write.
+ * Varios intentos y se toma el **máximo** (con altas concurrentes también es el valor más actual).
+ */
+export async function adminCountWaitlistSignupsAfterWrite(): Promise<number | null> {
+  let best: number | null = null;
+  for (let i = 0; i < WAITLIST_COUNT_AFTER_WRITE_ATTEMPTS; i++) {
+    const n = await adminCountWaitlistSignups();
+    if (n != null) {
+      best = best === null ? n : Math.max(best, n);
+    }
+    if (i < WAITLIST_COUNT_AFTER_WRITE_ATTEMPTS - 1) {
+      await new Promise((r) => setTimeout(r, WAITLIST_COUNT_AFTER_WRITE_DELAY_MS));
+    }
+  }
+  return best;
+}
+
 export async function adminFetchWaitlistEntries(): Promise<WaitlistEntry[] | null> {
   const app = tryGetAdminApp();
   if (!app) return null;

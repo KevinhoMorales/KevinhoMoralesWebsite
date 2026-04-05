@@ -8,6 +8,10 @@ import { WAITLIST_EMAIL_RE } from '@/lib/waitlist-api-security';
 const MAX_TO_LEN = 254;
 const MAX_FIRST_NAME_LEN = 80;
 
+/** Igual que en `emails/resend-waitlist-thank-you-template.html` y el modal waitlist. */
+const WAITLIST_THANK_YOU_BOOK_IMAGE_SRC =
+  'https://firebasestorage.googleapis.com/v0/b/kevinho-morales.firebasestorage.app/o/Book%20Sample.png?alt=media&token=949ece75-48b2-4a3c-a93d-3ba8ff0a694d';
+
 /**
  * Variables que debe declarar la plantilla en Resend (fallbacks en el editor)
  * y el HTML con {{{READER_NAME}}}, {{{PREORDER_UNTIL}}}, {{{LAUNCH_DAY}}}, {{{PREORDER_TOTAL}}}.
@@ -48,10 +52,14 @@ function isReasonableResendFrom(from: string): boolean {
  * Nunca lanza; no registra PII ni la clave API. Clave Resend: env o Remote Config.
  * Con RESEND_WAITLIST_TEMPLATE_ID usa plantilla (en dev, desactivada si RESEND_DEV_OVERRIDE_TO redirige el destino).
  * RESEND_DEV_OVERRIDE_TO (solo NODE_ENV=development): envía el correo a esa dirección para sortear el límite de prueba de Resend.
+ *
+ * `signupsCount`: total en Firestore tras este alta; preferible pasarlo desde la API tras
+ * `adminCountWaitlistSignupsAfterWrite()` para que el número del correo coincida con el conteo real.
  */
 export async function sendWaitlistThankYouEmail(input: {
   to: string;
   firstName: string;
+  signupsCount?: number;
 }): Promise<void> {
   let apiKey = (process.env.RESEND_API_KEY || '').trim();
   if (!apiKey || apiKey.length < 10) {
@@ -102,10 +110,16 @@ export async function sendWaitlistThankYouEmail(input: {
   const name = escapeHtml(first || 'hola');
   const preorderUntil = escapeHtml(formatPreorderDay(PREORDER_END, 'es'));
   const launchDay = escapeHtml(formatPreorderDay(LAUNCH_DATE, 'es'));
-  const preorderTotalRaw = await adminCountWaitlistSignups();
-  const preorderTotal = Math.max(1, preorderTotalRaw ?? 1);
+  const signups = input.signupsCount;
+  let preorderTotal: number;
+  if (signups != null && Number.isFinite(signups) && signups >= 1) {
+    preorderTotal = Math.floor(signups);
+  } else {
+    const preorderTotalRaw = await adminCountWaitlistSignups();
+    preorderTotal = Math.max(1, preorderTotalRaw ?? 1);
+  }
 
-  const subject = 'Gracias por reservar — lista de espera del libro';
+  const subject = '¡Gracias por reservar el libro!';
   const templateIdRaw = (process.env.RESEND_WAITLIST_TEMPLATE_ID || '').trim();
   const templateId = redirectResendTest ? '' : templateIdRaw;
 
@@ -116,8 +130,22 @@ export async function sendWaitlistThankYouEmail(input: {
   <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="background:#f4f6f8;padding:24px 12px;">
     <tr><td align="center">
       <table role="presentation" width="100%" style="max-width:520px;background:#ffffff;border-radius:12px;border:1px solid #e8ecf0;overflow:hidden;">
-        <tr><td style="padding:28px 24px;background:#0d9488;">
-          <p style="margin:0;font-size:18px;font-weight:700;color:#ffffff;">Lista de espera — libro</p>
+        <tr><td style="padding:0;background-color:#0E6E5C;" bgcolor="#0E6E5C">
+          <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="border-collapse:collapse;">
+            <tr>
+              <td style="padding:28px 24px;text-align:center;">
+                <p style="margin:0 0 8px 0;font-size:11px;font-weight:600;letter-spacing:0.12em;text-transform:uppercase;color:#ffffff;">
+                  Preventa · Gracias
+                </p>
+                <p style="margin:0;font-size:18px;line-height:1.3;font-weight:700;color:#ffffff;letter-spacing:-0.02em;">
+                  Gracias por tu reserva
+                </p>
+              </td>
+            </tr>
+          </table>
+        </td></tr>
+        <tr><td style="padding:0;">
+          <img src="${WAITLIST_THANK_YOU_BOOK_IMAGE_SRC}" width="520" alt="Portada: Dominando Kotlin, Swift y Dart" style="display:block;width:100%;max-width:520px;height:auto;margin:0;border:0;" />
         </td></tr>
         <tr><td style="padding:28px 24px;">
           ${devBannerHtml}
@@ -130,7 +158,7 @@ export async function sendWaitlistThankYouEmail(input: {
           </td></tr></table>
           <p style="margin:0 0 8px;font-size:14px;line-height:1.55;color:#475569;">Te enviaremos un correo con los detalles de la <strong>preventa</strong> a más tardar el <strong>${preorderUntil}</strong>. El lanzamiento oficial está previsto para el <strong>${launchDay}</strong>.</p>
           <p style="margin:16px 0 0;font-size:13px;line-height:1.5;color:#64748b;">Revisa también la carpeta de spam o promociones por si el mensaje llega ahí.</p>
-          <p style="margin:24px 0 0;font-size:13px;line-height:1.5;color:#94a3b8;">— Kevin Morales<br/>kevinhomorales.com</p>
+          <p style="margin:24px 0 0;font-size:13px;line-height:1.5;color:#94a3b8;">Kevin Morales<br/>kevinhomorales.com</p>
         </td></tr>
       </table>
     </td></tr>
