@@ -67,26 +67,27 @@ export async function POST(request: NextRequest) {
       userAgent: ua,
     });
 
-    if (saved?.status === 'exists') {
+    if (saved == null) {
+      console.warn('[waitlist] Firestore write skipped: Firebase Admin no disponible en el servidor');
+      return NextResponse.json(
+        { success: false, message: 'No pudimos completar el registro. Inténtalo más tarde.' },
+        { status: 503 }
+      );
+    }
+
+    if (saved.status === 'exists') {
       return NextResponse.json(
         { success: false, code: 'duplicate_email' },
         { status: 409 }
       );
     }
 
-    if (saved?.status === 'created') {
-      const signupsCount = await adminCountWaitlistSignupsAfterWrite();
-      void sendWaitlistThankYouEmail({
-        to: e,
-        firstName: fn,
-        ...(signupsCount != null ? { signupsCount } : {}),
-      });
-      return NextResponse.json({
-        success: true,
-        message: '¡Listo! Te avisaremos cuando haya novedades.',
-      });
-    }
-
+    const signupsCount = await adminCountWaitlistSignupsAfterWrite();
+    void sendWaitlistThankYouEmail({
+      to: e,
+      firstName: fn,
+      ...(signupsCount != null ? { signupsCount } : {}),
+    });
     return NextResponse.json({
       success: true,
       message: '¡Listo! Te avisaremos cuando haya novedades.',

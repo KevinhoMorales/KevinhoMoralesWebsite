@@ -206,6 +206,8 @@ export async function sendWaitlistThankYouEmail(input: {
           '[resend] Modo prueba: verifica un dominio en Resend y usa RESEND_FROM con ese dominio, o en local define RESEND_DEV_OVERRIDE_TO=tu_correo_verificado_resend'
         );
       }
+    } else {
+      console.info('[resend] waitlist thank-you sent ok (inline o plantilla)');
     }
   } catch (e) {
     console.warn('[resend] waitlist thank-you failed: exception');
