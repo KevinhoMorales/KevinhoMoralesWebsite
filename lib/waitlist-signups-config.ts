@@ -1,8 +1,9 @@
 /**
  * Registro en lista de espera del libro (Firestore / Web3Forms).
- * Solo actívalo cuando el flujo (p. ej. Payphone) esté listo:
- * NEXT_PUBLIC_WAITLIST_OPEN=true
+ * Por defecto acepta envíos. Para cerrar modal y API sin redeploy de lógica:
+ * NEXT_PUBLIC_WAITLIST_OPEN=false
  */
 export function isWaitlistAcceptingSubmissions(): boolean {
-  return process.env.NEXT_PUBLIC_WAITLIST_OPEN === 'true';
+  const v = process.env.NEXT_PUBLIC_WAITLIST_OPEN?.trim().toLowerCase();
+  return v !== 'false' && v !== '0' && v !== 'no';
 }

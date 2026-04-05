@@ -211,7 +211,7 @@
       "countdownMany": "Quedan {{days}} días — {{time}}",
       "countdownSoon": "Cierra en {{time}}",
       "ended": "La preventa ha finalizado; el lanzamiento oficial está muy cerca.",
-      "gratitude": "Gracias por apoyar este proyecto desde el inicio 💙"
+      "gratitude": "Gracias por apoyar este proyecto desde el inicio"
     }
   },
   "bmc": {
