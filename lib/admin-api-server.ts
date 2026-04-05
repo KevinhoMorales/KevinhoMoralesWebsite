@@ -1,12 +1,23 @@
+import { NextResponse } from 'next/server';
 import { getAuth, type DecodedIdToken } from 'firebase-admin/auth';
 import { getFirestore } from 'firebase-admin/firestore';
 import { tryGetAdminApp } from '@/lib/firebase-admin';
 
+export type AdminUnauthorizedCode =
+  | 'missing_token'
+  | 'invalid_token'
+  | 'no_email'
+  | 'email_not_allowed';
+
 export class AdminUnauthorized extends Error {
-  constructor() {
+  constructor(public readonly code: AdminUnauthorizedCode = 'invalid_token') {
     super('Unauthorized');
     this.name = 'AdminUnauthorized';
   }
+}
+
+export function adminUnauthorizedResponse(e: AdminUnauthorized) {
+  return NextResponse.json({ error: 'No autorizado', code: e.code }, { status: 401 });
 }
 
 export function requireAdminApp() {
@@ -34,7 +45,7 @@ function bearerToken(req: Request): string | null {
  */
 export async function assertAdminUser(req: Request): Promise<{ uid: string; email: string }> {
   const idToken = bearerToken(req);
-  if (!idToken) throw new AdminUnauthorized();
+  if (!idToken) throw new AdminUnauthorized('missing_token');
 
   const app = requireAdminApp();
   const auth = getAuth(app);
@@ -42,11 +53,11 @@ export async function assertAdminUser(req: Request): Promise<{ uid: string; emai
   try {
     decoded = await auth.verifyIdToken(idToken);
   } catch {
-    throw new AdminUnauthorized();
+    throw new AdminUnauthorized('invalid_token');
   }
 
   const email = decoded.email?.trim().toLowerCase() ?? '';
-  if (!email) throw new AdminUnauthorized();
+  if (!email) throw new AdminUnauthorized('no_email');
 
   const allow = process.env.ADMIN_ALLOWED_EMAILS?.trim();
   if (allow) {
@@ -56,7 +67,7 @@ export async function assertAdminUser(req: Request): Promise<{ uid: string; emai
         .map((e) => e.trim().toLowerCase())
         .filter(Boolean)
     );
-    if (!set.has(email)) throw new AdminUnauthorized();
+    if (!set.has(email)) throw new AdminUnauthorized('email_not_allowed');
   }
 
   return { uid: decoded.uid, email };

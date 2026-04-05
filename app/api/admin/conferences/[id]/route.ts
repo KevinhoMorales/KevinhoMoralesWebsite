@@ -1,5 +1,10 @@
 import { NextResponse } from 'next/server';
-import { AdminUnauthorized, assertAdminUser, getAdminFirestore } from '@/lib/admin-api-server';
+import {
+  AdminUnauthorized,
+  assertAdminUser,
+  adminUnauthorizedResponse,
+  getAdminFirestore,
+} from '@/lib/admin-api-server';
 import {
   CONFERENCES_SUBCOLLECTION,
   PROD_ADMIN_DOC_ID,
@@ -11,7 +16,7 @@ export async function PUT(req: Request, { params }: { params: { id: string } }) 
     await assertAdminUser(req);
   } catch (e) {
     if (e instanceof AdminUnauthorized) {
-      return NextResponse.json({ error: 'No autorizado' }, { status: 401 });
+      return adminUnauthorizedResponse(e);
     }
     throw e;
   }
@@ -42,7 +47,7 @@ export async function DELETE(req: Request, { params }: { params: { id: string } 
     await assertAdminUser(req);
   } catch (e) {
     if (e instanceof AdminUnauthorized) {
-      return NextResponse.json({ error: 'No autorizado' }, { status: 401 });
+      return adminUnauthorizedResponse(e);
     }
     throw e;
   }

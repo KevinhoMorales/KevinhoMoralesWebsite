@@ -97,7 +97,10 @@ function millisFromFirestoreValue(v: unknown): number {
   return 0;
 }
 
-/** Conteo de documentos en la subcolección de lista de espera (agregación; no descarga docs). */
+/**
+ * Conteo vía agregado `count()` (barato; puede verse menos alineado que una lectura completa en casos raros).
+ * Ruta: `{PROD_COLLECTION}/{PROD_ADMIN_DOC_ID}/waitlist` (por defecto `prod/admin/waitlist`).
+ */
 export async function adminCountWaitlistSignups(): Promise<number | null> {
   const app = tryGetAdminApp();
   if (!app) return null;
@@ -116,25 +119,51 @@ export async function adminCountWaitlistSignups(): Promise<number | null> {
   }
 }
 
+/**
+ * Conteo leyendo la subcolección entera (`QuerySnapshot#size`). Refleja lo mismo que ves en la consola
+ * al listar documentos en `prod/admin/waitlist`. Preferible para el número del correo de thank-you.
+ * En consola hay que borrar **los documentos dentro de esa subcolección**; borrar solo el doc `admin`
+ * no elimina `waitlist`.
+ */
+export async function adminCountWaitlistSignupsDirect(): Promise<number | null> {
+  const app = tryGetAdminApp();
+  if (!app) return null;
+  const db = getFirestore(app);
+  const col = db
+    .collection(PROD_COLLECTION)
+    .doc(PROD_ADMIN_DOC_ID)
+    .collection(WAITLIST_SUBCOLLECTION);
+
+  try {
+    const snap = await withTimeout(col.get(), 'firestore waitlist direct count');
+    return snap.size;
+  } catch (err) {
+    console.warn('[firestore-admin] waitlist direct count failed:', err);
+    return null;
+  }
+}
+
 const WAITLIST_COUNT_AFTER_WRITE_ATTEMPTS = 4;
-const WAITLIST_COUNT_AFTER_WRITE_DELAY_MS = 85;
+const WAITLIST_COUNT_AFTER_WRITE_DELAY_MS = 100;
+const WAITLIST_COUNT_BEFORE_FIRST_READ_MS = 100;
 
 /**
- * Tras un alta nuevo, el agregado `count()` a veces tarda un instante en reflejar el write.
- * Varios intentos y se toma el **máximo** (con altas concurrentes también es el valor más actual).
+ * Tras un alta nuevo: lectura **directa** de la subcolección varias veces con pausa (el write debe verse
+ * en `get()`). Se usa el **último** valor; no el máximo, para no quedar con conteos obsoletos altos.
  */
 export async function adminCountWaitlistSignupsAfterWrite(): Promise<number | null> {
-  let best: number | null = null;
+  await new Promise((r) => setTimeout(r, WAITLIST_COUNT_BEFORE_FIRST_READ_MS));
+  let last: number | null = null;
   for (let i = 0; i < WAITLIST_COUNT_AFTER_WRITE_ATTEMPTS; i++) {
-    const n = await adminCountWaitlistSignups();
+    const n = await adminCountWaitlistSignupsDirect();
     if (n != null) {
-      best = best === null ? n : Math.max(best, n);
+      last = n;
     }
     if (i < WAITLIST_COUNT_AFTER_WRITE_ATTEMPTS - 1) {
       await new Promise((r) => setTimeout(r, WAITLIST_COUNT_AFTER_WRITE_DELAY_MS));
     }
   }
-  return best;
+  return last;
 }
 
 export async function adminFetchWaitlistEntries(): Promise<WaitlistEntry[] | null> {

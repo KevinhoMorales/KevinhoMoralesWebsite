@@ -5,6 +5,7 @@ const TO_KEY: Record<string, string> = {
     'admin.errors.api.firebaseAdmin',
   Unauthorized: 'admin.errors.api.unauthorized',
   'No autorizado': 'admin.errors.api.unauthorized',
+  'Correo no autorizado para el panel': 'admin.errors.api.emailNotAllowed',
   'No autenticado': 'admin.errors.notAuthenticated',
   'Error de red': 'admin.errors.network',
   'NEXT_PUBLIC_FIREBASE_STORAGE_BUCKET no configurado': 'admin.errors.api.storageBucket',

@@ -342,6 +342,7 @@
       "api": {
         "firebaseAdmin": "Firebase Admin no configurado (FIREBASE_ADMIN_SDK_KEY o GOOGLE_APPLICATION_CREDENTIALS en el servidor).",
         "unauthorized": "No autorizado",
+        "emailNotAllowed": "Tu correo no está en ADMIN_ALLOWED_EMAILS (o la sesión no es válida). Revisa variables en el servidor o vuelve a iniciar sesión.",
         "storageBucket": "NEXT_PUBLIC_FIREBASE_STORAGE_BUCKET no configurado",
         "invalidMultipart": "Multipart inválido",
         "fileRequired": "Archivo requerido (campo file)",

@@ -1,6 +1,6 @@
 import { NextResponse } from 'next/server';
 import { adminFetchWaitlistEntries } from '@/lib/firestore-admin-waitlist';
-import { AdminUnauthorized, assertAdminUser } from '@/lib/admin-api-server';
+import { AdminUnauthorized, assertAdminUser, adminUnauthorizedResponse } from '@/lib/admin-api-server';
 
 export const dynamic = 'force-dynamic';
 
@@ -9,7 +9,7 @@ export async function GET(req: Request) {
     await assertAdminUser(req);
   } catch (e) {
     if (e instanceof AdminUnauthorized) {
-      return NextResponse.json({ error: 'No autorizado' }, { status: 401 });
+      return adminUnauthorizedResponse(e);
     }
     throw e;
   }

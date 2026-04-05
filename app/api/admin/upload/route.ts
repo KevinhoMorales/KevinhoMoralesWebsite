@@ -1,6 +1,11 @@
 import { NextResponse } from 'next/server';
 import { getStorage } from 'firebase-admin/storage';
-import { AdminUnauthorized, assertAdminUser, requireAdminApp } from '@/lib/admin-api-server';
+import {
+  AdminUnauthorized,
+  assertAdminUser,
+  adminUnauthorizedResponse,
+  requireAdminApp,
+} from '@/lib/admin-api-server';
 import { STORAGE_ADMIN_PREFIX } from '@/lib/firebase-paths';
 
 function safeFileName(name: string) {
@@ -12,7 +17,7 @@ export async function POST(req: Request) {
     await assertAdminUser(req);
   } catch (e) {
     if (e instanceof AdminUnauthorized) {
-      return NextResponse.json({ error: 'No autorizado' }, { status: 401 });
+      return adminUnauthorizedResponse(e);
     }
     throw e;
   }

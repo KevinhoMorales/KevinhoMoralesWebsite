@@ -1,6 +1,6 @@
 import { Resend } from 'resend';
 
-import { adminCountWaitlistSignups } from '@/lib/firestore-admin-waitlist';
+import { adminCountWaitlistSignupsDirect } from '@/lib/firestore-admin-waitlist';
 import { getResendApiKeyFromRemoteConfig } from '@/lib/firebase-admin';
 import { LAUNCH_DATE, PREORDER_END, formatPreorderDay } from '@/lib/waitlist-preorder';
 import { WAITLIST_EMAIL_RE } from '@/lib/waitlist-api-security';
@@ -115,7 +115,7 @@ export async function sendWaitlistThankYouEmail(input: {
   if (signups != null && Number.isFinite(signups) && signups >= 1) {
     preorderTotal = Math.floor(signups);
   } else {
-    const preorderTotalRaw = await adminCountWaitlistSignups();
+    const preorderTotalRaw = await adminCountWaitlistSignupsDirect();
     preorderTotal = Math.max(1, preorderTotalRaw ?? 1);
   }
 
