@@ -15,7 +15,8 @@
     "scrape": "tsx scripts/scrape-notion-site.ts",
     "scrape-images": "tsx scripts/scrape-images.ts",
     "update-profile-images": "tsx scripts/update-profile-with-local-images.ts",
-    "import-testimonials": "tsx scripts/import-linkedin-testimonials.ts"
+    "import-testimonials": "tsx scripts/import-linkedin-testimonials.ts",
+    "resend:publish-waitlist-template": "tsx scripts/resend-publish-waitlist-template.ts"
   },
   "dependencies": {
     "@base-ui/react": "^1.2.0",
@@ -35,6 +36,7 @@
     "react-dom": "^18",
     "react-icons": "^5.6.0",
     "react-type-animation": "^3.2.0",
+    "resend": "^6.10.0",
     "rss-parser": "^3.13.0",
     "shadcn": "^4.0.0",
     "tailwind-merge": "^3.5.0",

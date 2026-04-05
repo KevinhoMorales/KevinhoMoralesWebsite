@@ -35,12 +35,17 @@ function waitlistDocRef(emailLower: string): string {
   return createHash('sha256').update(emailLower).digest('hex');
 }
 
+export type WaitlistSignupSaveResult =
+  | { status: 'created'; id: string }
+  | { status: 'exists'; id: string };
+
 export async function adminSaveWaitlistSignup(input: {
   email: string;
   firstName: string;
   lastName: string;
+  organization: string;
   userAgent?: string;
-}): Promise<{ id: string } | null> {
+}): Promise<WaitlistSignupSaveResult | null> {
   const app = tryGetAdminApp();
   if (!app) return null;
 
@@ -56,19 +61,22 @@ export async function adminSaveWaitlistSignup(input: {
 
   const firstName = input.firstName.trim().slice(0, 120);
   const lastName = input.lastName.trim().slice(0, 120);
+  const organization = input.organization.trim().slice(0, 120);
   const displayName = `${firstName} ${lastName}`.trim().slice(0, 120);
   const userAgent = input.userAgent?.trim().slice(0, 512);
 
+  let created = false;
   await db.runTransaction(async (tx) => {
     const snap = await tx.get(ref);
-    const now = FieldValue.serverTimestamp();
 
     if (!snap.exists) {
+      created = true;
+      const now = FieldValue.serverTimestamp();
       tx.set(ref, {
         email,
-        emailLower,
         firstName,
         lastName,
+        organization,
         displayName,
         source: 'waitlist_modal',
         createdAt: now,
@@ -78,25 +86,34 @@ export async function adminSaveWaitlistSignup(input: {
       return;
     }
 
-    const upd: Record<string, unknown> = {
-      email,
-      emailLower,
-      firstName,
-      lastName,
-      displayName,
-      updatedAt: now,
-      organization: FieldValue.delete(),
-    };
-    if (userAgent) upd.userAgent = userAgent;
-    tx.update(ref, upd);
+    // Siguiente envío con el mismo correo: no sobrescribir ni duplicar notificación.
   });
 
-  return { id };
+  return created ? { status: 'created', id } : { status: 'exists', id };
 }
 
 function millisFromFirestoreValue(v: unknown): number {
   if (v instanceof Timestamp) return v.toMillis();
   return 0;
+}
+
+/** Conteo de documentos en la subcolección de lista de espera (agregación; no descarga docs). */
+export async function adminCountWaitlistSignups(): Promise<number | null> {
+  const app = tryGetAdminApp();
+  if (!app) return null;
+  const db = getFirestore(app);
+  const col = db
+    .collection(PROD_COLLECTION)
+    .doc(PROD_ADMIN_DOC_ID)
+    .collection(WAITLIST_SUBCOLLECTION);
+
+  try {
+    const snap = await withTimeout(col.count().get(), 'firestore waitlist count');
+    return snap.data().count;
+  } catch (err) {
+    console.warn('[firestore-admin] waitlist count failed:', err);
+    return null;
+  }
 }
 
 export async function adminFetchWaitlistEntries(): Promise<WaitlistEntry[] | null> {
@@ -130,7 +147,6 @@ export async function adminFetchWaitlistEntries(): Promise<WaitlistEntry[] | nul
       out.push({
         id: doc.id,
         email: typeof d.email === 'string' ? d.email : '',
-        emailLower: typeof d.emailLower === 'string' ? d.emailLower : undefined,
         firstName: typeof d.firstName === 'string' ? d.firstName : undefined,
         lastName: typeof d.lastName === 'string' ? d.lastName : undefined,
         displayName: typeof d.displayName === 'string' ? d.displayName : undefined,

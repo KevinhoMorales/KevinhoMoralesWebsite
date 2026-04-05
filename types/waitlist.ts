@@ -2,7 +2,6 @@
 export interface WaitlistEntry {
   id: string;
   email: string;
-  emailLower?: string;
   firstName?: string;
   lastName?: string;
   /** Derivable desde nombre + apellido; puede existir en registros antiguos. */

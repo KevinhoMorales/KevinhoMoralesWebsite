@@ -6,16 +6,22 @@ const YOUTUBE_API_KEY_PARAM_NAMES = [
   'YOUTUBE_API_KEY',
 ];
 
-const WEB3FORMS_ACCESS_KEY_PARAM_NAMES = [
-  'web_3_form',
-  'web3forms_access_key',
-  'WEB3FORMS_ACCESS_KEY',
+const RESEND_API_KEY_PARAM_NAMES = [
+  'resend_api_key',
+  'RESEND_API_KEY',
+  'resend-api-key',
 ];
 
 interface RemoteConfigParameter {
   defaultValue?: { value?: string };
   conditionalValues?: Record<string, { value?: string }>;
 }
+
+/** Plantilla mínima para buscar en raíz y en `parameterGroups` (Firebase Console). */
+type RemoteConfigTemplateLike = {
+  parameters?: Record<string, RemoteConfigParameter>;
+  parameterGroups?: Record<string, { parameters?: Record<string, RemoteConfigParameter> }>;
+};
 
 function extractRemoteConfigValue(
   parameter: RemoteConfigParameter | undefined
@@ -33,6 +39,21 @@ function extractRemoteConfigValue(
     }
   }
 
+  return undefined;
+}
+
+function getRemoteConfigParameter(
+  template: RemoteConfigTemplateLike,
+  name: string
+): RemoteConfigParameter | undefined {
+  const top = template.parameters?.[name];
+  if (top) return top;
+  const groups = template.parameterGroups;
+  if (!groups) return undefined;
+  for (const group of Object.values(groups)) {
+    const p = group?.parameters?.[name];
+    if (p) return p;
+  }
   return undefined;
 }
 
@@ -106,13 +127,10 @@ export async function getYouTubeApiKeyFromRemoteConfig(
     const remoteConfig = admin.remoteConfig(app);
     const template = await remoteConfig.getTemplate();
 
-    const parameters = template.parameters as Record<string, RemoteConfigParameter> | undefined;
-    if (parameters) {
-      for (const name of namesToTry) {
-        const parameter = parameters[name];
-        const value = extractRemoteConfigValue(parameter);
-        if (value) return value;
-      }
+    for (const name of namesToTry) {
+      const parameter = getRemoteConfigParameter(template as RemoteConfigTemplateLike, name);
+      const value = extractRemoteConfigValue(parameter);
+      if (value) return value;
     }
 
     throw new Error(
@@ -128,30 +146,35 @@ export async function getYouTubeApiKeyFromRemoteConfig(
 }
 
 /**
- * Obtiene la Web3Forms Access Key desde Firebase Remote Config.
- * Fallback a WEB3FORMS_ACCESS_KEY en env.
+ * Obtiene la API key de Resend desde Firebase Remote Config (servidor).
+ * Prueba varios nombres de parámetro y hace fallback a RESEND_API_KEY en env.
  */
-export async function getWeb3FormsAccessKeyFromRemoteConfig(): Promise<string> {
+export async function getResendApiKeyFromRemoteConfig(
+  paramName?: string
+): Promise<string> {
+  const namesToTry = paramName
+    ? [paramName, ...RESEND_API_KEY_PARAM_NAMES.filter((n) => n !== paramName)]
+    : RESEND_API_KEY_PARAM_NAMES;
+
   try {
     const app = getAdminApp();
     const remoteConfig = admin.remoteConfig(app);
     const template = await remoteConfig.getTemplate();
 
-    const parameters = template.parameters as Record<string, RemoteConfigParameter> | undefined;
-    if (parameters) {
-      for (const name of WEB3FORMS_ACCESS_KEY_PARAM_NAMES) {
-        const parameter = parameters[name];
-        const value = extractRemoteConfigValue(parameter);
-        if (value) return value;
-      }
+    for (const name of namesToTry) {
+      const parameter = getRemoteConfigParameter(template as RemoteConfigTemplateLike, name);
+      const value = extractRemoteConfigValue(parameter);
+      if (value) return value;
     }
 
     throw new Error(
-      `No se encontró parámetro web3forms en Remote Config (probados: ${WEB3FORMS_ACCESS_KEY_PARAM_NAMES.join(', ')})`
+      `No se encontró parámetro de Resend API key en Remote Config (probados: ${namesToTry.join(', ')})`
     );
   } catch (error) {
-    const envKey = (process.env.WEB3FORMS_ACCESS_KEY || '').trim();
-    if (envKey) return envKey;
+    const envKey = (process.env.RESEND_API_KEY || '').trim();
+    if (envKey) {
+      return envKey;
+    }
     throw error;
   }
 }

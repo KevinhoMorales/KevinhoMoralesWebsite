@@ -128,8 +128,8 @@ export function Navigation() {
     [t]
   )
 
-  const showWaitlistNav =
-    !waitlistJoined && pathname != null && !pathname.startsWith('/admin')
+  /** CTA del libro: visible siempre (excepto admin); el estilo “teaser” solo si cerró sin unirse. */
+  const showBookNav = pathname != null && !pathname.startsWith('/admin')
 
   useEffect(() => {
     const handleScroll = () => setIsScrolled(window.scrollY > 50)
@@ -180,22 +180,22 @@ export function Navigation() {
             />
           </div>
 
-          {showWaitlistNav ? (
+          {showBookNav ? (
             <button
               type="button"
               onClick={openWaitlist}
               className={
-                navTeaserVisible
+                navTeaserVisible && !waitlistJoined
                   ? 'group relative hidden shrink-0 items-center gap-2 rounded-full px-3.5 py-2 text-xs font-semibold tracking-tight text-primary-foreground shadow-lg shadow-primary/35 sm:inline-flex bg-gradient-to-r from-primary via-teal-600 to-primary bg-[length:200%_100%] animate-shimmer ring-offset-background transition-[filter,transform] hover:brightness-110 focus:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 active:scale-[0.98]'
                   : 'group relative hidden shrink-0 items-center gap-2 rounded-full border border-primary/40 bg-primary/10 px-3.5 py-2 text-xs font-semibold tracking-tight text-primary ring-offset-background transition-colors hover:bg-primary/20 focus:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 active:scale-[0.98] sm:inline-flex'
               }
             >
-              {navTeaserVisible ? (
+              {navTeaserVisible && !waitlistJoined ? (
                 <span className="pointer-events-none absolute -inset-px rounded-full bg-gradient-to-r from-primary/0 via-white/25 to-primary/0 opacity-0 blur-px transition-opacity group-hover:opacity-100" aria-hidden />
               ) : null}
               <Sparkles className="h-4 w-4 shrink-0 opacity-90" aria-hidden />
               <span className="whitespace-nowrap">{t('nav.waitlist')}</span>
-              {navTeaserVisible ? (
+              {navTeaserVisible && !waitlistJoined ? (
                 <>
                   <span className="absolute -right-0.5 -top-0.5 flex h-2.5 w-2.5 rounded-full bg-primary-foreground/90 motion-safe:animate-ping" aria-hidden />
                   <span className="absolute -right-0.5 -top-0.5 flex h-2.5 w-2.5 rounded-full bg-amber-300 ring-2 ring-primary" aria-hidden />
@@ -221,7 +221,7 @@ export function Navigation() {
               </SheetTrigger>
               <SheetContent side="right" className="w-[min(300px,85vw)] sm:w-[320px]">
                 <div className="mt-8 flex flex-col gap-1">
-                  {showWaitlistNav ? (
+                  {showBookNav ? (
                     <Button
                       type="button"
                       className="mb-2 h-12 gap-2 rounded-xl bg-gradient-to-r from-primary to-teal-600 font-semibold text-primary-foreground shadow-md shadow-primary/30 hover:from-primary/95 hover:to-teal-600/95"

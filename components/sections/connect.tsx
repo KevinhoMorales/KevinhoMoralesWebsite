@@ -1,6 +1,6 @@
 'use client'
 
-import { useState, useRef } from 'react'
+import { useState } from 'react'
 import { Button } from '@/components/ui/button'
 import { ScrollReveal } from '@/components/scroll-reveal'
 import { Card, CardContent } from '@/components/ui/card'
@@ -8,6 +8,7 @@ import { Coffee } from 'lucide-react'
 import { BuyMeACoffeeModal } from '@/components/buymeacoffee-modal'
 import { useI18n } from '@/components/i18n/locale-provider'
 import { cn } from '@/lib/utils'
+import { getPublicWeb3FormsAccessKey } from '@/lib/web3forms-submit'
 import type { Profile } from '@/types'
 
 interface ConnectProps {
@@ -20,45 +21,52 @@ const inputClassName =
 export function Connect({ profile }: ConnectProps) {
   const { t } = useI18n()
   const links = profile.socialLinks || {}
-  const [name, setName] = useState('')
-  const [linkedin, setLinkedin] = useState('')
-  const [message, setMessage] = useState('')
   const [status, setStatus] = useState<'idle' | 'sending' | 'success' | 'error'>('idle')
-  const [statusMessage, setStatusMessage] = useState('')
+  const [result, setResult] = useState('')
   const [bmcModalOpen, setBmcModalOpen] = useState(false)
-  const botcheckRef = useRef<HTMLInputElement>(null)
 
-  async function handleSubmit(e: React.FormEvent) {
-    e.preventDefault()
+  async function onSubmit(event: React.FormEvent<HTMLFormElement>) {
+    event.preventDefault()
+    const form = event.currentTarget
     setStatus('sending')
-    setStatusMessage('')
+    setResult(t('connect.sending'))
+
+    const accessKey = getPublicWeb3FormsAccessKey()
+    if (!accessKey) {
+      setStatus('error')
+      setResult(t('connect.missingWeb3Key'))
+      return
+    }
+
+    const formData = new FormData(form)
+    formData.append('access_key', accessKey)
+    const name = String(formData.get('name') || '').trim()
+    formData.append('subject', `Contact from ${name} - kevinhomorales.com`)
+    formData.append('from_name', name)
 
     try {
-      const res = await fetch('/api/contact', {
+      const response = await fetch('https://api.web3forms.com/submit', {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          name,
-          linkedin: linkedin || undefined,
-          message,
-          botcheck: botcheckRef.current?.value || '',
-        }),
+        body: formData,
       })
-      const data = (await res.json()) as { success?: boolean; message?: string }
+
+      const data = (await response.json()) as {
+        success?: boolean
+        message?: string
+        body?: { message?: string }
+      }
 
       if (data.success) {
         setStatus('success')
-        setStatusMessage(data.message || t('connect.success'))
-        setName('')
-        setLinkedin('')
-        setMessage('')
+        setResult(t('connect.success'))
+        form.reset()
       } else {
         setStatus('error')
-        setStatusMessage(data.message || t('connect.fail'))
+        setResult(data.body?.message || data.message || t('connect.fail'))
       }
     } catch {
       setStatus('error')
-      setStatusMessage(t('connect.network'))
+      setResult(t('connect.network'))
     }
   }
 
@@ -78,69 +86,61 @@ export function Connect({ profile }: ConnectProps) {
         <ScrollReveal delay={0.1} variant="scale">
         <Card className="bg-card/50 border-border/50 max-w-2xl mx-auto mb-6">
           <CardContent className="p-4 sm:p-6 md:p-8">
-            <form onSubmit={handleSubmit} className="space-y-4 text-left">
+            <form onSubmit={onSubmit} className="space-y-4 text-left">
               <div>
-                <label htmlFor="name" className="block text-sm font-medium mb-2">
+                <label htmlFor="connect-name" className="block text-sm font-medium mb-2">
                   {t('connect.name')}
                 </label>
                 <input
-                  id="name"
+                  id="connect-name"
+                  name="name"
                   type="text"
                   required
-                  value={name}
-                  onChange={(e) => setName(e.target.value)}
                   placeholder={t('connect.namePh')}
                   className={inputClassName}
                   disabled={status === 'sending'}
+                  autoComplete="name"
                 />
               </div>
               <div>
-                <label htmlFor="linkedin" className="block text-sm font-medium mb-2">
-                  {t('connect.linkedin')} <span className="text-muted-foreground">{t('connect.optional')}</span>
+                <label htmlFor="connect-email" className="block text-sm font-medium mb-2">
+                  {t('connect.email')}
                 </label>
                 <input
-                  id="linkedin"
-                  type="url"
-                  value={linkedin}
-                  onChange={(e) => setLinkedin(e.target.value)}
-                  placeholder={t('connect.linkedinPh')}
+                  id="connect-email"
+                  name="email"
+                  type="email"
+                  required
+                  placeholder={t('connect.emailPh')}
                   className={inputClassName}
                   disabled={status === 'sending'}
+                  autoComplete="email"
                 />
               </div>
               <div>
-                <label htmlFor="message" className="block text-sm font-medium mb-2">
+                <label htmlFor="connect-message" className="block text-sm font-medium mb-2">
                   {t('connect.message')}
                 </label>
                 <textarea
-                  id="message"
+                  id="connect-message"
+                  name="message"
                   required
-                  value={message}
-                  onChange={(e) => setMessage(e.target.value)}
                   placeholder={t('connect.messagePh')}
                   rows={4}
                   className={cn(inputClassName, 'min-h-[100px] resize-y')}
                   disabled={status === 'sending'}
                 />
               </div>
-              <input
-                ref={botcheckRef}
-                type="text"
-                name="botcheck"
-                className="absolute -left-[9999px]"
-                tabIndex={-1}
-                autoComplete="off"
-              />
-              {statusMessage && (
+              {result ? (
                 <p
                   className={cn(
                     'text-sm',
                     status === 'success' ? 'text-primary' : 'text-destructive'
                   )}
                 >
-                  {statusMessage}
+                  {result}
                 </p>
-              )}
+              ) : null}
               <Button
                 type="submit"
                 size="lg"

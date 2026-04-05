@@ -3,7 +3,6 @@
 import { useState, FormEvent, useEffect } from 'react';
 import Link from 'next/link';
 import { useAdminAuth } from '@/components/admin/admin-auth-provider';
-import { LocaleSwitcher } from '@/components/i18n/locale-switcher';
 import { useI18n } from '@/components/i18n/locale-provider';
 import { getFirebaseAuth } from '@/lib/firebase';
 import { Button } from '@/components/ui/button';
@@ -45,10 +44,7 @@ export default function AdminLoginPage() {
 
   return (
     <main className="container mx-auto flex min-h-[70vh] max-w-sm flex-col justify-center px-4 py-12">
-      <div className="flex items-center justify-between gap-3 mb-4">
-        <h1 className="text-2xl font-semibold">{t('admin.login.title')}</h1>
-        <LocaleSwitcher />
-      </div>
+      <h1 className="text-2xl font-semibold mb-4">{t('admin.login.title')}</h1>
       <p className="text-muted-foreground text-sm mb-6">{t('admin.login.intro')}</p>
       {missingFirebase && (
         <p className="text-sm text-destructive mb-4">{t('admin.login.missingFirebase')}</p>

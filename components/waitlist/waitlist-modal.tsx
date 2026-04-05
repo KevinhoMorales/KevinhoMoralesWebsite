@@ -2,7 +2,7 @@
 
 import Image from 'next/image';
 import { useEffect, useState } from 'react';
-import { CheckCircle2, Loader2 } from 'lucide-react';
+import { Loader2 } from 'lucide-react';
 
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
@@ -10,6 +10,7 @@ import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle } f
 import { Input } from '@/components/ui/input';
 import { useI18n } from '@/components/i18n/locale-provider';
 import { toBcp47 } from '@/lib/i18n/bcp47';
+import { getPublicWeb3FormsAccessKey } from '@/lib/web3forms-submit';
 import { LAUNCH_DATE, PREORDER_END, formatPreorderDay } from '@/lib/waitlist-preorder';
 import { isWaitlistAcceptingSubmissions } from '@/lib/waitlist-signups-config';
 
@@ -27,9 +28,9 @@ function PreorderCountdown({ endAt }: { endAt: Date }) {
   const ms = endAt.getTime() - Date.now();
   if (ms <= 0) {
     return (
-      <p className="text-xs text-muted-foreground leading-relaxed">
-        {t('waitlist.preorder.ended')}
-      </p>
+      <div className="mt-2 rounded-lg border border-border/70 bg-muted/40 px-3 py-2.5 sm:px-4">
+        <p className="text-sm text-muted-foreground leading-relaxed">{t('waitlist.preorder.ended')}</p>
+      </div>
     );
   }
   const totalSeconds = Math.floor(ms / 1000);
@@ -48,9 +49,15 @@ function PreorderCountdown({ endAt }: { endAt: Date }) {
         ? t('waitlist.preorder.countdownOne', { days: '1', time })
         : t('waitlist.preorder.countdownSoon', { time });
   return (
-    <p className="text-xs font-medium text-primary/90 tabular-nums leading-relaxed">
-      <span className="text-foreground/90">{line}</span>
-    </p>
+    <div
+      className="mt-2 rounded-lg border border-primary/50 bg-primary/15 px-3 py-2.5 sm:px-4 sm:py-3 shadow-[inset_0_1px_0_0_rgba(255,255,255,0.06)] ring-1 ring-primary/15"
+      role="status"
+      aria-live="polite"
+    >
+      <p className="text-sm sm:text-base font-semibold text-foreground tabular-nums leading-snug tracking-tight text-balance">
+        {line}
+      </p>
+    </div>
   );
 }
 
@@ -91,22 +98,21 @@ function WaitlistPreorderOffer() {
         <p className="text-muted-foreground line-through decoration-muted-foreground/70 mt-1.5">$7.99</p>
         <p className="text-lg font-semibold text-primary">$4.99</p>
       </div>
-      <div className="mt-2">
-        <PreorderCountdown endAt={PREORDER_END} />
-      </div>
+      <PreorderCountdown endAt={PREORDER_END} />
       <p className="text-xs text-muted-foreground mt-3 leading-relaxed">{t('waitlist.preorder.gratitude')}</p>
     </div>
   );
 }
 
 export function WaitlistModal() {
-  const { t } = useI18n();
+  const { t, locale } = useI18n();
   const acceptingSignup = isWaitlistAcceptingSubmissions();
   const { dialogOpen, setDialogOpen, markJoined } = useWaitlist();
   const [email, setEmail] = useState('');
   const [firstName, setFirstName] = useState('');
   const [lastName, setLastName] = useState('');
-  const [status, setStatus] = useState<'idle' | 'loading' | 'success' | 'error'>('idle');
+  const [community, setCommunity] = useState('');
+  const [status, setStatus] = useState<'idle' | 'loading' | 'error'>('idle');
   const [message, setMessage] = useState<string | null>(null);
   const [formEngaged, setFormEngaged] = useState(false);
 
@@ -114,6 +120,7 @@ export function WaitlistModal() {
     setEmail('');
     setFirstName('');
     setLastName('');
+    setCommunity('');
     setStatus('idle');
     setMessage(null);
     setFormEngaged(false);
@@ -142,20 +149,99 @@ export function WaitlistModal() {
           email: email.trim(),
           firstName: firstName.trim(),
           lastName: lastName.trim(),
+          organization: community.trim(),
           botcheck,
         }),
       });
-      const data = (await res.json()) as { success?: boolean; message?: string };
+      const data = (await res.json()) as {
+        success?: boolean;
+        message?: string;
+        code?: string;
+      };
 
       if (data.success && res.ok) {
-        setStatus('success');
-        setMessage(data.message ?? t('waitlist.thanksMsg'));
         markJoined();
+        const preorderDeadline = formatPreorderDay(PREORDER_END, toBcp47(locale));
+        let alertMessage = t('waitlist.successAlert', { date: preorderDeadline });
+
+        const pubKey = getPublicWeb3FormsAccessKey();
+        if (pubKey) {
+          const trap = (form.elements.namedItem('botcheck') as HTMLInputElement)?.value ?? '';
+          if (trap) {
+            console.warn('[waitlist] Web3Forms omitido (botcheck)');
+          } else {
+            /** Inputs controlados: no usar `new FormData(form)` (React no siempre sincroniza al DOM a tiempo). */
+            const fn = firstName.trim();
+            const ln = lastName.trim();
+            const e = email.trim();
+            const org = community.trim();
+            const full = `${fn} ${ln}`.trim();
+            const lines = [
+              'Nuevo registro en la lista de espera del libro.',
+              '',
+              `Correo: ${e}`,
+              `Nombre: ${fn}`,
+              `Apellido: ${ln}`,
+              `Comunidad: ${org}`,
+            ];
+            const fd = new FormData();
+            fd.append('access_key', pubKey);
+            fd.append('botcheck', '');
+            fd.append('name', full || e);
+            fd.append('email', e);
+            fd.append('from_name', full || e);
+            fd.append(
+              'subject',
+              'Lista de espera — libro Kotlin / Swift / Dart (kevinhomorales.com)'
+            );
+            fd.append('message', lines.join('\n'));
+            fd.append('firstName', fn);
+            fd.append('lastName', ln);
+            fd.append('organization', org);
+
+            try {
+              const w3Res = await fetch('https://api.web3forms.com/submit', {
+                method: 'POST',
+                body: fd,
+              });
+              const w3Data = (await w3Res.json()) as {
+                success?: boolean;
+                message?: string;
+                body?: { message?: string };
+              };
+              if (!w3Data.success) {
+                const detail =
+                  w3Data.body?.message || w3Data.message || `HTTP ${w3Res.status}`;
+                console.warn('[waitlist] Web3Forms:', detail);
+                alertMessage += `\n\n${t('waitlist.web3NotifyFail', { detail })}`;
+              }
+            } catch (w3Err) {
+              console.warn('[waitlist] Web3Forms fetch error:', w3Err);
+              alertMessage += `\n\n${t('waitlist.web3NotifyFail', { detail: t('waitlist.errorNetwork') })}`;
+            }
+          }
+        } else {
+          console.warn(
+            '[waitlist] Falta NEXT_PUBLIC_WEB3FORMS_ACCESS_KEY: Web3Forms no recibe el envío desde el navegador.'
+          );
+          alertMessage += `\n\n${t('waitlist.web3KeyMissing')}`;
+        }
+
+        setStatus('idle');
+        resetForm();
+        setDialogOpen(false);
+        window.setTimeout(() => {
+          window.alert(alertMessage);
+        }, 200);
         return;
       }
 
       setStatus('error');
-      setMessage(data.message ?? t('waitlist.errorSend'));
+      setMessage(
+        data.code === 'duplicate_email'
+          ? t('waitlist.duplicateEmail')
+          : (data.message ?? t('waitlist.errorSend'))
+      );
     } catch {
       setStatus('error');
       setMessage(t('waitlist.errorNetwork'));
@@ -197,24 +283,7 @@ export function WaitlistModal() {
               ) : null}
             </DialogHeader>
 
-            {status === 'success' ? (
-              <div className="flex flex-col gap-4">
-                <div className="rounded-xl border border-primary/25 bg-primary/5 px-4 py-5">
-                  <div className="flex items-start gap-3">
-                    <CheckCircle2 className="h-6 w-6 shrink-0 text-primary mt-0.5" aria-hidden />
-                    <div>
-                      <p className="font-medium text-foreground">{t('waitlist.thanks')}</p>
-                      <p className="text-sm text-muted-foreground mt-1">{message}</p>
-                    </div>
-                  </div>
-                </div>
-                <WaitlistPreorderOffer />
-                <Button type="button" variant="secondary" className="w-full sm:w-auto" onClick={() => handleOpenChange(false)}>
-                  {t('waitlist.close')}
-                </Button>
-              </div>
-            ) : (
-              <form onSubmit={handleSubmit} className="flex flex-col gap-4">
+            <form onSubmit={handleSubmit} className="flex flex-col gap-4">
                 <div className="space-y-2">
                   <label htmlFor="waitlist-email" className="text-sm font-medium text-foreground">
                     {t('waitlist.email')}
@@ -288,6 +357,30 @@ export function WaitlistModal() {
                     className="h-11 rounded-xl border-border/80 bg-background/80"
                   />
                 </div>
+                <div className="space-y-2">
+                  <label htmlFor="waitlist-community" className="text-sm font-medium text-foreground">
+                    {t('waitlist.community')}
+                    {acceptingSignup ? <span className="text-destructive"> *</span> : null}
+                  </label>
+                  <Input
+                    id="waitlist-community"
+                    name="organization"
+                    type="text"
+                    autoComplete="organization"
+                    required={acceptingSignup}
+                    placeholder={t('waitlist.communityPh')}
+                    value={community}
+                    onChange={(e) => {
+                      const v = e.target.value;
+                      setCommunity(v);
+                      if (v.trim()) setFormEngaged(true);
+                    }}
+                    onFocus={() => setFormEngaged(true)}
+                    disabled={!acceptingSignup || status === 'loading'}
+                    maxLength={120}
+                    className="h-11 rounded-xl border-border/80 bg-background/80"
+                  />
+                </div>
 
                 {formEngaged || status === 'loading' ? <WaitlistPreorderOffer /> : null}
 
@@ -318,7 +411,6 @@ export function WaitlistModal() {
                   )}
                 </Button>
               </form>
-            )}
           </div>
         </div>
       </DialogContent>

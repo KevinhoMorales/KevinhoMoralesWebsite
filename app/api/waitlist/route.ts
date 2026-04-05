@@ -1,79 +1,15 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { adminSaveWaitlistSignup } from '@/lib/firestore-admin-waitlist';
-import { resolveWeb3FormsAccessKey } from '@/lib/web3forms-access-key';
+import { sendWaitlistThankYouEmail } from '@/lib/send-waitlist-thank-you';
+import {
+  assertWaitlistJsonSize,
+  checkWaitlistRateLimit,
+  getWaitlistClientKey,
+  normalizeWaitlistFields,
+} from '@/lib/waitlist-api-security';
 import { isWaitlistAcceptingSubmissions } from '@/lib/waitlist-signups-config';
 
 export const dynamic = 'force-dynamic';
-
-const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-
-async function notifyWaitlistViaWeb3Forms(
-  e: string,
-  firstName: string,
-  lastName: string
-): Promise<{ ok: true; message: string } | { ok: false; message: string }> {
-  const { key, remoteConfigError } = await resolveWeb3FormsAccessKey();
-
-  if (!key) {
-    const hint = remoteConfigError?.includes('not configured')
-      ? ' Configura FIREBASE_ADMIN_SDK_KEY o WEB3FORMS_ACCESS_KEY.'
-      : '';
-    return {
-      ok: false,
-      message:
-        'Lista de espera no disponible. Configura FIREBASE_ADMIN_SDK_KEY en el servidor o WEB3FORMS_ACCESS_KEY en .env / Remote Config.' +
-        hint,
-    };
-  }
-
-  const fn = firstName.trim();
-  const ln = lastName.trim();
-  const full = `${fn} ${ln}`.trim();
-  const lines = [
-    'Nuevo registro en la lista de espera del libro.',
-    '',
-    `Correo: ${e}`,
-    `Nombre: ${fn}`,
-    `Apellido: ${ln}`,
-  ];
-
-  const payload = {
-    access_key: key,
-    email: e,
-    name: full || e,
-    subject: 'Lista de espera — libro Kotlin / Swift / Dart (kevinhomorales.com)',
-    message: lines.join('\n'),
-    from_name: full || e,
-    botcheck: '',
-  };
-
-  const res = await fetch('https://api.web3forms.com/submit', {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-      Accept: 'application/json',
-    },
-    body: JSON.stringify(payload),
-  });
-
-  const data = (await res.json().catch(() => ({}))) as {
-    success?: boolean;
-    message?: string;
-    body?: { message?: string };
-  };
-
-  if (!res.ok) {
-    return {
-      ok: false,
-      message: data.body?.message || data.message || 'No se pudo registrar.',
-    };
-  }
-
-  return {
-    ok: true,
-    message: data.body?.message || data.message || '¡Listo! Te avisaremos cuando haya novedades.',
-  };
-}
 
 export async function POST(request: NextRequest) {
   try {
@@ -84,66 +20,70 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    const body = await request.json();
-    const { email, firstName, lastName, botcheck } = body as {
-      email?: string;
-      firstName?: string;
-      lastName?: string;
-      botcheck?: string;
-    };
+    const size = assertWaitlistJsonSize(request);
+    if (!size.ok) {
+      return NextResponse.json({ success: false, message: 'Solicitud demasiado grande.' }, { status: 413 });
+    }
 
-    if (!email?.trim() || !EMAIL_RE.test(email.trim())) {
+    const clientKey = getWaitlistClientKey(request);
+    const limited = checkWaitlistRateLimit(clientKey);
+    if (!limited.allowed) {
       return NextResponse.json(
-        { success: false, message: 'Introduce un correo válido.' },
-        { status: 400 }
+        { success: false, message: 'Demasiados intentos. Espera unos minutos e inténtalo de nuevo.' },
+        {
+          status: 429,
+          headers: { 'Retry-After': String(limited.retryAfterSec) },
+        }
       );
     }
 
-    const fn = firstName?.trim() ?? '';
-    const ln = lastName?.trim() ?? '';
-    if (!fn || !ln) {
-      return NextResponse.json(
-        { success: false, message: 'Indica nombre y apellido.' },
-        { status: 400 }
-      );
+    let bodyRaw: unknown;
+    try {
+      bodyRaw = await request.json();
+    } catch {
+      return NextResponse.json({ success: false, message: 'Datos inválidos.' }, { status: 400 });
     }
 
-    if (botcheck) {
-      return NextResponse.json({ success: false, message: 'Spam detectado.' }, { status: 400 });
+    if (!bodyRaw || typeof bodyRaw !== 'object' || Array.isArray(bodyRaw)) {
+      return NextResponse.json({ success: false, message: 'Datos inválidos.' }, { status: 400 });
     }
 
-    const e = email.trim();
+    const parsed = normalizeWaitlistFields(bodyRaw as Record<string, unknown>);
+    if (!parsed.ok) {
+      return NextResponse.json({ success: false, message: parsed.message }, { status: 400 });
+    }
+
+    const { email: e, firstName: fn, lastName: ln, organization: org } = parsed.fields;
     const ua = request.headers.get('user-agent') ?? undefined;
 
     const saved = await adminSaveWaitlistSignup({
       email: e,
       firstName: fn,
       lastName: ln,
+      organization: org,
       userAgent: ua,
     });
 
-    if (saved) {
-      const notify = await notifyWaitlistViaWeb3Forms(e, fn, ln);
-      if (!notify.ok) {
-        console.warn('[waitlist] Web3Forms (opcional, Firestore OK):', notify.message);
-      }
+    if (saved?.status === 'exists') {
+      return NextResponse.json(
+        { success: false, code: 'duplicate_email' },
+        { status: 409 }
+      );
+    }
+
+    if (saved?.status === 'created') {
+      void sendWaitlistThankYouEmail({ to: e, firstName: fn });
       return NextResponse.json({
         success: true,
         message: '¡Listo! Te avisaremos cuando haya novedades.',
       });
     }
 
-    const notify = await notifyWaitlistViaWeb3Forms(e, fn, ln);
-    if (!notify.ok) {
-      return NextResponse.json({ success: false, message: notify.message }, { status: 503 });
-    }
-
     return NextResponse.json({
       success: true,
-      message: notify.message,
+      message: '¡Listo! Te avisaremos cuando haya novedades.',
     });
-  } catch (error) {
-    console.error('Waitlist error:', error);
+  } catch {
     return NextResponse.json(
       { success: false, message: 'Error al enviar. Inténtalo de nuevo.' },
       { status: 500 }

@@ -3,7 +3,6 @@
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { useAdminAuth } from '@/components/admin/admin-auth-provider';
-import { LocaleSwitcher } from '@/components/i18n/locale-switcher';
 import { useI18n } from '@/components/i18n/locale-provider';
 import { Button } from '@/components/ui/button';
 import { cn } from '@/lib/utils';
@@ -45,7 +44,6 @@ export function AdminShell({ children }: { children: React.ReactNode }) {
             })}
           </nav>
           <div className="flex items-center gap-2">
-            <LocaleSwitcher />
             <Button variant="ghost" size="sm" asChild>
               <Link href="/">{t('admin.shell.viewSite')}</Link>
             </Button>

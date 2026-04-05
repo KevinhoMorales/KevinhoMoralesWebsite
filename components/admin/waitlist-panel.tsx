@@ -74,6 +74,7 @@ export function WaitlistPanel() {
               <th className="p-3 font-medium whitespace-nowrap">{t('admin.waitlistPanel.colEmail')}</th>
               <th className="p-3 font-medium whitespace-nowrap">{t('admin.waitlistPanel.colFirstName')}</th>
               <th className="p-3 font-medium whitespace-nowrap">{t('admin.waitlistPanel.colLastName')}</th>
+              <th className="p-3 font-medium whitespace-nowrap">{t('admin.waitlistPanel.colCommunity')}</th>
               <th className="p-3 font-medium whitespace-nowrap">{t('admin.waitlistPanel.colCreated')}</th>
               <th className="p-3 font-medium whitespace-nowrap">{t('admin.waitlistPanel.colUpdated')}</th>
             </tr>
@@ -94,6 +95,9 @@ export function WaitlistPanel() {
                   <td className="p-3 align-top break-all max-w-[200px]">{row.email || '—'}</td>
                   <td className="p-3 align-top text-muted-foreground">{nombre}</td>
                   <td className="p-3 align-top text-muted-foreground">{apellido}</td>
+                  <td className="p-3 align-top text-muted-foreground max-w-[160px] break-words">
+                    {row.organization || '—'}
+                  </td>
                   <td className="p-3 align-top whitespace-nowrap text-muted-foreground">
                     {formatDate(row.createdAt)}
                   </td>
