@@ -48,10 +48,39 @@ En el deployment, abre **Building** y comprueba que:
 
 ## 6. Variables de entorno
 
-En **Settings** → **Environment Variables**:
+En **Settings** → **Environment Variables**.
 
-- `NEXT_PUBLIC_FIREBASE_*` (para Firebase client)
-- `YOUTUBE_API_KEY` o `FIREBASE_ADMIN_SDK_KEY` (si se usan)
+### Firebase en el navegador (obligatorio si usas `/admin` o Analytics de Firebase)
+
+Si en producción ves *“Firebase Auth can’t run here”* / *“NEXT_PUBLIC_FIREBASE_* env vars are missing”*, el build en Vercel **no tiene** la configuración del **Web app** de Firebase.
+
+1. En [Firebase Console](https://console.firebase.google.com/) → tu proyecto → **Project settings** (engranaje) → pestaña **General** → sección **Your apps** → app **Web** (`</>`). Si no existe, crea una.
+2. Copia los valores del objeto `firebaseConfig`.
+3. En Vercel: **Settings** → **Environment Variables** → añade **todas** las filas de abajo (mismo **nombre**; pega el valor del console). Marca al menos **Production** (y **Preview** si quieres probar en ramas).
+4. **Deployments** → **Redeploy** el último deploy (o haz un push). Las variables `NEXT_PUBLIC_*` se inyectan en **build time**; sin redeploy el cambio no se ve.
+
+| Nombre en Vercel | Origen en Firebase (campo del SDK) |
+|------------------|-------------------------------------|
+| `NEXT_PUBLIC_FIREBASE_API_KEY` | `apiKey` |
+| `NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN` | `authDomain` |
+| `NEXT_PUBLIC_FIREBASE_PROJECT_ID` | `projectId` |
+| `NEXT_PUBLIC_FIREBASE_STORAGE_BUCKET` | `storageBucket` |
+| `NEXT_PUBLIC_FIREBASE_MESSAGING_SENDER_ID` | `messagingSenderId` |
+| `NEXT_PUBLIC_FIREBASE_APP_ID` | `appId` |
+| `NEXT_PUBLIC_FIREBASE_MEASUREMENT_ID` | `measurementId` (opcional si no usas Analytics web) |
+
+**Mínimo para que arranque Auth:** `NEXT_PUBLIC_FIREBASE_API_KEY` y `NEXT_PUBLIC_FIREBASE_PROJECT_ID` (el resto evita errores raros en Storage/Firestore cliente).
+
+Referencia local: copia los mismos nombres que en [`.env.example`](./.env.example).
+
+### Firebase en el servidor (panel admin: APIs, Firestore, waitlist)
+
+Para que `/api/admin/*` y el guardado en Firestore funcionen en producción, añade también **`FIREBASE_ADMIN_SDK_KEY`**: el JSON completo de la cuenta de servicio (Project settings → **Service accounts** → **Generate new private key**). En Vercel suele pegarse como una sola línea; si el JSON trae comillas, revisa la documentación de Vercel para valores multilínea o escapa según te indique el dashboard.
+
+### Otras
+
+- `YOUTUBE_API_KEY` — episodios del podcast (si aplica).
+- `NEXT_PUBLIC_WEB3FORMS_ACCESS_KEY`, `RESEND_*`, etc. — según features que uses (ver `.env.example`).
 
 ## 7. Protección de deployment
 

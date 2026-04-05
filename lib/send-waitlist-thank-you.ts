@@ -8,6 +8,24 @@ import { WAITLIST_EMAIL_RE } from '@/lib/waitlist-api-security';
 const MAX_TO_LEN = 254;
 const MAX_FIRST_NAME_LEN = 80;
 
+/**
+ * Variables que debe declarar la plantilla en Resend (fallbacks en el editor)
+ * y el HTML con {{{READER_NAME}}}, {{{PREORDER_UNTIL}}}, {{{LAUNCH_DAY}}}, {{{PREORDER_TOTAL}}}.
+ */
+function waitlistThankYouTemplateVariables(params: {
+  readerNameEscaped: string;
+  preorderUntil: string;
+  launchDay: string;
+  preorderTotal: number;
+}): Record<'READER_NAME' | 'PREORDER_UNTIL' | 'LAUNCH_DAY' | 'PREORDER_TOTAL', string | number> {
+  return {
+    READER_NAME: params.readerNameEscaped,
+    PREORDER_UNTIL: params.preorderUntil,
+    LAUNCH_DAY: params.launchDay,
+    PREORDER_TOTAL: params.preorderTotal,
+  };
+}
+
 function escapeHtml(text: string): string {
   return text
     .replace(/&/g, '&amp;')
@@ -130,12 +148,12 @@ export async function sendWaitlistThankYouEmail(input: {
           subject,
           template: {
             id: templateId,
-            variables: {
-              READER_NAME: name,
-              PREORDER_UNTIL: preorderUntil,
-              LAUNCH_DAY: launchDay,
-              PREORDER_TOTAL: preorderTotal,
-            },
+            variables: waitlistThankYouTemplateVariables({
+              readerNameEscaped: name,
+              preorderUntil,
+              launchDay,
+              preorderTotal,
+            }),
           },
         })
       : await resend.emails.send({
