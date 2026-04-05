@@ -1,4 +1,5 @@
 import type { Metadata, Viewport } from 'next';
+import { Analytics } from '@vercel/analytics/react';
 import { Inter } from 'next/font/google';
 import { cookies, headers } from 'next/headers';
 import './globals.css';
@@ -108,6 +109,7 @@ export default async function RootLayout({
           <ThemeProvider>
             <WaitlistRoot>
               <FirebaseAnalytics />
+              <Analytics />
               <AnalyticsPageViewsBoundary />
               <CalendlyWidget />
               {/* Nav fuera de overflow-x-hidden para que el último enlace (Acceso) no quede recortado */}
