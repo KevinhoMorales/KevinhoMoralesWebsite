@@ -70,6 +70,26 @@ function getAdminApp(): admin.app.App {
   );
 }
 
+/** Inicializa Admin solo si hay credenciales; si no, null (sin lanzar). */
+export function tryGetAdminApp(): admin.app.App | null {
+  if (admin.apps.length > 0) {
+    return admin.apps[0] as admin.app.App;
+  }
+  const serviceAccountJson = process.env.FIREBASE_ADMIN_SDK_KEY;
+  const hasADC = Boolean(process.env.GOOGLE_APPLICATION_CREDENTIALS);
+  if (!serviceAccountJson?.trim() && !hasADC) {
+    return null;
+  }
+  try {
+    return getAdminApp();
+  } catch (e) {
+    if (process.env.NODE_ENV === 'development') {
+      console.error('[firebase-admin] tryGetAdminApp:', e);
+    }
+    return null;
+  }
+}
+
 /**
  * Obtiene el YouTube API Key desde Firebase Remote Config (versión servidor).
  * Prueba varios nombres de parámetro y hace fallback a YOUTUBE_API_KEY en env.

@@ -7,8 +7,8 @@ export const metadata: Metadata = {
   description: 'Conference talks and speaker engagements by Kevin Morales',
 };
 
-export default function ConferencesPage() {
-  const conferences = getConferences();
+export default async function ConferencesPage() {
+  const conferences = await getConferences();
 
   return (
     <main className="container mx-auto px-4 py-12 max-w-6xl">

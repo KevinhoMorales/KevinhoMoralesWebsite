@@ -37,7 +37,9 @@ export function ArticlesSection() {
         <div className="max-w-6xl mx-auto">
           <div className="mb-8 sm:mb-10">
             <p className="text-primary font-medium tracking-wide uppercase text-xs sm:text-sm mb-3 sm:mb-4">Articles</p>
-            <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold text-balance">Writing on Medium</h2>
+            <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold text-balance">
+              Firebase, Cursor, GitKraken & mobile
+            </h2>
           </div>
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6">
             {Array.from({ length: 6 }).map((_, i) => (
@@ -55,7 +57,9 @@ export function ArticlesSection() {
         <div className="max-w-6xl mx-auto">
           <div className="mb-8 sm:mb-10">
             <p className="text-primary font-medium tracking-wide uppercase text-xs sm:text-sm mb-3 sm:mb-4">Articles</p>
-            <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold text-balance">Writing on Medium</h2>
+            <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold text-balance">
+              Firebase, Cursor, GitKraken & mobile
+            </h2>
           </div>
           <p className="text-sm sm:text-base text-muted-foreground">{error}</p>
         </div>
@@ -70,10 +74,11 @@ export function ArticlesSection() {
           <div>
             <p className="text-primary font-medium tracking-wide uppercase text-xs sm:text-sm mb-3 sm:mb-4">Articles</p>
             <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold text-balance">
-              Writing on Medium
+              Firebase, Cursor, GitKraken & mobile
             </h2>
             <p className="text-sm sm:text-base text-muted-foreground mt-3 sm:mt-4 max-w-xl">
-              Technical articles on iOS, Android, Kotlin, Swift, and mobile development.
+              Technical articles on Firebase, Cursor, GitKraken, and mobile development with Swift,
+              Kotlin, and Dart.
             </p>
           </div>
           <Button variant="outline" className="gap-2 shrink-0" asChild>
@@ -90,8 +95,8 @@ export function ArticlesSection() {
         </ScrollReveal>
 
         <StaggerContainer className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6">
-          {articles.map((article) => (
-            <StaggerItem key={article.link}>
+          {articles.map((article, index) => (
+            <StaggerItem key={article.link} delay={index * 0.05}>
             <Card
               className="bg-card/50 border-border/50 overflow-hidden group hover:border-primary/50 transition-colors"
             >

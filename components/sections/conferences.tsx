@@ -157,9 +157,9 @@ export function ConferencesSection({ conferences, achievements }: ConferencesPro
             <h2 className="text-xl sm:text-2xl md:text-3xl font-bold text-balance">Conferences</h2>
           </ScrollReveal>
 
-          <StaggerContainer staggerDelay={0.06} className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6">
-            {conferences.slice(0, PREVIEW_COUNT).map((conf) => (
-              <StaggerItem key={conf.id}>
+          <StaggerContainer className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6">
+            {conferences.slice(0, PREVIEW_COUNT).map((conf, index) => (
+              <StaggerItem key={conf.id} delay={index * 0.06}>
                 <ConferenceCard conf={conf} />
               </StaggerItem>
             ))}

@@ -5,7 +5,9 @@ import { getFirebaseAnalytics } from '@/lib/firebase';
 
 export function FirebaseAnalytics() {
   useEffect(() => {
-    getFirebaseAnalytics();
+    void getFirebaseAnalytics().catch(() => {
+      /* Analytics opcional; config inválida no debe tumbar la página */
+    });
   }, []);
   return null;
 }

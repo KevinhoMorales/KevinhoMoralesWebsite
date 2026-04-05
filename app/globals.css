@@ -8,6 +8,30 @@
   }
 }
 
+/* Hero: animación solo con CSS (no depende de Framer en primer frame). */
+@keyframes hero-fade-in {
+  from {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.motion-hero-in {
+  animation: hero-fade-in 0.55s ease-out both;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .motion-hero-in {
+    animation: none;
+    opacity: 1;
+    transform: none;
+  }
+}
+
 @layer base {
   :root {
     --radius: 0.75rem;

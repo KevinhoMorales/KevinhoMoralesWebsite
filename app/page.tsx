@@ -17,13 +17,12 @@ import { Recommendations } from '@/components/sections/recommendations';
 import { Connect } from '@/components/sections/connect';
 import { Footer } from '@/components/sections/footer';
 
-export default function Home() {
+export default async function Home() {
   const profile = getProfile();
-  const projects = getProjects();
   const experience = getExperience();
-  const conferences = getConferences();
   const testimonials = getTestimonials();
   const achievements = getAchievements();
+  const [projects, conferences] = await Promise.all([getProjects(), getConferences()]);
 
   return (
     <main className="min-h-screen">

@@ -29,8 +29,8 @@ export function Recommendations({ testimonials }: RecommendationsProps) {
         </ScrollReveal>
 
         <StaggerContainer className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-3 sm:gap-4">
-          {testimonials.map((t) => (
-            <StaggerItem key={t.id}>
+          {testimonials.map((t, index) => (
+            <StaggerItem key={t.id} delay={index * 0.05}>
             <Card className="bg-card/50 border-border/50">
               <CardContent className="p-3 sm:p-4 space-y-2">
                 <Quote className="h-5 w-5 sm:h-6 sm:w-6 text-primary/30" />

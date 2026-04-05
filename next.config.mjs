@@ -12,6 +12,8 @@ const nextConfig = {
   },
   experimental: {
     optimizePackageImports: ['@/components/ui'],
+    /** Evita que webpack empaquete firebase-admin (gRPC); sin esto suele fallar el SSR con 500. */
+    serverComponentsExternalPackages: ['firebase-admin'],
   },
 };
 

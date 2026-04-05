@@ -1,7 +1,7 @@
 export default function Loading() {
   return (
-    <div className="container flex min-h-[50vh] items-center justify-center">
-      <div className="h-8 w-8 animate-spin rounded-full border-2 border-primary border-t-transparent" />
+    <div className="flex min-h-[50vh] items-center justify-center px-4">
+      <p className="text-sm text-muted-foreground">Cargando…</p>
     </div>
   );
 }

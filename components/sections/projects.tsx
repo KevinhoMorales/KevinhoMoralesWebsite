@@ -65,11 +65,14 @@ export function ProjectsSection({ projects }: ProjectsProps) {
           })}
         </ScrollReveal>
 
-        <StaggerContainer staggerDelay={0.08} className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6">
-          {filteredProjects.map((project) => {
+        <StaggerContainer
+          key={activeCategory}
+          className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6"
+        >
+          {filteredProjects.map((project, index) => {
             const mainLink = project.links[0]?.url || '#'
             return (
-              <StaggerItem key={project.id}>
+              <StaggerItem key={project.id} delay={index * 0.06}>
               <Card
                 className="bg-card/50 border-border/50 overflow-hidden group hover:border-primary/50 transition-colors"
               >

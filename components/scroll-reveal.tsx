@@ -15,25 +15,26 @@ interface ScrollRevealProps {
   amount?: number
 }
 
+/** Opacity stays 1 so SSR / slow JS never leaves blocks invisible (Framer applies initial on server). */
 const variants: Record<Variant, { initial: TargetAndTransition; animate: TargetAndTransition }> = {
   'fade-up': {
-    initial: { opacity: 0, y: 24 },
+    initial: { opacity: 1, y: 18 },
     animate: { opacity: 1, y: 0 },
   },
   'fade-in': {
-    initial: { opacity: 0 },
+    initial: { opacity: 1 },
     animate: { opacity: 1 },
   },
   'fade-left': {
-    initial: { opacity: 0, x: -24 },
+    initial: { opacity: 1, x: -18 },
     animate: { opacity: 1, x: 0 },
   },
   'fade-right': {
-    initial: { opacity: 0, x: 24 },
+    initial: { opacity: 1, x: 18 },
     animate: { opacity: 1, x: 0 },
   },
   scale: {
-    initial: { opacity: 0, scale: 0.95 },
+    initial: { opacity: 1, scale: 0.98 },
     animate: { opacity: 1, scale: 1 },
   },
 }
@@ -69,48 +70,31 @@ export function ScrollReveal({
 interface StaggerContainerProps {
   children: React.ReactNode
   className?: string
+  /** @deprecated Usa `delay` en cada StaggerItem; se ignora */
   staggerDelay?: number
 }
 
-export function StaggerContainer({
-  children,
-  className,
-  staggerDelay = 0.05,
-}: StaggerContainerProps) {
-  return (
-    <motion.div
-      initial="hidden"
-      whileInView="visible"
-      viewport={{ once: true, amount: 0.1 }}
-      variants={{
-        hidden: {},
-        visible: {
-          transition: {
-            staggerChildren: staggerDelay,
-          },
-        },
-      }}
-      className={className}
-    >
-      {children}
-    </motion.div>
-  )
+/** Contenedor sin animación propia: cada StaggerItem anima con su propio whileInView (evita bloqueos en opacity: 0). */
+export function StaggerContainer({ children, className }: StaggerContainerProps) {
+  return <div className={className}>{children}</div>
 }
 
 interface StaggerItemProps {
   children: React.ReactNode
   className?: string
+  /** Retraso escalonado en segundos (p. ej. index * 0.05). */
+  delay?: number
 }
 
-export function StaggerItem({ children, className }: StaggerItemProps) {
+export function StaggerItem({ children, className, delay = 0 }: StaggerItemProps) {
   return (
     <motion.div
-      variants={{
-        hidden: { opacity: 0, y: 20 },
-        visible: { opacity: 1, y: 0 },
-      }}
+      initial={{ opacity: 1, y: 16 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true, amount: 'some', margin: '0px 0px -32px 0px' }}
       transition={{
         duration: 0.4,
+        delay,
         ease: [0.25, 0.4, 0.25, 1],
       }}
       className={className}

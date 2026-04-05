@@ -41,8 +41,8 @@ export function About({ profile }: AboutProps) {
             )}
 
             <StaggerContainer className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-4 gap-3 sm:gap-4 pt-4 sm:pt-6">
-              {highlights.map((item) => (
-                <StaggerItem key={item.title}>
+              {highlights.map((item, index) => (
+                <StaggerItem key={item.title} delay={index * 0.06}>
                 <Card className="bg-card/50 border-border/50">
                   <CardContent className="p-3 sm:p-4 text-center">
                     <item.icon className="h-5 w-5 sm:h-6 sm:w-6 text-primary mx-auto mb-1 sm:mb-2" />

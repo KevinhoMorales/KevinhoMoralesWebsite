@@ -1,6 +1,8 @@
 import { initializeApp, getApps, FirebaseApp } from 'firebase/app';
 import { getAnalytics, Analytics, isSupported } from 'firebase/analytics';
 import { getFirestore, Firestore } from 'firebase/firestore';
+import { getAuth, Auth } from 'firebase/auth';
+import { getStorage, FirebaseStorage } from 'firebase/storage';
 
 const firebaseConfig = {
   apiKey: process.env.NEXT_PUBLIC_FIREBASE_API_KEY,
@@ -15,10 +17,19 @@ const firebaseConfig = {
 let app: FirebaseApp | null = null;
 let db: Firestore | null = null;
 let analytics: Analytics | null = null;
+let auth: Auth | null = null;
+let storage: FirebaseStorage | null = null;
 
 export function getFirebaseApp(): FirebaseApp | null {
   if (!firebaseConfig.apiKey || !firebaseConfig.projectId) return null;
-  if (!app) app = getApps().length ? (getApps()[0] as FirebaseApp) : initializeApp(firebaseConfig);
+  if (!app) {
+    try {
+      app = getApps().length ? (getApps()[0] as FirebaseApp) : initializeApp(firebaseConfig);
+    } catch (e) {
+      console.error('[firebase] initializeApp failed:', e);
+      return null;
+    }
+  }
   return app;
 }
 
@@ -27,6 +38,20 @@ export function getFirebaseDb(): Firestore | null {
   if (!firebaseApp) return null;
   if (!db) db = getFirestore(firebaseApp);
   return db;
+}
+
+export function getFirebaseAuth(): Auth | null {
+  const firebaseApp = getFirebaseApp();
+  if (!firebaseApp) return null;
+  if (!auth) auth = getAuth(firebaseApp);
+  return auth;
+}
+
+export function getFirebaseStorage(): FirebaseStorage | null {
+  const firebaseApp = getFirebaseApp();
+  if (!firebaseApp) return null;
+  if (!storage) storage = getStorage(firebaseApp);
+  return storage;
 }
 
 export async function getFirebaseAnalytics(): Promise<Analytics | null> {

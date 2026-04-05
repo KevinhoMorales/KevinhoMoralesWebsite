@@ -7,8 +7,8 @@ export const metadata: Metadata = {
   description: 'Mobile and web projects - iOS, Android, Flutter apps by Kevin Morales',
 };
 
-export default function ProjectsPage() {
-  const projects = getProjects();
+export default async function ProjectsPage() {
+  const projects = await getProjects();
 
   return (
     <main className="container mx-auto px-4 py-12 max-w-6xl">

@@ -26,20 +26,15 @@ export class ErrorBoundary extends Component<Props, State> {
     if (this.state.hasError) {
       if (this.props.fallback) return this.props.fallback
       return (
-        <div className="min-h-[50vh] flex flex-col items-center justify-center px-6 py-12 text-center">
-          <p className="text-muted-foreground mb-4">
-            Si ves esta pantalla en el Simple Browser de VS Code, ábrelo en un navegador real:
+        <div className="min-h-[50vh] flex flex-col items-center justify-center px-6 py-12 text-center gap-3">
+          <p className="text-muted-foreground max-w-md">
+            El panel embebido de Cursor/VS Code a veces falla con Next.js (cookies, hidratación). Abre el
+            sitio en Chrome, Safari o Firefox usando el puerto que muestre tu terminal (3000, 3001, etc.).
           </p>
-          <a
-            href="http://localhost:3000"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="inline-flex items-center gap-2 rounded-lg bg-primary px-4 py-2 text-primary-foreground font-medium hover:opacity-90"
-          >
-            Abrir en navegador
-          </a>
-          <p className="text-sm text-muted-foreground mt-6">
-            Chrome, Safari o Firefox funcionan correctamente.
+          <p className="text-xs text-muted-foreground">
+            La primera carga tras <code className="rounded bg-muted px-1">npm run dev</code> puede tardar
+            unos segundos mientras compila; espera o usa{' '}
+            <code className="rounded bg-muted px-1">npm run dev:turbo</code>.
           </p>
         </div>
       )

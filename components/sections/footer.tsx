@@ -1,5 +1,6 @@
 'use client'
 
+import Link from 'next/link'
 import { Separator } from '@/components/ui/separator'
 import { ScrollReveal } from '@/components/scroll-reveal'
 import { FaLinkedinIn } from 'react-icons/fa'
@@ -81,7 +82,19 @@ export function Footer({ profile }: FooterProps) {
         <Separator className="mb-6" />
 
         <div className="text-center text-xs sm:text-sm text-muted-foreground">
-          <p>© {currentYear} {profile.name}. All rights reserved.</p>
+          <p className="inline-flex flex-wrap items-center justify-center gap-x-2 gap-y-1">
+            <span>© {currentYear} {profile.name}. All rights reserved.</span>
+            <span className="text-muted-foreground/25 select-none" aria-hidden>
+              ·
+            </span>
+            <Link
+              href="/admin/login"
+              className="text-[10px] uppercase tracking-widest text-muted-foreground/35 hover:text-muted-foreground/70 transition-colors"
+              aria-label="Acceso de administración"
+            >
+              Acceso
+            </Link>
+          </p>
         </div>
         </ScrollReveal>
       </div>

@@ -20,8 +20,8 @@ export function ExperienceSection({ experiences }: ExperienceProps) {
         </ScrollReveal>
 
         <StaggerContainer className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-4">
-          {experiences.map((exp) => (
-            <StaggerItem key={exp.id}>
+          {experiences.map((exp, index) => (
+            <StaggerItem key={exp.id} delay={index * 0.04}>
             <Card
               className="bg-card/50 border-border/50 hover:bg-card/80 transition-colors group"
             >
