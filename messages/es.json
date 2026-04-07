@@ -190,8 +190,8 @@
   },
   "waitlist": {
     "title": "Únete a la lista de espera",
-    "description": "Sé de los primeros en enterarte cuando salga el libro sobre Kotlin, Swift y Dart. Sin spam, solo novedades importantes.",
-    "editionNote": "Esta lista es para la edición en español del libro.",
+    "description": "Las personas que se inscriban hasta el 30 de abril tendrán el libro al precio especial de preventa. Sin spam: solo avisos importantes.",
+    "editionNote": "Edición en español sobre Kotlin, Swift y Dart.",
     "closedNotice": "El registro en la lista abrirá próximamente (estamos cerrando el flujo de pago). Mientras tanto puedes ver la información de preventa abajo.",
     "email": "Correo electrónico",
     "emailPh": "tu@correo.com",

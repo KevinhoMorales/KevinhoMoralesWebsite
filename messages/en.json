@@ -190,8 +190,8 @@
   },
   "waitlist": {
     "title": "Join the waitlist",
-    "description": "Be among the first to know when the book on Kotlin, Swift, and Dart comes out. No spam—only important updates.",
-    "editionNote": "This waitlist is for the Spanish-language edition of the book.",
+    "description": "Everyone who joins the waitlist before April 30 gets the Spanish-language book on Kotlin, Swift, and Dart at the special pre-order price. No spam—only important updates.",
+    "editionNote": "The promotional price applies to sign-ups through April 30.",
     "closedNotice": "Signups will open soon while we finalize payments. You can still read the pre-sale info below.",
     "email": "Email",
     "emailPh": "you@email.com",

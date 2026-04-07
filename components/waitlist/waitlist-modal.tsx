@@ -114,7 +114,6 @@ export function WaitlistModal() {
   const [community, setCommunity] = useState('');
   const [status, setStatus] = useState<'idle' | 'loading' | 'error'>('idle');
   const [message, setMessage] = useState<string | null>(null);
-  const [formEngaged, setFormEngaged] = useState(false);
 
   const resetForm = () => {
     setEmail('');
@@ -123,7 +122,6 @@ export function WaitlistModal() {
     setCommunity('');
     setStatus('idle');
     setMessage(null);
-    setFormEngaged(false);
   };
 
   const handleOpenChange = (open: boolean) => {
@@ -284,6 +282,8 @@ export function WaitlistModal() {
             </DialogHeader>
 
             <form onSubmit={handleSubmit} className="flex flex-col gap-4">
+                {acceptingSignup ? <WaitlistPreorderOffer /> : null}
+
                 <div className="space-y-2">
                   <label htmlFor="waitlist-email" className="text-sm font-medium text-foreground">
                     {t('waitlist.email')}
@@ -298,64 +298,51 @@ export function WaitlistModal() {
                     required={acceptingSignup}
                     placeholder={t('waitlist.emailPh')}
                     value={email}
-                    onChange={(e) => {
-                      const v = e.target.value;
-                      setEmail(v);
-                      if (v.trim()) setFormEngaged(true);
-                    }}
-                    onFocus={() => setFormEngaged(true)}
+                    onChange={(e) => setEmail(e.target.value)}
                     disabled={!acceptingSignup || status === 'loading'}
                     className="h-11 rounded-xl border-border/80 bg-background/80"
                     aria-invalid={status === 'error'}
                   />
                 </div>
-                <div className="space-y-2">
-                  <label htmlFor="waitlist-first-name" className="text-sm font-medium text-foreground">
-                    {t('waitlist.firstName')}
-                    {acceptingSignup ? <span className="text-destructive"> *</span> : null}
-                  </label>
-                  <Input
-                    id="waitlist-first-name"
-                    name="firstName"
-                    type="text"
-                    autoComplete="given-name"
-                    required={acceptingSignup}
-                    placeholder={t('waitlist.firstNamePh')}
-                    value={firstName}
-                    onChange={(e) => {
-                      const v = e.target.value;
-                      setFirstName(v);
-                      if (v.trim()) setFormEngaged(true);
-                    }}
-                    onFocus={() => setFormEngaged(true)}
-                    disabled={!acceptingSignup || status === 'loading'}
-                    maxLength={120}
-                    className="h-11 rounded-xl border-border/80 bg-background/80"
-                  />
-                </div>
-                <div className="space-y-2">
-                  <label htmlFor="waitlist-last-name" className="text-sm font-medium text-foreground">
-                    {t('waitlist.lastName')}
-                    {acceptingSignup ? <span className="text-destructive"> *</span> : null}
-                  </label>
-                  <Input
-                    id="waitlist-last-name"
-                    name="lastName"
-                    type="text"
-                    autoComplete="family-name"
-                    required={acceptingSignup}
-                    placeholder={t('waitlist.lastNamePh')}
-                    value={lastName}
-                    onChange={(e) => {
-                      const v = e.target.value;
-                      setLastName(v);
-                      if (v.trim()) setFormEngaged(true);
-                    }}
-                    onFocus={() => setFormEngaged(true)}
-                    disabled={!acceptingSignup || status === 'loading'}
-                    maxLength={120}
-                    className="h-11 rounded-xl border-border/80 bg-background/80"
-                  />
+                <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
+                  <div className="space-y-2 min-w-0">
+                    <label htmlFor="waitlist-first-name" className="text-sm font-medium text-foreground">
+                      {t('waitlist.firstName')}
+                      {acceptingSignup ? <span className="text-destructive"> *</span> : null}
+                    </label>
+                    <Input
+                      id="waitlist-first-name"
+                      name="firstName"
+                      type="text"
+                      autoComplete="given-name"
+                      required={acceptingSignup}
+                      placeholder={t('waitlist.firstNamePh')}
+                      value={firstName}
+                      onChange={(e) => setFirstName(e.target.value)}
+                      disabled={!acceptingSignup || status === 'loading'}
+                      maxLength={120}
+                      className="h-11 rounded-xl border-border/80 bg-background/80"
+                    />
+                  </div>
+                  <div className="space-y-2 min-w-0">
+                    <label htmlFor="waitlist-last-name" className="text-sm font-medium text-foreground">
+                      {t('waitlist.lastName')}
+                      {acceptingSignup ? <span className="text-destructive"> *</span> : null}
+                    </label>
+                    <Input
+                      id="waitlist-last-name"
+                      name="lastName"
+                      type="text"
+                      autoComplete="family-name"
+                      required={acceptingSignup}
+                      placeholder={t('waitlist.lastNamePh')}
+                      value={lastName}
+                      onChange={(e) => setLastName(e.target.value)}
+                      disabled={!acceptingSignup || status === 'loading'}
+                      maxLength={120}
+                      className="h-11 rounded-xl border-border/80 bg-background/80"
+                    />
+                  </div>
                 </div>
                 <div className="space-y-2">
                   <label htmlFor="waitlist-community" className="text-sm font-medium text-foreground">
@@ -370,19 +357,12 @@ export function WaitlistModal() {
                     required={acceptingSignup}
                     placeholder={t('waitlist.communityPh')}
                     value={community}
-                    onChange={(e) => {
-                      const v = e.target.value;
-                      setCommunity(v);
-                      if (v.trim()) setFormEngaged(true);
-                    }}
-                    onFocus={() => setFormEngaged(true)}
+                    onChange={(e) => setCommunity(e.target.value)}
                     disabled={!acceptingSignup || status === 'loading'}
                     maxLength={120}
                     className="h-11 rounded-xl border-border/80 bg-background/80"
                   />
                 </div>
-
-                {formEngaged || status === 'loading' ? <WaitlistPreorderOffer /> : null}
 
                 <input type="text" name="botcheck" tabIndex={-1} autoComplete="off" className="sr-only" aria-hidden />
 
