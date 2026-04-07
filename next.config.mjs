@@ -8,6 +8,7 @@ const nextConfig = {
       { protocol: 'https', hostname: 'cdn-images-1.medium.com', pathname: '/**' },
       { protocol: 'https', hostname: 'assets.super.so', pathname: '/**' },
       { protocol: 'https', hostname: 'images.spr.so', pathname: '/**' },
+      { protocol: 'https', hostname: 'storage.googleapis.com', pathname: '/**' },
     ],
   },
   experimental: {

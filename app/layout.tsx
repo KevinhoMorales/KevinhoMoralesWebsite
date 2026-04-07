@@ -7,6 +7,7 @@ import { AnalyticsPageViewsBoundary } from '@/components/analytics-page-views-bo
 import { ThemeProvider } from '@/components/theme-provider';
 import { FirebaseAnalytics } from '@/components/firebase-analytics';
 import { CalendlyWidget } from '@/components/calendly-widget';
+import { HashScroll } from '@/components/hash-scroll';
 import { Navigation } from '@/components/sections/navigation';
 import { SiteJsonLd } from '@/components/seo/site-json-ld';
 import { WaitlistRoot } from '@/components/waitlist/waitlist-root';
@@ -112,6 +113,7 @@ export default async function RootLayout({
               <Analytics />
               <AnalyticsPageViewsBoundary />
               <CalendlyWidget />
+              <HashScroll />
               {/* Nav fuera de overflow-x-hidden para que el último enlace (Acceso) no quede recortado */}
               <Navigation />
               <div className="overflow-x-wrapper">

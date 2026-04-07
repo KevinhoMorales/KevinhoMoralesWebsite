@@ -10,5 +10,11 @@ service firebase.storage {
       allow read: if true;
       allow write: if isSignedIn();
     }
+
+    /* Imágenes de charlas subidas desde el panel (prod/conferences/conference001/…) */
+    match /prod/conferences/{allPaths=**} {
+      allow read: if true;
+      allow write: if isSignedIn();
+    }
   }
 }

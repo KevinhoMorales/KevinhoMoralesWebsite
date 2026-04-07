@@ -33,6 +33,12 @@
 }
 
 @layer base {
+  @media (prefers-reduced-motion: no-preference) {
+    html {
+      scroll-behavior: smooth;
+    }
+  }
+
   :root {
     --radius: 0.75rem;
     /* Fallback: light theme until next-themes hydrates */

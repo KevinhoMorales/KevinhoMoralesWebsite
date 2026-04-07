@@ -113,7 +113,11 @@
     "achievements": "Achievements",
     "watchVideo": "Watch video",
     "event": "Event",
-    "attendees": "{{count}} attendees"
+    "attendees": "{{count}} attendees",
+    "openDetail": "Open talk details",
+    "detailDate": "Date",
+    "detailLocation": "Location",
+    "detailAudience": "Audience"
   },
   "conferenceType": {
     "conference": "Conference",
@@ -169,7 +173,8 @@
     },
     "conferences": {
       "title": "Conferences & Talks",
-      "desc": "Speaker engagements at DevFest, Google I/O Extended, GDG events, and more."
+      "desc": "Speaker engagements at DevFest, Google I/O Extended, GDG events, and more.",
+      "empty": "No talks listed yet. Check back soon."
     },
     "testimonials": {
       "title": "Testimonials",
@@ -301,7 +306,9 @@
       "labelVideoUrl": "Video URL",
       "labelEventUrl": "Event URL",
       "labelTags": "Tags (comma-separated)",
-      "labelImages": "Images (one URL per line)",
+      "labelImages": "Images",
+      "imagePasteZone": "You can paste an image here (Ctrl+V / ⌘V) or upload one below.",
+      "removeImage": "Remove image",
       "uploadImage": "Upload image",
       "saving": "Saving…",
       "save": "Save",

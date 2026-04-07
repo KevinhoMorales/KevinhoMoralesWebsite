@@ -113,7 +113,11 @@
     "achievements": "Logros",
     "watchVideo": "Ver video",
     "event": "Evento",
-    "attendees": "{{count}} asistentes"
+    "attendees": "{{count}} asistentes",
+    "openDetail": "Ver detalles de la charla",
+    "detailDate": "Fecha",
+    "detailLocation": "Lugar",
+    "detailAudience": "Audiencia"
   },
   "conferenceType": {
     "conference": "Conferencia",
@@ -169,7 +173,8 @@
     },
     "conferences": {
       "title": "Conferencias y charlas",
-      "desc": "Charlas en DevFest, Google I/O Extended, GDG y más."
+      "desc": "Charlas en DevFest, Google I/O Extended, GDG y más.",
+      "empty": "Aún no hay charlas publicadas. Vuelve pronto."
     },
     "testimonials": {
       "title": "Testimonios",
@@ -301,7 +306,9 @@
       "labelVideoUrl": "URL del video",
       "labelEventUrl": "URL del evento",
       "labelTags": "Etiquetas (coma)",
-      "labelImages": "Imágenes (URL por línea)",
+      "labelImages": "Imágenes",
+      "imagePasteZone": "Puedes pegar una imagen aquí (Ctrl+V / ⌘V) o subirla abajo.",
+      "removeImage": "Quitar imagen",
       "uploadImage": "Subir imagen",
       "saving": "Guardando…",
       "save": "Guardar",

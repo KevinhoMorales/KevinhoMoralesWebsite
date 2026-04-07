@@ -1,27 +1,30 @@
 import * as fs from 'fs';
 import * as path from 'path';
 import type { Profile, Experience, Project, Conference, Testimonial, Achievement } from '@/types';
+import { expandConferenceImagesForPublic } from '@/lib/storage-public-url';
 
 const CONTENT_DIR = path.join(process.cwd(), 'content');
 
 /**
- * En `next dev`, por defecto NO se llama a Firestore en la home: evita 5–15s de compilación + gRPC en frío
- * (parece que "no carga"). Para forzar Firestore en local: DEV_FETCH_FIRESTORE=1 en .env.local
+ * Solo afecta a **proyectos**: en `next dev` se lee `projects.json` por defecto (evita gRPC en frío en cada recarga).
+ * Las **conferencias** siempre intentan Firestore si hay Admin SDK (no tienen JSON de respaldo).
+ * Para leer proyectos desde Firestore también en dev: `DEV_FETCH_FIRESTORE=1` en `.env.local`.
  */
-function ssrSkipRemoteFirestore(): boolean {
+function ssrSkipRemoteFirestoreForProjects(): boolean {
   if (process.env.DEV_FETCH_FIRESTORE === '1') return false;
   return process.env.NODE_ENV === 'development';
 }
 
-/**
- * En producción: no bloquear el SSR más de esto; luego se usa JSON local.
- */
+/** SSR: no bloquear demasiado; proyectos tienen fallback JSON. */
 const SSR_FIRESTORE_BUDGET_MS = 2000;
 
-function withSsrBudget<T>(promise: Promise<T | null>): Promise<T | null> {
+/** Conferencias solo en Firestore — presupuesto alineado con la lectura admin (sin fallback si cortamos antes). */
+const SSR_CONFERENCES_BUDGET_MS = 5000;
+
+function withSsrBudget<T>(promise: Promise<T | null>, budgetMs = SSR_FIRESTORE_BUDGET_MS): Promise<T | null> {
   return Promise.race([
     promise,
-    new Promise<null>((resolve) => setTimeout(() => resolve(null), SSR_FIRESTORE_BUDGET_MS)),
+    new Promise<null>((resolve) => setTimeout(() => resolve(null), budgetMs)),
   ]);
 }
 
@@ -61,7 +64,7 @@ export function getExperience(): Experience[] {
 }
 
 export async function getProjects(): Promise<Project[]> {
-  if (ssrSkipRemoteFirestore()) {
+  if (ssrSkipRemoteFirestoreForProjects()) {
     return readJson<Project[]>('projects.json');
   }
   try {
@@ -75,18 +78,31 @@ export async function getProjects(): Promise<Project[]> {
   }
 }
 
+function sortConferencesForDisplay(list: Conference[]): Conference[] {
+  return [...list].sort((a, b) => {
+    const da = (a.date ?? '').trim();
+    const db = (b.date ?? '').trim();
+    if (da && db && da !== db) return db.localeCompare(da);
+    if (da && !db) return -1;
+    if (!da && db) return 1;
+    return a.title.localeCompare(b.title);
+  });
+}
+
+/**
+ * Charlas / conferencias: solo Firestore (`prod/admin/conferences` o raíz en env).
+ * En dev también se consulta si `FIREBASE_ADMIN_SDK_KEY` / ADC están configurados (antes se devolvía [] siempre).
+ */
 export async function getConferences(): Promise<Conference[]> {
-  if (ssrSkipRemoteFirestore()) {
-    return readJson<Conference[]>('conferences.json');
-  }
   try {
-    const fromDb = await withSsrBudget(adminFetchConferencesSafe());
-    if (fromDb === null) return readJson<Conference[]>('conferences.json');
-    if (fromDb.length > 0) return fromDb;
-    return readJson<Conference[]>('conferences.json');
+    const fromDb = await withSsrBudget(adminFetchConferencesSafe(), SSR_CONFERENCES_BUDGET_MS);
+    if (fromDb == null || fromDb.length === 0) {
+      return [];
+    }
+    return sortConferencesForDisplay(fromDb.map(expandConferenceImagesForPublic));
   } catch (e) {
     console.error('[content] getConferences:', e);
-    return readJson<Conference[]>('conferences.json');
+    return [];
   }
 }
 

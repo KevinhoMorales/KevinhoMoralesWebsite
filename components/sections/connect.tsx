@@ -108,14 +108,9 @@ export function Connect({ profile }: ConnectProps) {
           </p>
         </ScrollReveal>
 
-        <div
-          className={cn(
-            'grid gap-6 lg:gap-8 items-stretch',
-            hasSchedulingAside ? 'lg:grid-cols-2' : 'lg:grid-cols-1 max-w-2xl mx-auto w-full'
-          )}
-        >
-          <ScrollReveal variant="scale" className="h-full min-w-0">
-            <Card className="h-full border-border/60 bg-card/85 backdrop-blur-md shadow-xl shadow-black/5 dark:shadow-black/20 rounded-2xl overflow-hidden">
+        <div className="mx-auto flex w-full max-w-2xl flex-col gap-6 lg:gap-8">
+          <ScrollReveal variant="scale" className="min-w-0">
+            <Card className="border-border/60 bg-card/85 backdrop-blur-md shadow-xl shadow-black/5 dark:shadow-black/20 rounded-2xl overflow-hidden">
               <CardHeader className="space-y-1 pb-2">
                 <div className="flex items-center gap-2 text-primary">
                   <Mail className="h-5 w-5 shrink-0" aria-hidden />
@@ -183,9 +178,9 @@ export function Connect({ profile }: ConnectProps) {
           </ScrollReveal>
 
           {hasSchedulingAside ? (
-            <ScrollReveal delay={0.08} variant="scale" className="h-full min-w-0">
-              <Card className="h-full border-border/60 bg-card/85 backdrop-blur-md shadow-xl shadow-black/5 dark:shadow-black/20 rounded-2xl overflow-hidden flex flex-col">
-                <CardHeader className="space-y-2 pb-4">
+            <ScrollReveal delay={0.08} variant="scale" className="min-w-0">
+              <Card className="border-border/60 bg-card/85 backdrop-blur-md shadow-xl shadow-black/5 dark:shadow-black/20 rounded-2xl overflow-hidden">
+                <CardHeader className="space-y-2 pb-3">
                   <div className="flex items-center gap-2 text-primary">
                     <Calendar className="h-5 w-5 shrink-0" aria-hidden />
                     <CardTitle className="text-lg sm:text-xl font-semibold">{t('connect.asideTitle')}</CardTitle>
@@ -194,8 +189,8 @@ export function Connect({ profile }: ConnectProps) {
                 </CardHeader>
                 <CardContent
                   className={cn(
-                    'flex flex-col gap-3 pt-0 pb-6 sm:pb-8 px-5 sm:px-6 flex-1',
-                    asideRowWithCalendlyAndBmc && 'sm:flex-row sm:items-center sm:gap-3'
+                    'flex flex-col gap-3 pt-0 pb-6 sm:pb-8 px-5 sm:px-6',
+                    asideRowWithCalendlyAndBmc && 'sm:flex-row sm:items-stretch sm:gap-3'
                   )}
                 >
                   {links.calendly ? (
@@ -204,7 +199,7 @@ export function Connect({ profile }: ConnectProps) {
                       className={cn(
                         calendlyPopupButtonClassName,
                         'w-full justify-center px-4 py-2.5 text-sm leading-snug min-h-11 rounded-md',
-                        asideRowWithCalendlyAndBmc && 'sm:flex-1 sm:min-w-0 sm:max-w-none shrink-0 h-auto'
+                        asideRowWithCalendlyAndBmc && 'sm:flex-1 sm:min-w-0'
                       )}
                       onClick={onCalendlyClick}
                     >
@@ -219,7 +214,7 @@ export function Connect({ profile }: ConnectProps) {
                       onClick={() => setBmcModalOpen(true)}
                       className={cn(
                         'flex w-full min-h-11 items-center justify-center overflow-hidden rounded-full border-0 bg-transparent px-1 py-1 shadow-sm ring-1 ring-black/10 transition hover:opacity-95 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-card dark:ring-white/15',
-                        asideRowWithCalendlyAndBmc && 'sm:flex-1 sm:min-w-0 sm:max-w-none shrink-0 h-auto'
+                        asideRowWithCalendlyAndBmc && 'sm:flex-1 sm:min-w-0'
                       )}
                     >
                       <BmcThemedButtonGraphic

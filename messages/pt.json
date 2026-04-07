@@ -113,7 +113,11 @@
     "achievements": "Conquistas",
     "watchVideo": "Ver vídeo",
     "event": "Evento",
-    "attendees": "{{count}} participantes"
+    "attendees": "{{count}} participantes",
+    "openDetail": "Abrir detalhes da palestra",
+    "detailDate": "Data",
+    "detailLocation": "Local",
+    "detailAudience": "Público"
   },
   "conferenceType": {
     "conference": "Conferência",
@@ -169,7 +173,8 @@
     },
     "conferences": {
       "title": "Conferências e palestras",
-      "desc": "Palestras em DevFest, Google I/O Extended, GDG e mais."
+      "desc": "Palestras em DevFest, Google I/O Extended, GDG e mais.",
+      "empty": "Nenhuma palestra listada ainda. Volte em breve."
     },
     "testimonials": {
       "title": "Depoimentos",
@@ -301,7 +306,9 @@
       "labelVideoUrl": "URL do vídeo",
       "labelEventUrl": "URL do evento",
       "labelTags": "Tags (vírgula)",
-      "labelImages": "Imagens (uma URL por linha)",
+      "labelImages": "Imagens",
+      "imagePasteZone": "Você pode colar uma imagem aqui (Ctrl+V / ⌘V) ou enviar abaixo.",
+      "removeImage": "Remover imagem",
       "uploadImage": "Enviar imagem",
       "saving": "Salvando…",
       "save": "Salvar",

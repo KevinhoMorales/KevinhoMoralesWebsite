@@ -63,11 +63,13 @@
   },
   {
     "id": "7",
-    "company": "Developer ecosystem",
-    "role": "Community ambassador",
+    "company": "Cursor",
+    "role": "Cursor Ambassador",
     "type": "freelance",
     "startDate": "2023-11",
-    "current": true
+    "current": true,
+    "companyUrl": "https://cursor.com/",
+    "companyLogo": "/images/cursor-logo.png"
   },
   {
     "id": "8",

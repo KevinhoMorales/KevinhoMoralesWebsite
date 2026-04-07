@@ -6,7 +6,7 @@ import {
   adminUnauthorizedResponse,
   requireAdminApp,
 } from '@/lib/admin-api-server';
-import { STORAGE_ADMIN_PREFIX } from '@/lib/firebase-paths';
+import { PROD_COLLECTION, STORAGE_ADMIN_PREFIX } from '@/lib/firebase-paths';
 
 function safeFileName(name: string) {
   return name.replace(/[^a-zA-Z0-9._-]/g, '_').slice(0, 120) || 'file';
@@ -38,9 +38,20 @@ export async function POST(req: Request) {
     return NextResponse.json({ error: 'Archivo requerido (campo file)' }, { status: 400 });
   }
 
+  const scope = formData.get('scope');
+  const slotRaw = formData.get('slot');
+
+  let path: string;
+  if (scope === 'conferences' && slotRaw != null && String(slotRaw).trim() !== '') {
+    const slot = Math.max(1, parseInt(String(slotRaw), 10) || 1);
+    const folder = `conference${String(slot).padStart(3, '0')}`;
+    path = `${PROD_COLLECTION}/conferences/${folder}/${Date.now()}_${safeFileName(file.name)}`;
+  } else {
+    path = `${STORAGE_ADMIN_PREFIX}/panel/${Date.now()}_${safeFileName(file.name)}`;
+  }
+
   const app = requireAdminApp();
   const bucket = getStorage(app).bucket(bucketName);
-  const path = `${STORAGE_ADMIN_PREFIX}/panel/${Date.now()}_${safeFileName(file.name)}`;
   const buffer = Buffer.from(await file.arrayBuffer());
   const fileRef = bucket.file(path);
 
@@ -56,9 +67,9 @@ export async function POST(req: Request) {
       action: 'read',
       expires: Date.now() + 365 * 24 * 60 * 60 * 1000,
     });
-    return NextResponse.json({ url });
+    return NextResponse.json({ url, path });
   }
 
   const publicUrl = `https://storage.googleapis.com/${bucketName}/${path}`;
-  return NextResponse.json({ url: publicUrl });
+  return NextResponse.json({ url: publicUrl, path });
 }

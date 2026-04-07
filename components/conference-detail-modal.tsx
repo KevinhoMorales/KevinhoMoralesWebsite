@@ -1,0 +1,185 @@
+'use client'
+
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogHeader,
+  DialogTitle,
+} from '@/components/ui/dialog'
+import { Badge } from '@/components/ui/badge'
+import { ConferenceImagesCarousel } from '@/components/conference-images-carousel'
+import { Calendar, ExternalLink, MapPin, Users, Video } from 'lucide-react'
+import { useI18n } from '@/components/i18n/locale-provider'
+import type { Conference } from '@/types'
+
+const TAG_COLORS: Record<string, string> = {
+  Android: 'bg-emerald-500/20 text-emerald-600 dark:text-emerald-400',
+  iOS: 'bg-blue-500/20 text-blue-600 dark:text-blue-400',
+  Flutter: 'bg-sky-500/20 text-sky-600 dark:text-sky-400',
+  Kotlin: 'bg-violet-500/20 text-violet-600 dark:text-violet-400',
+  ML: 'bg-amber-500/20 text-amber-600 dark:text-amber-400',
+  AI: 'bg-rose-500/20 text-rose-600 dark:text-rose-400',
+  default: 'bg-primary/15 text-primary',
+}
+
+function tagClass(tag: string) {
+  return TAG_COLORS[tag] ?? TAG_COLORS.default
+}
+
+/** Lugar: sede / ciudad · país sin duplicar. */
+function formatVenue(c: Conference): string | null {
+  const bits: string[] = []
+  if (c.location?.trim()) bits.push(c.location.trim())
+  const cc = [c.city, c.country].filter(Boolean).join(', ')
+  if (cc) bits.push(cc)
+  if (bits.length === 0) return null
+  return [...new Set(bits)].join(' · ')
+}
+
+type ConferenceDetailModalProps = {
+  conference: Conference | null
+  open: boolean
+  onClose: () => void
+}
+
+export function ConferenceDetailModal({ conference, open, onClose }: ConferenceDetailModalProps) {
+  const { t } = useI18n()
+
+  const confType = (type: string) => {
+    const k = `conferenceType.${type}`
+    const s = t(k)
+    return s === k ? type : s
+  }
+
+  const c = conference
+  if (!c) return null
+
+  const imgs = c.images ?? []
+  const hasImages = imgs.length > 0
+  const venueLine = formatVenue(c)
+
+  return (
+    <Dialog open={open} onOpenChange={(next) => !next && onClose()}>
+      <DialogContent className="max-h-[min(90dvh,880px)] gap-0 overflow-hidden p-0 sm:max-w-2xl">
+        <div className="max-h-[min(90dvh,880px)] overflow-y-auto">
+          {hasImages ? (
+            <ConferenceImagesCarousel
+              images={imgs}
+              alt={c.title}
+              sizes="(max-width: 640px) 100vw, 42rem"
+              className="sm:rounded-t-2xl"
+            >
+              <Badge
+                variant="secondary"
+                className="bg-background/90 backdrop-blur-sm text-foreground border-0 [text-shadow:0_1px_3px_rgba(0,0,0,0.9)]"
+              >
+                {confType(c.type)}
+              </Badge>
+              {c.country && (
+                <Badge
+                  variant="secondary"
+                  className="bg-background/90 backdrop-blur-sm text-foreground border-0 [text-shadow:0_1px_3px_rgba(0,0,0,0.9)]"
+                >
+                  {c.country}
+                </Badge>
+              )}
+            </ConferenceImagesCarousel>
+          ) : null}
+
+          <div className="space-y-4 p-5 sm:p-6">
+            {!hasImages && (
+              <div className="flex flex-wrap gap-2">
+                <Badge variant="secondary">{confType(c.type)}</Badge>
+                {c.country && <Badge variant="outline">{c.country}</Badge>}
+              </div>
+            )}
+
+            <DialogHeader className="text-left">
+              <DialogTitle className="text-xl sm:text-2xl pr-8">{c.title}</DialogTitle>
+              <DialogDescription className="sr-only">
+                {[confType(c.type), c.topic, venueLine, c.date?.trim()]
+                  .filter(Boolean)
+                  .join('. ')}
+              </DialogDescription>
+            </DialogHeader>
+
+            <div className="space-y-3">
+              {c.topic ? <p className="text-base font-medium text-primary">{c.topic}</p> : null}
+
+              <dl className="grid gap-2 text-sm text-muted-foreground">
+                {c.date?.trim() ? (
+                  <div className="flex gap-2">
+                    <dt className="flex shrink-0 items-center gap-1.5 font-medium text-foreground/80">
+                      <Calendar className="h-4 w-4 shrink-0 opacity-80" aria-hidden />
+                      {t('conferences.detailDate')}
+                    </dt>
+                    <dd>{c.date.trim()}</dd>
+                  </div>
+                ) : null}
+                {venueLine ? (
+                  <div className="flex gap-2">
+                    <dt className="flex shrink-0 items-center gap-1.5 font-medium text-foreground/80">
+                      <MapPin className="h-4 w-4 shrink-0 opacity-80" aria-hidden />
+                      {t('conferences.detailLocation')}
+                    </dt>
+                    <dd>{venueLine}</dd>
+                  </div>
+                ) : null}
+                {c.audience != null ? (
+                  <div className="flex gap-2">
+                    <dt className="flex shrink-0 items-center gap-1.5 font-medium text-foreground/80">
+                      <Users className="h-4 w-4 shrink-0 opacity-80" aria-hidden />
+                      {t('conferences.detailAudience')}
+                    </dt>
+                    <dd>{t('conferences.attendees', { count: String(c.audience) })}</dd>
+                  </div>
+                ) : null}
+              </dl>
+
+              {(c.videoUrl || c.eventUrl) && (
+                <div className="flex flex-wrap gap-3 pt-1">
+                  {c.videoUrl?.trim() ? (
+                    <a
+                      href={c.videoUrl}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="inline-flex items-center gap-1.5 text-sm font-medium text-primary hover:underline"
+                    >
+                      <Video className="h-4 w-4 shrink-0" />
+                      {t('conferences.watchVideo')}
+                    </a>
+                  ) : null}
+                  {c.eventUrl?.trim() ? (
+                    <a
+                      href={c.eventUrl}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="inline-flex items-center gap-1.5 text-sm font-medium text-primary hover:underline"
+                    >
+                      <ExternalLink className="h-4 w-4 shrink-0" />
+                      {t('conferences.event')}
+                    </a>
+                  ) : null}
+                </div>
+              )}
+
+              {c.tags && c.tags.length > 0 ? (
+                <div className="flex flex-wrap gap-1.5 pt-2">
+                  {c.tags.map((tag) => (
+                    <span
+                      key={tag}
+                      className={`text-xs px-2 py-0.5 rounded-md font-medium ${tagClass(tag)}`}
+                    >
+                      {tag}
+                    </span>
+                  ))}
+                </div>
+              ) : null}
+            </div>
+          </div>
+        </div>
+      </DialogContent>
+    </Dialog>
+  )
+}

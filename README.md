@@ -139,9 +139,9 @@ Edit `/content/profile.json` with your bio, links, and social URLs.
 
 Edit `/content/experience.json`. Set `current: true` for active roles.
 
-### Adding Conferences
+### Conferences & talks
 
-Edit `/content/conferences.json` with new talk entries.
+Talks are stored in **Firestore** and edited in the admin panel at `/admin/conferences` (not in `/content`). The `conferences.json` file stays empty as a placeholder for scripts.
 
 ### Importing LinkedIn Testimonials
 

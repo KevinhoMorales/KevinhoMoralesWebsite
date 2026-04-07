@@ -44,6 +44,48 @@ function asStringArray(v: unknown): string[] | undefined {
   return out.length ? out : undefined;
 }
 
+/** Rutas/URLs de imágenes de conferencia: tolera array, mapa indexado o objetos `{ url | path }`. */
+function conferenceImagesFromFirestore(raw: unknown): string[] | undefined {
+  if (raw == null) return undefined;
+
+  const pushFromItem = (x: unknown, bucket: string[]) => {
+    if (typeof x === 'string' && x.trim()) {
+      bucket.push(x.trim());
+      return;
+    }
+    if (x !== null && typeof x === 'object') {
+      const o = x as Record<string, unknown>;
+      for (const key of ['url', 'path', 'src', 'storagePath'] as const) {
+        const v = o[key];
+        if (typeof v === 'string' && v.trim()) {
+          bucket.push(v.trim());
+          return;
+        }
+      }
+    }
+  };
+
+  if (Array.isArray(raw)) {
+    const out: string[] = [];
+    for (const x of raw) pushFromItem(x, out);
+    return out.length ? out : undefined;
+  }
+
+  if (typeof raw === 'object') {
+    const rec = raw as Record<string, unknown>;
+    const keys = Object.keys(rec);
+    const allNumeric = keys.length > 0 && keys.every((k) => /^\d+$/.test(k));
+    if (allNumeric) {
+      const ordered = [...keys].sort((a, b) => Number(a) - Number(b));
+      const out: string[] = [];
+      for (const k of ordered) pushFromItem(rec[k], out);
+      return out.length ? out : undefined;
+    }
+  }
+
+  return undefined;
+}
+
 function asLinks(v: unknown): ProjectLink[] {
   if (!Array.isArray(v)) return [];
   return v
@@ -103,7 +145,7 @@ function normalizeConference(data: Record<string, unknown>, docId: string): Conf
     videoUrl: asString(data.videoUrl),
     eventUrl: asString(data.eventUrl),
     tags: asStringArray(data.tags),
-    images: asStringArray(data.images),
+    images: conferenceImagesFromFirestore(data.images),
   };
 }
 

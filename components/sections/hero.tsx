@@ -3,9 +3,11 @@
 import Image from 'next/image'
 import { TypeAnimation } from 'react-type-animation'
 import Link from 'next/link'
+import { usePathname } from 'next/navigation'
 import { Button } from '@/components/ui/button'
 import { ArrowDown, MessageCircle, FileText } from 'lucide-react'
 import { useI18n } from '@/components/i18n/locale-provider'
+import { handleHomeHashLinkClick } from '@/lib/section-scroll'
 import type { Profile } from '@/types'
 
 interface HeroProps {
@@ -14,6 +16,7 @@ interface HeroProps {
 
 export function Hero({ profile }: HeroProps) {
   const { t, locale } = useI18n()
+  const pathname = usePathname()
   const avatarSrc =
     (profile as { heroImage?: string }).heroImage ||
     (profile as { profileImageLocal?: string }).profileImageLocal ||
@@ -62,13 +65,13 @@ export function Hero({ profile }: HeroProps) {
 
             <div className="flex flex-col xs:flex-row flex-wrap gap-2 sm:gap-3 pt-1">
               <Button size="lg" className="gap-2" asChild>
-                <Link href="/projects">
+                <Link href="/#projects" onClick={(e) => handleHomeHashLinkClick(e, pathname, '/#projects')}>
                   {t('hero.exploreWork')}
                   <ArrowDown className="h-4 w-4" aria-hidden />
                 </Link>
               </Button>
               <Button variant="outline" size="lg" className="gap-2" asChild>
-                <Link href="/contact">
+                <Link href="/#connect" onClick={(e) => handleHomeHashLinkClick(e, pathname, '/#connect')}>
                   <MessageCircle className="h-4 w-4" aria-hidden />
                   {t('hero.letsTalk')}
                 </Link>

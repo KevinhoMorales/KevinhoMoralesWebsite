@@ -11,6 +11,7 @@ import { ThemeToggle } from '@/components/theme-toggle'
 import { LocaleSwitcher } from '@/components/i18n/locale-switcher'
 import { useI18n } from '@/components/i18n/locale-provider'
 import { useWaitlist } from '@/components/waitlist/waitlist-context'
+import { handleHomeHashLinkClick } from '@/lib/section-scroll'
 import { cn } from '@/lib/utils'
 import { ChevronDown, Menu, Sparkles } from 'lucide-react'
 
@@ -19,12 +20,15 @@ function NavMoreDropdown({
   admin,
   moreLabel,
   moreAria,
+  pathname,
   onNavigate,
 }: {
   items: { name: string; href: string }[]
-  admin: { name: string; href: string }
+  /** Si se omite, el menú solo muestra `items` (p. ej. Articles, Podcast, About). */
+  admin?: { name: string; href: string }
   moreLabel: string
   moreAria: string
+  pathname: string | null
   onNavigate?: () => void
 }) {
   const [open, setOpen] = useState(false)
@@ -71,7 +75,8 @@ function NavMoreDropdown({
               href={item.href}
               role="menuitem"
               className="block px-3 py-2 text-sm hover:bg-muted"
-              onClick={() => {
+              onClick={(e) => {
+                handleHomeHashLinkClick(e, pathname, item.href)
                 setOpen(false)
                 onNavigate?.()
               }}
@@ -79,18 +84,22 @@ function NavMoreDropdown({
               {item.name}
             </Link>
           ))}
-          <div className="my-1 h-px bg-border" role="separator" />
-          <Link
-            href={admin.href}
-            role="menuitem"
-            className="block px-3 py-2 text-sm hover:bg-muted"
-            onClick={() => {
-              setOpen(false)
-              onNavigate?.()
-            }}
-          >
-            {admin.name}
-          </Link>
+          {admin ? (
+            <>
+              <div className="my-1 h-px bg-border" role="separator" />
+              <Link
+                href={admin.href}
+                role="menuitem"
+                className="block px-3 py-2 text-sm hover:bg-muted"
+                onClick={() => {
+                  setOpen(false)
+                  onNavigate?.()
+                }}
+              >
+                {admin.name}
+              </Link>
+            </>
+          ) : null}
         </div>
       ) : null}
     </div>
@@ -106,19 +115,18 @@ export function Navigation() {
 
   const navMain = useMemo(
     () => [
-      { name: t('nav.about'), href: '/about' },
-      { name: t('nav.experience'), href: '/experience' },
-      { name: t('nav.projects'), href: '/projects' },
-      { name: t('nav.contact'), href: '/contact' },
+      { name: t('nav.experience'), href: '/#experience' },
+      { name: t('nav.speaking'), href: '/#conferences' },
+      { name: t('nav.projects'), href: '/#projects' },
     ],
     [t]
   )
 
   const navMore = useMemo(
     () => [
-      { name: t('nav.articles'), href: '/articles' },
-      { name: t('nav.podcast'), href: '/podcast' },
-      { name: t('nav.speaking'), href: '/conferences' },
+      { name: t('nav.articles'), href: '/#articles' },
+      { name: t('nav.podcast'), href: '/#podcast' },
+      { name: t('nav.about'), href: '/#about' },
     ],
     [t]
   )
@@ -168,15 +176,16 @@ export function Navigation() {
                 key={item.href}
                 href={item.href}
                 className="shrink-0 rounded-full px-2.5 py-2 text-xs font-medium text-muted-foreground transition-colors hover:bg-secondary/50 hover:text-foreground xl:px-3 xl:text-sm"
+                onClick={(e) => handleHomeHashLinkClick(e, pathname, item.href)}
               >
                 {item.name}
               </Link>
             ))}
             <NavMoreDropdown
               items={navMore}
-              admin={navAdmin}
               moreLabel={t('nav.more')}
               moreAria={t('nav.moreAria')}
+              pathname={pathname}
             />
           </div>
 
@@ -240,7 +249,13 @@ export function Navigation() {
                   </p>
                   {navMain.map((item) => (
                     <Button key={item.href} variant="ghost" className="h-11 justify-start text-base" asChild>
-                      <Link href={item.href} onClick={() => setIsOpen(false)}>
+                      <Link
+                        href={item.href}
+                        onClick={(e) => {
+                          handleHomeHashLinkClick(e, pathname, item.href)
+                          setIsOpen(false)
+                        }}
+                      >
                         {item.name}
                       </Link>
                     </Button>
@@ -253,7 +268,13 @@ export function Navigation() {
                   </p>
                   {navMore.map((item) => (
                     <Button key={item.href} variant="ghost" className="h-11 justify-start text-base" asChild>
-                      <Link href={item.href} onClick={() => setIsOpen(false)}>
+                      <Link
+                        href={item.href}
+                        onClick={(e) => {
+                          handleHomeHashLinkClick(e, pathname, item.href)
+                          setIsOpen(false)
+                        }}
+                      >
                         {item.name}
                       </Link>
                     </Button>

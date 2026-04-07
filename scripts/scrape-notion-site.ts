@@ -78,19 +78,7 @@ I'm also the host of the DevLokos podcast and the community lead for GDG Tsáchi
     { id: 'elite-padel', title: 'Élite Padel: Ranking Oficial', description: 'Official padel ranking app', technologies: ['Jetpack Compose'], category: 'android' as const, links: [{ type: 'playStore' as const, url: 'https://play.google.com/store/apps/details?id=com.kevinhomorales.padelhubjetpackcompose' }], experience: 'DevLokos Enterprise', platforms: ['Android'], tags: ['Sports', 'Padel'] },
   ];
 
-  // Conferences - preserve existing if already populated from kevinhomorales.com/speaker, else use defaults
-  const conferencesPath = path.join(CONTENT_DIR, 'conferences.json');
-  const defaultConferences = [
-    { id: '1', title: 'Google I/O Extended, Machala 2023', topic: 'El futuro del nativo Jetpack Compose vs SwiftUI', type: 'conference' as const, location: 'Machala', tags: ['Android'] },
-    { id: '2', title: 'Google I/O Extended, Ecuador 2023', topic: 'El futuro del nativo Jetpack Compose vs SwiftUI', type: 'virtual' as const, videoUrl: 'https://youtu.be/SC4RrJGtIX4', tags: ['Android'] },
-  ];
-  let conferences: typeof defaultConferences;
-  if (fs.existsSync(conferencesPath)) {
-    const existing = JSON.parse(fs.readFileSync(conferencesPath, 'utf-8'));
-    conferences = Array.isArray(existing) && existing.length > 15 ? existing : defaultConferences;
-  } else {
-    conferences = defaultConferences;
-  }
+  // Conferences se gestionan en Firestore (/admin/conferences), no en JSON.
 
   // Testimonials - from recommendations section
   const testimonials = [
@@ -107,14 +95,14 @@ I'm also the host of the DevLokos podcast and the community lead for GDG Tsáchi
   fs.writeFileSync(path.join(CONTENT_DIR, 'profile.json'), JSON.stringify(profile, null, 2));
   fs.writeFileSync(path.join(CONTENT_DIR, 'experience.json'), JSON.stringify(experience, null, 2));
   fs.writeFileSync(path.join(CONTENT_DIR, 'projects.json'), JSON.stringify(projects, null, 2));
-  fs.writeFileSync(path.join(CONTENT_DIR, 'conferences.json'), JSON.stringify(conferences, null, 2));
+  fs.writeFileSync(path.join(CONTENT_DIR, 'conferences.json'), JSON.stringify([], null, 2));
   fs.writeFileSync(path.join(CONTENT_DIR, 'testimonials.json'), JSON.stringify(testimonials, null, 2));
 
   console.log('Scraped data saved to /content:');
   console.log('  - profile.json');
   console.log('  - experience.json');
   console.log('  - projects.json');
-  console.log('  - conferences.json');
+  console.log('  - conferences.json (vacío; charlas en Firestore)');
   console.log('  - testimonials.json');
   console.log(`\nExtracted ${images.length} images, ${links.length} links from page.`);
 }

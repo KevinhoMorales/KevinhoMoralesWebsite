@@ -12,6 +12,9 @@ export function ConferencesPageClient({ conferences }: { conferences: Conference
     <main className="container mx-auto px-4 py-12 max-w-6xl">
       <TranslatedPageHeader titleKey="pages.conferences.title" descKey="pages.conferences.desc" />
       <div className="space-y-4">
+        {conferences.length === 0 ? (
+          <p className="text-sm text-muted-foreground">{t('pages.conferences.empty')}</p>
+        ) : null}
         {conferences.map((conf) => (
           <article
             key={conf.id}

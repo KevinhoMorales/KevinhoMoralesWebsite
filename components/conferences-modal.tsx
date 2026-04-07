@@ -1,8 +1,9 @@
 'use client'
 
-import { useEffect } from 'react'
-import Image from 'next/image'
+import { useEffect, useState } from 'react'
 import { Card, CardContent } from '@/components/ui/card'
+import { ConferenceImagesCarousel } from '@/components/conference-images-carousel'
+import { ConferenceDetailModal } from '@/components/conference-detail-modal'
 import { Badge } from '@/components/ui/badge'
 import { MapPin, ExternalLink, Video, Users } from 'lucide-react'
 import { useI18n } from '@/components/i18n/locale-provider'
@@ -28,6 +29,8 @@ interface ConferencesModalProps {
 
 export function ConferencesModal({ conferences, open, onClose }: ConferencesModalProps) {
   const { t } = useI18n()
+  const [detailConference, setDetailConference] = useState<Conference | null>(null)
+
   const confType = (type: string) => {
     const k = `conferenceType.${type}`
     const s = t(k)
@@ -45,6 +48,10 @@ export function ConferencesModal({ conferences, open, onClose }: ConferencesModa
       document.body.style.overflow = ''
     }
   }, [open, onClose])
+
+  useEffect(() => {
+    if (!open) setDetailConference(null)
+  }, [open])
 
   if (!open) return null
 
@@ -90,22 +97,37 @@ export function ConferencesModal({ conferences, open, onClose }: ConferencesModa
         <div className="overflow-y-auto p-4 sm:p-6">
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-5">
             {conferences.map((conf) => {
-              const mainImage = conf.images?.[0]
+              const imgs = conf.images ?? []
+              const hasImages = imgs.length > 0
+              const hasTeaserLinks =
+                Boolean(conf.videoUrl?.trim()) ||
+                Boolean(conf.eventUrl?.trim() && !conf.videoUrl?.trim())
+
               return (
                 <Card
                   key={conf.id}
-                  className="bg-card/50 border-border/50 overflow-hidden hover:border-primary/50 transition-colors"
+                  className="bg-card/50 border-border/50 gap-0 overflow-hidden py-0 hover:border-primary/50 transition-colors"
                 >
-                  {mainImage && (
-                    <div className="relative aspect-video overflow-hidden bg-secondary">
-                      <Image
-                        src={mainImage}
+                  <div
+                    role="button"
+                    tabIndex={0}
+                    className="cursor-pointer text-left focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background"
+                    aria-label={`${t('conferences.openDetail')}: ${conf.title}`}
+                    onClick={() => setDetailConference(conf)}
+                    onKeyDown={(e) => {
+                      if (e.key === 'Enter' || e.key === ' ') {
+                        e.preventDefault()
+                        setDetailConference(conf)
+                      }
+                    }}
+                  >
+                    {hasImages && (
+                      <ConferenceImagesCarousel
+                        images={imgs}
                         alt={conf.title}
-                        fill
-                        className="object-cover"
                         sizes="(max-width: 640px) 100vw, 50vw"
-                      />
-                      <div className="absolute top-2 left-2 flex gap-1.5">
+                        compact
+                      >
                         <Badge
                           variant="secondary"
                           className="bg-background/90 text-xs [text-shadow:0_1px_3px_rgba(0,0,0,0.9)]"
@@ -120,87 +142,95 @@ export function ConferencesModal({ conferences, open, onClose }: ConferencesModa
                             {conf.country}
                           </Badge>
                         )}
-                      </div>
-                    </div>
-                  )}
-                  <CardContent className="p-3 sm:p-4">
-                    {!mainImage && (
-                      <div className="flex gap-2 flex-wrap mb-2">
-                        <Badge variant="secondary" className="text-xs">
-                          {confType(conf.type)}
-                        </Badge>
-                        {conf.country && (
-                          <Badge variant="outline" className="text-xs">
-                            {conf.country}
+                      </ConferenceImagesCarousel>
+                    )}
+                    <CardContent className={hasTeaserLinks ? 'p-3 sm:p-4 pb-1 sm:pb-1' : 'p-3 sm:p-4'}>
+                      {!hasImages && (
+                        <div className="flex gap-2 flex-wrap mb-2">
+                          <Badge variant="secondary" className="text-xs">
+                            {confType(conf.type)}
                           </Badge>
+                          {conf.country && (
+                            <Badge variant="outline" className="text-xs">
+                              {conf.country}
+                            </Badge>
+                          )}
+                        </div>
+                      )}
+                      <h3 className="font-semibold text-sm sm:text-base">{conf.title}</h3>
+                      {conf.topic && (
+                        <p className="text-xs sm:text-sm text-primary font-medium mt-1 line-clamp-2">
+                          {conf.topic}
+                        </p>
+                      )}
+                      <div className="flex flex-wrap gap-x-3 gap-y-1 mt-2 text-xs text-muted-foreground">
+                        {conf.location && (
+                          <span className="flex items-center gap-1">
+                            <MapPin className="h-3 w-3" />
+                            {conf.location}
+                          </span>
+                        )}
+                        {conf.audience != null && (
+                          <span className="flex items-center gap-1">
+                            <Users className="h-3 w-3" />
+                            {t('conferences.attendees', { count: String(conf.audience) })}
+                          </span>
                         )}
                       </div>
-                    )}
-                    <h3 className="font-semibold text-sm sm:text-base">{conf.title}</h3>
-                    {conf.topic && (
-                      <p className="text-xs sm:text-sm text-primary font-medium mt-1 line-clamp-2">
-                        {conf.topic}
-                      </p>
-                    )}
-                    <div className="flex flex-wrap gap-x-3 gap-y-1 mt-2 text-xs text-muted-foreground">
-                      {conf.location && (
-                        <span className="flex items-center gap-1">
-                          <MapPin className="h-3 w-3" />
-                          {conf.location}
-                        </span>
+                      {conf.tags && conf.tags.length > 0 && (
+                        <div className="flex flex-wrap gap-1 mt-2">
+                          {conf.tags.slice(0, 4).map((tag) => (
+                            <span
+                              key={tag}
+                              className={`text-[10px] px-1.5 py-0.5 rounded-md font-medium ${getTagClassName(tag)}`}
+                            >
+                              {tag}
+                            </span>
+                          ))}
+                        </div>
                       )}
-                      {conf.audience != null && (
-                        <span className="flex items-center gap-1">
-                          <Users className="h-3 w-3" />
-                          {t('conferences.attendees', { count: String(conf.audience) })}
-                        </span>
-                      )}
-                    </div>
-                    <div className="flex flex-wrap gap-2 mt-2">
-                      {conf.videoUrl && (
-                        <a
-                          href={conf.videoUrl}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          className="flex items-center gap-1 text-xs text-primary hover:underline"
-                          onClick={(e) => e.stopPropagation()}
-                        >
-                          <Video className="h-3 w-3" />
-                          {t('conferences.watchVideo')}
-                        </a>
-                      )}
-                      {conf.eventUrl && !conf.videoUrl && (
-                        <a
-                          href={conf.eventUrl}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          className="flex items-center gap-1 text-xs text-primary hover:underline"
-                          onClick={(e) => e.stopPropagation()}
-                        >
-                          <ExternalLink className="h-3 w-3" />
-                          {t('conferences.event')}
-                        </a>
-                      )}
-                    </div>
-                    {conf.tags && conf.tags.length > 0 && (
-                      <div className="flex flex-wrap gap-1 mt-2">
-                        {conf.tags.slice(0, 4).map((tag) => (
-                          <span
-                            key={tag}
-                            className={`text-[10px] px-1.5 py-0.5 rounded-md font-medium ${getTagClassName(tag)}`}
+                    </CardContent>
+                  </div>
+                  {hasTeaserLinks ? (
+                    <CardContent className="px-3 pb-3 pt-0 sm:px-4 sm:pb-4">
+                      <div className="flex flex-wrap gap-2 border-t border-border/50 pt-2">
+                        {conf.videoUrl?.trim() ? (
+                          <a
+                            href={conf.videoUrl}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="flex items-center gap-1 text-xs text-primary hover:underline"
                           >
-                            {tag}
-                          </span>
-                        ))}
+                            <Video className="h-3 w-3" />
+                            {t('conferences.watchVideo')}
+                          </a>
+                        ) : null}
+                        {conf.eventUrl?.trim() && !conf.videoUrl?.trim() ? (
+                          <a
+                            href={conf.eventUrl}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="flex items-center gap-1 text-xs text-primary hover:underline"
+                          >
+                            <ExternalLink className="h-3 w-3" />
+                            {t('conferences.event')}
+                          </a>
+                        ) : null}
                       </div>
-                    )}
-                  </CardContent>
+                    </CardContent>
+                  ) : null}
                 </Card>
               )
             })}
           </div>
         </div>
       </div>
+
+      <ConferenceDetailModal
+        conference={detailConference}
+        open={detailConference !== null}
+        onClose={() => setDetailConference(null)}
+      />
     </div>
   )
 }
