@@ -34,7 +34,7 @@ function formatVenue(c: Conference): string | null {
   const cc = [c.city, c.country].filter(Boolean).join(', ')
   if (cc) bits.push(cc)
   if (bits.length === 0) return null
-  return [...new Set(bits)].join(' · ')
+  return Array.from(new Set(bits)).join(' · ')
 }
 
 type ConferenceDetailModalProps = {
