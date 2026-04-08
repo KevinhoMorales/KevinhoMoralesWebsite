@@ -10,6 +10,7 @@ import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle } from '@/components/ui/dialog';
 import { Input } from '@/components/ui/input';
+import { NativeSelect } from '@/components/ui/native-select';
 import { useI18n } from '@/components/i18n/locale-provider';
 import { toBcp47 } from '@/lib/i18n/bcp47';
 import { getPublicWeb3FormsAccessKey } from '@/lib/web3forms-submit';
@@ -334,114 +335,133 @@ export function WaitlistModal() {
                 <form onSubmit={handleSubmit} className="flex flex-col gap-4">
                   {acceptingSignup ? <WaitlistPreorderOffer /> : null}
 
-                  <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
-                    <div className="space-y-2 min-w-0">
-                      <label htmlFor="waitlist-first-name" className="text-sm font-medium text-foreground">
-                        {t('waitlist.firstName')}
-                        {acceptingSignup ? <span className="text-destructive"> *</span> : null}
-                      </label>
-                      <Input
-                        id="waitlist-first-name"
-                        name="firstName"
-                        type="text"
-                        autoComplete="given-name"
-                        required={acceptingSignup}
-                        placeholder={t('waitlist.firstNamePh')}
-                        value={firstName}
-                        onChange={(e) => setFirstName(e.target.value)}
-                        disabled={!acceptingSignup || status === 'loading'}
-                        maxLength={120}
-                        className="h-11 rounded-xl border-border/80 bg-background/80"
-                      />
-                    </div>
-                    <div className="space-y-2 min-w-0">
-                      <label htmlFor="waitlist-last-name" className="text-sm font-medium text-foreground">
-                        {t('waitlist.lastName')}
-                        {acceptingSignup ? <span className="text-destructive"> *</span> : null}
-                      </label>
-                      <Input
-                        id="waitlist-last-name"
-                        name="lastName"
-                        type="text"
-                        autoComplete="family-name"
-                        required={acceptingSignup}
-                        placeholder={t('waitlist.lastNamePh')}
-                        value={lastName}
-                        onChange={(e) => setLastName(e.target.value)}
-                        disabled={!acceptingSignup || status === 'loading'}
-                        maxLength={120}
-                        className="h-11 rounded-xl border-border/80 bg-background/80"
-                      />
-                    </div>
-                  </div>
-                  <div className="space-y-2">
-                    <label htmlFor="waitlist-email" className="text-sm font-medium text-foreground">
-                      {t('waitlist.email')}
-                      {acceptingSignup ? <span className="text-destructive"> *</span> : null}
-                    </label>
-                    <Input
-                      id="waitlist-email"
-                      name="email"
-                      type="email"
-                      autoComplete="email"
-                      inputMode="email"
-                      required={acceptingSignup}
-                      placeholder={t('waitlist.emailPh')}
-                      value={email}
-                      onChange={(e) => setEmail(e.target.value)}
-                      disabled={!acceptingSignup || status === 'loading'}
-                      className="h-11 rounded-xl border-border/80 bg-background/80"
-                      aria-invalid={status === 'error'}
-                    />
-                  </div>
-
-                  <div className="space-y-2">
-                    <label htmlFor="waitlist-heard-from" className="text-sm font-medium text-foreground">
-                      {t('waitlist.heardFrom')}{' '}
-                      {acceptingSignup ? (
-                        <span className="font-normal text-muted-foreground">{t('waitlist.communityOptional')}</span>
-                      ) : null}
-                    </label>
-                    <select
-                      id="waitlist-heard-from"
-                      name="heardFrom"
-                      value={heardFrom}
-                      onChange={(e) => setHeardFrom(e.target.value)}
-                      disabled={!acceptingSignup || status === 'loading'}
-                      className={cn(
-                        'flex h-11 w-full rounded-xl border border-border/80 bg-background/80 px-3 py-2 text-sm text-foreground shadow-sm ring-offset-background',
-                        'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2',
-                        'disabled:cursor-not-allowed disabled:opacity-50'
-                      )}
+                  <div
+                    role="group"
+                    aria-labelledby="waitlist-section-contact"
+                    className="space-y-4"
+                  >
+                    <h3
+                      id="waitlist-section-contact"
+                      className="text-[11px] font-semibold uppercase tracking-wider text-muted-foreground"
                     >
-                      <option value="">{t('waitlist.heardFromPlaceholder')}</option>
-                      {HEARD_FROM_SELECT_KEYS.map((key) => (
-                        <option key={key} value={key}>
-                          {t(`waitlist.heardFrom_${key}` as 'waitlist.heardFrom_site')}
-                        </option>
-                      ))}
-                    </select>
+                      {t('waitlist.sectionContact')}
+                    </h3>
+                    <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
+                      <div className="space-y-2 min-w-0">
+                        <label htmlFor="waitlist-first-name" className="text-sm font-medium text-foreground">
+                          {t('waitlist.firstName')}
+                          {acceptingSignup ? <span className="text-destructive"> *</span> : null}
+                        </label>
+                        <Input
+                          id="waitlist-first-name"
+                          name="firstName"
+                          type="text"
+                          autoComplete="given-name"
+                          required={acceptingSignup}
+                          placeholder={t('waitlist.firstNamePh')}
+                          value={firstName}
+                          onChange={(e) => setFirstName(e.target.value)}
+                          disabled={!acceptingSignup || status === 'loading'}
+                          maxLength={120}
+                          className="h-11 rounded-xl border-border/80 bg-background/80 text-base md:text-sm"
+                        />
+                      </div>
+                      <div className="space-y-2 min-w-0">
+                        <label htmlFor="waitlist-last-name" className="text-sm font-medium text-foreground">
+                          {t('waitlist.lastName')}
+                          {acceptingSignup ? <span className="text-destructive"> *</span> : null}
+                        </label>
+                        <Input
+                          id="waitlist-last-name"
+                          name="lastName"
+                          type="text"
+                          autoComplete="family-name"
+                          required={acceptingSignup}
+                          placeholder={t('waitlist.lastNamePh')}
+                          value={lastName}
+                          onChange={(e) => setLastName(e.target.value)}
+                          disabled={!acceptingSignup || status === 'loading'}
+                          maxLength={120}
+                          className="h-11 rounded-xl border-border/80 bg-background/80 text-base md:text-sm"
+                        />
+                      </div>
+                    </div>
+                    <div className="space-y-2">
+                      <label htmlFor="waitlist-email" className="text-sm font-medium text-foreground">
+                        {t('waitlist.email')}
+                        {acceptingSignup ? <span className="text-destructive"> *</span> : null}
+                      </label>
+                      <Input
+                        id="waitlist-email"
+                        name="email"
+                        type="email"
+                        autoComplete="email"
+                        inputMode="email"
+                        required={acceptingSignup}
+                        placeholder={t('waitlist.emailPh')}
+                        value={email}
+                        onChange={(e) => setEmail(e.target.value)}
+                        disabled={!acceptingSignup || status === 'loading'}
+                        className="h-11 rounded-xl border-border/80 bg-background/80 text-base md:text-sm"
+                        aria-invalid={status === 'error'}
+                      />
+                    </div>
                   </div>
 
-                  <div className="space-y-2">
-                    <label htmlFor="waitlist-community" className="text-sm font-medium text-foreground">
-                      {t('waitlist.community')}{' '}
-                      {acceptingSignup ? (
-                        <span className="font-normal text-muted-foreground">{t('waitlist.communityOptional')}</span>
-                      ) : null}
-                    </label>
-                    <Input
-                      id="waitlist-community"
-                      name="organization"
-                      type="text"
-                      autoComplete="organization"
-                      placeholder={t('waitlist.communityPh')}
-                      value={community}
-                      onChange={(e) => setCommunity(e.target.value)}
-                      disabled={!acceptingSignup || status === 'loading'}
-                      maxLength={120}
-                      className="h-11 rounded-xl border-border/80 bg-background/80"
-                    />
+                  <div
+                    role="group"
+                    aria-labelledby="waitlist-section-optional"
+                    className="space-y-4 border-t border-border/60 pt-4"
+                  >
+                    <h3
+                      id="waitlist-section-optional"
+                      className="text-[11px] font-semibold uppercase tracking-wider text-muted-foreground"
+                    >
+                      {t('waitlist.sectionOptional')}
+                    </h3>
+                    <div className="space-y-2">
+                      <label htmlFor="waitlist-heard-from" className="text-sm font-medium text-foreground">
+                        {t('waitlist.heardFrom')}{' '}
+                        {acceptingSignup ? (
+                          <span className="font-normal text-muted-foreground">{t('waitlist.communityOptional')}</span>
+                        ) : null}
+                      </label>
+                      <NativeSelect
+                        id="waitlist-heard-from"
+                        name="heardFrom"
+                        value={heardFrom}
+                        onChange={(e) => setHeardFrom(e.target.value)}
+                        disabled={!acceptingSignup || status === 'loading'}
+                      >
+                        <option value="">{t('waitlist.heardFromPlaceholder')}</option>
+                        {HEARD_FROM_SELECT_KEYS.map((key) => (
+                          <option key={key} value={key}>
+                            {t(`waitlist.heardFrom_${key}` as 'waitlist.heardFrom_site')}
+                          </option>
+                        ))}
+                      </NativeSelect>
+                    </div>
+
+                    <div className="space-y-2">
+                      <label htmlFor="waitlist-community" className="text-sm font-medium text-foreground">
+                        {t('waitlist.community')}{' '}
+                        {acceptingSignup ? (
+                          <span className="font-normal text-muted-foreground">{t('waitlist.communityOptional')}</span>
+                        ) : null}
+                      </label>
+                      <Input
+                        id="waitlist-community"
+                        name="organization"
+                        type="text"
+                        autoComplete="organization"
+                        placeholder={t('waitlist.communityPh')}
+                        value={community}
+                        onChange={(e) => setCommunity(e.target.value)}
+                        disabled={!acceptingSignup || status === 'loading'}
+                        maxLength={120}
+                        className="h-11 rounded-xl border-border/80 bg-background/80 text-base md:text-sm"
+                      />
+                    </div>
                   </div>
 
                   <input type="text" name="botcheck" tabIndex={-1} autoComplete="off" className="sr-only" aria-hidden />

@@ -203,6 +203,8 @@
     "community": "Comunidade à qual pertence",
     "communityOptional": "(opcional)",
     "communityPh": "ex.: GDG, meetup, empresa…",
+    "sectionContact": "Seus dados",
+    "sectionOptional": "Um pouco mais",
     "privacyNote": "Usamos seu e-mail só para avisos de lançamento e pré-venda deste livro, sem spam extra.",
     "heardFrom": "Como você ficou sabendo do livro?",
     "heardFromPlaceholder": "Escolha uma opção",
