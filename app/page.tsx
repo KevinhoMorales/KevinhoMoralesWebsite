@@ -8,6 +8,7 @@ import {
   getTestimonials,
   getAchievements,
 } from '@/lib/content';
+import { mergeExperienceByCompany } from '@/lib/experience-merge';
 import { withCanonical } from '@/lib/site';
 import { orderProjectsForDisplay } from '@/lib/projects-order';
 import { Hero } from '@/components/sections/hero';
@@ -31,7 +32,7 @@ export const metadata: Metadata = {
 
 export default async function Home() {
   const profile = getProfile();
-  const experience = getExperience();
+  const experience = mergeExperienceByCompany(getExperience());
   const testimonials = getTestimonials();
   const achievements = getAchievements();
   const [projectsRaw, conferences] = await Promise.all([getProjects(), getConferences()]);
@@ -41,7 +42,7 @@ export default async function Home() {
     <main className="min-h-screen min-w-0">
       <Hero profile={profile} />
       <About profile={profile} />
-      <ExperienceSection experiences={experience} mobileLimit={3} />
+      <ExperienceSection experiences={experience} previewLimit={3} />
       <ProjectsSection projects={projects} />
       <ArticlesSection />
       <PodcastSectionUI />

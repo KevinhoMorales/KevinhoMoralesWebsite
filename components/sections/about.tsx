@@ -35,8 +35,8 @@ export function About({ profile }: AboutProps) {
           </h2>
         </ScrollReveal>
 
-        <div className="grid lg:grid-cols-2 gap-8 lg:gap-10 lg:items-stretch">
-          <ScrollReveal variant="fade-right" delay={0.1} className="space-y-4 sm:space-y-6">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-y-10 gap-x-0 lg:gap-x-12 xl:gap-x-16 lg:gap-y-8 lg:items-stretch">
+          <ScrollReveal variant="fade-right" delay={0.1} className="flex min-h-0 flex-col space-y-4 sm:space-y-6">
             <p className="text-base sm:text-lg text-muted-foreground leading-relaxed">
               {t('about.bioP1')}
             </p>
@@ -50,12 +50,12 @@ export function About({ profile }: AboutProps) {
               &ldquo;{t('about.motto')}&rdquo;
             </p>
 
-            <StaggerContainer className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-4 gap-3 sm:gap-4 pt-4 sm:pt-6">
+            <StaggerContainer className="grid grid-cols-2 md:grid-cols-4 gap-3 sm:gap-4 pt-4 sm:pt-6 items-stretch">
               {highlights.map((item, index) => (
-                <StaggerItem key={`${item.title}-${index}`} delay={index * 0.06}>
-                <Card className="bg-card/50 border-border/50">
-                  <CardContent className="p-3 sm:p-4 text-center">
-                    <item.icon className="h-5 w-5 sm:h-6 sm:w-6 text-primary mx-auto mb-1 sm:mb-2" />
+                <StaggerItem key={`${item.title}-${index}`} delay={index * 0.06} className="min-h-0 h-full">
+                <Card className="bg-card/50 border-border/50 h-full flex flex-col">
+                  <CardContent className="p-3 sm:p-4 text-center flex flex-col flex-1 justify-center gap-0.5">
+                    <item.icon className="h-5 w-5 sm:h-6 sm:w-6 text-primary mx-auto mb-1 sm:mb-2 shrink-0" />
                     <p className="font-semibold text-xs sm:text-sm">{item.title}</p>
                     <p className="text-[10px] sm:text-xs text-muted-foreground">{item.description}</p>
                   </CardContent>
@@ -65,8 +65,8 @@ export function About({ profile }: AboutProps) {
             </StaggerContainer>
           </ScrollReveal>
 
-          <ScrollReveal variant="fade-left" delay={0.2} className="flex">
-            <Card className="bg-card/50 border-border/50 overflow-hidden flex flex-col flex-1 min-h-0">
+          <ScrollReveal variant="fade-left" delay={0.2} className="flex min-h-0 w-full lg:pl-0">
+            <Card className="bg-card/50 border-border/50 overflow-hidden flex flex-col flex-1 min-h-0 w-full">
               <CardContent className="p-0 flex flex-col flex-1 min-h-0">
                 {profile.familyImage ? (
                   <>

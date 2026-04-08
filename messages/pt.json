@@ -59,8 +59,7 @@
   },
   "experience": {
     "kicker": "Experiência",
-    "title": "Onde trabalhei",
-    "seeMore": "Ver toda a experiência"
+    "title": "Onde trabalhei"
   },
   "projects": {
     "kicker": "Projetos",
@@ -79,8 +78,9 @@
     "title": "Firebase, Cursor, GitKraken & mobile",
     "subtitle": "Artigos técnicos sobre Firebase, Cursor, GitKraken e desenvolvimento mobile com Swift, Kotlin e Dart.",
     "viewMedium": "Ver tudo no Medium",
-    "seeMore": "Ver todos os artigos",
-    "unavailable": "Artigos indisponíveis."
+    "seeMore": "Ver mais",
+    "unavailable": "Artigos indisponíveis.",
+    "fullArchiveOnMedium": "Quer ver todas as publicações e o arquivo completo? Acesse o perfil no Medium."
   },
   "podcastUi": {
     "kicker": "Podcast",

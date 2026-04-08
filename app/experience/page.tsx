@@ -1,6 +1,7 @@
 import type { Metadata } from 'next'
 
 import { getExperience } from '@/lib/content'
+import { mergeExperienceByCompany } from '@/lib/experience-merge'
 import { withCanonical } from '@/lib/site'
 import { ExperienceSection } from '@/components/sections/experience'
 
@@ -11,7 +12,7 @@ export const metadata: Metadata = {
 }
 
 export default function ExperiencePage() {
-  const experiences = getExperience()
+  const experiences = mergeExperienceByCompany(getExperience())
   return (
     <main className="min-h-[50vh]">
       <ExperienceSection experiences={experiences} />

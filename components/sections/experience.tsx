@@ -2,23 +2,26 @@
 
 import Image from 'next/image'
 import Link from 'next/link'
-import { Card, CardContent } from '@/components/ui/card'
 import { Button } from '@/components/ui/button'
 import { ScrollReveal, StaggerContainer, StaggerItem } from '@/components/scroll-reveal'
 import { useI18n } from '@/components/i18n/locale-provider'
 import { cn } from '@/lib/utils'
 import { ArrowRight, ExternalLink } from 'lucide-react'
-import type { Experience } from '@/types'
+import type { MergedExperience } from '@/types'
 
 interface ExperienceProps {
-  experiences: Experience[]
-  /** Por debajo del breakpoint `sm`, solo los primeros `mobileLimit` ítems (orden del JSON: más recientes arriba); en `/experience` se lista todo */
-  mobileLimit?: number
+  experiences: MergedExperience[]
+  /** En la home: solo los primeros `previewLimit` bloques; el resto en `/experience` */
+  previewLimit?: number
 }
 
-export function ExperienceSection({ experiences, mobileLimit }: ExperienceProps) {
+export function ExperienceSection({ experiences, previewLimit }: ExperienceProps) {
   const { t } = useI18n()
-  const truncated = mobileLimit != null && experiences.length > mobileLimit
+
+  const visible =
+    previewLimit != null ? experiences.slice(0, previewLimit) : experiences
+  const showFullPageLink =
+    previewLimit != null && experiences.length > previewLimit
 
   return (
     <section id="experience" className="scroll-mt-20 py-4 sm:py-5 md:py-6 px-4 sm:px-6 md:px-8 lg:px-12 xl:px-24">
@@ -30,68 +33,73 @@ export function ExperienceSection({ experiences, mobileLimit }: ExperienceProps)
           </h2>
         </ScrollReveal>
 
-        <StaggerContainer className="grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-3 sm:gap-4">
-          {experiences.map((exp, index) => (
-            <StaggerItem
-              key={exp.id}
-              delay={index * 0.04}
-              className={cn(
-                mobileLimit != null && index >= mobileLimit && 'hidden sm:block'
-              )}
-            >
-            <Card
-              className="bg-card/50 border-border/50 hover:bg-card/80 transition-colors group"
-            >
-              <CardContent className="p-3 sm:p-4">
-                <div className="flex items-start gap-3">
-                  {exp.companyLogo && (
-                    <div className="relative h-5 w-5 sm:h-6 sm:w-6 shrink-0 rounded-sm overflow-hidden bg-background border border-border">
-                      <Image
-                        src={exp.companyLogo}
-                        alt={exp.company}
-                        fill
-                        className="object-contain scale-125"
-                        sizes="24px"
-                      />
-                    </div>
-                  )}
-                  <div className="min-w-0 flex-1">
-                    <h3 className="font-semibold text-sm sm:text-base group-hover:text-primary transition-colors">
-                      {exp.role}
-                    </h3>
-                    <p className="text-sm text-muted-foreground flex items-center gap-1">
-                      {exp.company}
-                      {exp.companyUrl && (
+        <StaggerContainer className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-4 sm:gap-5">
+          {visible.map((block, index) => (
+            <StaggerItem key={block.id} delay={index * 0.05} className="w-full min-h-0 h-full">
+              <article
+                className={cn(
+                  'relative flex h-full min-h-[11rem] flex-col overflow-hidden rounded-2xl border border-border/50 bg-gradient-to-br from-card/90 via-card/70 to-muted/20',
+                  'shadow-sm shadow-black/[0.03] dark:shadow-black/20',
+                  'p-4 sm:p-5',
+                  'transition-[box-shadow,transform] duration-300 hover:shadow-md hover:border-border/80'
+                )}
+              >
+                <div className="pointer-events-none absolute -right-6 -top-6 h-28 w-28 rounded-full bg-primary/[0.06] blur-2xl" aria-hidden />
+                {/* Móvil: cabecera en fila; sm+: dos columnas (empresa | roles) */}
+                <div className="relative flex flex-1 flex-col gap-4 sm:flex-row sm:gap-5 sm:items-start">
+                  <div className="flex shrink-0 flex-row items-center gap-3 sm:w-[min(42%,11rem)] sm:flex-col sm:items-stretch sm:gap-3">
+                    {block.companyLogo ? (
+                      <div className="relative h-12 w-12 shrink-0 rounded-2xl overflow-hidden bg-background/80 border border-border/60 shadow-inner">
+                        <Image
+                          src={block.companyLogo}
+                          alt={block.company}
+                          fill
+                          className="object-contain scale-110 p-0.5"
+                          sizes="48px"
+                        />
+                      </div>
+                    ) : null}
+                    <h3 className="min-w-0 flex-1 text-left text-base font-semibold leading-snug tracking-tight sm:flex-none">
+                      <span className="text-foreground">{block.company}</span>
+                      {block.companyUrl ? (
                         <a
-                          href={exp.companyUrl}
+                          href={block.companyUrl}
                           target="_blank"
                           rel="noopener noreferrer"
-                          className="opacity-0 group-hover:opacity-100 transition-opacity"
+                          className="ml-1 inline-flex align-middle text-muted-foreground hover:text-primary transition-colors"
+                          aria-label={block.company}
                         >
-                          <ExternalLink className="h-3 w-3" />
+                          <ExternalLink className="h-3.5 w-3.5" />
                         </a>
-                      )}
-                    </p>
-                    <p className="text-xs text-muted-foreground mt-1">
-                      {exp.startDate} — {exp.current ? t('common.present') : exp.endDate || '—'} · {exp.type}
-                    </p>
+                      ) : null}
+                    </h3>
                   </div>
+
+                  <ul className="min-w-0 flex-1 space-y-2.5 border-l-2 border-primary/25 pl-3.5 sm:space-y-3 sm:pl-4">
+                    {block.roles.map((role, ri) => (
+                      <li key={`${role.role}-${role.startDate}-${ri}`}>
+                        <p className="font-medium text-sm text-foreground leading-snug">{role.role}</p>
+                        <p className="mt-0.5 text-xs text-muted-foreground leading-relaxed sm:text-[0.8125rem]">
+                          {role.startDate} — {role.current ? t('common.present') : role.endDate || '—'} · {role.type}
+                        </p>
+                      </li>
+                    ))}
+                  </ul>
                 </div>
-              </CardContent>
-            </Card>
+              </article>
             </StaggerItem>
           ))}
         </StaggerContainer>
 
-        {truncated ? (
-          <div className="mt-6 flex justify-center sm:hidden">
+        {showFullPageLink ? (
+          <ScrollReveal delay={0.12} className="mt-8 sm:mt-10 flex justify-center">
             <Button variant="outline" size="lg" className="gap-2 rounded-xl" asChild>
               <Link href="/experience">
-                {t('experience.seeMore')}
+                {t('projects.seeMore')}
                 <ArrowRight className="h-4 w-4" aria-hidden />
               </Link>
             </Button>
-          </div>
+          </ScrollReveal>
         ) : null}
       </div>
     </section>
