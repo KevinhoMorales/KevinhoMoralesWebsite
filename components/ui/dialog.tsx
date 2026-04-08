@@ -33,25 +33,39 @@ const DialogContent = React.forwardRef<
 >(({ className, children, ...props }, ref) => {
   const { t } = useI18n();
   return (
-  <DialogPortal>
-    <DialogOverlay />
-    <DialogPrimitive.Content
-      ref={ref}
-      className={cn(
-        'fixed left-1/2 top-1/2 z-[101] grid w-full max-w-[calc(100vw-1.5rem)] -translate-x-1/2 -translate-y-1/2 gap-0 rounded-2xl border border-border/80 bg-card p-0 shadow-2xl shadow-primary/10 duration-200 data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0 data-[state=closed]:zoom-out-95 data-[state=open]:zoom-in-95 sm:max-w-2xl md:max-w-3xl',
-        className
-      )}
-      {...props}
-    >
-      {children}
-      <DialogPrimitive.Close
-        className="absolute right-3 top-3 z-10 rounded-full bg-background/90 p-2 text-muted-foreground opacity-90 ring-offset-background transition-all hover:bg-muted hover:text-foreground focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 disabled:pointer-events-none"
-        aria-label={t('common.close')}
+    <DialogPortal>
+      <DialogOverlay />
+      {/*
+        Centrado con translate en el Content (Radix). El zoom/fade va en un hijo para no pisar
+        el transform del centrado (tailwindcss-animate usa transform en el mismo nodo).
+      */}
+      <DialogPrimitive.Content
+        ref={ref}
+        className={cn(
+          'group fixed left-1/2 top-1/2 z-[101] w-full max-w-[min(42rem,calc(100%-1.5rem))] -translate-x-1/2 -translate-y-1/2 outline-none md:max-w-3xl'
+        )}
+        {...props}
       >
-        <X className="h-4 w-4" />
-      </DialogPrimitive.Close>
-    </DialogPrimitive.Content>
-  </DialogPortal>
+        <div
+          className={cn(
+            'relative grid gap-0 overflow-hidden rounded-2xl border border-border/80 bg-card p-0 shadow-2xl shadow-primary/10',
+            'origin-center duration-200 ease-out',
+            'group-data-[state=open]:animate-in group-data-[state=closed]:animate-out',
+            'group-data-[state=closed]:fade-out-0 group-data-[state=open]:fade-in-0',
+            'group-data-[state=closed]:zoom-out-95 group-data-[state=open]:zoom-in-95',
+            className
+          )}
+        >
+          {children}
+          <DialogPrimitive.Close
+            className="absolute right-3 top-3 z-10 rounded-full bg-background/90 p-2 text-muted-foreground opacity-90 ring-offset-background transition-all hover:bg-muted hover:text-foreground focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 disabled:pointer-events-none"
+            aria-label={t('common.close')}
+          >
+            <X className="h-4 w-4" />
+          </DialogPrimitive.Close>
+        </div>
+      </DialogPrimitive.Content>
+    </DialogPortal>
   );
 });
 DialogContent.displayName = DialogPrimitive.Content.displayName;

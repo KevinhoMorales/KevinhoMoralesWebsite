@@ -76,8 +76,8 @@ export function WaitlistProvider({ children }: { children: ReactNode }) {
   );
 
   const openWaitlist = useCallback(() => {
-    setDialogOpen(true);
-  }, []);
+    handleDialogOpenChange(true);
+  }, [handleDialogOpenChange]);
 
   const markJoined = useCallback(() => {
     safeLocalSet(STORAGE_JOINED, '1');

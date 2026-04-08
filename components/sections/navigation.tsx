@@ -136,7 +136,7 @@ export function Navigation() {
     [t]
   )
 
-  /** CTA del libro: visible siempre (excepto admin); el estilo “teaser” solo si cerró sin unirse. */
+  /** CTA del libro: visible siempre (excepto admin). Siempre estilo primario (gradiente); el estado “joined” no debe apagar el CTA en la barra. */
   const showBookNav = pathname != null && !pathname.startsWith('/admin')
 
   useEffect(() => {
@@ -193,16 +193,10 @@ export function Navigation() {
             <button
               type="button"
               onClick={openWaitlist}
-              className={
-                navTeaserVisible && !waitlistJoined
-                  ? 'group relative hidden shrink-0 items-center gap-2 rounded-full px-3.5 py-2 text-xs font-semibold tracking-tight text-primary-foreground shadow-lg shadow-primary/35 sm:inline-flex bg-gradient-to-r from-primary via-teal-600 to-primary bg-[length:200%_100%] animate-shimmer ring-offset-background transition-[filter,transform] hover:brightness-110 focus:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 active:scale-[0.98]'
-                  : 'group relative hidden shrink-0 items-center gap-2 rounded-full border border-primary/40 bg-primary/10 px-3.5 py-2 text-xs font-semibold tracking-tight text-primary ring-offset-background transition-colors hover:bg-primary/20 focus:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 active:scale-[0.98] sm:inline-flex'
-              }
+              className="group relative hidden shrink-0 items-center gap-2 rounded-full border-2 border-yellow-400 bg-gradient-to-r from-primary via-teal-600 to-primary bg-[length:200%_100%] px-3.5 py-2 text-xs font-semibold tracking-tight text-primary-foreground shadow-md shadow-primary/40 shadow-[0_0_0_1px_rgba(250,204,21,0.35)] sm:inline-flex animate-shimmer transition-[filter,transform] hover:brightness-110 hover:border-yellow-300 hover:shadow-lg hover:shadow-primary/45 focus:outline-none focus-visible:ring-2 focus-visible:ring-yellow-400 focus-visible:ring-offset-2 active:scale-[0.98] dark:border-yellow-400/95"
             >
-              {navTeaserVisible && !waitlistJoined ? (
-                <span className="pointer-events-none absolute -inset-px rounded-full bg-gradient-to-r from-primary/0 via-white/25 to-primary/0 opacity-0 blur-px transition-opacity group-hover:opacity-100" aria-hidden />
-              ) : null}
-              <Sparkles className="h-4 w-4 shrink-0 opacity-90" aria-hidden />
+              <span className="pointer-events-none absolute -inset-px rounded-full bg-gradient-to-r from-primary/0 via-white/25 to-primary/0 opacity-0 blur-px transition-opacity group-hover:opacity-100" aria-hidden />
+              <Sparkles className="h-4 w-4 shrink-0 text-primary-foreground opacity-95" aria-hidden />
               <span className="whitespace-nowrap">{t('nav.waitlist')}</span>
               {navTeaserVisible && !waitlistJoined ? (
                 <>
@@ -233,7 +227,7 @@ export function Navigation() {
                   {showBookNav ? (
                     <Button
                       type="button"
-                      className="mb-2 h-12 gap-2 rounded-xl bg-gradient-to-r from-primary to-teal-600 font-semibold text-primary-foreground shadow-md shadow-primary/30 hover:from-primary/95 hover:to-teal-600/95"
+                      className="mb-2 h-12 gap-2 rounded-xl border-2 border-yellow-400 bg-gradient-to-r from-primary to-teal-600 font-semibold text-primary-foreground shadow-md shadow-primary/30 hover:border-yellow-300 hover:from-primary/95 hover:to-teal-600/95 dark:border-yellow-400/95"
                       onClick={() => {
                         openWaitlist()
                         setIsOpen(false)
