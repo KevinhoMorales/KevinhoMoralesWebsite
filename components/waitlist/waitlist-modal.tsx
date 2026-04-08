@@ -2,7 +2,9 @@
 
 import Image from 'next/image';
 import { useEffect, useState } from 'react';
-import { Loader2 } from 'lucide-react';
+import { CheckCircle2, Loader2 } from 'lucide-react';
+
+import { WAITLIST_HEARD_FROM_VALUES } from '@/lib/waitlist-api-security';
 
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
@@ -13,10 +15,13 @@ import { toBcp47 } from '@/lib/i18n/bcp47';
 import { getPublicWeb3FormsAccessKey } from '@/lib/web3forms-submit';
 import { LAUNCH_DATE, PREORDER_END, formatPreorderDay } from '@/lib/waitlist-preorder';
 import { isWaitlistAcceptingSubmissions } from '@/lib/waitlist-signups-config';
+import { cn } from '@/lib/utils';
 
 import { useWaitlist } from './waitlist-context';
 
 const BOOK_SRC = '/images/book-waitlist.png';
+
+const HEARD_FROM_SELECT_KEYS = WAITLIST_HEARD_FROM_VALUES.filter((v) => v !== '');
 
 function PreorderCountdown({ endAt }: { endAt: Date }) {
   const { t } = useI18n();
@@ -112,20 +117,30 @@ export function WaitlistModal() {
   const [firstName, setFirstName] = useState('');
   const [lastName, setLastName] = useState('');
   const [community, setCommunity] = useState('');
+  const [heardFrom, setHeardFrom] = useState('');
   const [status, setStatus] = useState<'idle' | 'loading' | 'error'>('idle');
   const [message, setMessage] = useState<string | null>(null);
+  const [phase, setPhase] = useState<'form' | 'success'>('form');
+  const [successAux, setSuccessAux] = useState<string | null>(null);
 
   const resetForm = () => {
     setEmail('');
     setFirstName('');
     setLastName('');
     setCommunity('');
+    setHeardFrom('');
     setStatus('idle');
     setMessage(null);
   };
 
+  const resetModal = () => {
+    resetForm();
+    setPhase('form');
+    setSuccessAux(null);
+  };
+
   const handleOpenChange = (open: boolean) => {
-    if (!open) resetForm();
+    if (!open) resetModal();
     setDialogOpen(open);
   };
 
@@ -148,6 +163,7 @@ export function WaitlistModal() {
           firstName: firstName.trim(),
           lastName: lastName.trim(),
           organization: community.trim(),
+          heardFrom,
           botcheck,
         }),
       });
@@ -159,8 +175,7 @@ export function WaitlistModal() {
 
       if (data.success && res.ok) {
         markJoined();
-        const preorderDeadline = formatPreorderDay(PREORDER_END, toBcp47(locale));
-        let alertMessage = t('waitlist.successAlert', { date: preorderDeadline });
+        const auxParts: string[] = [];
 
         const pubKey = getPublicWeb3FormsAccessKey();
         if (pubKey) {
@@ -173,6 +188,7 @@ export function WaitlistModal() {
             const ln = lastName.trim();
             const e = email.trim();
             const org = community.trim();
+            const hf = heardFrom;
             const full = `${fn} ${ln}`.trim();
             const lines = [
               'Nuevo registro en la lista de espera del libro.',
@@ -180,7 +196,8 @@ export function WaitlistModal() {
               `Correo: ${e}`,
               `Nombre: ${fn}`,
               `Apellido: ${ln}`,
-              `Comunidad: ${org}`,
+              `Comunidad: ${org || '—'}`,
+              `Origen: ${hf || '—'}`,
             ];
             const fd = new FormData();
             fd.append('access_key', pubKey);
@@ -211,26 +228,26 @@ export function WaitlistModal() {
                 const detail =
                   w3Data.body?.message || w3Data.message || `HTTP ${w3Res.status}`;
                 console.warn('[waitlist] Web3Forms:', detail);
-                alertMessage += `\n\n${t('waitlist.web3NotifyFail', { detail })}`;
+                auxParts.push(t('waitlist.web3NotifyFail', { detail }));
               }
             } catch (w3Err) {
               console.warn('[waitlist] Web3Forms fetch error:', w3Err);
-              alertMessage += `\n\n${t('waitlist.web3NotifyFail', { detail: t('waitlist.errorNetwork') })}`;
+              auxParts.push(
+                t('waitlist.web3NotifyFail', { detail: t('waitlist.errorNetwork') })
+              );
             }
           }
         } else {
           console.warn(
             '[waitlist] Falta NEXT_PUBLIC_WEB3FORMS_ACCESS_KEY: Web3Forms no recibe el envío desde el navegador.'
           );
-          alertMessage += `\n\n${t('waitlist.web3KeyMissing')}`;
+          auxParts.push(t('waitlist.web3KeyMissing'));
         }
 
         setStatus('idle');
         resetForm();
-        setDialogOpen(false);
-        window.setTimeout(() => {
-          window.alert(alertMessage);
-        }, 200);
+        setSuccessAux(auxParts.length > 0 ? auxParts.join('\n\n') : null);
+        setPhase('success');
         return;
       }
 
@@ -246,153 +263,218 @@ export function WaitlistModal() {
     }
   };
 
+  const successDate = formatPreorderDay(PREORDER_END, toBcp47(locale));
+
   return (
     <Dialog open={dialogOpen} onOpenChange={handleOpenChange}>
-      <DialogContent className="flex max-h-[min(90dvh,calc(100vh-1.25rem))] flex-col gap-0 overflow-hidden p-0 sm:max-w-2xl">
-        <div className="shrink-0 border-b border-border/60 bg-gradient-to-br from-primary/20 via-primary/8 to-muted/40 px-5 pt-12 pb-5">
-          <div className="relative mx-auto aspect-[3/2] w-full max-w-[min(100%,320px)] rounded-lg bg-card shadow-2xl shadow-primary/20 ring-2 ring-primary/25 overflow-hidden">
-            <Image
-              src={BOOK_SRC}
-              alt="Portada: Dominando Kotlin, Swift y Dart — Kevin Morales"
-              fill
-              className="object-cover object-center"
-              sizes="(max-width: 640px) 90vw, 320px"
-              priority
-            />
-          </div>
-        </div>
-
-        <div className="min-h-0 flex-1 overflow-y-auto overscroll-contain px-5 pb-6 pt-4 [scrollbar-gutter:stable] sm:px-6">
-          <div className="flex flex-col gap-4">
-            <DialogHeader className="text-left space-y-2">
-              <DialogTitle className="text-xl sm:text-2xl font-semibold tracking-tight text-balance">
-                {t('waitlist.title')}
-              </DialogTitle>
-              <DialogDescription className="text-sm sm:text-base text-muted-foreground text-pretty leading-relaxed">
-                {t('waitlist.description')}
-              </DialogDescription>
-              <p className="text-sm font-medium text-primary/95 text-pretty leading-snug">
-                {t('waitlist.editionNote')}
+      <DialogContent
+        className={cn(
+          'flex max-h-[min(90dvh,calc(100vh-1.25rem))] flex-col gap-0 overflow-hidden p-0 sm:max-w-2xl',
+          'border-2 border-yellow-400 shadow-[0_0_0_1px_rgba(250,204,21,0.25)] dark:border-yellow-400/90'
+        )}
+      >
+        {phase === 'success' ? (
+          <div className="flex flex-col items-center gap-4 px-6 pb-8 pt-14 text-center sm:px-10">
+            <CheckCircle2 className="h-14 w-14 shrink-0 text-primary" aria-hidden />
+            <div className="space-y-2">
+              <h2 className="text-xl font-semibold tracking-tight text-foreground">{t('waitlist.successTitle')}</h2>
+              <p className="text-sm text-muted-foreground leading-relaxed text-pretty">
+                {t('waitlist.successMessage', { date: successDate })}
               </p>
-              {!acceptingSignup ? (
-                <p className="text-sm text-amber-600/95 dark:text-amber-400/90 text-pretty leading-snug rounded-lg border border-amber-500/35 bg-amber-500/10 px-3 py-2">
-                  {t('waitlist.closedNotice')}
-                </p>
-              ) : null}
-            </DialogHeader>
+            </div>
+            {successAux ? (
+              <p className="w-full max-w-md text-left text-xs text-muted-foreground whitespace-pre-wrap rounded-lg border border-border/60 bg-muted/30 px-3 py-2">
+                {successAux}
+              </p>
+            ) : null}
+            <Button type="button" size="lg" className="mt-1 h-11 w-full max-w-xs rounded-xl font-semibold" onClick={() => setDialogOpen(false)}>
+              {t('waitlist.successDone')}
+            </Button>
+          </div>
+        ) : (
+          <>
+            <div className="shrink-0 border-b border-border/60 bg-gradient-to-br from-primary/20 via-primary/8 to-muted/40 px-5 pt-12 pb-5">
+              <div className="relative mx-auto aspect-[3/2] w-full max-w-[min(100%,320px)] rounded-lg bg-card shadow-2xl shadow-primary/20 ring-2 ring-primary/25 overflow-hidden">
+                <Image
+                  src={BOOK_SRC}
+                  alt="Portada: Dominando Kotlin, Swift y Dart — Kevin Morales"
+                  fill
+                  className="object-cover object-center"
+                  sizes="(max-width: 640px) 90vw, 320px"
+                  priority
+                />
+              </div>
+            </div>
 
-            <form onSubmit={handleSubmit} className="flex flex-col gap-4">
-                {acceptingSignup ? <WaitlistPreorderOffer /> : null}
+            <div className="min-h-0 flex-1 overflow-y-auto overscroll-contain px-5 pb-6 pt-4 [scrollbar-gutter:stable] sm:px-6">
+              <div className="flex flex-col gap-4">
+                <DialogHeader className="text-left space-y-2">
+                  <DialogTitle className="text-xl sm:text-2xl font-semibold tracking-tight text-balance">
+                    {t('waitlist.title')}
+                  </DialogTitle>
+                  <DialogDescription className="text-sm sm:text-base text-muted-foreground text-pretty leading-relaxed">
+                    {t('waitlist.description')}
+                  </DialogDescription>
+                  <p className="text-sm font-medium text-primary/95 text-pretty leading-snug">
+                    {t('waitlist.editionNote')}
+                  </p>
+                  {!acceptingSignup ? (
+                    <p className="text-sm text-amber-600/95 dark:text-amber-400/90 text-pretty leading-snug rounded-lg border border-amber-500/35 bg-amber-500/10 px-3 py-2">
+                      {t('waitlist.closedNotice')}
+                    </p>
+                  ) : null}
+                </DialogHeader>
 
-                <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
-                  <div className="space-y-2 min-w-0">
-                    <label htmlFor="waitlist-first-name" className="text-sm font-medium text-foreground">
-                      {t('waitlist.firstName')}
-                      {acceptingSignup ? <span className="text-destructive"> *</span> : null}
-                    </label>
-                    <Input
-                      id="waitlist-first-name"
-                      name="firstName"
-                      type="text"
-                      autoComplete="given-name"
-                      required={acceptingSignup}
-                      placeholder={t('waitlist.firstNamePh')}
-                      value={firstName}
-                      onChange={(e) => setFirstName(e.target.value)}
-                      disabled={!acceptingSignup || status === 'loading'}
-                      maxLength={120}
-                      className="h-11 rounded-xl border-border/80 bg-background/80"
-                    />
-                  </div>
-                  <div className="space-y-2 min-w-0">
-                    <label htmlFor="waitlist-last-name" className="text-sm font-medium text-foreground">
-                      {t('waitlist.lastName')}
-                      {acceptingSignup ? <span className="text-destructive"> *</span> : null}
-                    </label>
-                    <Input
-                      id="waitlist-last-name"
-                      name="lastName"
-                      type="text"
-                      autoComplete="family-name"
-                      required={acceptingSignup}
-                      placeholder={t('waitlist.lastNamePh')}
-                      value={lastName}
-                      onChange={(e) => setLastName(e.target.value)}
-                      disabled={!acceptingSignup || status === 'loading'}
-                      maxLength={120}
-                      className="h-11 rounded-xl border-border/80 bg-background/80"
-                    />
-                  </div>
-                </div>
-                <div className="space-y-2">
-                  <label htmlFor="waitlist-email" className="text-sm font-medium text-foreground">
-                    {t('waitlist.email')}
-                    {acceptingSignup ? <span className="text-destructive"> *</span> : null}
-                  </label>
-                  <Input
-                    id="waitlist-email"
-                    name="email"
-                    type="email"
-                    autoComplete="email"
-                    inputMode="email"
-                    required={acceptingSignup}
-                    placeholder={t('waitlist.emailPh')}
-                    value={email}
-                    onChange={(e) => setEmail(e.target.value)}
-                    disabled={!acceptingSignup || status === 'loading'}
-                    className="h-11 rounded-xl border-border/80 bg-background/80"
-                    aria-invalid={status === 'error'}
-                  />
-                </div>
-                <div className="space-y-2">
-                  <label htmlFor="waitlist-community" className="text-sm font-medium text-foreground">
-                    {t('waitlist.community')}
-                    {acceptingSignup ? <span className="text-destructive"> *</span> : null}
-                  </label>
-                  <Input
-                    id="waitlist-community"
-                    name="organization"
-                    type="text"
-                    autoComplete="organization"
-                    required={acceptingSignup}
-                    placeholder={t('waitlist.communityPh')}
-                    value={community}
-                    onChange={(e) => setCommunity(e.target.value)}
-                    disabled={!acceptingSignup || status === 'loading'}
-                    maxLength={120}
-                    className="h-11 rounded-xl border-border/80 bg-background/80"
-                  />
-                </div>
-
-                <input type="text" name="botcheck" tabIndex={-1} autoComplete="off" className="sr-only" aria-hidden />
-
-                {message && status === 'error' ? (
-                  <p className="text-sm text-destructive" role="alert">
-                    {message}
+                {acceptingSignup ? (
+                  <p className="text-xs text-muted-foreground leading-relaxed border-l-2 border-primary/35 pl-3">
+                    {t('waitlist.privacyNote')}
                   </p>
                 ) : null}
 
-                <Button
-                  type="submit"
-                  variant="default"
-                  size="lg"
-                  disabled={!acceptingSignup || status === 'loading'}
-                  className="h-11 w-full rounded-xl font-semibold disabled:opacity-80"
-                >
-                  {!acceptingSignup ? (
-                    t('waitlist.submitClosed')
-                  ) : status === 'loading' ? (
-                    <>
-                      <Loader2 className="h-4 w-4 animate-spin mr-2" aria-hidden />
-                      {t('waitlist.submitting')}
-                    </>
-                  ) : (
-                    t('waitlist.submit')
-                  )}
-                </Button>
-              </form>
-          </div>
-        </div>
+                <form onSubmit={handleSubmit} className="flex flex-col gap-4">
+                  {acceptingSignup ? <WaitlistPreorderOffer /> : null}
+
+                  <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
+                    <div className="space-y-2 min-w-0">
+                      <label htmlFor="waitlist-first-name" className="text-sm font-medium text-foreground">
+                        {t('waitlist.firstName')}
+                        {acceptingSignup ? <span className="text-destructive"> *</span> : null}
+                      </label>
+                      <Input
+                        id="waitlist-first-name"
+                        name="firstName"
+                        type="text"
+                        autoComplete="given-name"
+                        required={acceptingSignup}
+                        placeholder={t('waitlist.firstNamePh')}
+                        value={firstName}
+                        onChange={(e) => setFirstName(e.target.value)}
+                        disabled={!acceptingSignup || status === 'loading'}
+                        maxLength={120}
+                        className="h-11 rounded-xl border-border/80 bg-background/80"
+                      />
+                    </div>
+                    <div className="space-y-2 min-w-0">
+                      <label htmlFor="waitlist-last-name" className="text-sm font-medium text-foreground">
+                        {t('waitlist.lastName')}
+                        {acceptingSignup ? <span className="text-destructive"> *</span> : null}
+                      </label>
+                      <Input
+                        id="waitlist-last-name"
+                        name="lastName"
+                        type="text"
+                        autoComplete="family-name"
+                        required={acceptingSignup}
+                        placeholder={t('waitlist.lastNamePh')}
+                        value={lastName}
+                        onChange={(e) => setLastName(e.target.value)}
+                        disabled={!acceptingSignup || status === 'loading'}
+                        maxLength={120}
+                        className="h-11 rounded-xl border-border/80 bg-background/80"
+                      />
+                    </div>
+                  </div>
+                  <div className="space-y-2">
+                    <label htmlFor="waitlist-email" className="text-sm font-medium text-foreground">
+                      {t('waitlist.email')}
+                      {acceptingSignup ? <span className="text-destructive"> *</span> : null}
+                    </label>
+                    <Input
+                      id="waitlist-email"
+                      name="email"
+                      type="email"
+                      autoComplete="email"
+                      inputMode="email"
+                      required={acceptingSignup}
+                      placeholder={t('waitlist.emailPh')}
+                      value={email}
+                      onChange={(e) => setEmail(e.target.value)}
+                      disabled={!acceptingSignup || status === 'loading'}
+                      className="h-11 rounded-xl border-border/80 bg-background/80"
+                      aria-invalid={status === 'error'}
+                    />
+                  </div>
+
+                  <div className="space-y-2">
+                    <label htmlFor="waitlist-heard-from" className="text-sm font-medium text-foreground">
+                      {t('waitlist.heardFrom')}{' '}
+                      {acceptingSignup ? (
+                        <span className="font-normal text-muted-foreground">{t('waitlist.communityOptional')}</span>
+                      ) : null}
+                    </label>
+                    <select
+                      id="waitlist-heard-from"
+                      name="heardFrom"
+                      value={heardFrom}
+                      onChange={(e) => setHeardFrom(e.target.value)}
+                      disabled={!acceptingSignup || status === 'loading'}
+                      className={cn(
+                        'flex h-11 w-full rounded-xl border border-border/80 bg-background/80 px-3 py-2 text-sm text-foreground shadow-sm ring-offset-background',
+                        'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2',
+                        'disabled:cursor-not-allowed disabled:opacity-50'
+                      )}
+                    >
+                      <option value="">{t('waitlist.heardFromPlaceholder')}</option>
+                      {HEARD_FROM_SELECT_KEYS.map((key) => (
+                        <option key={key} value={key}>
+                          {t(`waitlist.heardFrom_${key}` as 'waitlist.heardFrom_site')}
+                        </option>
+                      ))}
+                    </select>
+                  </div>
+
+                  <div className="space-y-2">
+                    <label htmlFor="waitlist-community" className="text-sm font-medium text-foreground">
+                      {t('waitlist.community')}{' '}
+                      {acceptingSignup ? (
+                        <span className="font-normal text-muted-foreground">{t('waitlist.communityOptional')}</span>
+                      ) : null}
+                    </label>
+                    <Input
+                      id="waitlist-community"
+                      name="organization"
+                      type="text"
+                      autoComplete="organization"
+                      placeholder={t('waitlist.communityPh')}
+                      value={community}
+                      onChange={(e) => setCommunity(e.target.value)}
+                      disabled={!acceptingSignup || status === 'loading'}
+                      maxLength={120}
+                      className="h-11 rounded-xl border-border/80 bg-background/80"
+                    />
+                  </div>
+
+                  <input type="text" name="botcheck" tabIndex={-1} autoComplete="off" className="sr-only" aria-hidden />
+
+                  {message && status === 'error' ? (
+                    <p className="text-sm text-destructive" role="alert">
+                      {message}
+                    </p>
+                  ) : null}
+
+                  <Button
+                    type="submit"
+                    variant="default"
+                    size="lg"
+                    disabled={!acceptingSignup || status === 'loading'}
+                    className="h-11 w-full rounded-xl border-2 border-yellow-400 font-semibold shadow-md shadow-primary/25 transition-colors hover:border-yellow-300 disabled:opacity-80 dark:border-yellow-400/90"
+                  >
+                    {!acceptingSignup ? (
+                      t('waitlist.submitClosed')
+                    ) : status === 'loading' ? (
+                      <>
+                        <Loader2 className="h-4 w-4 animate-spin mr-2" aria-hidden />
+                        {t('waitlist.submitting')}
+                      </>
+                    ) : (
+                      t('waitlist.submit')
+                    )}
+                  </Button>
+                </form>
+              </div>
+            </div>
+          </>
+        )}
       </DialogContent>
     </Dialog>
   );

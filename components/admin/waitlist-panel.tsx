@@ -5,6 +5,7 @@ import { adminFetch } from '@/lib/admin-browser';
 import type { WaitlistEntry } from '@/types/waitlist';
 import { useI18n } from '@/components/i18n/locale-provider';
 import { translateAdminError } from '@/lib/i18n/admin-errors';
+import { WAITLIST_HEARD_FROM_VALUES } from '@/lib/waitlist-api-security';
 import { toBcp47 } from '@/lib/i18n/bcp47';
 import { Button } from '@/components/ui/button';
 import { Card } from '@/components/ui/card';
@@ -28,6 +29,16 @@ export function WaitlistPanel() {
       }
     },
     [locale]
+  );
+
+  const heardFromLabel = useCallback(
+    (key: string | undefined) => {
+      if (!key) return '—';
+      const allowed = (WAITLIST_HEARD_FROM_VALUES as readonly string[]).filter((v) => v !== '');
+      if (!allowed.includes(key)) return key;
+      return t(`waitlist.heardFrom_${key}` as 'waitlist.heardFrom_site');
+    },
+    [t]
   );
 
   const refresh = useCallback(async () => {
@@ -75,6 +86,7 @@ export function WaitlistPanel() {
               <th className="p-3 font-medium whitespace-nowrap">{t('admin.waitlistPanel.colFirstName')}</th>
               <th className="p-3 font-medium whitespace-nowrap">{t('admin.waitlistPanel.colLastName')}</th>
               <th className="p-3 font-medium whitespace-nowrap">{t('admin.waitlistPanel.colCommunity')}</th>
+              <th className="p-3 font-medium whitespace-nowrap">{t('admin.waitlistPanel.colHeardFrom')}</th>
               <th className="p-3 font-medium whitespace-nowrap">{t('admin.waitlistPanel.colCreated')}</th>
               <th className="p-3 font-medium whitespace-nowrap">{t('admin.waitlistPanel.colUpdated')}</th>
             </tr>
@@ -82,7 +94,7 @@ export function WaitlistPanel() {
           <tbody>
             {list.length === 0 && !loading ? (
               <tr>
-                <td colSpan={5} className="p-8 text-center text-muted-foreground">
+                <td colSpan={7} className="p-8 text-center text-muted-foreground">
                   {t('admin.waitlistPanel.empty')}
                 </td>
               </tr>
@@ -97,6 +109,9 @@ export function WaitlistPanel() {
                   <td className="p-3 align-top text-muted-foreground">{apellido}</td>
                   <td className="p-3 align-top text-muted-foreground max-w-[160px] break-words">
                     {row.organization || '—'}
+                  </td>
+                  <td className="p-3 align-top text-muted-foreground max-w-[120px] whitespace-nowrap">
+                    {heardFromLabel(row.heardFrom)}
                   </td>
                   <td className="p-3 align-top whitespace-nowrap text-muted-foreground">
                     {formatDate(row.createdAt)}

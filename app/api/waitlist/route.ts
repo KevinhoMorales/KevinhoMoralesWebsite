@@ -56,7 +56,7 @@ export async function POST(request: NextRequest) {
       return NextResponse.json({ success: false, message: parsed.message }, { status: 400 });
     }
 
-    const { email: e, firstName: fn, lastName: ln, organization: org } = parsed.fields;
+    const { email: e, firstName: fn, lastName: ln, organization: org, heardFrom: hf } = parsed.fields;
     const ua = request.headers.get('user-agent') ?? undefined;
 
     const saved = await adminSaveWaitlistSignup({
@@ -64,6 +64,7 @@ export async function POST(request: NextRequest) {
       firstName: fn,
       lastName: ln,
       organization: org,
+      heardFrom: hf || undefined,
       userAgent: ua,
     });
 

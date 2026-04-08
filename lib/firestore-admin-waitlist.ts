@@ -44,6 +44,7 @@ export async function adminSaveWaitlistSignup(input: {
   firstName: string;
   lastName: string;
   organization: string;
+  heardFrom?: string;
   userAgent?: string;
 }): Promise<WaitlistSignupSaveResult | null> {
   const app = tryGetAdminApp();
@@ -62,6 +63,9 @@ export async function adminSaveWaitlistSignup(input: {
   const firstName = input.firstName.trim().slice(0, 120);
   const lastName = input.lastName.trim().slice(0, 120);
   const organization = input.organization.trim().slice(0, 120);
+  const heardFrom = input.heardFrom?.trim();
+  const heardFromStored =
+    heardFrom && heardFrom.length > 0 ? heardFrom.slice(0, 32) : undefined;
   const displayName = `${firstName} ${lastName}`.trim().slice(0, 120);
   const userAgent = input.userAgent?.trim().slice(0, 512);
 
@@ -82,6 +86,7 @@ export async function adminSaveWaitlistSignup(input: {
         createdAt: now,
         updatedAt: now,
         ...(userAgent ? { userAgent } : {}),
+        ...(heardFromStored ? { heardFrom: heardFromStored } : {}),
       });
       return;
     }
@@ -201,6 +206,7 @@ export async function adminFetchWaitlistEntries(): Promise<WaitlistEntry[] | nul
         lastName: typeof d.lastName === 'string' ? d.lastName : undefined,
         displayName: typeof d.displayName === 'string' ? d.displayName : undefined,
         organization: typeof d.organization === 'string' ? d.organization : undefined,
+        heardFrom: typeof d.heardFrom === 'string' ? d.heardFrom : undefined,
         source: typeof d.source === 'string' ? d.source : undefined,
         userAgent: typeof d.userAgent === 'string' ? d.userAgent : undefined,
         createdAt: tsToIso(d.createdAt),

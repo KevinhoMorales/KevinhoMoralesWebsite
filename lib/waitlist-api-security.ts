@@ -8,6 +8,19 @@ const MAX_NAME_LEN = 120;
 const MAX_ORG_LEN = 120;
 const MAX_JSON_BYTES = 12_288;
 
+/** Valores permitidos para atribución (opcional). */
+export const WAITLIST_HEARD_FROM_VALUES = [
+  '',
+  'site',
+  'twitter',
+  'linkedin',
+  'youtube',
+  'podcast',
+  'friend',
+  'search',
+  'other',
+] as const;
+
 const RATE_WINDOW_MS = 15 * 60 * 1000;
 const RATE_MAX = 12;
 const STORE_MAX_KEYS = 40_000;
@@ -76,6 +89,7 @@ export type WaitlistFields = {
   firstName: string;
   lastName: string;
   organization: string;
+  heardFrom: string;
   botcheck: string;
 };
 
@@ -84,6 +98,7 @@ export function normalizeWaitlistFields(body: Record<string, unknown>): { ok: fa
   const firstName = typeof body.firstName === 'string' ? body.firstName.trim() : '';
   const lastName = typeof body.lastName === 'string' ? body.lastName.trim() : '';
   const organization = typeof body.organization === 'string' ? body.organization.trim() : '';
+  const heardFromRaw = typeof body.heardFrom === 'string' ? body.heardFrom.trim() : '';
   const botcheck = typeof body.botcheck === 'string' ? body.botcheck : '';
 
   if (!email || email.length > MAX_EMAIL_LEN || !WAITLIST_EMAIL_RE.test(email)) {
@@ -92,8 +107,12 @@ export function normalizeWaitlistFields(body: Record<string, unknown>): { ok: fa
   if (!firstName || firstName.length > MAX_NAME_LEN || !lastName || lastName.length > MAX_NAME_LEN) {
     return { ok: false, message: 'Indica nombre y apellido.' };
   }
-  if (!organization || organization.length > MAX_ORG_LEN) {
-    return { ok: false, message: 'Indica tu comunidad o afiliación.' };
+  if (organization.length > MAX_ORG_LEN) {
+    return { ok: false, message: 'El campo de comunidad es demasiado largo.' };
+  }
+  const allowedHeard = WAITLIST_HEARD_FROM_VALUES as readonly string[];
+  if (!allowedHeard.includes(heardFromRaw)) {
+    return { ok: false, message: 'Selección de origen no válida.' };
   }
   if (/\r|\n/.test(email)) {
     return { ok: false, message: 'Introduce un correo válido.' };
@@ -104,6 +123,6 @@ export function normalizeWaitlistFields(body: Record<string, unknown>): { ok: fa
 
   return {
     ok: true,
-    fields: { email, firstName, lastName, organization, botcheck },
+    fields: { email, firstName, lastName, organization, heardFrom: heardFromRaw, botcheck },
   };
 }

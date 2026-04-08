@@ -8,6 +8,8 @@ export interface WaitlistEntry {
   displayName?: string;
   /** Solo registros antiguos. */
   organization?: string;
+  /** Atribución opcional (select en el modal). */
+  heardFrom?: string;
   source?: string;
   userAgent?: string;
   createdAt: string | null;
