@@ -284,26 +284,6 @@ export function WaitlistModal() {
             <form onSubmit={handleSubmit} className="flex flex-col gap-4">
                 {acceptingSignup ? <WaitlistPreorderOffer /> : null}
 
-                <div className="space-y-2">
-                  <label htmlFor="waitlist-email" className="text-sm font-medium text-foreground">
-                    {t('waitlist.email')}
-                    {acceptingSignup ? <span className="text-destructive"> *</span> : null}
-                  </label>
-                  <Input
-                    id="waitlist-email"
-                    name="email"
-                    type="email"
-                    autoComplete="email"
-                    inputMode="email"
-                    required={acceptingSignup}
-                    placeholder={t('waitlist.emailPh')}
-                    value={email}
-                    onChange={(e) => setEmail(e.target.value)}
-                    disabled={!acceptingSignup || status === 'loading'}
-                    className="h-11 rounded-xl border-border/80 bg-background/80"
-                    aria-invalid={status === 'error'}
-                  />
-                </div>
                 <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
                   <div className="space-y-2 min-w-0">
                     <label htmlFor="waitlist-first-name" className="text-sm font-medium text-foreground">
@@ -343,6 +323,26 @@ export function WaitlistModal() {
                       className="h-11 rounded-xl border-border/80 bg-background/80"
                     />
                   </div>
+                </div>
+                <div className="space-y-2">
+                  <label htmlFor="waitlist-email" className="text-sm font-medium text-foreground">
+                    {t('waitlist.email')}
+                    {acceptingSignup ? <span className="text-destructive"> *</span> : null}
+                  </label>
+                  <Input
+                    id="waitlist-email"
+                    name="email"
+                    type="email"
+                    autoComplete="email"
+                    inputMode="email"
+                    required={acceptingSignup}
+                    placeholder={t('waitlist.emailPh')}
+                    value={email}
+                    onChange={(e) => setEmail(e.target.value)}
+                    disabled={!acceptingSignup || status === 'loading'}
+                    className="h-11 rounded-xl border-border/80 bg-background/80"
+                    aria-invalid={status === 'error'}
+                  />
                 </div>
                 <div className="space-y-2">
                   <label htmlFor="waitlist-community" className="text-sm font-medium text-foreground">
