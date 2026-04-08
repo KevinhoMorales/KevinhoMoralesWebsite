@@ -166,7 +166,15 @@ export function Navigation() {
             height={36}
             className="h-8 w-8 rounded-full object-cover ring-2 ring-primary/30 sm:h-9 sm:w-9"
           />
-          <span className="hidden truncate xs:inline">Kevin Morales</span>
+          <span
+            className={cn(
+              'hidden truncate',
+              /* Con CTA del libro en barra: en móvil solo avatar + chip; el nombre vuelve desde sm */
+              showBookNav ? 'sm:inline' : 'xs:inline'
+            )}
+          >
+            Kevin Morales
+          </span>
         </Link>
 
         <div className="flex min-w-0 flex-1 items-center justify-end gap-1.5 sm:gap-2">
@@ -193,11 +201,17 @@ export function Navigation() {
             <button
               type="button"
               onClick={openWaitlist}
-              className="group relative hidden shrink-0 items-center gap-2 rounded-full border-2 border-yellow-400 bg-gradient-to-r from-primary via-teal-600 to-primary bg-[length:200%_100%] px-3.5 py-2 text-xs font-semibold tracking-tight text-primary-foreground shadow-md shadow-primary/40 shadow-[0_0_0_1px_rgba(250,204,21,0.35)] sm:inline-flex animate-shimmer transition-[filter,transform] hover:brightness-110 hover:border-yellow-300 hover:shadow-lg hover:shadow-primary/45 focus:outline-none focus-visible:ring-2 focus-visible:ring-yellow-400 focus-visible:ring-offset-2 active:scale-[0.98] dark:border-yellow-400/95"
+              aria-label={t('nav.waitlist')}
+              className={cn(
+                'group relative inline-flex shrink-0 items-center rounded-full border-2 border-yellow-400 bg-gradient-to-r from-primary via-teal-600 to-primary bg-[length:200%_100%] font-semibold tracking-tight text-primary-foreground shadow-md shadow-primary/40 shadow-[0_0_0_1px_rgba(250,204,21,0.35)]',
+                'gap-1.5 px-2.5 py-1.5 text-[11px] sm:gap-2 sm:px-3.5 sm:py-2 sm:text-xs',
+                'animate-shimmer transition-[filter,transform] hover:brightness-110 hover:border-yellow-300 hover:shadow-lg hover:shadow-primary/45 focus:outline-none focus-visible:ring-2 focus-visible:ring-yellow-400 focus-visible:ring-offset-2 active:scale-[0.98] dark:border-yellow-400/95'
+              )}
             >
               <span className="pointer-events-none absolute -inset-px rounded-full bg-gradient-to-r from-primary/0 via-white/25 to-primary/0 opacity-0 blur-px transition-opacity group-hover:opacity-100" aria-hidden />
-              <Sparkles className="h-4 w-4 shrink-0 text-primary-foreground opacity-95" aria-hidden />
-              <span className="whitespace-nowrap">{t('nav.waitlist')}</span>
+              <Sparkles className="h-3.5 w-3.5 shrink-0 text-primary-foreground opacity-95 sm:h-4 sm:w-4" aria-hidden />
+              <span className="truncate sm:hidden">{t('nav.waitlistChip')}</span>
+              <span className="hidden whitespace-nowrap sm:inline">{t('nav.waitlist')}</span>
               {navTeaserVisible && !waitlistJoined ? (
                 <>
                   <span className="absolute -right-0.5 -top-0.5 flex h-2.5 w-2.5 rounded-full bg-primary-foreground/90 motion-safe:animate-ping" aria-hidden />
