@@ -5,8 +5,10 @@ import { Card, CardContent } from '@/components/ui/card'
 import { ConferenceImagesCarousel } from '@/components/conference-images-carousel'
 import { ConferenceDetailModal } from '@/components/conference-detail-modal'
 import { Badge } from '@/components/ui/badge'
-import { MapPin, ExternalLink, Video, Users } from 'lucide-react'
+import { MapPin, Users } from 'lucide-react'
 import { useI18n } from '@/components/i18n/locale-provider'
+import { CONFERENCE_BADGE_OVERLAY_CLASS } from '@/lib/conference-ui'
+import { cn } from '@/lib/utils'
 import type { Conference } from '@/types'
 
 const TAG_COLORS: Record<string, string> = {
@@ -95,23 +97,20 @@ export function ConferencesModal({ conferences, open, onClose }: ConferencesModa
         </div>
 
         <div className="overflow-y-auto p-4 sm:p-6">
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-5">
+          <div className="grid grid-cols-1 items-stretch gap-4 sm:grid-cols-2 sm:gap-5">
             {conferences.map((conf) => {
               const imgs = conf.images ?? []
               const hasImages = imgs.length > 0
-              const hasTeaserLinks =
-                Boolean(conf.videoUrl?.trim()) ||
-                Boolean(conf.eventUrl?.trim() && !conf.videoUrl?.trim())
 
               return (
                 <Card
                   key={conf.id}
-                  className="bg-card/50 border-border/50 gap-0 overflow-hidden py-0 hover:border-primary/50 transition-colors"
+                  className="flex h-full flex-col bg-card/50 border-border/50 gap-0 overflow-hidden py-0 hover:border-primary/50 transition-colors"
                 >
                   <div
                     role="button"
                     tabIndex={0}
-                    className="cursor-pointer text-left focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background"
+                    className="flex min-h-0 flex-1 cursor-pointer flex-col text-left focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background"
                     aria-label={`${t('conferences.openDetail')}: ${conf.title}`}
                     onClick={() => setDetailConference(conf)}
                     onKeyDown={(e) => {
@@ -128,25 +127,19 @@ export function ConferencesModal({ conferences, open, onClose }: ConferencesModa
                         sizes="(max-width: 640px) 100vw, 50vw"
                         compact
                       >
-                        <Badge
-                          variant="secondary"
-                          className="bg-background/90 text-xs [text-shadow:0_1px_3px_rgba(0,0,0,0.9)]"
-                        >
+                        <Badge className={cn(CONFERENCE_BADGE_OVERLAY_CLASS, 'text-xs')}>
                           {confType(conf.type)}
                         </Badge>
                         {conf.country && (
-                          <Badge
-                            variant="secondary"
-                            className="bg-background/90 text-xs [text-shadow:0_1px_3px_rgba(0,0,0,0.9)]"
-                          >
+                          <Badge className={cn(CONFERENCE_BADGE_OVERLAY_CLASS, 'text-xs')}>
                             {conf.country}
                           </Badge>
                         )}
                       </ConferenceImagesCarousel>
                     )}
-                    <CardContent className={hasTeaserLinks ? 'p-3 sm:p-4 pb-1 sm:pb-1' : 'p-3 sm:p-4'}>
+                    <CardContent className="flex flex-1 flex-col p-3 sm:p-4">
                       {!hasImages && (
-                        <div className="flex gap-2 flex-wrap mb-2">
+                        <div className="mb-2 flex gap-2 flex-wrap">
                           <Badge variant="secondary" className="text-xs">
                             {confType(conf.type)}
                           </Badge>
@@ -157,28 +150,28 @@ export function ConferencesModal({ conferences, open, onClose }: ConferencesModa
                           )}
                         </div>
                       )}
-                      <h3 className="font-semibold text-sm sm:text-base">{conf.title}</h3>
+                      <h3 className="line-clamp-2 font-semibold text-sm sm:text-base">{conf.title}</h3>
                       {conf.topic && (
-                        <p className="text-xs sm:text-sm text-primary font-medium mt-1 line-clamp-2">
+                        <p className="mt-1 line-clamp-2 text-xs font-medium text-primary sm:text-sm">
                           {conf.topic}
                         </p>
                       )}
-                      <div className="flex flex-wrap gap-x-3 gap-y-1 mt-2 text-xs text-muted-foreground">
+                      <div className="mt-2 flex flex-wrap gap-x-3 gap-y-1 text-xs text-muted-foreground">
                         {conf.location && (
                           <span className="flex items-center gap-1">
-                            <MapPin className="h-3 w-3" />
+                            <MapPin className="h-3 w-3 shrink-0" />
                             {conf.location}
                           </span>
                         )}
                         {conf.audience != null && (
                           <span className="flex items-center gap-1">
-                            <Users className="h-3 w-3" />
+                            <Users className="h-3 w-3 shrink-0" />
                             {t('conferences.attendees', { count: String(conf.audience) })}
                           </span>
                         )}
                       </div>
                       {conf.tags && conf.tags.length > 0 && (
-                        <div className="flex flex-wrap gap-1 mt-2">
+                        <div className="mt-auto flex flex-wrap gap-1 pt-2">
                           {conf.tags.slice(0, 4).map((tag) => (
                             <span
                               key={tag}
@@ -191,34 +184,6 @@ export function ConferencesModal({ conferences, open, onClose }: ConferencesModa
                       )}
                     </CardContent>
                   </div>
-                  {hasTeaserLinks ? (
-                    <CardContent className="px-3 pb-3 pt-0 sm:px-4 sm:pb-4">
-                      <div className="flex flex-wrap gap-2 border-t border-border/50 pt-2">
-                        {conf.videoUrl?.trim() ? (
-                          <a
-                            href={conf.videoUrl}
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            className="flex items-center gap-1 text-xs text-primary hover:underline"
-                          >
-                            <Video className="h-3 w-3" />
-                            {t('conferences.watchVideo')}
-                          </a>
-                        ) : null}
-                        {conf.eventUrl?.trim() && !conf.videoUrl?.trim() ? (
-                          <a
-                            href={conf.eventUrl}
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            className="flex items-center gap-1 text-xs text-primary hover:underline"
-                          >
-                            <ExternalLink className="h-3 w-3" />
-                            {t('conferences.event')}
-                          </a>
-                        ) : null}
-                      </div>
-                    </CardContent>
-                  ) : null}
                 </Card>
               )
             })}

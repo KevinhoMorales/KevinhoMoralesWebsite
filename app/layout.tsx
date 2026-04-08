@@ -114,9 +114,9 @@ export default async function RootLayout({
               <AnalyticsPageViewsBoundary />
               <CalendlyWidget />
               <HashScroll />
-              {/* Nav fuera de overflow-x-hidden para que el último enlace (Acceso) no quede recortado */}
+              {/* Nav fuera de page-root: evita recortar dropdowns; el scroll horizontal lo cortan html/body + page-root */}
               <Navigation />
-              <div className="overflow-x-wrapper">
+              <div className="page-root">
                 <div className="pt-14 sm:pt-16">
                   <ErrorBoundary>{children}</ErrorBoundary>
                 </div>

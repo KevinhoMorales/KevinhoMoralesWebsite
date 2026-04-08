@@ -49,7 +49,7 @@ export function ArticlesSection() {
               {t('articles.title')}
             </h2>
           </div>
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6">
+          <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 sm:gap-6">
             {Array.from({ length: HOME_ARTICLES }).map((_, i) => (
               <div key={i} className="aspect-[4/3] rounded-lg bg-muted animate-pulse" />
             ))}
@@ -104,7 +104,7 @@ export function ArticlesSection() {
           </Button>
         </ScrollReveal>
 
-        <StaggerContainer className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6">
+        <StaggerContainer className="grid grid-cols-1 gap-4 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 sm:gap-6">
           {displayed.map((article, index) => (
             <StaggerItem key={article.link} delay={index * 0.05}>
             <Card
@@ -123,7 +123,7 @@ export function ArticlesSection() {
                       alt=""
                       fill
                       className="object-cover group-hover:scale-105 transition-transform duration-300"
-                      sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 25vw"
+                      sizes="(max-width: 640px) 100vw, (max-width: 768px) 50vw, (max-width: 1024px) 33vw, 25vw"
                       unoptimized
                     />
                   ) : (

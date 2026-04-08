@@ -114,6 +114,8 @@
     scroll-behavior: smooth;
     scroll-padding-top: 5rem;
     -webkit-overflow-scrolling: touch;
+    overflow-x: clip;
+    max-width: 100%;
   }
   body {
     background-color: var(--background);
@@ -122,13 +124,17 @@
     padding-left: env(safe-area-inset-left);
     padding-right: env(safe-area-inset-right);
     min-height: 100dvh;
+    min-width: 0;
+    max-width: 100%;
+    overflow-x: clip;
     -webkit-overflow-scrolling: touch;
     overscroll-behavior-y: auto;
   }
-  /* Wrapper para overflow-x: evita bloquear scroll en móvil (html/body con overflow-x: hidden lo bloquea en iOS) */
-  .overflow-x-wrapper {
-    overflow-x: hidden;
+  /* Contenedor principal: recorte horizontal sin barra lateral gris en móvil */
+  .page-root {
     min-height: 100dvh;
+    min-width: 0;
     width: 100%;
+    overflow-x: clip;
   }
 }

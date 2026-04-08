@@ -11,6 +11,8 @@ import { Badge } from '@/components/ui/badge'
 import { ConferenceImagesCarousel } from '@/components/conference-images-carousel'
 import { Calendar, ExternalLink, MapPin, Users, Video } from 'lucide-react'
 import { useI18n } from '@/components/i18n/locale-provider'
+import { CONFERENCE_BADGE_OVERLAY_CLASS } from '@/lib/conference-ui'
+import { cn } from '@/lib/utils'
 import type { Conference } from '@/types'
 
 const TAG_COLORS: Record<string, string> = {
@@ -70,20 +72,8 @@ export function ConferenceDetailModal({ conference, open, onClose }: ConferenceD
               sizes="(max-width: 640px) 100vw, 42rem"
               className="sm:rounded-t-2xl"
             >
-              <Badge
-                variant="secondary"
-                className="bg-background/90 backdrop-blur-sm text-foreground border-0 [text-shadow:0_1px_3px_rgba(0,0,0,0.9)]"
-              >
-                {confType(c.type)}
-              </Badge>
-              {c.country && (
-                <Badge
-                  variant="secondary"
-                  className="bg-background/90 backdrop-blur-sm text-foreground border-0 [text-shadow:0_1px_3px_rgba(0,0,0,0.9)]"
-                >
-                  {c.country}
-                </Badge>
-              )}
+              <Badge className={cn(CONFERENCE_BADGE_OVERLAY_CLASS)}>{confType(c.type)}</Badge>
+              {c.country && <Badge className={cn(CONFERENCE_BADGE_OVERLAY_CLASS)}>{c.country}</Badge>}
             </ConferenceImagesCarousel>
           ) : null}
 

@@ -59,7 +59,8 @@
   },
   "experience": {
     "kicker": "Experiencia",
-    "title": "Dónde he trabajado"
+    "title": "Dónde he trabajado",
+    "seeMore": "Ver toda la experiencia"
   },
   "projects": {
     "kicker": "Proyectos",

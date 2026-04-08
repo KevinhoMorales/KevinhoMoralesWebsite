@@ -38,10 +38,10 @@ export default async function Home() {
   const projects = orderProjectsForDisplay(projectsRaw);
 
   return (
-    <main className="min-h-screen">
+    <main className="min-h-screen min-w-0">
       <Hero profile={profile} />
       <About profile={profile} />
-      <ExperienceSection experiences={experience} />
+      <ExperienceSection experiences={experience} mobileLimit={3} />
       <ProjectsSection projects={projects} />
       <ArticlesSection />
       <PodcastSectionUI />

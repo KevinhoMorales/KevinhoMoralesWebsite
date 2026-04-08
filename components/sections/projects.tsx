@@ -77,21 +77,21 @@ export function ProjectsSection({ projects }: ProjectsProps) {
         ) : (
           <StaggerContainer
             key={activeCategory}
-            className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6"
+            className="grid grid-cols-1 items-stretch gap-4 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 sm:gap-6"
           >
             {filteredProjects.map((project, index) => {
               const mainLink = project.links[0]?.url || '#'
               return (
-                <StaggerItem key={project.id} delay={index * 0.06}>
-                  <Card className="bg-card/50 border-border/50 overflow-hidden group hover:border-primary/50 transition-colors">
-                    <div className="aspect-video bg-secondary relative overflow-hidden">
+                <StaggerItem key={project.id} delay={index * 0.06} className="h-full">
+                  <Card className="flex h-full flex-col bg-card/50 border-border/50 overflow-hidden group hover:border-primary/50 transition-colors">
+                    <div className="aspect-video shrink-0 bg-secondary relative overflow-hidden">
                       {project.image ? (
                         <Image
                           src={project.image}
                           alt={project.title}
                           fill
                           className="object-cover"
-                          sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 25vw"
+                          sizes="(max-width: 640px) 100vw, (max-width: 768px) 50vw, (max-width: 1024px) 33vw, 25vw"
                         />
                       ) : (
                         <div className="absolute inset-0 bg-gradient-to-br from-primary/20 to-primary/5 flex items-center justify-center">
@@ -106,16 +106,16 @@ export function ProjectsSection({ projects }: ProjectsProps) {
                         </Button>
                       </div>
                     </div>
-                    <CardContent className="p-4 sm:p-6 space-y-3 sm:space-y-4">
-                      <div>
-                        <h3 className="font-semibold text-base sm:text-lg mb-1 sm:mb-2 group-hover:text-primary transition-colors">
+                    <CardContent className="flex flex-1 flex-col justify-between gap-3 p-4 sm:p-6 sm:gap-4">
+                      <div className="min-h-0">
+                        <h3 className="line-clamp-2 font-semibold text-base sm:text-lg mb-1 sm:mb-2 group-hover:text-primary transition-colors">
                           {project.title}
                         </h3>
                         <p className="text-xs sm:text-sm text-muted-foreground leading-relaxed line-clamp-2">
                           {project.description}
                         </p>
                       </div>
-                      <div className="flex flex-wrap gap-2">
+                      <div className="mt-auto flex flex-wrap gap-2 pt-1">
                         {project.technologies.map((tech) => (
                           <Badge
                             key={tech}

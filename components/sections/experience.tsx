@@ -1,18 +1,25 @@
 'use client'
 
 import Image from 'next/image'
+import Link from 'next/link'
 import { Card, CardContent } from '@/components/ui/card'
+import { Button } from '@/components/ui/button'
 import { ScrollReveal, StaggerContainer, StaggerItem } from '@/components/scroll-reveal'
 import { useI18n } from '@/components/i18n/locale-provider'
-import { ExternalLink } from 'lucide-react'
+import { cn } from '@/lib/utils'
+import { ArrowRight, ExternalLink } from 'lucide-react'
 import type { Experience } from '@/types'
 
 interface ExperienceProps {
   experiences: Experience[]
+  /** Por debajo del breakpoint `sm`, solo los primeros `mobileLimit` ítems (orden del JSON: más recientes arriba); en `/experience` se lista todo */
+  mobileLimit?: number
 }
 
-export function ExperienceSection({ experiences }: ExperienceProps) {
+export function ExperienceSection({ experiences, mobileLimit }: ExperienceProps) {
   const { t } = useI18n()
+  const truncated = mobileLimit != null && experiences.length > mobileLimit
+
   return (
     <section id="experience" className="scroll-mt-20 py-4 sm:py-5 md:py-6 px-4 sm:px-6 md:px-8 lg:px-12 xl:px-24">
       <div className="max-w-6xl mx-auto">
@@ -23,9 +30,15 @@ export function ExperienceSection({ experiences }: ExperienceProps) {
           </h2>
         </ScrollReveal>
 
-        <StaggerContainer className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-4">
+        <StaggerContainer className="grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-3 sm:gap-4">
           {experiences.map((exp, index) => (
-            <StaggerItem key={exp.id} delay={index * 0.04}>
+            <StaggerItem
+              key={exp.id}
+              delay={index * 0.04}
+              className={cn(
+                mobileLimit != null && index >= mobileLimit && 'hidden sm:block'
+              )}
+            >
             <Card
               className="bg-card/50 border-border/50 hover:bg-card/80 transition-colors group"
             >
@@ -69,6 +82,17 @@ export function ExperienceSection({ experiences }: ExperienceProps) {
             </StaggerItem>
           ))}
         </StaggerContainer>
+
+        {truncated ? (
+          <div className="mt-6 flex justify-center sm:hidden">
+            <Button variant="outline" size="lg" className="gap-2 rounded-xl" asChild>
+              <Link href="/experience">
+                {t('experience.seeMore')}
+                <ArrowRight className="h-4 w-4" aria-hidden />
+              </Link>
+            </Button>
+          </div>
+        ) : null}
       </div>
     </section>
   )

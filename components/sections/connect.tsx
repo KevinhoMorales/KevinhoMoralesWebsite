@@ -120,31 +120,33 @@ export function Connect({ profile }: ConnectProps) {
               </CardHeader>
               <CardContent className="pt-2 pb-6 sm:pb-8 px-5 sm:px-6">
                 <form onSubmit={onSubmit} className="space-y-5">
-                  <div className="space-y-2">
-                    <Label htmlFor="connect-name">{t('connect.name')}</Label>
-                    <Input
-                      id="connect-name"
-                      name="name"
-                      type="text"
-                      required
-                      placeholder={t('connect.namePh')}
-                      disabled={status === 'sending'}
-                      autoComplete="name"
-                      className={fieldClass}
-                    />
-                  </div>
-                  <div className="space-y-2">
-                    <Label htmlFor="connect-email">{t('connect.email')}</Label>
-                    <Input
-                      id="connect-email"
-                      name="email"
-                      type="email"
-                      required
-                      placeholder={t('connect.emailPh')}
-                      disabled={status === 'sending'}
-                      autoComplete="email"
-                      className={fieldClass}
-                    />
+                  <div className="grid grid-cols-1 gap-5 sm:grid-cols-2">
+                    <div className="space-y-2 min-w-0">
+                      <Label htmlFor="connect-name">{t('connect.name')}</Label>
+                      <Input
+                        id="connect-name"
+                        name="name"
+                        type="text"
+                        required
+                        placeholder={t('connect.namePh')}
+                        disabled={status === 'sending'}
+                        autoComplete="name"
+                        className={fieldClass}
+                      />
+                    </div>
+                    <div className="space-y-2 min-w-0">
+                      <Label htmlFor="connect-email">{t('connect.email')}</Label>
+                      <Input
+                        id="connect-email"
+                        name="email"
+                        type="email"
+                        required
+                        placeholder={t('connect.emailPh')}
+                        disabled={status === 'sending'}
+                        autoComplete="email"
+                        className={fieldClass}
+                      />
+                    </div>
                   </div>
                   <div className="space-y-2">
                     <Label htmlFor="connect-message">{t('connect.message')}</Label>

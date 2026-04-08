@@ -8,6 +8,8 @@ import { useI18n } from '@/components/i18n/locale-provider';
 import type { PodcastEpisode } from '@/lib/youtube';
 
 const EPISODES_PER_PAGE = 6;
+/** Episodios en la home (preview); menos tarjetas en móvil sin scroll horizontal */
+const HOME_PREVIEW_EPISODES = 3;
 
 interface PodcastSectionProps {
   preview?: boolean;
@@ -85,12 +87,9 @@ export function PodcastSection({ preview = false }: PodcastSectionProps) {
     return (
       <div className="space-y-6">
         <div className="h-10 w-full max-w-md rounded-md bg-muted animate-pulse" />
-        <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-          {Array.from({ length: 6 }).map((_, i) => (
-            <div
-              key={i}
-              className="aspect-video rounded-lg bg-muted animate-pulse"
-            />
+        <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3 sm:gap-6">
+          {Array.from({ length: HOME_PREVIEW_EPISODES }).map((_, i) => (
+            <div key={i} className="aspect-video rounded-lg bg-muted animate-pulse" />
           ))}
         </div>
       </div>
@@ -140,14 +139,14 @@ export function PodcastSection({ preview = false }: PodcastSectionProps) {
   }
 
   const displayEpisodes = preview
-    ? filteredEpisodes.slice(0, 6)
+    ? filteredEpisodes.slice(0, HOME_PREVIEW_EPISODES)
     : paginatedEpisodes;
 
   return (
     <div className="space-y-6">
       {/* Filtros - ocultos en preview */}
       {!preview && (
-        <div className="flex flex-col sm:flex-row gap-4 flex-wrap">
+        <div className="flex flex-col gap-4 sm:flex-row sm:flex-wrap">
         <input
           type="search"
           placeholder={t('podcast.searchPlaceholder')}
@@ -155,7 +154,7 @@ export function PodcastSection({ preview = false }: PodcastSectionProps) {
           onChange={(e) => setSearch(e.target.value)}
           className="flex h-9 w-full max-w-md rounded-md border border-input bg-background px-3 py-1 text-sm shadow-sm transition-colors placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring"
         />
-        <div className="flex gap-2">
+        <div className="flex flex-wrap gap-2">
           <Button
             variant={season === 'all' ? 'default' : 'outline'}
             size="sm"
@@ -181,8 +180,7 @@ export function PodcastSection({ preview = false }: PodcastSectionProps) {
       </div>
       )}
 
-      {/* Grid de episodios */}
-      <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+      <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3 sm:gap-6">
         {displayEpisodes.map((episode) => (
           <EpisodeCard
             key={episode.videoId}

@@ -61,50 +61,54 @@ export function ProjectGrid({ projects, initialCategory = 'all' }: ProjectGridPr
       {filtered.length === 0 ? (
         <p className="text-sm text-muted-foreground py-8">{t('projects.emptyCategory')}</p>
       ) : (
-        <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+        <div className="grid grid-cols-1 items-stretch gap-6 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
           {filtered.map((project) => (
             <article
               key={project.id}
-              className="group rounded-lg border bg-card p-4 transition-shadow hover:shadow-md"
+              className="group flex h-full flex-col rounded-lg border bg-card p-4 transition-shadow hover:shadow-md"
             >
               {project.image && (
-                <div className="relative aspect-video mb-4 overflow-hidden rounded-md">
+                <div className="relative mb-4 aspect-video shrink-0 overflow-hidden rounded-md">
                   <Image
                     src={project.image}
                     alt={project.title}
                     fill
                     className="object-cover transition-transform group-hover:scale-105"
-                    sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
+                    sizes="(max-width: 640px) 100vw, (max-width: 768px) 50vw, (max-width: 1024px) 33vw, 25vw"
                   />
                 </div>
               )}
-              <div className="space-y-2">
-                <h3 className="font-semibold">{project.title}</h3>
-                <p className="text-sm text-muted-foreground line-clamp-2">
-                  {project.description}
-                </p>
-                <div className="flex flex-wrap gap-1">
-                  {project.technologies.slice(0, 4).map((tech) => (
-                    <span
-                      key={tech}
-                      className="rounded bg-muted px-2 py-0.5 text-xs"
-                    >
-                      {tech}
-                    </span>
-                  ))}
+              <div className="flex min-h-0 flex-1 flex-col justify-between gap-3">
+                <div className="min-h-0">
+                  <h3 className="line-clamp-2 font-semibold">{project.title}</h3>
+                  <p className="mt-1 text-sm text-muted-foreground line-clamp-2">
+                    {project.description}
+                  </p>
                 </div>
-                <div className="flex flex-wrap gap-2 pt-2">
-                  {project.links.map((link) => (
-                    <Link
-                      key={link.url}
-                      href={link.url}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="text-sm text-primary hover:underline"
-                    >
-                      {linkLabel(link.type, link.label)}
-                    </Link>
-                  ))}
+                <div className="mt-auto space-y-2">
+                  <div className="flex flex-wrap gap-1">
+                    {project.technologies.slice(0, 4).map((tech) => (
+                      <span
+                        key={tech}
+                        className="rounded bg-muted px-2 py-0.5 text-xs"
+                      >
+                        {tech}
+                      </span>
+                    ))}
+                  </div>
+                  <div className="flex flex-wrap gap-2">
+                    {project.links.map((link) => (
+                      <Link
+                        key={link.url}
+                        href={link.url}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="text-sm text-primary hover:underline"
+                      >
+                        {linkLabel(link.type, link.label)}
+                      </Link>
+                    ))}
+                  </div>
                 </div>
               </div>
             </article>

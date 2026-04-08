@@ -22,11 +22,10 @@ export function AchievementsSection({ achievements }: { achievements: Achievemen
           <p className="text-primary font-medium tracking-wide uppercase text-xs sm:text-sm mb-4">
             {t('conferences.achievements')}
           </p>
-          <div className="overflow-x-auto pb-2 -mx-4 px-4 sm:-mx-6 sm:px-6 md:-mx-8 md:px-8 lg:-mx-12 lg:px-12 xl:-mx-24 xl:px-24 [scrollbar-width:thin]">
-            <div className="flex items-stretch gap-8 sm:gap-10 min-w-max">
+          <div className="grid grid-cols-2 gap-x-4 gap-y-8 sm:grid-cols-3 sm:gap-x-6 sm:gap-y-10 lg:grid-cols-4 justify-items-center">
               {achievements.map((achievement) => {
                 const frame = (
-                  <div className="relative h-28 w-44 shrink-0 sm:h-32 sm:w-56">
+                  <div className="relative mx-auto h-28 w-44 sm:h-32 sm:w-56">
                     <Image
                       src={achievement.image}
                       alt={achievement.title}
@@ -47,7 +46,7 @@ export function AchievementsSection({ achievements }: { achievements: Achievemen
                     href={achievement.url}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="flex shrink-0 flex-col items-center text-center transition-transform hover:scale-[1.02] focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 focus:ring-offset-background rounded-xl"
+                    className="flex w-full max-w-[15rem] flex-col items-center text-center transition-transform hover:scale-[1.02] focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 focus:ring-offset-background rounded-xl"
                   >
                     {frame}
                     {caption}
@@ -55,14 +54,13 @@ export function AchievementsSection({ achievements }: { achievements: Achievemen
                 ) : (
                   <div
                     key={achievement.id}
-                    className="flex shrink-0 flex-col items-center text-center transition-transform hover:scale-[1.02]"
+                    className="flex w-full max-w-[15rem] flex-col items-center text-center transition-transform hover:scale-[1.02]"
                   >
                     {frame}
                     {caption}
                   </div>
                 )
               })}
-            </div>
           </div>
         </ScrollReveal>
       </div>

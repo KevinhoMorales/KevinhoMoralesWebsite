@@ -31,7 +31,10 @@ export function Recommendations({ testimonials }: RecommendationsProps) {
   }
 
   return (
-    <section id="recommendations" className="scroll-mt-20 py-4 sm:py-5 md:py-6 px-4 sm:px-6 md:px-8 lg:px-12 xl:px-24">
+    <section
+      id="recommendations"
+      className="scroll-mt-20 overflow-x-hidden py-4 sm:py-5 md:py-6 px-4 sm:px-6 md:px-8 lg:px-12 xl:px-24"
+    >
       <div className="max-w-6xl mx-auto">
         <ScrollReveal className="mb-8 sm:mb-10 text-center">
           <p className="text-primary font-medium tracking-wide uppercase text-xs sm:text-sm mb-3 sm:mb-4">
@@ -55,7 +58,7 @@ export function Recommendations({ testimonials }: RecommendationsProps) {
             aria-hidden
           />
 
-          <div className="overflow-hidden motion-reduce:overflow-visible">
+          <div className="overflow-hidden motion-reduce:overflow-x-auto motion-reduce:snap-x">
             <div
               className={cn(
                 'flex w-max gap-4 sm:gap-5 py-2',
