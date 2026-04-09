@@ -43,7 +43,9 @@ export async function PUT(
     .doc(PROD_ADMIN_DOC_ID)
     .collection(CONFERENCES_SUBCOLLECTION)
     .doc(id);
-  const { createdAt: _c, updatedAt: _u, ...payload } = data as Record<string, unknown>;
+  const payload = { ...(data as Record<string, unknown>) };
+  delete payload.createdAt;
+  delete payload.updatedAt;
   const write = applyConferencePayloadForFirestore(
     { ...(payload as Record<string, unknown>), id },
     { merge: true }

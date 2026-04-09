@@ -60,7 +60,9 @@ export async function POST(req: Request) {
     .doc(PROD_ADMIN_DOC_ID)
     .collection(CONFERENCES_SUBCOLLECTION);
   const ref = col.doc();
-  const { createdAt: _c, updatedAt: _u, ...payload } = data as Record<string, unknown>;
+  const payload = { ...(data as Record<string, unknown>) };
+  delete payload.createdAt;
+  delete payload.updatedAt;
   const write = applyConferencePayloadForFirestore(payload as Record<string, unknown>, {
     merge: false,
   });
