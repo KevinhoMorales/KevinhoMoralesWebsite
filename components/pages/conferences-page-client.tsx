@@ -5,6 +5,7 @@ import { TranslatedPageHeader } from '@/components/i18n/translated-page-header';
 import { useI18n } from '@/components/i18n/locale-provider';
 import type { Conference } from '@/types';
 import { hasWatchableVideoUrl } from '@/lib/conference-video-url';
+import { getConferenceTagClassName } from '@/lib/conference-tag-styles';
 
 export function ConferencesPageClient({ conferences }: { conferences: Conference[] }) {
   const { t } = useI18n();
@@ -29,7 +30,10 @@ export function ConferencesPageClient({ conferences }: { conferences: Conference
               <div className="flex flex-wrap gap-2 mt-2">
                 <span className="text-xs rounded bg-muted px-2 py-0.5">{conf.type}</span>
                 {conf.tags?.map((tag) => (
-                  <span key={tag} className="text-xs rounded bg-muted px-2 py-0.5">
+                  <span
+                    key={tag}
+                    className={`inline-flex text-xs rounded-full px-2 py-0.5 font-medium ${getConferenceTagClassName(tag)}`}
+                  >
                     {tag}
                   </span>
                 ))}

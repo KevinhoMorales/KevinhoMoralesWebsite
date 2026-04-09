@@ -9,20 +9,9 @@ import { MapPin, Users } from 'lucide-react'
 import { useI18n } from '@/components/i18n/locale-provider'
 import { CONFERENCE_BADGE_OVERLAY_CLASS } from '@/lib/conference-ui'
 import { formatConferenceVenueLine } from '@/lib/conference-location-platform'
+import { getConferenceTagClassName } from '@/lib/conference-tag-styles'
 import { cn } from '@/lib/utils'
 import type { Conference } from '@/types'
-
-const TAG_COLORS: Record<string, string> = {
-  Android: 'bg-emerald-500/20 text-emerald-600 dark:text-emerald-400',
-  iOS: 'bg-blue-500/20 text-blue-600 dark:text-blue-400',
-  Flutter: 'bg-sky-500/20 text-sky-600 dark:text-sky-400',
-  Kotlin: 'bg-violet-500/20 text-violet-600 dark:text-violet-400',
-  default: 'bg-primary/15 text-primary',
-}
-
-function getTagClassName(tag: string): string {
-  return TAG_COLORS[tag] ?? TAG_COLORS.default
-}
 
 interface ConferencesModalProps {
   conferences: Conference[]
@@ -177,7 +166,7 @@ export function ConferencesModal({ conferences, open, onClose }: ConferencesModa
                           {conf.tags.slice(0, 4).map((tag) => (
                             <span
                               key={tag}
-                              className={`text-[10px] px-1.5 py-0.5 rounded-md font-medium ${getTagClassName(tag)}`}
+                              className={`inline-flex text-[10px] px-1.5 py-0.5 rounded-full font-medium ${getConferenceTagClassName(tag)}`}
                             >
                               {tag}
                             </span>
