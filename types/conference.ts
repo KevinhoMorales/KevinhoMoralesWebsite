@@ -6,6 +6,7 @@ export const CONFERENCE_LOCATION_PLATFORMS = [
   'youtube',
   'streamyard',
   'gather',
+  'discord',
 ] as const;
 
 export type ConferenceLocationPlatform = (typeof CONFERENCE_LOCATION_PLATFORMS)[number];

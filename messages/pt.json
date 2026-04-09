@@ -136,7 +136,8 @@
     "twitch": "Twitch",
     "youtube": "YouTube",
     "streamyard": "StreamYard",
-    "gather": "Gather"
+    "gather": "Gather",
+    "discord": "Discord"
   },
   "recommendations": {
     "kicker": "Depoimentos",
