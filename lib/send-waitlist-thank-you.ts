@@ -1,8 +1,11 @@
 import { Resend } from 'resend';
 
-import { adminCountWaitlistSignupsDirect } from '@/lib/firestore-admin-waitlist';
 import { getResendApiKeyFromRemoteConfig } from '@/lib/firebase-admin';
-import { LAUNCH_DATE, PREORDER_END, formatPreorderDay } from '@/lib/waitlist-preorder';
+import {
+  LAUNCH_DATE,
+  WAITLIST_SUCCESS_EMAIL_BY_DATE,
+  formatPreorderDay,
+} from '@/lib/waitlist-preorder';
 import { WAITLIST_EMAIL_RE } from '@/lib/waitlist-api-security';
 
 const MAX_TO_LEN = 254;
@@ -13,20 +16,17 @@ const WAITLIST_THANK_YOU_BOOK_IMAGE_SRC =
   'https://firebasestorage.googleapis.com/v0/b/kevinho-morales.firebasestorage.app/o/Book%20Sample.png?alt=media&token=949ece75-48b2-4a3c-a93d-3ba8ff0a694d';
 
 /**
- * Variables que debe declarar la plantilla en Resend (fallbacks en el editor)
- * y el HTML con {{{READER_NAME}}}, {{{PREORDER_UNTIL}}}, {{{LAUNCH_DAY}}}, {{{PREORDER_TOTAL}}}.
+ * Variables de la plantilla en Resend: {{{READER_NAME}}}, {{{EMAIL_LINK_DAY}}}, {{{LAUNCH_DAY}}}.
  */
 function waitlistThankYouTemplateVariables(params: {
   readerNameEscaped: string;
-  preorderUntil: string;
+  emailLinkDay: string;
   launchDay: string;
-  preorderTotal: number;
-}): Record<'READER_NAME' | 'PREORDER_UNTIL' | 'LAUNCH_DAY' | 'PREORDER_TOTAL', string | number> {
+}): Record<'READER_NAME' | 'EMAIL_LINK_DAY' | 'LAUNCH_DAY', string> {
   return {
     READER_NAME: params.readerNameEscaped,
-    PREORDER_UNTIL: params.preorderUntil,
+    EMAIL_LINK_DAY: params.emailLinkDay,
     LAUNCH_DAY: params.launchDay,
-    PREORDER_TOTAL: params.preorderTotal,
   };
 }
 
@@ -53,13 +53,10 @@ function isReasonableResendFrom(from: string): boolean {
  * Con RESEND_WAITLIST_TEMPLATE_ID usa plantilla (en dev, desactivada si RESEND_DEV_OVERRIDE_TO redirige el destino).
  * RESEND_DEV_OVERRIDE_TO (solo NODE_ENV=development): envía el correo a esa dirección para sortear el límite de prueba de Resend.
  *
- * `signupsCount`: total en Firestore tras este alta; preferible pasarlo desde la API tras
- * `adminCountWaitlistSignupsAfterWrite()` para que el número del correo coincida con el conteo real.
  */
 export async function sendWaitlistThankYouEmail(input: {
   to: string;
   firstName: string;
-  signupsCount?: number;
 }): Promise<void> {
   let apiKey = (process.env.RESEND_API_KEY || '').trim();
   if (!apiKey || apiKey.length < 10) {
@@ -108,16 +105,8 @@ export async function sendWaitlistThankYouEmail(input: {
 
   const first = input.firstName.trim().slice(0, MAX_FIRST_NAME_LEN);
   const name = escapeHtml(first || 'hola');
-  const preorderUntil = escapeHtml(formatPreorderDay(PREORDER_END, 'es'));
+  const emailLinkDay = escapeHtml(formatPreorderDay(WAITLIST_SUCCESS_EMAIL_BY_DATE, 'es'));
   const launchDay = escapeHtml(formatPreorderDay(LAUNCH_DATE, 'es'));
-  const signups = input.signupsCount;
-  let preorderTotal: number;
-  if (signups != null && Number.isFinite(signups) && signups >= 1) {
-    preorderTotal = Math.floor(signups);
-  } else {
-    const preorderTotalRaw = await adminCountWaitlistSignupsDirect();
-    preorderTotal = Math.max(1, preorderTotalRaw ?? 1);
-  }
 
   const subject = '¡Gracias por reservar el libro!';
   const templateIdRaw = (process.env.RESEND_WAITLIST_TEMPLATE_ID || '').trim();
@@ -151,12 +140,7 @@ export async function sendWaitlistThankYouEmail(input: {
           ${devBannerHtml}
           <p style="margin:0 0 16px;font-size:16px;line-height:1.5;color:#0f172a;">Hola <strong>${name}</strong>,</p>
           <p style="margin:0 0 16px;font-size:15px;line-height:1.6;color:#475569;">Gracias por reservar tu lugar. Ya estás en la lista para novedades del libro <strong>Dominando Kotlin, Swift y Dart</strong>.</p>
-          <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="margin:0 0 16px 0;"><tr><td style="padding:14px 16px;background:#f0fdfa;border-radius:10px;border:1px solid #99f6e4;">
-            <p style="margin:0 0 4px;font-size:11px;font-weight:600;letter-spacing:0.06em;text-transform:uppercase;color:#0f766e;">Reservas de preventa</p>
-            <p style="margin:0;font-size:20px;font-weight:800;color:#0d9488;">${preorderTotal}</p>
-            <p style="margin:8px 0 0;font-size:13px;line-height:1.5;color:#475569;">Tu registro es la reserva número <strong style="color:#0f172a;">${preorderTotal}</strong> en la lista.</p>
-          </td></tr></table>
-          <p style="margin:0 0 8px;font-size:14px;line-height:1.55;color:#475569;">Te enviaremos un correo con los detalles de la <strong>preventa</strong> a más tardar el <strong>${preorderUntil}</strong>. El lanzamiento oficial está previsto para el <strong>${launchDay}</strong>.</p>
+          <p style="margin:0 0 8px;font-size:14px;line-height:1.6;color:#475569;">A partir del <strong>${emailLinkDay}</strong> te enviaremos a <strong>este mismo correo</strong> un mensaje con el <strong>enlace de compra</strong> y el <strong>precio especial de preventa</strong> como agradecimiento por tu apoyo. El lanzamiento oficial está previsto para el <strong>${launchDay}</strong>.</p>
           <p style="margin:16px 0 0;font-size:13px;line-height:1.5;color:#64748b;">Revisa también la carpeta de spam o promociones por si el mensaje llega ahí.</p>
           <p style="margin:24px 0 0;font-size:13px;line-height:1.5;color:#94a3b8;">Kevin Morales<br/>kevinhomorales.com</p>
         </td></tr>
@@ -178,9 +162,8 @@ export async function sendWaitlistThankYouEmail(input: {
             id: templateId,
             variables: waitlistThankYouTemplateVariables({
               readerNameEscaped: name,
-              preorderUntil,
+              emailLinkDay,
               launchDay,
-              preorderTotal,
             }),
           },
         })

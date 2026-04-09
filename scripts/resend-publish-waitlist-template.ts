@@ -30,9 +30,8 @@ async function main() {
       html,
       variables: [
         { key: 'READER_NAME', type: 'string', fallbackValue: 'hola' },
-        { key: 'PREORDER_UNTIL', type: 'string', fallbackValue: 'próximas semanas' },
+        { key: 'EMAIL_LINK_DAY', type: 'string', fallbackValue: '1 de mayo' },
         { key: 'LAUNCH_DAY', type: 'string', fallbackValue: 'el lanzamiento' },
-        { key: 'PREORDER_TOTAL', type: 'number', fallbackValue: 1 },
       ],
     })
     .publish();

@@ -14,7 +14,12 @@ import { NativeSelect } from '@/components/ui/native-select';
 import { useI18n } from '@/components/i18n/locale-provider';
 import { toBcp47 } from '@/lib/i18n/bcp47';
 import { getPublicWeb3FormsAccessKey } from '@/lib/web3forms-submit';
-import { LAUNCH_DATE, PREORDER_END, formatPreorderDay } from '@/lib/waitlist-preorder';
+import {
+  LAUNCH_DATE,
+  PREORDER_END,
+  WAITLIST_SUCCESS_EMAIL_BY_DATE,
+  formatPreorderDay,
+} from '@/lib/waitlist-preorder';
 import { isWaitlistAcceptingSubmissions } from '@/lib/waitlist-signups-config';
 import { cn } from '@/lib/utils';
 
@@ -190,6 +195,15 @@ export function WaitlistModal() {
             const e = email.trim();
             const org = community.trim();
             const hf = heardFrom;
+            const heardFromLabel = (() => {
+              const v = hf.trim();
+              if (!v) return '—';
+              const allowed = WAITLIST_HEARD_FROM_VALUES as readonly string[];
+              if (allowed.includes(v) && v !== '') {
+                return t(`waitlist.heardFrom_${v}` as 'waitlist.heardFrom_site');
+              }
+              return v.charAt(0).toUpperCase() + v.slice(1);
+            })();
             const full = `${fn} ${ln}`.trim();
             const lines = [
               'Nuevo registro en la lista de espera del libro.',
@@ -198,7 +212,7 @@ export function WaitlistModal() {
               `Nombre: ${fn}`,
               `Apellido: ${ln}`,
               `Comunidad: ${org || '—'}`,
-              `Origen: ${hf || '—'}`,
+              `Origen: ${heardFromLabel}`,
             ];
             const fd = new FormData();
             fd.append('access_key', pubKey);
@@ -264,7 +278,7 @@ export function WaitlistModal() {
     }
   };
 
-  const successDate = formatPreorderDay(PREORDER_END, toBcp47(locale));
+  const successDate = formatPreorderDay(WAITLIST_SUCCESS_EMAIL_BY_DATE, toBcp47(locale));
 
   return (
     <Dialog open={dialogOpen} onOpenChange={handleOpenChange}>
@@ -273,6 +287,12 @@ export function WaitlistModal() {
           'flex max-h-[min(90dvh,calc(100vh-1.25rem))] flex-col gap-0 overflow-hidden p-0 sm:max-w-2xl',
           'border-2 border-yellow-400 shadow-[0_0_0_1px_rgba(250,204,21,0.25)] dark:border-yellow-400/90'
         )}
+        onOpenAutoFocus={(e) => {
+          /** En móvil el autofocus del primer input abre el teclado al instante; el usuario prefiere ver el modal primero. */
+          if (typeof window !== 'undefined' && window.matchMedia('(max-width: 767px)').matches) {
+            e.preventDefault();
+          }
+        }}
       >
         {phase === 'success' ? (
           <div className="flex flex-col items-center gap-4 px-6 pb-8 pt-14 text-center sm:px-10">
