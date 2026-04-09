@@ -111,7 +111,9 @@
   "conferences": {
     "kicker": "Speaking",
     "title": "Conferences",
-    "seeMore": "See more ({{count}} talks)",
+    "description": "Conference and meetup talks on mobile development, Kotlin, Kotlin Multiplatform, and related topics.",
+    "totalCount": "{{count}} talks in total",
+    "seeMore": "See more",
     "achievements": "Achievements",
     "watchVideo": "Watch video",
     "event": "Event",
@@ -122,10 +124,18 @@
     "detailAudience": "Audience"
   },
   "conferenceType": {
+    "virtual_conference": "Virtual conference",
     "conference": "Conference",
-    "virtual": "Virtual",
-    "talk": "Talk",
-    "meetup": "Meetup"
+    "virtual_talk": "Virtual talk",
+    "talk": "Talk"
+  },
+  "conferenceLocationPlatform": {
+    "google_meet": "Google Meet",
+    "zoom": "Zoom",
+    "bevy": "Bevy",
+    "twitch": "Twitch",
+    "youtube": "YouTube",
+    "streamyard": "StreamYard"
   },
   "recommendations": {
     "kicker": "Testimonials",
@@ -252,7 +262,7 @@
     "continue": "Continue to Buy Me a Coffee"
   },
   "conferencesModal": {
-    "title": "All conferences",
+    "title": "More talks",
     "closeAria": "Close"
   },
   "admin": {
@@ -263,6 +273,10 @@
       "projects": "Projects",
       "viewSite": "View site",
       "signOut": "Sign out"
+    },
+    "common": {
+      "cancel": "Cancel",
+      "deleteIrreversible": "This action cannot be undone."
     },
     "authGate": {
       "loading": "Loading…",
@@ -301,29 +315,47 @@
       "colHeardFrom": "Source",
       "colCreated": "Created",
       "colUpdated": "Updated",
+      "colActions": "Actions",
+      "delete": "Delete",
+      "confirmDeleteTitle": "Delete entry",
+      "confirmDeleteDesc": "Enter your admin account email and password to confirm.",
+      "labelAdminEmail": "Admin email",
+      "labelPassword": "Password",
+      "credentialRequired": "Email and password are required.",
+      "credentialInvalid": "Incorrect email or password.",
+      "credentialTooMany": "Too many attempts. Wait a moment and try again.",
+      "deleteFailed": "Could not delete the entry.",
+      "confirmDelete": "Delete permanently",
       "empty": "No entries yet.",
       "loadFailed": "Couldn’t load data"
     },
     "conferences": {
       "title": "Talks",
+      "refresh": "Refresh",
       "new": "New",
       "list": "List",
       "delete": "Delete",
       "formNew": "New talk",
       "formEdit": "Edit",
+      "titleRequired": "Add a title for the talk.",
+      "editMissingId": "Choose a talk from the list to edit, or tap New to create one.",
+      "untitled": "(Untitled)",
       "labelTitle": "Title",
       "labelTopic": "Topic",
       "labelType": "Type",
+      "typeVirtualConference": "Virtual conference",
       "typeConference": "Conference",
-      "typeVirtual": "Virtual",
+      "typeVirtualTalk": "Virtual talk",
       "typeTalk": "Talk",
-      "typeMeetup": "Meetup",
       "labelDate": "Date",
       "labelAudience": "Audience",
       "labelLocation": "Location",
+      "locationPlatformPlaceholder": "Select platform…",
       "labelCity": "City",
       "labelCountry": "Country",
       "labelVideoUrl": "Video URL",
+      "videoAutoPresencial": "No video",
+      "videoHintPresencial": "Filled automatically for in-person events. Replace with a URL if there’s a recording.",
       "labelEventUrl": "Event URL",
       "labelTags": "Tags (comma-separated)",
       "labelImages": "Images",
@@ -336,6 +368,7 @@
       "loadFailed": "Couldn’t load list",
       "uploadFailed": "Upload failed",
       "saveFailed": "Couldn’t save",
+      "saveSuccess": "Saved successfully: {{type}}.",
       "deleteFailed": "Couldn’t delete"
     },
     "projects": {
@@ -384,7 +417,8 @@
         "fileRequired": "File required (field file)",
         "idRequired": "ID required",
         "invalidJson": "Invalid JSON",
-        "dataRequired": "data field required"
+        "dataRequired": "data field required",
+        "invalidServerResponse": "Invalid response from server (could not read saved data). Try again or check the server logs."
       }
     }
   },

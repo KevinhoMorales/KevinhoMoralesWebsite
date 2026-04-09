@@ -1,10 +1,20 @@
 'use client';
 
 import { useCallback, useEffect, useState } from 'react';
+import { Loader2 } from 'lucide-react';
 import { adminFetch, getAdminIdToken } from '@/lib/admin-browser';
 import type { Project, ProjectLink } from '@/types';
 import { useI18n } from '@/components/i18n/locale-provider';
 import { translateAdminError } from '@/lib/i18n/admin-errors';
+import {
+  AlertDialog,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+} from '@/components/ui/alert-dialog';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
@@ -33,6 +43,8 @@ export function ProjectsPanel() {
   const [techInput, setTechInput] = useState('');
   const [tagsInput, setTagsInput] = useState('');
   const [platformsInput, setPlatformsInput] = useState('');
+  const [deleteId, setDeleteId] = useState<string | null>(null);
+  const [deleteLoading, setDeleteLoading] = useState(false);
 
   const refresh = useCallback(async () => {
     setLoadError('');
@@ -181,15 +193,20 @@ export function ProjectsPanel() {
     }
   }
 
-  async function del(id: string) {
-    if (!confirm(t('admin.projects.confirmDelete'))) return;
+  async function confirmDelete() {
+    if (!deleteId) return;
+    const id = deleteId;
+    setDeleteLoading(true);
     try {
       await adminFetch(`/api/admin/projects/${encodeURIComponent(id)}`, { method: 'DELETE' });
       await refresh();
       if (form.id === id) startNew();
+      setDeleteId(null);
     } catch (e) {
       const raw = e instanceof Error ? e.message : t('admin.projects.deleteFailed');
       alert(translateAdminError(raw, t));
+    } finally {
+      setDeleteLoading(false);
     }
   }
 
@@ -226,7 +243,7 @@ export function ProjectsPanel() {
                 >
                   {p.title}
                 </button>
-                <Button type="button" variant="ghost" size="sm" onClick={() => del(p.id)}>
+                <Button type="button" variant="ghost" size="sm" onClick={() => setDeleteId(p.id)}>
                   {t('admin.projects.delete')}
                 </Button>
               </li>
@@ -358,6 +375,32 @@ export function ProjectsPanel() {
           </Button>
         </Card>
       </div>
+
+      <AlertDialog
+        open={deleteId !== null}
+        onOpenChange={(open) => {
+          if (!open && !deleteLoading) setDeleteId(null);
+        }}
+      >
+        <AlertDialogContent>
+          <AlertDialogHeader>
+            <AlertDialogTitle>{t('admin.projects.confirmDelete')}</AlertDialogTitle>
+            <AlertDialogDescription>{t('admin.common.deleteIrreversible')}</AlertDialogDescription>
+          </AlertDialogHeader>
+          <AlertDialogFooter>
+            <AlertDialogCancel disabled={deleteLoading}>{t('admin.common.cancel')}</AlertDialogCancel>
+            <Button
+              type="button"
+              variant="destructive"
+              disabled={deleteLoading}
+              onClick={() => void confirmDelete()}
+            >
+              {deleteLoading ? <Loader2 className="h-4 w-4 animate-spin mr-2" aria-hidden /> : null}
+              {t('admin.projects.delete')}
+            </Button>
+          </AlertDialogFooter>
+        </AlertDialogContent>
+      </AlertDialog>
     </div>
   );
 }

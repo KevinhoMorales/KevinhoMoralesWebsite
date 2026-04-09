@@ -4,6 +4,7 @@ import Link from 'next/link';
 import { TranslatedPageHeader } from '@/components/i18n/translated-page-header';
 import { useI18n } from '@/components/i18n/locale-provider';
 import type { Conference } from '@/types';
+import { hasWatchableVideoUrl } from '@/lib/conference-video-url';
 
 export function ConferencesPageClient({ conferences }: { conferences: Conference[] }) {
   const { t } = useI18n();
@@ -34,9 +35,9 @@ export function ConferencesPageClient({ conferences }: { conferences: Conference
                 ))}
               </div>
             </div>
-            {conf.videoUrl && (
+            {hasWatchableVideoUrl(conf.videoUrl) && (
               <Link
-                href={conf.videoUrl}
+                href={conf.videoUrl!}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="text-sm text-primary hover:underline shrink-0"

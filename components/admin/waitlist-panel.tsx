@@ -1,20 +1,72 @@
 'use client';
 
 import { useCallback, useEffect, useState } from 'react';
+import { EmailAuthProvider, reauthenticateWithCredential } from 'firebase/auth';
+import { FirebaseError } from 'firebase/app';
+import { Loader2 } from 'lucide-react';
 import { adminFetch } from '@/lib/admin-browser';
+import { getFirebaseAuth } from '@/lib/firebase';
 import type { WaitlistEntry } from '@/types/waitlist';
 import { useI18n } from '@/components/i18n/locale-provider';
 import { translateAdminError } from '@/lib/i18n/admin-errors';
 import { WAITLIST_HEARD_FROM_VALUES } from '@/lib/waitlist-api-security';
 import { toBcp47 } from '@/lib/i18n/bcp47';
+import { useAdminAuth } from '@/components/admin/admin-auth-provider';
+import {
+  AlertDialog,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+} from '@/components/ui/alert-dialog';
 import { Button } from '@/components/ui/button';
+import { Input } from '@/components/ui/input';
+import { Label } from '@/components/ui/label';
 import { Card } from '@/components/ui/card';
+
+function mapReauthError(err: unknown, t: (key: string) => string): string {
+  const code =
+    err instanceof FirebaseError
+      ? err.code
+      : err && typeof err === 'object' && 'code' in err
+        ? String((err as { code: string }).code)
+        : '';
+  switch (code) {
+    case 'auth/invalid-credential':
+    case 'auth/wrong-password':
+    case 'auth/user-not-found':
+    case 'auth/invalid-email':
+      return t('admin.waitlistPanel.credentialInvalid');
+    case 'auth/too-many-requests':
+      return t('admin.waitlistPanel.credentialTooMany');
+    default:
+      if (err instanceof Error) return err.message;
+      return t('admin.waitlistPanel.deleteFailed');
+  }
+}
 
 export function WaitlistPanel() {
   const { t, locale } = useI18n();
+  const { email: adminEmail } = useAdminAuth();
   const [list, setList] = useState<WaitlistEntry[]>([]);
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(true);
+
+  const [deleteTarget, setDeleteTarget] = useState<WaitlistEntry | null>(null);
+  const [credEmail, setCredEmail] = useState('');
+  const [credPassword, setCredPassword] = useState('');
+  const [credError, setCredError] = useState('');
+  const [deleteLoading, setDeleteLoading] = useState(false);
+
+  useEffect(() => {
+    if (deleteTarget) {
+      setCredEmail((adminEmail ?? '').trim());
+      setCredPassword('');
+      setCredError('');
+    }
+  }, [deleteTarget, adminEmail]);
 
   const formatDate = useCallback(
     (iso: string | null) => {
@@ -60,6 +112,45 @@ export function WaitlistPanel() {
     void refresh();
   }, [refresh]);
 
+  async function confirmDeleteWaitlist() {
+    if (!deleteTarget) return;
+    setCredError('');
+    const email = credEmail.trim();
+    const password = credPassword;
+    if (!email || !password) {
+      setCredError(t('admin.waitlistPanel.credentialRequired'));
+      return;
+    }
+
+    setDeleteLoading(true);
+    try {
+      const auth = getFirebaseAuth();
+      if (!auth?.currentUser) {
+        setCredError(t('admin.waitlistPanel.credentialInvalid'));
+        return;
+      }
+      await reauthenticateWithCredential(
+        auth.currentUser,
+        EmailAuthProvider.credential(email, password)
+      );
+      await adminFetch<{ ok: boolean }>(
+        `/api/admin/waitlist/${encodeURIComponent(deleteTarget.id)}`,
+        { method: 'DELETE' }
+      );
+      setDeleteTarget(null);
+      await refresh();
+    } catch (e) {
+      if (e instanceof FirebaseError) {
+        setCredError(mapReauthError(e, t));
+      } else {
+        const raw = e instanceof Error ? e.message : t('admin.waitlistPanel.deleteFailed');
+        setCredError(translateAdminError(raw, t));
+      }
+    } finally {
+      setDeleteLoading(false);
+    }
+  }
+
   return (
     <div className="space-y-6">
       <div className="flex flex-wrap items-end justify-between gap-4">
@@ -88,7 +179,7 @@ export function WaitlistPanel() {
               <th className="p-3 font-medium whitespace-nowrap">{t('admin.waitlistPanel.colCommunity')}</th>
               <th className="p-3 font-medium whitespace-nowrap">{t('admin.waitlistPanel.colHeardFrom')}</th>
               <th className="p-3 font-medium whitespace-nowrap">{t('admin.waitlistPanel.colCreated')}</th>
-              <th className="p-3 font-medium whitespace-nowrap">{t('admin.waitlistPanel.colUpdated')}</th>
+              <th className="p-3 font-medium whitespace-nowrap text-right">{t('admin.waitlistPanel.colActions')}</th>
             </tr>
           </thead>
           <tbody>
@@ -116,8 +207,16 @@ export function WaitlistPanel() {
                   <td className="p-3 align-top whitespace-nowrap text-muted-foreground">
                     {formatDate(row.createdAt)}
                   </td>
-                  <td className="p-3 align-top whitespace-nowrap text-muted-foreground">
-                    {formatDate(row.updatedAt)}
+                  <td className="p-3 align-top text-right">
+                    <Button
+                      type="button"
+                      variant="outline"
+                      size="sm"
+                      className="text-destructive border-destructive/40 hover:bg-destructive/10"
+                      onClick={() => setDeleteTarget(row)}
+                    >
+                      {t('admin.waitlistPanel.delete')}
+                    </Button>
                   </td>
                 </tr>
               );
@@ -125,6 +224,68 @@ export function WaitlistPanel() {
           </tbody>
         </table>
       </Card>
+
+      <AlertDialog
+        open={deleteTarget !== null}
+        onOpenChange={(open) => {
+          if (!open && !deleteLoading) {
+            setDeleteTarget(null);
+            setCredPassword('');
+            setCredError('');
+          }
+        }}
+      >
+        <AlertDialogContent className="sm:max-w-md">
+          <AlertDialogHeader>
+            <AlertDialogTitle>{t('admin.waitlistPanel.confirmDeleteTitle')}</AlertDialogTitle>
+            <AlertDialogDescription>{t('admin.waitlistPanel.confirmDeleteDesc')}</AlertDialogDescription>
+          </AlertDialogHeader>
+          {deleteTarget ? (
+            <div className="space-y-3 text-left">
+              <p className="text-sm font-medium text-foreground break-all">{deleteTarget.email}</p>
+              <div className="space-y-2">
+                <Label htmlFor="waitlist-delete-email">{t('admin.waitlistPanel.labelAdminEmail')}</Label>
+                <Input
+                  id="waitlist-delete-email"
+                  type="email"
+                  autoComplete="email"
+                  value={credEmail}
+                  onChange={(e) => setCredEmail(e.target.value)}
+                  disabled={deleteLoading}
+                />
+              </div>
+              <div className="space-y-2">
+                <Label htmlFor="waitlist-delete-password">{t('admin.waitlistPanel.labelPassword')}</Label>
+                <Input
+                  id="waitlist-delete-password"
+                  type="password"
+                  autoComplete="current-password"
+                  value={credPassword}
+                  onChange={(e) => setCredPassword(e.target.value)}
+                  disabled={deleteLoading}
+                />
+              </div>
+              {credError ? (
+                <p className="text-sm text-destructive" role="alert">
+                  {credError}
+                </p>
+              ) : null}
+            </div>
+          ) : null}
+          <AlertDialogFooter>
+            <AlertDialogCancel disabled={deleteLoading}>{t('admin.common.cancel')}</AlertDialogCancel>
+            <Button
+              type="button"
+              variant="destructive"
+              disabled={deleteLoading || !deleteTarget}
+              onClick={() => void confirmDeleteWaitlist()}
+            >
+              {deleteLoading ? <Loader2 className="h-4 w-4 animate-spin mr-2" aria-hidden /> : null}
+              {t('admin.waitlistPanel.confirmDelete')}
+            </Button>
+          </AlertDialogFooter>
+        </AlertDialogContent>
+      </AlertDialog>
     </div>
   );
 }

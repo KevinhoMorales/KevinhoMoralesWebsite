@@ -1,16 +1,34 @@
 'use client';
 
+import Image from 'next/image';
 import { useCallback, useEffect, useState } from 'react';
+import { ImageIcon, Loader2, RefreshCw } from 'lucide-react';
 import { adminFetch, getAdminIdToken } from '@/lib/admin-browser';
 import type { Conference } from '@/types';
+import { CONFERENCE_LOCATION_PLATFORMS } from '@/types/conference';
 import { useI18n } from '@/components/i18n/locale-provider';
 import { translateAdminError } from '@/lib/i18n/admin-errors';
 import { storageObjectPathToPublicUrl } from '@/lib/storage-public-url';
+import {
+  AlertDialog,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+} from '@/components/ui/alert-dialog';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Card } from '@/components/ui/card';
 import { cn } from '@/lib/utils';
+import { conferenceDateToInputValue } from '@/lib/conference-date-input';
+import { sortConferencesForDisplay } from '@/lib/conference-sort';
+import {
+  VIDEO_URL_PRESENCIAL_NONE,
+  isPresencialNoVideoUrl,
+} from '@/lib/conference-video-url';
 
 /**
  * Imágenes pegadas. No mezclar `files` e `items`: en muchos navegadores es la misma imagen con distinto
@@ -58,7 +76,23 @@ function isProbablyImageUrl(s: string): boolean {
   return /^https?:\/\//i.test(s);
 }
 
+/** Primera imagen de la charla para la lista admin (Storage path o URL). */
+function firstConferenceListImageUrl(c: Conference): string | null {
+  const ref = c.images?.[0]?.trim();
+  if (!ref) return null;
+  return storageObjectPathToPublicUrl(ref);
+}
+
 type PendingImage = { id: string; file: File; previewUrl: string };
+
+function isVirtualLocationType(t: Conference['type']): boolean {
+  return t === 'virtual_conference' || t === 'virtual_talk';
+}
+
+/** Presencial (no virtual): conferencia o charla en sitio. */
+function isPresencialType(t: Conference['type']): boolean {
+  return t === 'conference' || t === 'talk';
+}
 
 const emptyForm: Conference = {
   id: '',
@@ -67,9 +101,10 @@ const emptyForm: Conference = {
   type: 'talk',
   date: '',
   location: '',
+  locationPlatform: undefined,
   city: '',
   country: '',
-  videoUrl: '',
+  videoUrl: VIDEO_URL_PRESENCIAL_NONE,
   eventUrl: '',
   tags: [],
   images: [],
@@ -87,14 +122,20 @@ export function ConferencesPanel() {
   const [savedImageRefs, setSavedImageRefs] = useState<string[]>([]);
   /** Archivos locales: se suben a Storage solo al pulsar Save (prod/conferences/conference00N/). */
   const [pendingImages, setPendingImages] = useState<PendingImage[]>([]);
+  const [deleteId, setDeleteId] = useState<string | null>(null);
+  const [deleteLoading, setDeleteLoading] = useState(false);
+  const [listRefreshing, setListRefreshing] = useState(false);
+  /** Mensaje de éxito en la página; los errores van con `alert()` para que no se bloqueen. */
+  const [saveSuccessMessage, setSaveSuccessMessage] = useState<string | null>(null);
 
   const hasAnyImages = pendingImages.length > 0 || savedImageRefs.length > 0;
 
   const refresh = useCallback(async () => {
     setLoadError('');
     try {
-      const rows = await adminFetch<Conference[]>('/api/admin/conferences');
-      setList(rows.sort((a, b) => a.title.localeCompare(b.title)));
+      const rows = await adminFetch<Conference[] | null>('/api/admin/conferences');
+      const safe = Array.isArray(rows) ? rows : [];
+      setList(sortConferencesForDisplay(safe));
     } catch (e) {
       const raw = e instanceof Error ? e.message : t('admin.conferences.loadFailed');
       setLoadError(translateAdminError(raw, t));
@@ -104,6 +145,16 @@ export function ConferencesPanel() {
   useEffect(() => {
     refresh();
   }, [refresh]);
+
+  async function handleRefreshList() {
+    if (saving || listRefreshing) return;
+    setListRefreshing(true);
+    try {
+      await refresh();
+    } finally {
+      setListRefreshing(false);
+    }
+  }
 
   function startNew() {
     setIsNew(true);
@@ -118,7 +169,13 @@ export function ConferencesPanel() {
 
   function startEdit(c: Conference) {
     setIsNew(false);
-    setForm({ ...c });
+    const videoUrl =
+      isPresencialType(c.type) && !c.videoUrl?.trim()
+        ? VIDEO_URL_PRESENCIAL_NONE
+        : (c.videoUrl ?? '');
+    const location = isVirtualLocationType(c.type) ? '' : (c.location ?? '');
+    const locationPlatform = isVirtualLocationType(c.type) ? c.locationPlatform : undefined;
+    setForm({ ...c, date: conferenceDateToInputValue(c.date), videoUrl, location, locationPlatform });
     setTagsInput((c.tags ?? []).join(', '));
     setSavedImageRefs([...(c.images ?? [])]);
     setPendingImages((prev) => {
@@ -145,9 +202,10 @@ export function ConferencesPanel() {
   }
 
   /** Índice 1..n en la lista del admin → carpeta `conference001`, `conference002`, … */
-  function conferenceStorageSlot(): number {
-    if (form.id) {
-      const idx = list.findIndex((c) => c.id === form.id);
+  function conferenceStorageSlot(explicitId?: string): number {
+    const id = explicitId ?? form.id;
+    if (id) {
+      const idx = list.findIndex((c) => c.id === id);
       if (idx >= 0) return idx + 1;
     }
     return Math.max(1, list.length + 1);
@@ -266,100 +324,237 @@ export function ConferencesPanel() {
     const audienceNum =
       form.audience !== undefined && !Number.isNaN(Number(form.audience)) ? Number(form.audience) : undefined;
 
+    if (!form.title.trim()) {
+      alert(t('admin.conferences.titleRequired'));
+      return;
+    }
+    if (!isNew && !form.id?.trim()) {
+      alert(t('admin.conferences.editMissingId'));
+      return;
+    }
+
     setSaving(true);
+    setDeleteId(null);
+    setSaveSuccessMessage(null);
+    /** Deja que React pinte el overlay antes del trabajo async (evita true+false en el mismo frame). */
+    await new Promise<void>((resolve) => {
+      requestAnimationFrame(() => {
+        requestAnimationFrame(() => resolve());
+      });
+    });
+
+    let saveSucceeded = false;
+    let savedType: Conference['type'] | undefined;
     try {
-      const slot = conferenceStorageSlot();
-      const uploadedPaths: string[] = [];
-      for (const p of pendingImages) {
-        const path = await uploadConferenceFileToStorage(p.file, slot);
-        uploadedPaths.push(path);
-      }
-      pendingImages.forEach((p) => URL.revokeObjectURL(p.previewUrl));
-      setPendingImages([]);
-
-      const images = [...savedImageRefs, ...uploadedPaths];
-
-      const payload: Record<string, unknown> = {
-        title: form.title.trim(),
-        type: form.type,
-        tags,
-        images,
+      savedType = form.type;
+      /** Misma lógica que antes; `images` son solo refs ya guardadas o URLs pegadas (sin ficheros pendientes). */
+      const buildPayload = (images: string[]): Record<string, unknown> => {
+        const payload: Record<string, unknown> = {
+          title: form.title.trim(),
+          type: form.type,
+          tags,
+          images,
+        };
+        if (form.topic?.trim()) payload.topic = form.topic.trim();
+        if (form.date?.trim()) payload.date = form.date.trim();
+        if (isVirtualLocationType(form.type)) {
+          payload.locationPlatform = form.locationPlatform?.trim() || '';
+          payload.location = '';
+        } else {
+          payload.location = form.location?.trim() || '';
+          payload.locationPlatform = '';
+        }
+        if (form.city?.trim()) payload.city = form.city.trim();
+        if (form.country?.trim()) payload.country = form.country.trim();
+        if (form.videoUrl?.trim()) payload.videoUrl = form.videoUrl.trim();
+        if (form.eventUrl?.trim()) payload.eventUrl = form.eventUrl.trim();
+        if (audienceNum !== undefined && !Number.isNaN(audienceNum)) payload.audience = audienceNum;
+        return payload;
       };
-      if (form.topic?.trim()) payload.topic = form.topic.trim();
-      if (form.date?.trim()) payload.date = form.date.trim();
-      if (form.location?.trim()) payload.location = form.location.trim();
-      if (form.city?.trim()) payload.city = form.city.trim();
-      if (form.country?.trim()) payload.country = form.country.trim();
-      if (form.videoUrl?.trim()) payload.videoUrl = form.videoUrl.trim();
-      if (form.eventUrl?.trim()) payload.eventUrl = form.eventUrl.trim();
-      if (audienceNum !== undefined && !Number.isNaN(audienceNum)) payload.audience = audienceNum;
+
+      const basePayload = buildPayload([...savedImageRefs]);
+      let conferenceId = form.id;
 
       if (isNew) {
-        await adminFetch<{ id: string }>('/api/admin/conferences', {
+        const created = await adminFetch<{ id?: string }>('/api/admin/conferences', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ data: payload }),
+          body: JSON.stringify({ data: basePayload }),
         });
+        if (!created || typeof created.id !== 'string' || !created.id.trim()) {
+          throw new Error('Invalid server response');
+        }
+        conferenceId = created.id;
       } else {
         await adminFetch(`/api/admin/conferences/${encodeURIComponent(form.id)}`, {
           method: 'PUT',
           headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ data: { ...payload, id: form.id } }),
+          body: JSON.stringify({ data: { ...basePayload, id: form.id } }),
         });
       }
+
+      if (pendingImages.length > 0) {
+        const slot = conferenceStorageSlot(conferenceId);
+        const uploadedPaths: string[] = [];
+        for (const p of pendingImages) {
+          uploadedPaths.push(await uploadConferenceFileToStorage(p.file, slot));
+        }
+        pendingImages.forEach((p) => URL.revokeObjectURL(p.previewUrl));
+        setPendingImages([]);
+
+        const finalPayload = buildPayload([...savedImageRefs, ...uploadedPaths]);
+        await adminFetch(`/api/admin/conferences/${encodeURIComponent(conferenceId)}`, {
+          method: 'PUT',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ data: { ...finalPayload, id: conferenceId } }),
+        });
+      }
+
       await refresh();
       startNew();
+      saveSucceeded = true;
     } catch (e) {
-      const raw = e instanceof Error ? e.message : t('admin.conferences.saveFailed');
-      alert(translateAdminError(raw, t));
+      /** Va a la consola del navegador (F12 → Console), no al “Debug Console” del IDE sin depurador. */
+      console.error('[admin conferences] Save failed:', e);
+      const raw =
+        e instanceof Error
+          ? e.message
+          : typeof e === 'string'
+            ? e
+            : t('admin.conferences.saveFailed');
+      const text = translateAdminError(raw, t) || t('admin.conferences.saveFailed');
+      /** Tras `finally` (overlay fuera) para que el diálogo nativo no quede tapado. */
+      window.setTimeout(() => alert(text), 0);
     } finally {
       setSaving(false);
     }
+    if (saveSucceeded && savedType) {
+      const typeLabel = t(`conferenceType.${savedType}`);
+      setSaveSuccessMessage(t('admin.conferences.saveSuccess', { type: typeLabel }));
+    }
   }
 
-  async function del(id: string) {
-    if (!confirm(t('admin.conferences.confirmDelete'))) return;
+  async function confirmDelete() {
+    if (!deleteId) return;
+    const id = deleteId;
+    setDeleteLoading(true);
     try {
       await adminFetch(`/api/admin/conferences/${encodeURIComponent(id)}`, { method: 'DELETE' });
       await refresh();
       if (form.id === id) startNew();
+      setDeleteId(null);
     } catch (e) {
       const raw = e instanceof Error ? e.message : t('admin.conferences.deleteFailed');
       alert(translateAdminError(raw, t));
+    } finally {
+      setDeleteLoading(false);
     }
   }
 
   return (
-    <div className="space-y-8">
+    <div className="relative space-y-8">
+      {saving ? (
+        <div
+          className="fixed inset-0 z-[80] flex items-center justify-center bg-background/75 backdrop-blur-[2px]"
+          aria-busy
+          aria-live="polite"
+        >
+          <div className="flex items-center gap-3 rounded-xl border bg-card px-5 py-4 shadow-lg">
+            <Loader2 className="h-6 w-6 shrink-0 animate-spin text-primary" aria-hidden />
+            <span className="text-sm font-medium">{t('admin.conferences.saving')}</span>
+          </div>
+        </div>
+      ) : null}
+      <div className={cn(saving && 'pointer-events-none select-none')}>
       <div className="flex items-center justify-between gap-4">
         <h1 className="text-xl font-semibold">{t('admin.conferences.title')}</h1>
-        <Button type="button" variant="outline" size="sm" onClick={() => startNew()}>
-          {t('admin.conferences.new')}
-        </Button>
+        <div className="flex shrink-0 items-center gap-2">
+          <Button
+            type="button"
+            variant="outline"
+            size="sm"
+            disabled={saving || listRefreshing}
+            onClick={() => void handleRefreshList()}
+            className="gap-1.5"
+          >
+            <RefreshCw className={cn('h-4 w-4', listRefreshing && 'animate-spin')} aria-hidden />
+            {t('admin.conferences.refresh')}
+          </Button>
+          <Button type="button" variant="outline" size="sm" disabled={saving} onClick={() => startNew()}>
+            {t('admin.conferences.new')}
+          </Button>
+        </div>
       </div>
       {loadError && <p className="text-sm text-destructive">{loadError}</p>}
+      {saveSuccessMessage && (
+        <div
+          role="status"
+          className="rounded-md border border-emerald-600/40 bg-emerald-500/10 px-4 py-3 text-sm text-emerald-950 dark:text-emerald-50"
+        >
+          <div className="flex items-start justify-between gap-3">
+            <span>{saveSuccessMessage}</span>
+            <button
+              type="button"
+              className="shrink-0 rounded-md px-2 py-0.5 text-xs font-medium opacity-80 hover:opacity-100"
+              onClick={() => setSaveSuccessMessage(null)}
+            >
+              {t('common.close')}
+            </button>
+          </div>
+        </div>
+      )}
 
       <div className="grid gap-8 lg:grid-cols-2">
         <Card className="p-4 space-y-4 max-h-[70vh] overflow-y-auto">
           <h2 className="font-medium text-sm text-muted-foreground">{t('admin.conferences.list')}</h2>
           <ul className="space-y-2">
-            {list.map((c) => (
-              <li
-                key={c.id}
-                className="flex flex-wrap items-center justify-between gap-2 rounded-md border p-2 text-sm"
-              >
-                <button
-                  type="button"
-                  className="text-left hover:underline font-medium"
-                  onClick={() => startEdit(c)}
+            {list.map((c) => {
+              const thumbSrc = firstConferenceListImageUrl(c);
+              return (
+                <li
+                  key={c.id}
+                  className="flex items-center gap-2 rounded-md border p-2 text-sm"
                 >
-                  {c.title}
-                </button>
-                <Button type="button" variant="ghost" size="sm" onClick={() => del(c.id)}>
-                  {t('admin.conferences.delete')}
-                </Button>
-              </li>
-            ))}
+                  <div className="flex min-w-0 flex-1 items-center gap-3">
+                    {thumbSrc ? (
+                      <Image
+                        src={thumbSrc}
+                        alt=""
+                        width={40}
+                        height={40}
+                        sizes="40px"
+                        className="h-10 w-10 shrink-0 rounded-md border border-border/60 bg-muted object-cover"
+                      />
+                    ) : (
+                      <div
+                        className="flex h-10 w-10 shrink-0 items-center justify-center rounded-md border border-dashed border-border/60 bg-muted/40 text-muted-foreground"
+                        aria-hidden
+                      >
+                        <ImageIcon className="h-4 w-4 opacity-70" />
+                      </div>
+                    )}
+                    <button
+                      type="button"
+                      disabled={saving}
+                      className="min-w-0 flex-1 truncate text-left font-medium hover:underline disabled:cursor-not-allowed disabled:opacity-50 disabled:no-underline"
+                      onClick={() => startEdit(c)}
+                    >
+                      {c.title.trim() || t('admin.conferences.untitled')}
+                    </button>
+                  </div>
+                  <Button
+                    type="button"
+                    variant="ghost"
+                    size="sm"
+                    className="shrink-0"
+                    disabled={saving}
+                    onClick={() => setDeleteId(c.id)}
+                  >
+                    {t('admin.conferences.delete')}
+                  </Button>
+                </li>
+              );
+            })}
           </ul>
         </Card>
 
@@ -372,6 +567,7 @@ export function ConferencesPanel() {
             <Input
               id="t"
               value={form.title}
+              disabled={saving}
               onChange={(e) => setForm((f) => ({ ...f, title: e.target.value }))}
             />
           </div>
@@ -380,6 +576,7 @@ export function ConferencesPanel() {
             <Input
               id="topic"
               value={form.topic ?? ''}
+              disabled={saving}
               onChange={(e) => setForm((f) => ({ ...f, topic: e.target.value }))}
             />
           </div>
@@ -387,16 +584,34 @@ export function ConferencesPanel() {
             <Label htmlFor="type">{t('admin.conferences.labelType')}</Label>
             <select
               id="type"
-              className="flex h-9 w-full rounded-md border border-input bg-background px-3 text-sm"
+              className="flex h-9 w-full rounded-md border border-input bg-background px-3 text-sm disabled:cursor-not-allowed disabled:opacity-50"
               value={form.type}
-              onChange={(e) =>
-                setForm((f) => ({ ...f, type: e.target.value as Conference['type'] }))
-              }
+              disabled={saving}
+              onChange={(e) => {
+                const next = e.target.value as Conference['type'];
+                setForm((f) => {
+                  let videoUrl = f.videoUrl ?? '';
+                  let location = f.location ?? '';
+                  let locationPlatform = f.locationPlatform;
+                  if (isPresencialType(next)) {
+                    videoUrl = VIDEO_URL_PRESENCIAL_NONE;
+                    locationPlatform = undefined;
+                  } else if (isPresencialNoVideoUrl(videoUrl)) {
+                    videoUrl = '';
+                  }
+                  if (isVirtualLocationType(next)) {
+                    location = '';
+                  } else {
+                    locationPlatform = undefined;
+                  }
+                  return { ...f, type: next, videoUrl, location, locationPlatform };
+                });
+              }}
             >
+              <option value="virtual_conference">{t('admin.conferences.typeVirtualConference')}</option>
               <option value="conference">{t('admin.conferences.typeConference')}</option>
-              <option value="virtual">{t('admin.conferences.typeVirtual')}</option>
+              <option value="virtual_talk">{t('admin.conferences.typeVirtualTalk')}</option>
               <option value="talk">{t('admin.conferences.typeTalk')}</option>
-              <option value="meetup">{t('admin.conferences.typeMeetup')}</option>
             </select>
           </div>
           <div className="grid grid-cols-2 gap-3">
@@ -404,8 +619,11 @@ export function ConferencesPanel() {
               <Label htmlFor="date">{t('admin.conferences.labelDate')}</Label>
               <Input
                 id="date"
+                type="date"
                 value={form.date ?? ''}
+                disabled={saving}
                 onChange={(e) => setForm((f) => ({ ...f, date: e.target.value }))}
+                className="dark:[color-scheme:dark]"
               />
             </div>
             <div className="space-y-2">
@@ -414,6 +632,7 @@ export function ConferencesPanel() {
                 id="audience"
                 type="number"
                 value={form.audience ?? ''}
+                disabled={saving}
                 onChange={(e) =>
                   setForm((f) => ({
                     ...f,
@@ -424,23 +643,52 @@ export function ConferencesPanel() {
             </div>
           </div>
           <div className="space-y-2">
-            <Label htmlFor="loc">{t('admin.conferences.labelLocation')}</Label>
-            <Input
-              id="loc"
-              value={form.location ?? ''}
-              onChange={(e) => setForm((f) => ({ ...f, location: e.target.value }))}
-            />
+            <Label htmlFor={isVirtualLocationType(form.type) ? 'location-platform' : 'loc'}>
+              {t('admin.conferences.labelLocation')}
+            </Label>
+            {isVirtualLocationType(form.type) ? (
+              <select
+                id="location-platform"
+                className="flex h-9 w-full rounded-md border border-input bg-background px-3 text-sm disabled:cursor-not-allowed disabled:opacity-50"
+                value={form.locationPlatform ?? ''}
+                disabled={saving}
+                onChange={(e) => {
+                  const v = e.target.value;
+                  setForm((f) => ({
+                    ...f,
+                    locationPlatform: v.length
+                      ? (v as NonNullable<Conference['locationPlatform']>)
+                      : undefined,
+                  }));
+                }}
+              >
+                <option value="">{t('admin.conferences.locationPlatformPlaceholder')}</option>
+                {CONFERENCE_LOCATION_PLATFORMS.map((key) => (
+                  <option key={key} value={key}>
+                    {t(`conferenceLocationPlatform.${key}`)}
+                  </option>
+                ))}
+              </select>
+            ) : (
+              <Input
+                id="loc"
+                value={form.location ?? ''}
+                disabled={saving}
+                onChange={(e) => setForm((f) => ({ ...f, location: e.target.value }))}
+              />
+            )}
           </div>
           <div className="grid grid-cols-2 gap-3">
             <div className="space-y-2">
               <Label htmlFor="city">{t('admin.conferences.labelCity')}</Label>
-              <Input id="city" value={form.city ?? ''} onChange={(e) => setForm((f) => ({ ...f, city: e.target.value }))} />
+              <Input id="city" value={form.city ?? ''} disabled={saving} onChange={(e) => setForm((f) => ({ ...f, city: e.target.value }))} />
             </div>
             <div className="space-y-2">
               <Label htmlFor="country">{t('admin.conferences.labelCountry')}</Label>
               <Input
                 id="country"
                 value={form.country ?? ''}
+                disabled={saving}
                 onChange={(e) => setForm((f) => ({ ...f, country: e.target.value }))}
               />
             </div>
@@ -449,31 +697,55 @@ export function ConferencesPanel() {
             <Label htmlFor="video">{t('admin.conferences.labelVideoUrl')}</Label>
             <Input
               id="video"
-              value={form.videoUrl ?? ''}
-              onChange={(e) => setForm((f) => ({ ...f, videoUrl: e.target.value }))}
+              value={
+                isPresencialNoVideoUrl(form.videoUrl)
+                  ? t('admin.conferences.videoAutoPresencial')
+                  : (form.videoUrl ?? '')
+              }
+              disabled={saving}
+              onChange={(e) => {
+                const v = e.target.value;
+                const autoLabel = t('admin.conferences.videoAutoPresencial').trim();
+                setForm((f) => {
+                  if (!isPresencialType(f.type)) {
+                    return { ...f, videoUrl: v };
+                  }
+                  if (v.trim() === '' || v.trim() === autoLabel) {
+                    return { ...f, videoUrl: VIDEO_URL_PRESENCIAL_NONE };
+                  }
+                  return { ...f, videoUrl: v };
+                });
+              }}
             />
+            {isPresencialType(form.type) ? (
+              <p className="text-xs text-muted-foreground leading-relaxed">
+                {t('admin.conferences.videoHintPresencial')}
+              </p>
+            ) : null}
           </div>
           <div className="space-y-2">
             <Label htmlFor="event">{t('admin.conferences.labelEventUrl')}</Label>
             <Input
               id="event"
               value={form.eventUrl ?? ''}
+              disabled={saving}
               onChange={(e) => setForm((f) => ({ ...f, eventUrl: e.target.value }))}
             />
           </div>
           <div className="space-y-2">
             <Label htmlFor="tags">{t('admin.conferences.labelTags')}</Label>
-            <Input id="tags" value={tagsInput} onChange={(e) => setTagsInput(e.target.value)} />
+            <Input id="tags" value={tagsInput} disabled={saving} onChange={(e) => setTagsInput(e.target.value)} />
           </div>
           <div className="space-y-2">
             <Label htmlFor="images-paste-zone">{t('admin.conferences.labelImages')}</Label>
             <div
               id="images-paste-zone"
-              tabIndex={0}
-              onPaste={onImagesPaste}
+              tabIndex={saving ? -1 : 0}
+              onPaste={saving ? undefined : onImagesPaste}
               className={cn(
                 'flex w-full cursor-text flex-col rounded-md border border-dashed border-input bg-muted/20 px-3 outline-none transition-colors focus-visible:border-ring focus-visible:ring-[3px] focus-visible:ring-ring/50',
-                hasAnyImages ? 'min-h-0 py-4' : 'min-h-[120px] items-center justify-center py-8 text-sm text-muted-foreground'
+                hasAnyImages ? 'min-h-0 py-4' : 'min-h-[120px] items-center justify-center py-8 text-sm text-muted-foreground',
+                saving && 'pointer-events-none opacity-50'
               )}
             >
               {!hasAnyImages ? (
@@ -491,7 +763,8 @@ export function ConferencesPanel() {
                       <img src={p.previewUrl} alt="" className="h-full w-full object-contain p-1" />
                       <button
                         type="button"
-                        className="absolute right-0.5 top-0.5 flex h-6 w-6 items-center justify-center rounded-md border border-border bg-background/90 text-xs font-semibold text-foreground shadow hover:bg-destructive/15 hover:text-destructive"
+                        disabled={saving}
+                        className="absolute right-0.5 top-0.5 flex h-6 w-6 items-center justify-center rounded-md border border-border bg-background/90 text-xs font-semibold text-foreground shadow hover:bg-destructive/15 hover:text-destructive disabled:opacity-40"
                         aria-label={t('admin.conferences.removeImage')}
                         onClick={(e) => {
                           e.stopPropagation();
@@ -516,7 +789,8 @@ export function ConferencesPanel() {
                       />
                       <button
                         type="button"
-                        className="absolute right-0.5 top-0.5 flex h-6 w-6 items-center justify-center rounded-md border border-border bg-background/90 text-xs font-semibold text-foreground shadow hover:bg-destructive/15 hover:text-destructive"
+                        disabled={saving}
+                        className="absolute right-0.5 top-0.5 flex h-6 w-6 items-center justify-center rounded-md border border-border bg-background/90 text-xs font-semibold text-foreground shadow hover:bg-destructive/15 hover:text-destructive disabled:opacity-40"
                         aria-label={t('admin.conferences.removeImage')}
                         onClick={(e) => {
                           e.stopPropagation();
@@ -539,6 +813,7 @@ export function ConferencesPanel() {
                 type="file"
                 accept="image/*"
                 className="text-xs"
+                disabled={saving}
                 onChange={(e) => {
                   const f = e.target.files?.[0];
                   e.target.value = '';
@@ -548,11 +823,43 @@ export function ConferencesPanel() {
               />
             </div>
           </div>
-          <Button type="button" onClick={() => save()} disabled={saving || !form.title.trim()}>
+          <Button
+            type="button"
+            onClick={() => void save()}
+            disabled={saving || !form.title.trim()}
+            title={!form.title.trim() ? t('admin.conferences.titleRequired') : undefined}
+          >
             {saving ? t('admin.conferences.saving') : t('admin.conferences.save')}
           </Button>
         </Card>
       </div>
+      </div>
+
+      <AlertDialog
+        open={deleteId !== null && !saving}
+        onOpenChange={(open) => {
+          if (!open && !deleteLoading && !saving) setDeleteId(null);
+        }}
+      >
+        <AlertDialogContent>
+          <AlertDialogHeader>
+            <AlertDialogTitle>{t('admin.conferences.confirmDelete')}</AlertDialogTitle>
+            <AlertDialogDescription>{t('admin.common.deleteIrreversible')}</AlertDialogDescription>
+          </AlertDialogHeader>
+          <AlertDialogFooter>
+            <AlertDialogCancel disabled={deleteLoading}>{t('admin.common.cancel')}</AlertDialogCancel>
+            <Button
+              type="button"
+              variant="destructive"
+              disabled={deleteLoading}
+              onClick={() => void confirmDelete()}
+            >
+              {deleteLoading ? <Loader2 className="h-4 w-4 animate-spin mr-2" aria-hidden /> : null}
+              {t('admin.conferences.delete')}
+            </Button>
+          </AlertDialogFooter>
+        </AlertDialogContent>
+      </AlertDialog>
     </div>
   );
 }

@@ -12,6 +12,8 @@ import { ConferenceImagesCarousel } from '@/components/conference-images-carouse
 import { Calendar, ExternalLink, MapPin, Users, Video } from 'lucide-react'
 import { useI18n } from '@/components/i18n/locale-provider'
 import { CONFERENCE_BADGE_OVERLAY_CLASS } from '@/lib/conference-ui'
+import { hasWatchableVideoUrl } from '@/lib/conference-video-url'
+import { formatConferenceVenueLine } from '@/lib/conference-location-platform'
 import { cn } from '@/lib/utils'
 import type { Conference } from '@/types'
 
@@ -27,16 +29,6 @@ const TAG_COLORS: Record<string, string> = {
 
 function tagClass(tag: string) {
   return TAG_COLORS[tag] ?? TAG_COLORS.default
-}
-
-/** Lugar: sede / ciudad · país sin duplicar. */
-function formatVenue(c: Conference): string | null {
-  const bits: string[] = []
-  if (c.location?.trim()) bits.push(c.location.trim())
-  const cc = [c.city, c.country].filter(Boolean).join(', ')
-  if (cc) bits.push(cc)
-  if (bits.length === 0) return null
-  return Array.from(new Set(bits)).join(' · ')
 }
 
 type ConferenceDetailModalProps = {
@@ -59,7 +51,7 @@ export function ConferenceDetailModal({ conference, open, onClose }: ConferenceD
 
   const imgs = c.images ?? []
   const hasImages = imgs.length > 0
-  const venueLine = formatVenue(c)
+  const venueLine = formatConferenceVenueLine(c, t)
 
   return (
     <Dialog open={open} onOpenChange={(next) => !next && onClose()}>
@@ -127,11 +119,11 @@ export function ConferenceDetailModal({ conference, open, onClose }: ConferenceD
                 ) : null}
               </dl>
 
-              {(c.videoUrl || c.eventUrl) && (
+              {(hasWatchableVideoUrl(c.videoUrl) || c.eventUrl?.trim()) && (
                 <div className="flex flex-wrap gap-3 pt-1">
-                  {c.videoUrl?.trim() ? (
+                  {hasWatchableVideoUrl(c.videoUrl) ? (
                     <a
-                      href={c.videoUrl}
+                      href={c.videoUrl!}
                       target="_blank"
                       rel="noopener noreferrer"
                       className="inline-flex items-center gap-1.5 text-sm font-medium text-primary hover:underline"

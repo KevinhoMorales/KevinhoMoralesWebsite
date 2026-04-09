@@ -1,6 +1,7 @@
 import * as fs from 'fs';
 import * as path from 'path';
 import type { Profile, Experience, Project, Conference, Testimonial, Achievement } from '@/types';
+import { sortConferencesForDisplay } from '@/lib/conference-sort';
 import { expandConferenceImagesForPublic } from '@/lib/storage-public-url';
 
 const CONTENT_DIR = path.join(process.cwd(), 'content');
@@ -76,17 +77,6 @@ export async function getProjects(): Promise<Project[]> {
     console.error('[content] getProjects:', e);
     return readJson<Project[]>('projects.json');
   }
-}
-
-function sortConferencesForDisplay(list: Conference[]): Conference[] {
-  return [...list].sort((a, b) => {
-    const da = (a.date ?? '').trim();
-    const db = (b.date ?? '').trim();
-    if (da && db && da !== db) return db.localeCompare(da);
-    if (da && !db) return -1;
-    if (!da && db) return 1;
-    return a.title.localeCompare(b.title);
-  });
 }
 
 /**

@@ -16,6 +16,7 @@ const TO_KEY: Record<string, string> = {
   'JSON inválido': 'admin.errors.api.invalidJson',
   'Campo data requerido': 'admin.errors.api.dataRequired',
   'Sin URL': 'admin.errors.noUrl',
+  'Invalid server response': 'admin.errors.api.invalidServerResponse',
 };
 
 export function translateAdminError(message: string, t: (key: string) => string): string {

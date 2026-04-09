@@ -111,7 +111,9 @@
   "conferences": {
     "kicker": "Charlas",
     "title": "Conferencias",
-    "seeMore": "Ver más ({{count}} charlas)",
+    "description": "Charlas en conferencias y meetups sobre desarrollo móvil, Kotlin, Kotlin Multiplatform y temas relacionados.",
+    "totalCount": "{{count}} charlas en total",
+    "seeMore": "Ver más",
     "achievements": "Logros",
     "watchVideo": "Ver video",
     "event": "Evento",
@@ -122,10 +124,18 @@
     "detailAudience": "Audiencia"
   },
   "conferenceType": {
+    "virtual_conference": "Conferencia virtual",
     "conference": "Conferencia",
-    "virtual": "Virtual",
-    "talk": "Charla",
-    "meetup": "Meetup"
+    "virtual_talk": "Charla virtual",
+    "talk": "Charla"
+  },
+  "conferenceLocationPlatform": {
+    "google_meet": "Google Meet",
+    "zoom": "Zoom",
+    "bevy": "Bevy",
+    "twitch": "Twitch",
+    "youtube": "YouTube",
+    "streamyard": "StreamYard"
   },
   "recommendations": {
     "kicker": "Testimonios",
@@ -252,7 +262,7 @@
     "continue": "Ir a Buy Me a Coffee"
   },
   "conferencesModal": {
-    "title": "Todas las conferencias",
+    "title": "Más charlas",
     "closeAria": "Cerrar"
   },
   "admin": {
@@ -263,6 +273,10 @@
       "projects": "Proyectos",
       "viewSite": "Ver sitio",
       "signOut": "Salir"
+    },
+    "common": {
+      "cancel": "Cancelar",
+      "deleteIrreversible": "Esta acción no se puede deshacer."
     },
     "authGate": {
       "loading": "Cargando…",
@@ -301,29 +315,47 @@
       "colHeardFrom": "Origen",
       "colCreated": "Alta",
       "colUpdated": "Actualizado",
+      "colActions": "Acciones",
+      "delete": "Eliminar",
+      "confirmDeleteTitle": "Eliminar registro",
+      "confirmDeleteDesc": "Introduce el correo y la contraseña de tu cuenta de administrador para confirmar.",
+      "labelAdminEmail": "Correo del administrador",
+      "labelPassword": "Contraseña",
+      "credentialRequired": "Indica correo y contraseña.",
+      "credentialInvalid": "Correo o contraseña incorrectos.",
+      "credentialTooMany": "Demasiados intentos. Espera un momento e inténtalo de nuevo.",
+      "deleteFailed": "No se pudo eliminar el registro.",
+      "confirmDelete": "Eliminar definitivamente",
       "empty": "Aún no hay registros.",
       "loadFailed": "Error al cargar"
     },
     "conferences": {
       "title": "Charlas",
+      "refresh": "Recargar",
       "new": "Nueva",
       "list": "Listado",
       "delete": "Borrar",
       "formNew": "Nueva charla",
       "formEdit": "Editar",
+      "titleRequired": "Añade un título para la charla.",
+      "editMissingId": "Elige una charla del listado para editar, o pulsa Nueva para crear otra.",
+      "untitled": "(Sin título)",
       "labelTitle": "Título",
       "labelTopic": "Tema",
       "labelType": "Tipo",
+      "typeVirtualConference": "Conferencia virtual",
       "typeConference": "Conferencia",
-      "typeVirtual": "Virtual",
+      "typeVirtualTalk": "Charla virtual",
       "typeTalk": "Charla",
-      "typeMeetup": "Meetup",
       "labelDate": "Fecha",
       "labelAudience": "Audiencia",
       "labelLocation": "Ubicación",
+      "locationPlatformPlaceholder": "Elige plataforma…",
       "labelCity": "Ciudad",
       "labelCountry": "País",
       "labelVideoUrl": "URL del video",
+      "videoAutoPresencial": "Sin video",
+      "videoHintPresencial": "Se rellena solo en presencial; sustituye por una URL si hay grabación.",
       "labelEventUrl": "URL del evento",
       "labelTags": "Etiquetas (coma)",
       "labelImages": "Imágenes",
@@ -336,6 +368,7 @@
       "loadFailed": "Error al cargar",
       "uploadFailed": "Error al subir",
       "saveFailed": "Error al guardar",
+      "saveSuccess": "Guardado correctamente: {{type}}.",
       "deleteFailed": "Error al eliminar"
     },
     "projects": {
@@ -384,7 +417,8 @@
         "fileRequired": "Archivo requerido (campo file)",
         "idRequired": "ID requerido",
         "invalidJson": "JSON inválido",
-        "dataRequired": "Campo data requerido"
+        "dataRequired": "Campo data requerido",
+        "invalidServerResponse": "Respuesta inválida del servidor (no se pudo leer el dato guardado). Inténtalo de nuevo o revisa los logs del servidor."
       }
     }
   },

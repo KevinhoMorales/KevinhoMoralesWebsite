@@ -6,11 +6,12 @@ import { ConferenceImagesCarousel } from '@/components/conference-images-carouse
 import { Badge } from '@/components/ui/badge'
 import { ScrollReveal, StaggerContainer, StaggerItem } from '@/components/scroll-reveal'
 import { Button } from '@/components/ui/button'
-import { MapPin, ChevronRight, Users } from 'lucide-react'
+import { MapPin, ArrowRight, Users } from 'lucide-react'
 import { ConferencesModal } from '@/components/conferences-modal'
 import { ConferenceDetailModal } from '@/components/conference-detail-modal'
 import { useI18n } from '@/components/i18n/locale-provider'
 import { CONFERENCE_BADGE_OVERLAY_CLASS } from '@/lib/conference-ui'
+import { formatConferenceVenueLine } from '@/lib/conference-location-platform'
 import { cn } from '@/lib/utils'
 import type { Conference } from '@/types'
 
@@ -18,7 +19,8 @@ interface ConferencesProps {
   conferences: Conference[]
 }
 
-const PREVIEW_COUNT = 3
+/** Charlas más recientes en la home; el resto se abre en el modal "Ver más". */
+const PREVIEW_COUNT = 6
 
 const TAG_COLORS: Record<string, string> = {
   Android: 'bg-emerald-500/20 text-emerald-600 dark:text-emerald-400',
@@ -43,6 +45,7 @@ function ConferenceCard({ conf, onOpenDetail }: { conf: Conference; onOpenDetail
   }
   const images = conf.images ?? []
   const hasImages = images.length > 0
+  const venueLine = formatConferenceVenueLine(conf, t)
 
   return (
     <Card className="flex h-full flex-col bg-card/50 border-border/50 gap-0 overflow-hidden py-0 hover:border-primary/50 transition-all duration-300 hover:shadow-lg hover:shadow-primary/5">
@@ -86,10 +89,10 @@ function ConferenceCard({ conf, onOpenDetail }: { conf: Conference; onOpenDetail
               )}
             </div>
             <div className="flex flex-wrap items-center gap-x-4 gap-y-1 text-xs text-muted-foreground">
-              {conf.location && (
+              {venueLine && (
                 <span className="flex items-center gap-1">
                   <MapPin className="h-3.5 w-3.5 shrink-0" />
-                  {conf.location}
+                  {venueLine}
                 </span>
               )}
               {conf.audience != null && (
@@ -127,41 +130,57 @@ export function ConferencesSection({ conferences }: ConferencesProps) {
     return null
   }
 
+  const previewConferences = conferences.slice(0, PREVIEW_COUNT)
+  const remainingConferences = conferences.slice(PREVIEW_COUNT)
+  const hasMore = remainingConferences.length > 0
+
   return (
     <section id="conferences" className="scroll-mt-20 py-4 sm:py-5 md:py-6 px-4 sm:px-6 md:px-8 lg:px-12 xl:px-24 bg-secondary/30">
       <div className="max-w-6xl mx-auto">
         <div>
-          <ScrollReveal className="mb-4 sm:mb-6">
+          <ScrollReveal className="mb-6 sm:mb-8">
             <p className="text-primary font-medium tracking-wide uppercase text-xs sm:text-sm mb-3">
               {t('conferences.kicker')}
             </p>
             <h2 className="text-xl sm:text-2xl md:text-3xl font-bold text-balance">{t('conferences.title')}</h2>
+            <p className="mt-3 max-w-2xl text-sm sm:text-base text-muted-foreground leading-relaxed">
+              {t('conferences.description')}
+            </p>
+            <p className="mt-2 text-sm font-medium text-primary">
+              {t('conferences.totalCount', { count: String(conferences.length) })}
+            </p>
           </ScrollReveal>
 
           <StaggerContainer className="grid grid-cols-1 items-stretch gap-4 sm:grid-cols-2 lg:grid-cols-3 sm:gap-6">
-            {conferences.slice(0, PREVIEW_COUNT).map((conf, index) => (
+            {previewConferences.map((conf, index) => (
               <StaggerItem key={conf.id} delay={index * 0.06} className="h-full">
                 <ConferenceCard conf={conf} onOpenDetail={() => setDetailConference(conf)} />
               </StaggerItem>
             ))}
           </StaggerContainer>
 
-          {conferences.length > PREVIEW_COUNT ? (
-            <ScrollReveal delay={0.15} className="mt-6">
+          {hasMore ? (
+            <ScrollReveal delay={0.12} className="mt-8 sm:mt-10 flex justify-center">
               <Button
+                type="button"
                 variant="outline"
-                className="w-full gap-2"
+                size="lg"
+                className="gap-2 rounded-xl"
                 onClick={() => setModalOpen(true)}
               >
-                {t('conferences.seeMore', { count: String(conferences.length) })}
-                <ChevronRight className="h-4 w-4" />
+                {t('conferences.seeMore')}
+                <ArrowRight className="h-4 w-4" aria-hidden />
               </Button>
             </ScrollReveal>
           ) : null}
         </div>
       </div>
 
-      <ConferencesModal conferences={conferences} open={modalOpen} onClose={() => setModalOpen(false)} />
+      <ConferencesModal
+        conferences={remainingConferences}
+        open={modalOpen}
+        onClose={() => setModalOpen(false)}
+      />
 
       <ConferenceDetailModal
         conference={detailConference}

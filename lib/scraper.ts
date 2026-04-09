@@ -99,7 +99,7 @@ export interface ScrapedConference {
   id: string;
   title: string;
   topic?: string;
-  type: 'conference' | 'virtual' | 'talk' | 'meetup';
+  type: 'virtual_conference' | 'conference' | 'virtual_talk' | 'talk';
   location?: string;
   videoUrl?: string;
   eventUrl?: string;
@@ -118,7 +118,8 @@ export async function extractConferencesFromSpeakerPage(html: string, baseUrl: s
     const conf: ScrapedConference = {
       id: String(id++),
       title,
-      type: href.includes('virtual') || title.toLowerCase().includes('virtual') ? 'virtual' : 'conference',
+      type:
+        href.includes('virtual') || title.toLowerCase().includes('virtual') ? 'virtual_talk' : 'conference',
       eventUrl: href.startsWith('http') ? href : new URL(href, baseUrl).href,
     };
     conferences.push(conf);

@@ -33,19 +33,36 @@ export async function adminFetch<T>(path: string, init?: RequestInit): Promise<T
   if (!auth.currentUser) throw new Error('No autenticado');
 
   let token = await getAdminIdToken(false);
-  let res = await fetch(path, { ...init, headers: authFetchHeaders(token, init) });
+  let res = await fetch(path, {
+    ...init,
+    cache: 'no-store',
+    headers: authFetchHeaders(token, init),
+  });
   if (res.status === 401) {
     token = await getAdminIdToken(true);
-    res = await fetch(path, { ...init, headers: authFetchHeaders(token, init) });
+    res = await fetch(path, {
+      ...init,
+      cache: 'no-store',
+      headers: authFetchHeaders(token, init),
+    });
+  }
+
+  /** Una sola lectura del cuerpo; no depender de Content-Type (charset, proxies, edge). */
+  const text = await res.text();
+  let json: unknown = null;
+  if (text) {
+    try {
+      json = JSON.parse(text) as unknown;
+    } catch {
+      /* no JSON */
+    }
   }
 
   if (res.status === 401) {
     let code: string | undefined;
-    try {
-      const j = (await res.json()) as { code?: string };
-      code = typeof j?.code === 'string' ? j.code : undefined;
-    } catch {
-      /* cuerpo vacío o no JSON */
+    if (json && typeof json === 'object' && json !== null && 'code' in json) {
+      const c = (json as { code?: unknown }).code;
+      code = typeof c === 'string' ? c : undefined;
     }
     if (code === 'email_not_allowed') {
       throw new Error('Correo no autorizado para el panel');
@@ -59,11 +76,14 @@ export async function adminFetch<T>(path: string, init?: RequestInit): Promise<T
     }
     throw new Error('No autorizado');
   }
-  const ct = res.headers.get('content-type');
-  const json = ct?.includes('application/json') ? await res.json() : null;
+
   if (!res.ok) {
-    const msg = json && typeof json === 'object' && 'error' in json ? String(json.error) : res.statusText;
+    const msg =
+      json && typeof json === 'object' && json !== null && 'error' in json
+        ? String((json as { error: unknown }).error)
+        : res.statusText;
     throw new Error(msg || 'Error de red');
   }
+
   return json as T;
 }

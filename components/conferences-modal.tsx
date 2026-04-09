@@ -8,6 +8,7 @@ import { Badge } from '@/components/ui/badge'
 import { MapPin, Users } from 'lucide-react'
 import { useI18n } from '@/components/i18n/locale-provider'
 import { CONFERENCE_BADGE_OVERLAY_CLASS } from '@/lib/conference-ui'
+import { formatConferenceVenueLine } from '@/lib/conference-location-platform'
 import { cn } from '@/lib/utils'
 import type { Conference } from '@/types'
 
@@ -101,6 +102,7 @@ export function ConferencesModal({ conferences, open, onClose }: ConferencesModa
             {conferences.map((conf) => {
               const imgs = conf.images ?? []
               const hasImages = imgs.length > 0
+              const venueLine = formatConferenceVenueLine(conf, t)
 
               return (
                 <Card
@@ -157,10 +159,10 @@ export function ConferencesModal({ conferences, open, onClose }: ConferencesModa
                         </p>
                       )}
                       <div className="mt-2 flex flex-wrap gap-x-3 gap-y-1 text-xs text-muted-foreground">
-                        {conf.location && (
+                        {venueLine && (
                           <span className="flex items-center gap-1">
                             <MapPin className="h-3 w-3 shrink-0" />
-                            {conf.location}
+                            {venueLine}
                           </span>
                         )}
                         {conf.audience != null && (

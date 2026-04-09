@@ -219,3 +219,23 @@ export async function adminFetchWaitlistEntries(): Promise<WaitlistEntry[] | nul
     return null;
   }
 }
+
+const WAITLIST_DOC_ID_RE = /^[a-f0-9]{64}$/i;
+
+/** Borra un documento de la subcolección waitlist por su id (hash SHA-256 del correo). */
+export async function adminDeleteWaitlistEntryByDocId(docId: string): Promise<boolean> {
+  const trimmed = docId.trim();
+  if (!WAITLIST_DOC_ID_RE.test(trimmed)) {
+    throw new Error('ID de documento inválido');
+  }
+  const app = tryGetAdminApp();
+  if (!app) return false;
+  const db = getFirestore(app);
+  const ref = db
+    .collection(PROD_COLLECTION)
+    .doc(PROD_ADMIN_DOC_ID)
+    .collection(WAITLIST_SUBCOLLECTION)
+    .doc(trimmed);
+  await ref.delete();
+  return true;
+}

@@ -1,3 +1,5 @@
+import { FieldValue } from 'firebase-admin/firestore';
+import { applyConferencePayloadForFirestore } from '@/lib/admin-conference-firestore-write';
 import { NextResponse } from 'next/server';
 import { adminFetchConferences } from '@/lib/firestore-admin-content';
 import {
@@ -25,7 +27,12 @@ export async function GET(req: Request) {
   if (list === null) {
     return NextResponse.json({ error: 'Firebase Admin no configurado' }, { status: 503 });
   }
-  return NextResponse.json(list);
+  return NextResponse.json(list, {
+    headers: {
+      'Cache-Control': 'no-store, no-cache, must-revalidate',
+      Pragma: 'no-cache',
+    },
+  });
 }
 
 export async function POST(req: Request) {
@@ -53,6 +60,21 @@ export async function POST(req: Request) {
     .doc(PROD_ADMIN_DOC_ID)
     .collection(CONFERENCES_SUBCOLLECTION);
   const ref = col.doc();
-  await ref.set({ ...data, id: ref.id });
+  const { createdAt: _c, updatedAt: _u, ...payload } = data as Record<string, unknown>;
+  const write = applyConferencePayloadForFirestore(payload as Record<string, unknown>, {
+    merge: false,
+  });
+  try {
+    await ref.set({
+      ...write,
+      id: ref.id,
+      createdAt: FieldValue.serverTimestamp(),
+      updatedAt: FieldValue.serverTimestamp(),
+    });
+  } catch (err) {
+    const msg = err instanceof Error ? err.message : String(err);
+    console.error('[admin/conferences POST] Firestore set failed:', msg);
+    return NextResponse.json({ error: `Firestore: ${msg}` }, { status: 500 });
+  }
   return NextResponse.json({ id: ref.id });
 }

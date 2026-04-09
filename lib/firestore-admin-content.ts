@@ -1,4 +1,4 @@
-import { getFirestore } from 'firebase-admin/firestore';
+import { getFirestore, Timestamp } from 'firebase-admin/firestore';
 import { tryGetAdminApp } from '@/lib/firebase-admin';
 import {
   PROD_COLLECTION,
@@ -7,6 +7,10 @@ import {
   PROJECTS_SUBCOLLECTION,
 } from '@/lib/firebase-paths';
 import type { Project, Conference, ProjectCategory, ProjectLink } from '@/types';
+import {
+  CONFERENCE_LOCATION_PLATFORMS,
+  type ConferenceLocationPlatform,
+} from '@/types/conference';
 
 const FIRESTORE_READ_MS = 5_000;
 
@@ -27,7 +31,7 @@ function withFirestoreTimeout<T>(promise: Promise<T>, label: string): Promise<T>
 }
 
 const CATEGORIES: ProjectCategory[] = ['ios', 'android', 'web', 'flutter'];
-const CONF_TYPES: Conference['type'][] = ['conference', 'virtual', 'talk', 'meetup'];
+const CONF_TYPES: Conference['type'][] = ['virtual_conference', 'conference', 'virtual_talk', 'talk'];
 
 function asString(v: unknown): string | undefined {
   return typeof v === 'string' && v.trim() ? v : undefined;
@@ -42,6 +46,12 @@ function asStringArray(v: unknown): string[] | undefined {
   if (!Array.isArray(v)) return undefined;
   const out = v.filter((x): x is string => typeof x === 'string' && x.length > 0);
   return out.length ? out : undefined;
+}
+
+function asIsoDateFromFirestore(v: unknown): string | undefined {
+  if (v instanceof Timestamp) return v.toDate().toISOString();
+  if (typeof v === 'string' && v.trim()) return v.trim();
+  return undefined;
 }
 
 /** Rutas/URLs de imágenes de conferencia: tolera array, mapa indexado o objetos `{ url | path }`. */
@@ -125,19 +135,39 @@ function normalizeProject(data: Record<string, unknown>, docId: string): Project
 }
 
 function normalizeConference(data: Record<string, unknown>, docId: string): Conference | null {
-  const title = asString(data.title);
-  if (!title) return null;
+  const title = (() => {
+    const v = data.title;
+    if (typeof v === 'string') return v.trim();
+    if (typeof v === 'number' || typeof v === 'boolean') return String(v);
+    return '';
+  })();
   const rawType = asString(data.type);
+  /** Registros antiguos en Firestore. */
+  const legacyMapped =
+    rawType === 'virtual'
+      ? 'virtual_talk'
+      : rawType === 'meetup'
+        ? 'talk'
+        : rawType;
   const type: Conference['type'] =
-    rawType && CONF_TYPES.includes(rawType as Conference['type'])
-      ? (rawType as Conference['type'])
+    legacyMapped && CONF_TYPES.includes(legacyMapped as Conference['type'])
+      ? (legacyMapped as Conference['type'])
       : 'talk';
   return {
     id: asString(data.id) ?? docId,
     title,
     topic: asString(data.topic),
     type,
+    createdAt: asIsoDateFromFirestore(data.createdAt),
+    updatedAt: asIsoDateFromFirestore(data.updatedAt),
     date: asString(data.date),
+    locationPlatform: (() => {
+      const raw = data.locationPlatform ?? data.location_platform;
+      const p = typeof raw === 'string' ? raw.trim() : '';
+      return p && (CONFERENCE_LOCATION_PLATFORMS as readonly string[]).includes(p)
+        ? (p as ConferenceLocationPlatform)
+        : undefined;
+    })(),
     location: asString(data.location),
     city: asString(data.city),
     country: asString(data.country),
