@@ -41,7 +41,11 @@ export function ArticlesSection() {
 
   if (loading) {
     return (
-      <section id="articles" className="scroll-mt-20 py-4 sm:py-5 md:py-6 px-4 sm:px-6 md:px-8 lg:px-12 xl:px-24">
+      <section
+        id="articles"
+        data-analytics-section="articles"
+        className="scroll-mt-20 py-4 sm:py-5 md:py-6 px-4 sm:px-6 md:px-8 lg:px-12 xl:px-24"
+      >
         <div className="max-w-6xl mx-auto">
           <div className="mb-8 sm:mb-10">
             <p className="text-primary font-medium tracking-wide uppercase text-xs sm:text-sm mb-3 sm:mb-4">{t('articles.kicker')}</p>
@@ -61,7 +65,11 @@ export function ArticlesSection() {
 
   if (loadFailed) {
     return (
-      <section id="articles" className="scroll-mt-20 py-4 sm:py-5 md:py-6 px-4 sm:px-6 md:px-8 lg:px-12 xl:px-24 bg-secondary/30">
+      <section
+        id="articles"
+        data-analytics-section="articles"
+        className="scroll-mt-20 py-4 sm:py-5 md:py-6 px-4 sm:px-6 md:px-8 lg:px-12 xl:px-24 bg-secondary/30"
+      >
         <div className="max-w-6xl mx-auto">
           <div className="mb-8 sm:mb-10">
             <p className="text-primary font-medium tracking-wide uppercase text-xs sm:text-sm mb-3 sm:mb-4">{t('articles.kicker')}</p>
@@ -79,7 +87,11 @@ export function ArticlesSection() {
   const hasMoreOnSite = articles.length > HOME_ARTICLES
 
   return (
-    <section id="articles" className="scroll-mt-20 py-4 sm:py-5 md:py-6 px-4 sm:px-6 md:px-8 lg:px-12 xl:px-24 bg-secondary/30">
+    <section
+      id="articles"
+      data-analytics-section="articles"
+      className="scroll-mt-20 py-4 sm:py-5 md:py-6 px-4 sm:px-6 md:px-8 lg:px-12 xl:px-24 bg-secondary/30"
+    >
       <div className="max-w-6xl mx-auto">
         <ScrollReveal className="flex flex-col sm:flex-row sm:items-end sm:justify-between gap-4 sm:gap-6 mb-8 sm:mb-10">
           <div>

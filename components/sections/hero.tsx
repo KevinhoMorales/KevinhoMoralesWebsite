@@ -25,7 +25,11 @@ export function Hero({ profile }: HeroProps) {
     '/images/profile-main.png'
 
   return (
-    <section className="min-h-[60vh] sm:min-h-[65vh] lg:min-h-[50vh] xl:min-h-[45vh] flex flex-col justify-center overflow-x-hidden px-4 sm:px-6 md:px-8 lg:px-12 xl:px-24 py-3 sm:py-4 md:py-4">
+    <section
+      id="hero"
+      data-analytics-section="hero"
+      className="min-h-[60vh] sm:min-h-[65vh] lg:min-h-[50vh] xl:min-h-[45vh] flex flex-col justify-center overflow-x-hidden px-4 sm:px-6 md:px-8 lg:px-12 xl:px-24 py-3 sm:py-4 md:py-4"
+    >
       <div className="max-w-6xl mx-auto w-full">
         <div className="grid gap-6 lg:grid-cols-[minmax(0,1fr)_minmax(0,1fr)] lg:gap-8 xl:gap-10 items-center motion-hero-in min-w-0 w-full">
           {/* Avatar primero en móvil para mejor jerarquía visual */}

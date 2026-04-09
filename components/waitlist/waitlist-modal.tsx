@@ -2,6 +2,8 @@
 
 import Image from 'next/image';
 import { useEffect, useState } from 'react';
+
+import { logAnalyticsEvent } from '@/lib/analytics-events';
 import { CheckCircle2, Loader2 } from 'lucide-react';
 
 import { WAITLIST_HEARD_FROM_VALUES } from '@/lib/waitlist-api-security';
@@ -118,7 +120,7 @@ function WaitlistPreorderOffer() {
 export function WaitlistModal() {
   const { t, locale } = useI18n();
   const acceptingSignup = isWaitlistAcceptingSubmissions();
-  const { dialogOpen, setDialogOpen, markJoined } = useWaitlist();
+  const { dialogOpen, setDialogOpen, markJoined, waitlistOpenSource } = useWaitlist();
   const [email, setEmail] = useState('');
   const [firstName, setFirstName] = useState('');
   const [lastName, setLastName] = useState('');
@@ -146,14 +148,25 @@ export function WaitlistModal() {
   };
 
   const handleOpenChange = (open: boolean) => {
-    if (!open) resetModal();
+    if (!open) {
+      void logAnalyticsEvent('book_waitlist_close', {
+        result: phase === 'success' ? 'completed_success' : 'abandoned',
+      });
+      resetModal();
+    }
     setDialogOpen(open);
   };
+
+  useEffect(() => {
+    if (!dialogOpen || !waitlistOpenSource) return;
+    void logAnalyticsEvent('book_waitlist_open', { source: waitlistOpenSource });
+  }, [dialogOpen, waitlistOpenSource]);
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     if (!acceptingSignup) return;
 
+    void logAnalyticsEvent('book_waitlist_submit_attempt', {});
     setStatus('loading');
     setMessage(null);
 
@@ -180,6 +193,7 @@ export function WaitlistModal() {
       };
 
       if (data.success && res.ok) {
+        void logAnalyticsEvent('book_waitlist_submit', { result: 'success' });
         markJoined();
         const auxParts: string[] = [];
 
@@ -262,12 +276,15 @@ export function WaitlistModal() {
       }
 
       setStatus('error');
-      setMessage(
-        data.code === 'duplicate_email'
-          ? t('waitlist.duplicateEmail')
-          : (data.message ?? t('waitlist.errorSend'))
-      );
+      if (data.code === 'duplicate_email') {
+        void logAnalyticsEvent('book_waitlist_submit', { result: 'duplicate' });
+        setMessage(t('waitlist.duplicateEmail'));
+      } else {
+        void logAnalyticsEvent('book_waitlist_submit', { result: 'error' });
+        setMessage(data.message ?? t('waitlist.errorSend'));
+      }
     } catch {
+      void logAnalyticsEvent('book_waitlist_submit', { result: 'network_error' });
       setStatus('error');
       setMessage(t('waitlist.errorNetwork'));
     }

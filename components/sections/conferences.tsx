@@ -122,7 +122,11 @@ export function ConferencesSection({ conferences }: ConferencesProps) {
   const hasMore = remainingConferences.length > 0
 
   return (
-    <section id="conferences" className="scroll-mt-20 py-4 sm:py-5 md:py-6 px-4 sm:px-6 md:px-8 lg:px-12 xl:px-24 bg-secondary/30">
+    <section
+      id="conferences"
+      data-analytics-section="conferences"
+      className="scroll-mt-20 py-4 sm:py-5 md:py-6 px-4 sm:px-6 md:px-8 lg:px-12 xl:px-24 bg-secondary/30"
+    >
       <div className="max-w-6xl mx-auto">
         <div>
           <ScrollReveal className="mb-6 sm:mb-8">

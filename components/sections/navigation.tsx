@@ -200,7 +200,7 @@ export function Navigation() {
           {showBookNav ? (
             <button
               type="button"
-              onClick={openWaitlist}
+              onClick={() => openWaitlist('nav')}
               aria-label={t('nav.waitlist')}
               className={cn(
                 'group relative inline-flex shrink-0 items-center rounded-full border-2 border-yellow-400 bg-gradient-to-r from-primary via-teal-600 to-primary bg-[length:200%_100%] font-semibold tracking-tight text-primary-foreground shadow-md shadow-primary/40 shadow-[0_0_0_1px_rgba(250,204,21,0.35)]',
@@ -243,7 +243,7 @@ export function Navigation() {
                       type="button"
                       className="mb-2 h-12 gap-2 rounded-xl border-2 border-yellow-400 bg-gradient-to-r from-primary to-teal-600 font-semibold text-primary-foreground shadow-md shadow-primary/30 hover:border-yellow-300 hover:from-primary/95 hover:to-teal-600/95 dark:border-yellow-400/95"
                       onClick={() => {
-                        openWaitlist()
+                        openWaitlist('mobile_nav')
                         setIsOpen(false)
                       }}
                     >

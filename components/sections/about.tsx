@@ -26,7 +26,11 @@ export function About({ profile }: AboutProps) {
   )
 
   return (
-    <section id="about" className="scroll-mt-20 py-3 sm:py-4 md:py-6 px-4 sm:px-6 md:px-8 lg:px-12 xl:px-24 bg-secondary/30">
+    <section
+      id="about"
+      data-analytics-section="about"
+      className="scroll-mt-20 py-3 sm:py-4 md:py-6 px-4 sm:px-6 md:px-8 lg:px-12 xl:px-24 bg-secondary/30"
+    >
       <div className="max-w-6xl mx-auto">
         <ScrollReveal className="mb-4 sm:mb-6">
           <p className="text-primary font-medium tracking-wide uppercase text-xs sm:text-sm mb-3 sm:mb-4">{t('about.kicker')}</p>

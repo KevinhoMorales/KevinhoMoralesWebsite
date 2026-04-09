@@ -18,11 +18,13 @@ const SESSION_POPUP_KEY = 'km-waitlist-session-popup-v1';
 type WaitlistContextValue = {
   dialogOpen: boolean;
   setDialogOpen: (open: boolean) => void;
+  /** Origen de la última apertura del modal (analytics). */
+  waitlistOpenSource: 'nav' | 'mobile_nav' | 'auto' | null;
   /** Usuario ya envió el formulario (no mostrar CTA). */
   waitlistJoined: boolean;
   /** Cerró el modal sin unirse: puede usarse para resaltar el CTA en nav. */
   navTeaserVisible: boolean;
-  openWaitlist: () => void;
+  openWaitlist: (source?: 'nav' | 'mobile_nav') => void;
   markJoined: () => void;
 };
 
@@ -31,6 +33,7 @@ const WaitlistContext = createContext<WaitlistContextValue | null>(null);
 export function WaitlistProvider({ children }: { children: ReactNode }) {
   const pathname = usePathname();
   const [dialogOpen, setDialogOpen] = useState(false);
+  const [waitlistOpenSource, setWaitlistOpenSource] = useState<'nav' | 'mobile_nav' | 'auto' | null>(null);
   const [waitlistJoined, setWaitlistJoined] = useState(false);
   const [navTeaserVisible, setNavTeaserVisible] = useState(false);
 
@@ -56,6 +59,7 @@ export function WaitlistProvider({ children }: { children: ReactNode }) {
 
     const timer = window.setTimeout(() => {
       safeSessionSet(SESSION_POPUP_KEY, '1');
+      setWaitlistOpenSource('auto');
       setDialogOpen(true);
     }, 2600);
     return () => clearTimeout(timer);
@@ -70,14 +74,18 @@ export function WaitlistProvider({ children }: { children: ReactNode }) {
   const handleDialogOpenChange = useCallback(
     (open: boolean) => {
       setDialogOpen(open);
-      if (!open) recordDismiss();
+      if (!open) {
+        setWaitlistOpenSource(null);
+        recordDismiss();
+      }
     },
     [recordDismiss]
   );
 
-  const openWaitlist = useCallback(() => {
-    handleDialogOpenChange(true);
-  }, [handleDialogOpenChange]);
+  const openWaitlist = useCallback((source: 'nav' | 'mobile_nav' = 'nav') => {
+    setWaitlistOpenSource(source);
+    setDialogOpen(true);
+  }, []);
 
   const markJoined = useCallback(() => {
     safeLocalSet(STORAGE_JOINED, '1');
@@ -89,6 +97,7 @@ export function WaitlistProvider({ children }: { children: ReactNode }) {
   const value: WaitlistContextValue = {
     dialogOpen,
     setDialogOpen: handleDialogOpenChange,
+    waitlistOpenSource,
     waitlistJoined,
     navTeaserVisible,
     openWaitlist,

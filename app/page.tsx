@@ -22,6 +22,7 @@ import { ConferencesSection } from '@/components/sections/conferences';
 import { Recommendations } from '@/components/sections/recommendations';
 import { Connect } from '@/components/sections/connect';
 import { Footer } from '@/components/sections/footer';
+import { HomeSectionAnalytics } from '@/components/home-section-analytics';
 
 export const metadata: Metadata = {
   title: 'Mobile & Software Engineer',
@@ -40,6 +41,7 @@ export default async function Home() {
 
   return (
     <main className="min-h-screen min-w-0">
+      <HomeSectionAnalytics />
       <Hero profile={profile} />
       <About profile={profile} />
       <ExperienceSection experiences={experience} previewLimit={3} />

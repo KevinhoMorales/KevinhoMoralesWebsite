@@ -87,6 +87,7 @@ export function Connect({ profile }: ConnectProps) {
   return (
     <section
       id="connect"
+      data-analytics-section="connect"
       className="scroll-mt-20 relative overflow-hidden py-16 sm:py-20 md:py-24 px-4 sm:px-6 md:px-8 lg:px-12 xl:px-24"
     >
       <div
