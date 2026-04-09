@@ -367,6 +367,7 @@
       "save": "Save",
       "confirmDelete": "Delete this talk?",
       "loadFailed": "Couldn’t load list",
+      "uploadTooLarge": "Image is too large for the server (often over ~4 MB on Vercel). Compress it or use a smaller file.",
       "uploadFailed": "Upload failed",
       "saveFailed": "Couldn’t save",
       "saveSuccess": "Saved successfully: {{type}}.",
@@ -400,6 +401,7 @@
       "save": "Save",
       "confirmDelete": "Delete this project?",
       "loadFailed": "Couldn’t load list",
+      "uploadTooLarge": "Image is too large for the server (often over ~4 MB on Vercel). Compress it or use a smaller file.",
       "uploadFailed": "Upload failed",
       "saveFailed": "Couldn’t save",
       "deleteFailed": "Couldn’t delete"

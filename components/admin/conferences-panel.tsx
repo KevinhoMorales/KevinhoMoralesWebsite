@@ -29,6 +29,10 @@ import {
   VIDEO_URL_PRESENCIAL_NONE,
   isPresencialNoVideoUrl,
 } from '@/lib/conference-video-url';
+import { compressImageForUpload } from '@/lib/compress-image-client';
+
+/** Vercel suele limitar ~4.5 MB por request; multipart añade overhead. */
+const MAX_CONFERENCE_IMAGE_BYTES = 4 * 1024 * 1024;
 
 /**
  * Imágenes pegadas. No mezclar `files` e `items`: en muchos navegadores es la misma imagen con distinto
@@ -213,8 +217,13 @@ export function ConferencesPanel() {
 
   /** Sube un archivo y devuelve la ruta de objeto en el bucket (misma que se guarda en Firestore). */
   async function uploadConferenceFileToStorage(file: File, slot: number): Promise<string> {
+    const fileToSend = await compressImageForUpload(file);
+    if (fileToSend.size > MAX_CONFERENCE_IMAGE_BYTES) {
+      throw new Error(t('admin.conferences.uploadTooLarge'));
+    }
+
     const fd = new FormData();
-    fd.append('file', file);
+    fd.append('file', fileToSend);
     fd.append('scope', 'conferences');
     fd.append('slot', String(slot));
     let token = await getAdminIdToken(false);
@@ -232,12 +241,13 @@ export function ConferencesPanel() {
       });
     }
     if (res.status === 401) {
+      const text401 = await res.text();
       let code: string | undefined;
       try {
-        const j = (await res.json()) as { code?: string };
+        const j = JSON.parse(text401) as { code?: string };
         code = typeof j?.code === 'string' ? j.code : undefined;
       } catch {
-        /*  */
+        /* cuerpo no JSON */
       }
       if (code === 'invalid_token' || code === 'no_email' || code === 'missing_token') {
         throw new Error('TOKEN_REJECTED_BY_SERVER');
@@ -248,9 +258,27 @@ export function ConferencesPanel() {
       window.location.href = '/admin/login';
       throw new Error('No autorizado');
     }
-    const json = (await res.json()) as { path?: string; url?: string; error?: string };
+
+    const text = await res.text();
+    let json: { path?: string; url?: string; error?: string } | null = null;
+    if (text) {
+      try {
+        json = JSON.parse(text) as { path?: string; url?: string; error?: string };
+      } catch {
+        /* p. ej. HTML “Request Entity Too Large” del proxy */
+      }
+    }
+
     if (!res.ok) {
-      throw new Error(json.error || t('admin.conferences.uploadFailed'));
+      if (res.status === 413 || /Request Entity Too Large|Payload Too Large/i.test(text)) {
+        throw new Error(t('admin.conferences.uploadTooLarge'));
+      }
+      if (json?.error) throw new Error(json.error);
+      throw new Error(t('admin.conferences.uploadFailed'));
+    }
+
+    if (!json) {
+      throw new Error(t('admin.conferences.uploadFailed'));
     }
     if (json.path) return json.path;
     if (json.url) return json.url;

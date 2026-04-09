@@ -367,6 +367,7 @@
       "save": "Salvar",
       "confirmDelete": "Excluir esta palestra?",
       "loadFailed": "Erro ao carregar",
+      "uploadTooLarge": "A imagem é grande demais para o servidor (geralmente ~4 MB no Vercel). Comprima ou use um arquivo menor.",
       "uploadFailed": "Erro ao enviar",
       "saveFailed": "Erro ao salvar",
       "saveSuccess": "Salvo com sucesso: {{type}}.",
@@ -400,6 +401,7 @@
       "save": "Salvar",
       "confirmDelete": "Excluir este projeto?",
       "loadFailed": "Erro ao carregar",
+      "uploadTooLarge": "A imagem é grande demais para o servidor (geralmente ~4 MB no Vercel). Comprima ou use um arquivo menor.",
       "uploadFailed": "Erro ao enviar",
       "saveFailed": "Erro ao salvar",
       "deleteFailed": "Erro ao excluir"

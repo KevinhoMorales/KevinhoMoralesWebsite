@@ -20,8 +20,12 @@ import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Textarea } from '@/components/ui/textarea';
 import { Card } from '@/components/ui/card';
+import { compressImageForUpload } from '@/lib/compress-image-client';
 
 const linkTypes: ProjectLink['type'][] = ['appStore', 'playStore', 'website', 'github', 'other'];
+
+/** Misma regla que charlas: límite de cuerpo en Vercel (~4.5 MB). */
+const MAX_ADMIN_UPLOAD_BYTES = 4 * 1024 * 1024;
 
 const emptyForm: Project = {
   id: '',
@@ -100,8 +104,13 @@ export function ProjectsPanel() {
   }
 
   async function uploadCover(file: File) {
+    const fileToSend = await compressImageForUpload(file);
+    if (fileToSend.size > MAX_ADMIN_UPLOAD_BYTES) {
+      throw new Error(t('admin.projects.uploadTooLarge'));
+    }
+
     const fd = new FormData();
-    fd.append('file', file);
+    fd.append('file', fileToSend);
     let token = await getAdminIdToken(false);
     let res = await fetch('/api/admin/upload', {
       method: 'POST',
@@ -117,12 +126,13 @@ export function ProjectsPanel() {
       });
     }
     if (res.status === 401) {
+      const text401 = await res.text();
       let code: string | undefined;
       try {
-        const j = (await res.json()) as { code?: string };
+        const j = JSON.parse(text401) as { code?: string };
         code = typeof j?.code === 'string' ? j.code : undefined;
       } catch {
-        /*  */
+        /* */
       }
       if (code === 'invalid_token' || code === 'no_email' || code === 'missing_token') {
         throw new Error('TOKEN_REJECTED_BY_SERVER');
@@ -133,11 +143,26 @@ export function ProjectsPanel() {
       window.location.href = '/admin/login';
       throw new Error('No autorizado');
     }
-    const json = (await res.json()) as { url?: string; error?: string };
-    if (!res.ok) {
-      throw new Error(json.error || t('admin.projects.uploadFailed'));
+
+    const text = await res.text();
+    let json: { url?: string; error?: string } | null = null;
+    if (text) {
+      try {
+        json = JSON.parse(text) as { url?: string; error?: string };
+      } catch {
+        /* HTML del proxy (413) */
+      }
     }
-    if (!json.url) throw new Error('Sin URL');
+
+    if (!res.ok) {
+      if (res.status === 413 || /Request Entity Too Large|Payload Too Large/i.test(text)) {
+        throw new Error(t('admin.projects.uploadTooLarge'));
+      }
+      if (json?.error) throw new Error(json.error);
+      throw new Error(t('admin.projects.uploadFailed'));
+    }
+
+    if (!json?.url) throw new Error(t('admin.projects.uploadFailed'));
     setForm((f) => ({ ...f, image: json.url }));
   }
 

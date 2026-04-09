@@ -367,6 +367,7 @@
       "save": "Guardar",
       "confirmDelete": "¿Eliminar esta charla?",
       "loadFailed": "Error al cargar",
+      "uploadTooLarge": "La imagen supera el tamaño máximo del servidor (suele ser ~4 MB en Vercel). Comprímela o usa un archivo más pequeño.",
       "uploadFailed": "Error al subir",
       "saveFailed": "Error al guardar",
       "saveSuccess": "Guardado correctamente: {{type}}.",
@@ -400,6 +401,7 @@
       "save": "Guardar",
       "confirmDelete": "¿Eliminar este proyecto?",
       "loadFailed": "Error al cargar",
+      "uploadTooLarge": "La imagen supera el tamaño máximo del servidor (suele ser ~4 MB en Vercel). Comprímela o usa un archivo más pequeño.",
       "uploadFailed": "Error al subir",
       "saveFailed": "Error al guardar",
       "deleteFailed": "Error al eliminar"
