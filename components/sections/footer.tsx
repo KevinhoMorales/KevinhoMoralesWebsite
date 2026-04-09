@@ -19,7 +19,7 @@ interface FooterProps {
   profile: Profile
 }
 
-const SOCIAL_USERNAME = 'kevinhomorales'
+const SOCIAL_USERNAME = 'devlokos'
 
 const socialIconConfig = [
   { name: 'LinkedIn', icon: FaLinkedinIn, key: 'linkedin' as const },

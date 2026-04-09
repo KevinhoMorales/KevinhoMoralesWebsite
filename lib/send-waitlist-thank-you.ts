@@ -7,6 +7,7 @@ import {
   formatPreorderDay,
 } from '@/lib/waitlist-preorder';
 import { WAITLIST_EMAIL_RE } from '@/lib/waitlist-api-security';
+import { buildWaitlistThankYouFooterBlockHtml } from '@/lib/waitlist-thank-you-footer-html';
 
 const MAX_TO_LEN = 254;
 const MAX_FIRST_NAME_LEN = 80;
@@ -16,17 +17,19 @@ const WAITLIST_THANK_YOU_BOOK_IMAGE_SRC =
   'https://firebasestorage.googleapis.com/v0/b/kevinho-morales.firebasestorage.app/o/Book%20Sample.png?alt=media&token=949ece75-48b2-4a3c-a93d-3ba8ff0a694d';
 
 /**
- * Variables de la plantilla en Resend: {{{READER_NAME}}}, {{{EMAIL_LINK_DAY}}}, {{{LAUNCH_DAY}}}.
+ * Variables de la plantilla en Resend: {{{READER_NAME}}}, {{{EMAIL_LINK_DAY}}}, {{{LAUNCH_DAY}}}, {{{FOOTER_BLOCK}}}.
  */
 function waitlistThankYouTemplateVariables(params: {
   readerNameEscaped: string;
   emailLinkDay: string;
   launchDay: string;
-}): Record<'READER_NAME' | 'EMAIL_LINK_DAY' | 'LAUNCH_DAY', string> {
+  footerBlockHtml: string;
+}): Record<'READER_NAME' | 'EMAIL_LINK_DAY' | 'LAUNCH_DAY' | 'FOOTER_BLOCK', string> {
   return {
     READER_NAME: params.readerNameEscaped,
     EMAIL_LINK_DAY: params.emailLinkDay,
     LAUNCH_DAY: params.launchDay,
+    FOOTER_BLOCK: params.footerBlockHtml,
   };
 }
 
@@ -107,6 +110,7 @@ export async function sendWaitlistThankYouEmail(input: {
   const name = escapeHtml(first || 'hola');
   const emailLinkDay = escapeHtml(formatPreorderDay(WAITLIST_SUCCESS_EMAIL_BY_DATE, 'es'));
   const launchDay = escapeHtml(formatPreorderDay(LAUNCH_DATE, 'es'));
+  const footerBlockHtml = buildWaitlistThankYouFooterBlockHtml();
 
   const subject = '¡Gracias por reservar el libro!';
   const templateIdRaw = (process.env.RESEND_WAITLIST_TEMPLATE_ID || '').trim();
@@ -142,7 +146,7 @@ export async function sendWaitlistThankYouEmail(input: {
           <p style="margin:0 0 16px;font-size:15px;line-height:1.6;color:#475569;">Gracias por reservar tu lugar. Ya estás en la lista para novedades del libro <strong>Dominando Kotlin, Swift y Dart</strong>.</p>
           <p style="margin:0 0 8px;font-size:14px;line-height:1.6;color:#475569;">A partir del <strong>${emailLinkDay}</strong> te enviaremos a <strong>este mismo correo</strong> un mensaje con el <strong>enlace de compra</strong> y el <strong>precio especial de preventa</strong> como agradecimiento por tu apoyo. El lanzamiento oficial está previsto para el <strong>${launchDay}</strong>.</p>
           <p style="margin:16px 0 0;font-size:13px;line-height:1.5;color:#64748b;">Revisa también la carpeta de spam o promociones por si el mensaje llega ahí.</p>
-          <p style="margin:24px 0 0;font-size:13px;line-height:1.5;color:#94a3b8;">Kevin Morales<br/>kevinhomorales.com</p>
+          ${footerBlockHtml}
         </td></tr>
       </table>
     </td></tr>
@@ -164,6 +168,7 @@ export async function sendWaitlistThankYouEmail(input: {
               readerNameEscaped: name,
               emailLinkDay,
               launchDay,
+              footerBlockHtml,
             }),
           },
         })

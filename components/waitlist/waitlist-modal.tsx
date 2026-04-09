@@ -205,29 +205,24 @@ export function WaitlistModal() {
               return v.charAt(0).toUpperCase() + v.slice(1);
             })();
             const full = `${fn} ${ln}`.trim();
-            const lines = [
-              'Nuevo registro en la lista de espera del libro.',
-              '',
-              `Correo: ${e}`,
-              `Nombre: ${fn}`,
-              `Apellido: ${ln}`,
-              `Comunidad: ${org || '—'}`,
-              `Origen: ${heardFromLabel}`,
-            ];
+            const displayName = full || e;
+            const messageBody = t('waitlist.web3FormMessage', { displayName });
             const fd = new FormData();
             fd.append('access_key', pubKey);
             fd.append('botcheck', '');
-            fd.append('name', full || e);
+            fd.append('name', displayName);
             fd.append('email', e);
-            fd.append('from_name', full || e);
+            fd.append('from_name', displayName);
             fd.append(
               'subject',
               'Lista de espera — libro Kotlin / Swift / Dart (kevinhomorales.com)'
             );
-            fd.append('message', lines.join('\n'));
-            fd.append('firstName', fn);
-            fd.append('lastName', ln);
-            fd.append('organization', org);
+            /** Cuerpo legible para el dueño del formulario; datos pormenorizados en campos con nombre claro (Web3Forms). */
+            fd.append('message', messageBody);
+            fd.append('FIRSTNAME', fn);
+            fd.append('LASTNAME', ln);
+            fd.append('ORIGEN', heardFromLabel);
+            fd.append('COMMUNITY', org || '—');
 
             try {
               const w3Res = await fetch('https://api.web3forms.com/submit', {

@@ -32,6 +32,12 @@ async function main() {
         { key: 'READER_NAME', type: 'string', fallbackValue: 'hola' },
         { key: 'EMAIL_LINK_DAY', type: 'string', fallbackValue: '1 de mayo' },
         { key: 'LAUNCH_DAY', type: 'string', fallbackValue: 'el lanzamiento' },
+        {
+          key: 'FOOTER_BLOCK',
+          type: 'string',
+          fallbackValue:
+            '<p style="margin:24px 0 0;font-size:13px;line-height:1.5;color:#94a3b8;text-align:center;">— Kevin Morales<br />kevinhomorales.com</p>',
+        },
       ],
     })
     .publish();

@@ -237,6 +237,7 @@
     "thanks": "Thank you!",
     "thanksMsg": "You're on the list!",
     "successAlert": "Thanks for reserving your spot!\n\nWe'll email you pre-order details by {{date}} at the latest. Check spam or promotions folders too.",
+    "web3FormMessage": "{{displayName}} has joined the waitlist for the book Dominando Kotlin, Swift y Dart.",
     "web3NotifyFail": "Note: Web3Forms did not send the notification ({{detail}}). Your signup was still saved. Try Contact or check the browser console if it keeps happening.",
     "web3KeyMissing": "Note: NEXT_PUBLIC_WEB3FORMS_ACCESS_KEY is missing from the site build, so the author won't get a Web3Forms copy. Set it in Vercel (or .env.local), redeploy, and check spam/promotions.",
     "close": "Close",

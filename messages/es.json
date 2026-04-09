@@ -237,6 +237,7 @@
     "thanks": "¡Gracias!",
     "thanksMsg": "¡Ya estás en la lista!",
     "successAlert": "¡Gracias por reservar tu lugar!\n\nTe enviaremos un correo con la información de la preventa a más tardar el {{date}}. Revisa también spam o promociones.",
+    "web3FormMessage": "{{displayName}} se ha sumado a la lista de espera del libro Dominando Kotlin, Swift y Dart.",
     "web3NotifyFail": "Aviso: no se pudo enviar la notificación por Web3Forms ({{detail}}). Tu reserva sí quedó guardada. Si el problema continúa, escribe en Contacto o revisa la consola del navegador.",
     "web3KeyMissing": "Aviso: falta NEXT_PUBLIC_WEB3FORMS_ACCESS_KEY en el build del sitio; no se enviará copia al correo del autor. Configúrala en Vercel (o .env.local), redespliega y comprueba spam / promociones.",
     "close": "Cerrar",

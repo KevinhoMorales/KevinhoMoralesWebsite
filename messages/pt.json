@@ -237,6 +237,7 @@
     "thanks": "Obrigado!",
     "thanksMsg": "Você está na lista!",
     "successAlert": "Obrigado por garantir sua vaga!\n\nEnviaremos um e-mail com os detalhes da pré-venda até {{date}}. Verifique também spam ou promoções.",
+    "web3FormMessage": "{{displayName}} entrou na lista de espera do livro Dominando Kotlin, Swift y Dart.",
     "web3NotifyFail": "Aviso: a notificação Web3Forms não foi enviada ({{detail}}). Sua inscrição foi salva. Use Contato ou o console se continuar falhando.",
     "web3KeyMissing": "Aviso: falta NEXT_PUBLIC_WEB3FORMS_ACCESS_KEY no build; o autor não recebe cópia. Configure no provedor, faça redeploy e verifique spam.",
     "close": "Fechar",
