@@ -60,7 +60,7 @@ export function buildWaitlistThankYouFooterBlockHtml(): string {
 
   const sigTop = socialHtml ? '20px' : '24px';
   const siteUrl = 'https://kevinhomorales.com';
-  const signatureHtml = `<p style="margin:${sigTop} 0 0;font-size:13px;line-height:1.5;color:#94a3b8;text-align:center;">— Kevin Morales<br /><a href="${escapeAttr(
+  const signatureHtml = `<p style="margin:${sigTop} 0 0;font-size:13px;line-height:1.5;color:#94a3b8;text-align:center;">Kevin Morales<br /><a href="${escapeAttr(
     siteUrl
   )}" target="_blank" rel="noopener noreferrer" style="color:#0E6E5C;font-weight:600;text-decoration:none;border-bottom:1px solid rgba(14,110,92,0.25);">kevinhomorales.com</a></p>`;
 
