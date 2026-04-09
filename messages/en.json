@@ -135,7 +135,8 @@
     "bevy": "Bevy",
     "twitch": "Twitch",
     "youtube": "YouTube",
-    "streamyard": "StreamYard"
+    "streamyard": "StreamYard",
+    "gather": "Gather"
   },
   "recommendations": {
     "kicker": "Testimonials",
