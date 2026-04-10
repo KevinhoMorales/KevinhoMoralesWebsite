@@ -87,3 +87,68 @@ export async function adminFetch<T>(path: string, init?: RequestInit): Promise<T
 
   return json as T;
 }
+
+/** Descarga binaria (p. ej. PDF) con el mismo flujo de auth que `adminFetch`. */
+export async function adminFetchBlob(path: string, init?: RequestInit): Promise<Blob> {
+  const auth = getFirebaseAuth();
+  if (!auth) throw new Error('No autenticado');
+  try {
+    await auth.authStateReady();
+  } catch {
+    throw new Error('No autenticado');
+  }
+  if (!auth.currentUser) throw new Error('No autenticado');
+
+  let token = await getAdminIdToken(false);
+  let res = await fetch(path, {
+    ...init,
+    cache: 'no-store',
+    headers: authFetchHeaders(token, init),
+  });
+  if (res.status === 401) {
+    token = await getAdminIdToken(true);
+    res = await fetch(path, {
+      ...init,
+      cache: 'no-store',
+      headers: authFetchHeaders(token, init),
+    });
+  }
+
+  const text = !res.ok ? await res.text() : '';
+  let json: unknown = null;
+  if (text) {
+    try {
+      json = JSON.parse(text) as unknown;
+    } catch {
+      /* no JSON */
+    }
+  }
+
+  if (res.status === 401) {
+    let code: string | undefined;
+    if (json && typeof json === 'object' && json !== null && 'code' in json) {
+      const c = (json as { code?: unknown }).code;
+      code = typeof c === 'string' ? c : undefined;
+    }
+    if (code === 'email_not_allowed') {
+      throw new Error('Correo no autorizado para el panel');
+    }
+    if (code === 'invalid_token' || code === 'no_email' || code === 'missing_token') {
+      throw new Error('TOKEN_REJECTED_BY_SERVER');
+    }
+    if (typeof window !== 'undefined' && !path.includes('/login')) {
+      window.location.href = '/admin/login';
+    }
+    throw new Error('No autorizado');
+  }
+
+  if (!res.ok) {
+    const msg =
+      json && typeof json === 'object' && json !== null && 'error' in json
+        ? String((json as { error: unknown }).error)
+        : text || res.statusText;
+    throw new Error(msg || 'Error de red');
+  }
+
+  return res.blob();
+}

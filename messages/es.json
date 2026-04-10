@@ -353,6 +353,11 @@
     },
     "conferences": {
       "title": "Charlas",
+      "headerHint": "Edita entradas en Firestore. Exporta cada charla a PDF desde el listado (una por vez); puedes cancelar mientras se genera.",
+      "exportPdf": "Exportar PDF",
+      "exportThisTalkPdf": "Exportar esta charla como PDF",
+      "exportPdfBusy": "Generando PDF…",
+      "exportPdfFailed": "No se pudo exportar el PDF",
       "refresh": "Recargar",
       "new": "Nueva",
       "list": "Listado",
@@ -442,7 +447,10 @@
         "idRequired": "ID requerido",
         "invalidJson": "JSON inválido",
         "dataRequired": "Campo data requerido",
-        "invalidServerResponse": "Respuesta inválida del servidor (no se pudo leer el dato guardado). Inténtalo de nuevo o revisa los logs del servidor."
+        "invalidServerResponse": "Respuesta inválida del servidor (no se pudo leer el dato guardado). Inténtalo de nuevo o revisa los logs del servidor.",
+        "exportPdfNoConferences": "No hay charlas para exportar.",
+        "exportPdfConferenceIdRequired": "Indica qué charla exportar (falta el id).",
+        "exportPdfConferenceNotFound": "No se encontró esa charla."
       }
     }
   },

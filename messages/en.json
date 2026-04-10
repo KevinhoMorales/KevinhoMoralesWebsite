@@ -353,6 +353,11 @@
     },
     "conferences": {
       "title": "Talks",
+      "headerHint": "Edit entries in Firestore. Export each talk to PDF from the list (one at a time); you can cancel while it generates.",
+      "exportPdf": "Export PDF",
+      "exportThisTalkPdf": "Export this talk as PDF",
+      "exportPdfBusy": "Generating PDF…",
+      "exportPdfFailed": "Couldn’t export PDF",
       "refresh": "Refresh",
       "new": "New",
       "list": "List",
@@ -442,7 +447,10 @@
         "idRequired": "ID required",
         "invalidJson": "Invalid JSON",
         "dataRequired": "data field required",
-        "invalidServerResponse": "Invalid response from server (could not read saved data). Try again or check the server logs."
+        "invalidServerResponse": "Invalid response from server (could not read saved data). Try again or check the server logs.",
+        "exportPdfNoConferences": "There are no talks to export.",
+        "exportPdfConferenceIdRequired": "Specify which talk to export (id is missing).",
+        "exportPdfConferenceNotFound": "That talk was not found."
       }
     }
   },

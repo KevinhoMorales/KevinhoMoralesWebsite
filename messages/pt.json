@@ -353,6 +353,11 @@
     },
     "conferences": {
       "title": "Palestras",
+      "headerHint": "Edite entradas no Firestore. Exporte cada palestra em PDF pela lista (uma de cada vez); pode cancelar enquanto gera.",
+      "exportPdf": "Exportar PDF",
+      "exportThisTalkPdf": "Exportar esta palestra como PDF",
+      "exportPdfBusy": "A gerar PDF…",
+      "exportPdfFailed": "Não foi possível exportar o PDF",
       "refresh": "Atualizar",
       "new": "Nova",
       "list": "Lista",
@@ -442,7 +447,10 @@
         "idRequired": "ID obrigatório",
         "invalidJson": "JSON inválido",
         "dataRequired": "Campo data obrigatório",
-        "invalidServerResponse": "Resposta inválida do servidor (não foi possível ler o dado salvo). Tente de novo ou verifique os logs do servidor."
+        "invalidServerResponse": "Resposta inválida do servidor (não foi possível ler o dado salvo). Tente de novo ou verifique os logs do servidor.",
+        "exportPdfNoConferences": "Não há palestras para exportar.",
+        "exportPdfConferenceIdRequired": "Indique qual palestra exportar (falta o id).",
+        "exportPdfConferenceNotFound": "Essa palestra não foi encontrada."
       }
     }
   },

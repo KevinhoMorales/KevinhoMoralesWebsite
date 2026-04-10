@@ -1,9 +1,9 @@
 'use client';
 
 import Image from 'next/image';
-import { useCallback, useEffect, useState } from 'react';
-import { ImageIcon, Loader2, RefreshCw } from 'lucide-react';
-import { adminFetch, getAdminIdToken } from '@/lib/admin-browser';
+import { useCallback, useEffect, useRef, useState } from 'react';
+import { FileDown, ImageIcon, Loader2, RefreshCw } from 'lucide-react';
+import { adminFetch, adminFetchBlob, getAdminIdToken } from '@/lib/admin-browser';
 import type { Conference } from '@/types';
 import { CONFERENCE_LOCATION_PLATFORMS } from '@/types/conference';
 import { useI18n } from '@/components/i18n/locale-provider';
@@ -98,6 +98,18 @@ function isPresencialType(t: Conference['type']): boolean {
   return t === 'conference' || t === 'talk';
 }
 
+function isAbortError(e: unknown): boolean {
+  if (e instanceof DOMException && e.name === 'AbortError') return true;
+  if (typeof e === 'object' && e !== null && 'name' in e && (e as { name: string }).name === 'AbortError') {
+    return true;
+  }
+  return false;
+}
+
+function safeTalkFilenameId(id: string): string {
+  return id.replace(/[^a-zA-Z0-9._-]+/g, '_').slice(0, 80);
+}
+
 const emptyForm: Conference = {
   id: '',
   title: '',
@@ -115,7 +127,7 @@ const emptyForm: Conference = {
 };
 
 export function ConferencesPanel() {
-  const { t } = useI18n();
+  const { t, locale } = useI18n();
   const [list, setList] = useState<Conference[]>([]);
   const [loadError, setLoadError] = useState('');
   const [form, setForm] = useState<Conference>(emptyForm);
@@ -129,6 +141,8 @@ export function ConferencesPanel() {
   const [deleteId, setDeleteId] = useState<string | null>(null);
   const [deleteLoading, setDeleteLoading] = useState(false);
   const [listRefreshing, setListRefreshing] = useState(false);
+  const [pdfExportingId, setPdfExportingId] = useState<string | null>(null);
+  const pdfExportAbortRef = useRef<AbortController | null>(null);
   /** Mensaje de éxito en la página; los errores van con `alert()` para que no se bloqueen. */
   const [saveSuccessMessage, setSaveSuccessMessage] = useState<string | null>(null);
 
@@ -463,6 +477,38 @@ export function ConferencesPanel() {
     }
   }
 
+  function cancelPdfExport() {
+    pdfExportAbortRef.current?.abort();
+  }
+
+  async function handleExportPdfForConference(conferenceId: string) {
+    if (list.length === 0 || pdfExportingId !== null || saving) return;
+    const ac = new AbortController();
+    pdfExportAbortRef.current = ac;
+    setPdfExportingId(conferenceId);
+    const day = new Date().toISOString().slice(0, 10);
+    const path = `/api/admin/conferences/export-pdf?lang=${encodeURIComponent(locale)}&id=${encodeURIComponent(conferenceId)}`;
+    try {
+      const blob = await adminFetchBlob(path, { signal: ac.signal });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = `talk-${safeTalkFilenameId(conferenceId)}-${day}.pdf`;
+      a.rel = 'noopener';
+      document.body.appendChild(a);
+      a.click();
+      a.remove();
+      URL.revokeObjectURL(url);
+    } catch (e) {
+      if (isAbortError(e)) return;
+      const raw = e instanceof Error ? e.message : t('admin.conferences.exportPdfFailed');
+      window.setTimeout(() => alert(translateAdminError(raw, t) || t('admin.conferences.exportPdfFailed')), 0);
+    } finally {
+      pdfExportAbortRef.current = null;
+      setPdfExportingId(null);
+    }
+  }
+
   async function confirmDelete() {
     if (!deleteId) return;
     const id = deleteId;
@@ -494,26 +540,54 @@ export function ConferencesPanel() {
           </div>
         </div>
       ) : null}
-      <div className={cn(saving && 'pointer-events-none select-none')}>
-      <div className="flex items-center justify-between gap-4">
-        <h1 className="text-xl font-semibold">{t('admin.conferences.title')}</h1>
-        <div className="flex shrink-0 items-center gap-2">
-          <Button
-            type="button"
-            variant="outline"
-            size="sm"
-            disabled={saving || listRefreshing}
-            onClick={() => void handleRefreshList()}
-            className="gap-1.5"
-          >
-            <RefreshCw className={cn('h-4 w-4', listRefreshing && 'animate-spin')} aria-hidden />
-            {t('admin.conferences.refresh')}
-          </Button>
-          <Button type="button" variant="outline" size="sm" disabled={saving} onClick={() => startNew()}>
-            {t('admin.conferences.new')}
-          </Button>
+      {pdfExportingId && !saving ? (
+        <div
+          className="fixed inset-0 z-[80] flex items-center justify-center bg-background/75 backdrop-blur-[2px]"
+          aria-busy
+          aria-live="polite"
+        >
+          <div className="flex max-w-sm flex-col gap-4 rounded-xl border bg-card px-5 py-4 shadow-lg sm:flex-row sm:items-center sm:gap-5">
+            <div className="flex items-center gap-3">
+              <Loader2 className="h-6 w-6 shrink-0 animate-spin text-primary" aria-hidden />
+              <span className="text-sm font-medium">{t('admin.conferences.exportPdfBusy')}</span>
+            </div>
+            <Button
+              type="button"
+              variant="outline"
+              size="sm"
+              className="shrink-0 rounded-xl"
+              onClick={cancelPdfExport}
+            >
+              {t('admin.common.cancel')}
+            </Button>
+          </div>
         </div>
-      </div>
+      ) : null}
+      <div className={cn((saving || pdfExportingId) && 'pointer-events-none select-none')}>
+      <Card className="rounded-2xl border-border/60 bg-card/90 p-5 shadow-sm sm:p-6">
+        <div className="flex flex-col gap-4 sm:flex-row sm:items-start sm:justify-between">
+          <div className="min-w-0 space-y-1">
+            <h1 className="text-2xl font-semibold tracking-tight">{t('admin.conferences.title')}</h1>
+            <p className="max-w-xl text-sm text-muted-foreground leading-relaxed">{t('admin.conferences.headerHint')}</p>
+          </div>
+          <div className="flex shrink-0 flex-wrap items-center gap-2">
+            <Button
+              type="button"
+              variant="outline"
+              size="sm"
+              disabled={saving || listRefreshing || pdfExportingId !== null}
+              onClick={() => void handleRefreshList()}
+              className="gap-1.5 rounded-xl border-border/80"
+            >
+              <RefreshCw className={cn('h-4 w-4', listRefreshing && 'animate-spin')} aria-hidden />
+              {t('admin.conferences.refresh')}
+            </Button>
+            <Button type="button" size="sm" disabled={saving} onClick={() => startNew()} className="rounded-xl gap-1.5">
+              {t('admin.conferences.new')}
+            </Button>
+          </div>
+        </div>
+      </Card>
       {loadError && <p className="text-sm text-destructive">{loadError}</p>}
       {saveSuccessMessage && (
         <div
@@ -533,16 +607,16 @@ export function ConferencesPanel() {
         </div>
       )}
 
-      <div className="grid gap-8 lg:grid-cols-2">
-        <Card className="p-4 space-y-4 max-h-[70vh] overflow-y-auto">
-          <h2 className="font-medium text-sm text-muted-foreground">{t('admin.conferences.list')}</h2>
+      <div className="grid gap-6 lg:grid-cols-2 lg:gap-8">
+        <Card className="max-h-[70vh] space-y-4 overflow-y-auto rounded-2xl border-border/60 p-4 shadow-sm sm:p-5">
+          <h2 className="text-sm font-medium text-muted-foreground">{t('admin.conferences.list')}</h2>
           <ul className="space-y-2">
             {list.map((c) => {
               const thumbSrc = firstConferenceListImageUrl(c);
               return (
                 <li
                   key={c.id}
-                  className="flex items-center gap-2 rounded-md border p-2 text-sm"
+                  className="flex items-center gap-2 rounded-xl border border-border/60 bg-background/40 p-2.5 text-sm transition-colors hover:bg-muted/35"
                 >
                   <div className="flex min-w-0 flex-1 items-center gap-3">
                     {thumbSrc ? (
@@ -552,11 +626,11 @@ export function ConferencesPanel() {
                         width={40}
                         height={40}
                         sizes="40px"
-                        className="h-10 w-10 shrink-0 rounded-md border border-border/60 bg-muted object-cover"
+                        className="h-10 w-10 shrink-0 rounded-lg border border-border/60 bg-muted object-cover"
                       />
                     ) : (
                       <div
-                        className="flex h-10 w-10 shrink-0 items-center justify-center rounded-md border border-dashed border-border/60 bg-muted/40 text-muted-foreground"
+                        className="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg border border-dashed border-border/60 bg-muted/40 text-muted-foreground"
                         aria-hidden
                       >
                         <ImageIcon className="h-4 w-4 opacity-70" />
@@ -574,9 +648,25 @@ export function ConferencesPanel() {
                   <Button
                     type="button"
                     variant="ghost"
+                    size="icon"
+                    className="shrink-0"
+                    disabled={saving || pdfExportingId !== null}
+                    title={t('admin.conferences.exportThisTalkPdf')}
+                    aria-label={t('admin.conferences.exportThisTalkPdf')}
+                    onClick={() => void handleExportPdfForConference(c.id)}
+                  >
+                    {pdfExportingId === c.id ? (
+                      <Loader2 className="h-4 w-4 animate-spin" aria-hidden />
+                    ) : (
+                      <FileDown className="h-4 w-4" aria-hidden />
+                    )}
+                  </Button>
+                  <Button
+                    type="button"
+                    variant="ghost"
                     size="sm"
                     className="shrink-0"
-                    disabled={saving}
+                    disabled={saving || pdfExportingId !== null}
                     onClick={() => setDeleteId(c.id)}
                   >
                     {t('admin.conferences.delete')}
@@ -587,8 +677,8 @@ export function ConferencesPanel() {
           </ul>
         </Card>
 
-        <Card className="p-4 space-y-4">
-          <h2 className="font-medium text-sm text-muted-foreground">
+        <Card className="space-y-4 rounded-2xl border-border/60 p-4 shadow-sm sm:p-5">
+          <h2 className="text-sm font-medium text-muted-foreground">
             {isNew ? t('admin.conferences.formNew') : t('admin.conferences.formEdit')}
           </h2>
           <div className="space-y-2">
@@ -855,7 +945,7 @@ export function ConferencesPanel() {
           <Button
             type="button"
             onClick={() => void save()}
-            disabled={saving || !form.title.trim()}
+            disabled={saving || pdfExportingId !== null || !form.title.trim()}
             title={!form.title.trim() ? t('admin.conferences.titleRequired') : undefined}
           >
             {saving ? t('admin.conferences.saving') : t('admin.conferences.save')}
@@ -865,9 +955,9 @@ export function ConferencesPanel() {
       </div>
 
       <AlertDialog
-        open={deleteId !== null && !saving}
+        open={deleteId !== null && !saving && !pdfExportingId}
         onOpenChange={(open) => {
-          if (!open && !deleteLoading && !saving) setDeleteId(null);
+          if (!open && !deleteLoading && !saving && !pdfExportingId) setDeleteId(null);
         }}
       >
         <AlertDialogContent>

@@ -22,8 +22,8 @@ export function AdminShell({ children }: { children: React.ReactNode }) {
 
   return (
     <div className="min-h-screen bg-muted/30">
-      <header className="border-b bg-background sticky top-14 z-10">
-        <div className="container mx-auto flex flex-wrap items-center justify-between gap-3 px-4 py-3">
+      <header className="sticky top-14 z-10 border-b border-border/60 bg-background/95 backdrop-blur-md supports-[backdrop-filter]:bg-background/80">
+        <div className="container mx-auto flex flex-wrap items-center justify-between gap-3 px-4 py-3 sm:px-5">
           <nav className="flex flex-wrap gap-1">
             {links.map(({ href, label }) => {
               const active =
@@ -33,7 +33,7 @@ export function AdminShell({ children }: { children: React.ReactNode }) {
                   key={href}
                   href={href}
                   className={cn(
-                    'rounded-md px-3 py-1.5 text-sm font-medium transition-colors',
+                    'rounded-lg px-3 py-1.5 text-sm font-medium transition-colors',
                     active
                       ? 'bg-primary text-primary-foreground'
                       : 'text-muted-foreground hover:bg-muted hover:text-foreground'

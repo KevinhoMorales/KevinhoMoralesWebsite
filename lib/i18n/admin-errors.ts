@@ -17,6 +17,9 @@ const TO_KEY: Record<string, string> = {
   'Campo data requerido': 'admin.errors.api.dataRequired',
   'Sin URL': 'admin.errors.noUrl',
   'Invalid server response': 'admin.errors.api.invalidServerResponse',
+  'No hay charlas para exportar': 'admin.errors.api.exportPdfNoConferences',
+  'Falta el id de la charla a exportar': 'admin.errors.api.exportPdfConferenceIdRequired',
+  'Charla no encontrada': 'admin.errors.api.exportPdfConferenceNotFound',
 };
 
 export function translateAdminError(message: string, t: (key: string) => string): string {
