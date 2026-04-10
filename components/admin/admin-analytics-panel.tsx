@@ -1,24 +1,13 @@
 'use client';
 
 import { useCallback, useEffect, useMemo, useState } from 'react';
-import {
-  Area,
-  AreaChart,
-  Bar,
-  BarChart,
-  CartesianGrid,
-  ResponsiveContainer,
-  Tooltip,
-  XAxis,
-  YAxis,
-} from 'recharts';
+import { Bar, BarChart, CartesianGrid, ResponsiveContainer, Tooltip, XAxis, YAxis } from 'recharts';
 import { Loader2 } from 'lucide-react';
 import { adminFetch } from '@/lib/admin-browser';
 import { useI18n } from '@/components/i18n/locale-provider';
 import { translateAdminError } from '@/lib/i18n/admin-errors';
 import { WAITLIST_HEARD_FROM_VALUES } from '@/lib/waitlist-api-security';
 import type { WaitlistAnalytics } from '@/lib/waitlist-analytics';
-import { toBcp47 } from '@/lib/i18n/bcp47';
 import { Button } from '@/components/ui/button';
 import { Card } from '@/components/ui/card';
 
@@ -27,7 +16,7 @@ const CHART_GRID = 'var(--border)';
 const CHART_TICK = 'var(--muted-foreground)';
 
 export function AdminAnalyticsPanel() {
-  const { t, locale } = useI18n();
+  const { t } = useI18n();
   const [data, setData] = useState<WaitlistAnalytics | null>(null);
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(true);
@@ -59,22 +48,6 @@ export function AdminAnalyticsPanel() {
       return t(`waitlist.heardFrom_${key}` as 'waitlist.heardFrom_site');
     },
     [t]
-  );
-
-  const formatDayTick = useCallback(
-    (isoDay: string) => {
-      try {
-        const [y, m, d] = isoDay.split('-').map((x) => parseInt(x, 10));
-        if (!y || !m || !d) return isoDay;
-        return new Date(Date.UTC(y, m - 1, d)).toLocaleDateString(toBcp47(locale), {
-          month: 'short',
-          day: 'numeric',
-        });
-      } catch {
-        return isoDay;
-      }
-    },
-    [locale]
   );
 
   const heardChartData = useMemo(() => {
@@ -125,65 +98,7 @@ export function AdminAnalyticsPanel() {
       ) : null}
 
       {!loading && !error && data && data.sampleSize > 0 ? (
-        <div className="grid gap-6 lg:grid-cols-1">
-          <Card className="p-4 sm:p-5">
-            <h2 className="text-sm font-medium text-foreground mb-1">{t('admin.analytics.chartSignupsByDay')}</h2>
-            <p className="text-xs text-muted-foreground mb-4">{t('admin.analytics.chartSignupsByDayHint')}</p>
-            {data.byDay.length === 0 ? (
-              <p className="text-sm text-muted-foreground py-8 text-center">{t('admin.analytics.noDates')}</p>
-            ) : (
-              <div className="h-[280px] w-full min-w-0">
-                <ResponsiveContainer width="100%" height="100%">
-                  <AreaChart data={data.byDay} margin={{ top: 8, right: 8, left: 0, bottom: 0 }}>
-                    <defs>
-                      <linearGradient id="waitlistArea" x1="0" y1="0" x2="0" y2="1">
-                        <stop offset="0%" stopColor={CHART_PRIMARY} stopOpacity={0.35} />
-                        <stop offset="100%" stopColor={CHART_PRIMARY} stopOpacity={0.02} />
-                      </linearGradient>
-                    </defs>
-                    <CartesianGrid strokeDasharray="3 3" stroke={CHART_GRID} strokeOpacity={0.55} vertical={false} />
-                    <XAxis
-                      dataKey="date"
-                      tick={{ fontSize: 11, fill: CHART_TICK }}
-                      tickFormatter={formatDayTick}
-                      interval="preserveStartEnd"
-                      minTickGap={24}
-                    />
-                    <YAxis
-                      allowDecimals={false}
-                      width={36}
-                      tick={{ fontSize: 11, fill: CHART_TICK }}
-                    />
-                    <Tooltip
-                      contentStyle={{
-                        borderRadius: 8,
-                        border: '1px solid var(--border)',
-                        background: 'var(--card)',
-                        fontSize: 12,
-                      }}
-                      labelFormatter={(label) =>
-                        typeof label === 'string'
-                          ? new Date(label + 'T12:00:00.000Z').toLocaleDateString(toBcp47(locale), {
-                              dateStyle: 'medium',
-                            })
-                          : String(label)
-                      }
-                    />
-                    <Area
-                      type="monotone"
-                      dataKey="count"
-                      name={t('admin.analytics.tooltipSignups')}
-                      stroke={CHART_PRIMARY}
-                      strokeWidth={2}
-                      fill="url(#waitlistArea)"
-                    />
-                  </AreaChart>
-                </ResponsiveContainer>
-              </div>
-            )}
-          </Card>
-
-          <div className="grid gap-6 lg:grid-cols-2">
+        <div className="grid gap-6 lg:grid-cols-2">
             <Card className="p-4 sm:p-5 min-w-0">
               <h2 className="text-sm font-medium text-foreground mb-1">{t('admin.analytics.chartHeardFrom')}</h2>
               <p className="text-xs text-muted-foreground mb-4">{t('admin.analytics.chartHeardFromHint')}</p>
@@ -256,7 +171,6 @@ export function AdminAnalyticsPanel() {
                 </div>
               )}
             </Card>
-          </div>
         </div>
       ) : null}
     </div>
