@@ -273,6 +273,7 @@
     "shell": {
       "home": "Home",
       "analytics": "Analytics",
+      "waitlistRegistrations": "Signups",
       "waitlist": "Waitlist",
       "conferences": "Talks",
       "projects": "Projects",
