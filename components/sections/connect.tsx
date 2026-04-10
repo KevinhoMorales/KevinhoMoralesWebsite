@@ -7,10 +7,9 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/com
 import { Input } from '@/components/ui/input'
 import { Textarea } from '@/components/ui/textarea'
 import { Label } from '@/components/ui/label'
-import { Calendar, Mail } from 'lucide-react'
-import { BmcThemedButtonGraphic } from '@/components/bmc-themed-button-graphic'
+import { Calendar, Coffee, Mail } from 'lucide-react'
 import { BuyMeACoffeeModal } from '@/components/buymeacoffee-modal'
-import { calendlyPopupButtonClassName, openCalendlyPopup } from '@/components/calendly-widget'
+import { openCalendlyPopup } from '@/components/calendly-widget'
 import { useI18n } from '@/components/i18n/locale-provider'
 import { cn } from '@/lib/utils'
 import { getPublicWeb3FormsAccessKey } from '@/lib/web3forms-submit'
@@ -197,43 +196,39 @@ export function Connect({ profile }: ConnectProps) {
                   )}
                 >
                   {links.calendly ? (
-                    <button
+                    <Button
                       type="button"
+                      size="lg"
                       className={cn(
-                        calendlyPopupButtonClassName,
-                        'w-full justify-center px-4 py-2.5 text-sm leading-snug min-h-11 rounded-md',
+                        'h-12 w-full rounded-xl border-0 bg-[#0069ff] font-semibold text-white shadow-sm',
+                        'hover:bg-[#0052cc] hover:text-white',
+                        'focus-visible:ring-[#0069ff]/50 [&_svg]:text-white',
                         asideRowWithCalendlyAndBmc && 'sm:flex-1 sm:min-w-0'
                       )}
                       onClick={onCalendlyClick}
                     >
+                      <Calendar className="h-4 w-4 opacity-95" aria-hidden />
                       {t('connect.calendlyCta')}
-                    </button>
+                    </Button>
                   ) : null}
 
                   {links.buymeacoffee ? (
-                    <button
+                    <Button
                       type="button"
-                      aria-label={t('connect.bmc')}
-                      onClick={() => setBmcModalOpen(true)}
+                      variant="outline"
+                      size="lg"
                       className={cn(
-                        'flex w-full min-h-11 items-center justify-center overflow-hidden rounded-full border-0 bg-transparent px-1 py-1 shadow-sm ring-1 ring-black/10 transition hover:opacity-95 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-card dark:ring-white/15',
+                        'h-12 w-full rounded-xl border-border/80 bg-background font-semibold text-foreground shadow-sm',
+                        'hover:border-border hover:bg-muted hover:text-foreground',
+                        'dark:bg-card/80 dark:hover:bg-muted/90 dark:hover:text-foreground',
+                        '[&_svg]:text-amber-600 dark:[&_svg]:text-amber-400',
                         asideRowWithCalendlyAndBmc && 'sm:flex-1 sm:min-w-0'
                       )}
+                      onClick={() => setBmcModalOpen(true)}
                     >
-                      <BmcThemedButtonGraphic
-                        sizes={
-                          asideRowWithCalendlyAndBmc
-                            ? '(max-width:640px) 100vw, min(50vw, 260px)'
-                            : '(max-width: 768px) 100vw, 400px'
-                        }
-                        className={cn(
-                          'block w-full max-w-full object-contain object-center',
-                          asideRowWithCalendlyAndBmc
-                            ? 'h-9 max-h-11 sm:h-10 sm:max-h-12'
-                            : 'mx-auto h-10 max-h-12 sm:h-11'
-                        )}
-                      />
-                    </button>
+                      <Coffee className="h-4 w-4" aria-hidden />
+                      {t('connect.bmc')}
+                    </Button>
                   ) : null}
                 </CardContent>
               </Card>

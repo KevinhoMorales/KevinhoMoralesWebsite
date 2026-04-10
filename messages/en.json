@@ -112,7 +112,7 @@
   "conferences": {
     "kicker": "Speaking",
     "title": "Conferences",
-    "description": "Conference and meetup talks on mobile development, Kotlin, Kotlin Multiplatform, and related topics.",
+    "description": "Conference and meetup talks focused on mobile apps, Firebase, and shipping quality products on iOS and Android.",
     "totalCount": "{{count}} talks in total",
     "seeMore": "See more",
     "achievements": "Achievements",

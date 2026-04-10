@@ -112,7 +112,7 @@
   "conferences": {
     "kicker": "Charlas",
     "title": "Conferencias",
-    "description": "Charlas en conferencias y meetups sobre desarrollo móvil, Kotlin, Kotlin Multiplatform y temas relacionados.",
+    "description": "Charlas en conferencias y meetups centradas en apps móviles, Firebase y en llevar productos sólidos a iOS y Android.",
     "totalCount": "{{count}} charlas en total",
     "seeMore": "Ver más",
     "achievements": "Logros",

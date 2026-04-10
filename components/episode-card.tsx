@@ -2,7 +2,10 @@
 
 import Image from 'next/image';
 import { useI18n } from '@/components/i18n/locale-provider';
+import { Badge } from '@/components/ui/badge';
+import { CONFERENCE_BADGE_OVERLAY_CLASS } from '@/lib/conference-ui';
 import { toBcp47 } from '@/lib/i18n/bcp47';
+import { cn } from '@/lib/utils';
 import type { PodcastEpisode } from '@/lib/youtube';
 
 interface EpisodeCardProps {
@@ -34,11 +37,16 @@ export function EpisodeCard({ episode, onClick }: EpisodeCardProps) {
           sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
           unoptimized
         />
-        {episode.duration && (
-          <span className="absolute bottom-2 right-2 rounded bg-black/70 px-2 py-0.5 text-xs text-white">
+        {episode.duration ? (
+          <Badge
+            className={cn(
+              CONFERENCE_BADGE_OVERLAY_CLASS,
+              'pointer-events-none absolute bottom-2 right-2 z-[1] rounded-full border-0 px-2.5 py-1 text-[0.7rem] font-normal leading-tight shadow-sm sm:text-xs'
+            )}
+          >
             {episode.duration}
-          </span>
-        )}
+          </Badge>
+        ) : null}
       </div>
       <div className="p-4 space-y-1">
         <h3 className="font-semibold line-clamp-2 group-hover:text-primary">

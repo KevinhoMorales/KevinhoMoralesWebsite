@@ -191,6 +191,7 @@ export function Navigation() {
             ))}
             <NavMoreDropdown
               items={navMore}
+              admin={navAdmin}
               moreLabel={t('nav.more')}
               moreAria={t('nav.moreAria')}
               pathname={pathname}
@@ -238,20 +239,6 @@ export function Navigation() {
               </SheetTrigger>
               <SheetContent side="right" className="w-[min(300px,85vw)] sm:w-[320px]">
                 <div className="mt-8 flex flex-col gap-1">
-                  {showBookNav ? (
-                    <Button
-                      type="button"
-                      className="mb-2 h-12 gap-2 rounded-xl border-2 border-yellow-400 bg-gradient-to-r from-primary to-teal-600 font-semibold text-primary-foreground shadow-md shadow-primary/30 hover:border-yellow-300 hover:from-primary/95 hover:to-teal-600/95 dark:border-yellow-400/95"
-                      onClick={() => {
-                        openWaitlist('mobile_nav')
-                        setIsOpen(false)
-                      }}
-                    >
-                      <Sparkles className="h-4 w-4" aria-hidden />
-                      {t('nav.waitlistBook')}
-                    </Button>
-                  ) : null}
-
                   <p className="px-3 pb-1 pt-3 text-xs font-medium uppercase tracking-wide text-muted-foreground">
                     {t('nav.site')}
                   </p>
