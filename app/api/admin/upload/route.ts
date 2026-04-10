@@ -62,12 +62,13 @@ export async function POST(req: Request) {
   try {
     await fileRef.makePublic();
   } catch {
-    // bucket puede usar acceso uniforme; devolver URL firmada corta
+    // Bucket con acceso uniforme u otras políticas: `makePublic` falla. La URL pública
+    // `storage.googleapis.com/.../path` devolvería 403; hay que guardar la URL firmada en Firestore.
     const [url] = await fileRef.getSignedUrl({
       action: 'read',
       expires: Date.now() + 365 * 24 * 60 * 60 * 1000,
     });
-    return NextResponse.json({ url, path });
+    return NextResponse.json({ url });
   }
 
   const publicUrl = `https://storage.googleapis.com/${bucketName}/${path}`;

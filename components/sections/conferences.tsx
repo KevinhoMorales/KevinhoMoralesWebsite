@@ -50,11 +50,7 @@ function ConferenceCard({ conf, onOpenDetail }: { conf: Conference; onOpenDetail
         }}
       >
         {hasImages && (
-          <ConferenceImagesCarousel
-            images={images}
-            alt={conf.title}
-            sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-          >
+          <ConferenceImagesCarousel images={images} alt={conf.title}>
             <Badge className={cn(CONFERENCE_BADGE_OVERLAY_CLASS)}>{confType(conf.type)}</Badge>
             {conf.country && (
               <Badge className={cn(CONFERENCE_BADGE_OVERLAY_CLASS)}>{conf.country}</Badge>

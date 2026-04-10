@@ -45,12 +45,7 @@ export function ConferenceDetailModal({ conference, open, onClose }: ConferenceD
       <DialogContent className="max-h-[min(90dvh,880px)] gap-0 overflow-hidden p-0 sm:max-w-2xl">
         <div className="max-h-[min(90dvh,880px)] overflow-y-auto">
           {hasImages ? (
-            <ConferenceImagesCarousel
-              images={imgs}
-              alt={c.title}
-              sizes="(max-width: 640px) 100vw, 42rem"
-              className="sm:rounded-t-2xl"
-            >
+            <ConferenceImagesCarousel images={imgs} alt={c.title} className="sm:rounded-t-2xl">
               <Badge className={cn(CONFERENCE_BADGE_OVERLAY_CLASS)}>{confType(c.type)}</Badge>
               {c.country && <Badge className={cn(CONFERENCE_BADGE_OVERLAY_CLASS)}>{c.country}</Badge>}
             </ConferenceImagesCarousel>

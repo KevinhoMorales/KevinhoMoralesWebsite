@@ -5,8 +5,8 @@ import type { Conference } from '@/types';
  * Si ya es http(s), se devuelve igual.
  */
 export function storageObjectPathToPublicUrl(ref: string): string {
-  const s = ref.trim();
-  if (!s) return s;
+  const s = ref.trim().replace(/^\/+/, '');
+  if (!s) return '';
   if (/^https?:\/\//i.test(s)) return s;
   const bucket = process.env.NEXT_PUBLIC_FIREBASE_STORAGE_BUCKET?.trim();
   if (!bucket) return s;

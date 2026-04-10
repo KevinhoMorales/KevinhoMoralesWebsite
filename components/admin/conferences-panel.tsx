@@ -280,8 +280,9 @@ export function ConferencesPanel() {
     if (!json) {
       throw new Error(t('admin.conferences.uploadFailed'));
     }
-    if (json.path) return json.path;
-    if (json.url) return json.url;
+    /** Tras upload, preferir `path` solo si existe (objeto público). Si el servidor devolvió solo `url` (firmada), usarla. */
+    if (json.path?.trim()) return json.path.trim();
+    if (json.url?.trim()) return json.url.trim();
     throw new Error('Sin path ni URL');
   }
 

@@ -2,6 +2,7 @@ import * as fs from 'fs';
 import * as path from 'path';
 import type { Profile, Experience, Project, Conference, Testimonial, Achievement } from '@/types';
 import { sortConferencesForDisplay } from '@/lib/conference-sort';
+import { signConferenceImagesForPublicRead } from '@/lib/conference-image-read-urls';
 import { expandConferenceImagesForPublic } from '@/lib/storage-public-url';
 
 const CONTENT_DIR = path.join(process.cwd(), 'content');
@@ -89,7 +90,9 @@ export async function getConferences(): Promise<Conference[]> {
     if (fromDb == null || fromDb.length === 0) {
       return [];
     }
-    return sortConferencesForDisplay(fromDb.map(expandConferenceImagesForPublic));
+    const expanded = fromDb.map(expandConferenceImagesForPublic);
+    const withImages = await signConferenceImagesForPublicRead(expanded);
+    return sortConferencesForDisplay(withImages);
   } catch (e) {
     console.error('[content] getConferences:', e);
     return [];

@@ -51,6 +51,7 @@ export function WaitlistPanel() {
   const { t, locale } = useI18n();
   const { email: adminEmail } = useAdminAuth();
   const [list, setList] = useState<WaitlistEntry[]>([]);
+  const [totalCount, setTotalCount] = useState(0);
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(true);
 
@@ -97,10 +98,14 @@ export function WaitlistPanel() {
     setError('');
     setLoading(true);
     try {
-      const rows = await adminFetch<WaitlistEntry[]>('/api/admin/waitlist');
-      setList(rows);
+      const data = await adminFetch<{ entries: WaitlistEntry[]; totalCount: number }>(
+        '/api/admin/waitlist'
+      );
+      setList(data.entries);
+      setTotalCount(data.totalCount);
     } catch (e) {
       setList([]);
+      setTotalCount(0);
       const raw = e instanceof Error ? e.message : t('admin.waitlistPanel.loadFailed');
       setError(translateAdminError(raw, t));
     } finally {
@@ -157,6 +162,19 @@ export function WaitlistPanel() {
         <div>
           <h1 className="text-2xl font-semibold">{t('admin.waitlistPanel.title')}</h1>
           <p className="text-muted-foreground text-sm mt-1">{t('admin.waitlistPanel.intro')}</p>
+          {!loading && !error ? (
+            <p className="text-sm font-medium text-foreground mt-2">
+              {t('admin.waitlistPanel.totalCount', { count: String(totalCount) })}
+            </p>
+          ) : null}
+          {!loading && !error && totalCount > list.length ? (
+            <p className="text-muted-foreground text-xs mt-1">
+              {t('admin.waitlistPanel.tableSubset', {
+                shown: String(list.length),
+                total: String(totalCount),
+              })}
+            </p>
+          ) : null}
         </div>
         <Button type="button" variant="outline" size="sm" onClick={() => void refresh()} disabled={loading}>
           {loading ? t('admin.waitlistPanel.loading') : t('admin.waitlistPanel.refresh')}

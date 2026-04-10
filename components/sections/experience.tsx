@@ -52,31 +52,53 @@ export function ExperienceSection({ experiences, previewLimit }: ExperienceProps
                 {/* Móvil: cabecera en fila; sm+: dos columnas (empresa | roles) */}
                 <div className="relative flex flex-1 flex-col gap-4 sm:flex-row sm:gap-5 sm:items-start">
                   <div className="flex shrink-0 flex-row items-center gap-3 sm:w-[min(42%,11rem)] sm:flex-col sm:items-stretch sm:gap-3">
-                    {block.companyLogo ? (
-                      <div className="relative h-12 w-12 shrink-0 rounded-2xl overflow-hidden bg-background/80 border border-border/60 shadow-inner">
-                        <Image
-                          src={block.companyLogo}
-                          alt={block.company}
-                          fill
-                          className="object-contain scale-110 p-0.5"
-                          sizes="48px"
-                        />
-                      </div>
-                    ) : null}
-                    <h3 className="min-w-0 flex-1 text-left text-base font-semibold leading-snug tracking-tight sm:flex-none">
-                      <span className="text-foreground">{block.company}</span>
-                      {block.companyUrl ? (
-                        <a
-                          href={block.companyUrl}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          className="ml-1 inline-flex align-middle text-muted-foreground hover:text-primary transition-colors"
-                          aria-label={block.company}
-                        >
-                          <ExternalLink className="h-3.5 w-3.5" />
-                        </a>
-                      ) : null}
-                    </h3>
+                    {block.companyUrl ? (
+                      <a
+                        href={block.companyUrl}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="group flex min-w-0 flex-1 flex-row items-center gap-3 rounded-xl text-left outline-offset-2 transition-colors hover:text-primary focus-visible:outline focus-visible:ring-2 focus-visible:ring-ring sm:w-full sm:flex-col sm:items-stretch sm:gap-3"
+                        aria-label={t('experience.companySiteAria', { name: block.company })}
+                      >
+                        {block.companyLogo ? (
+                          <div className="relative h-12 w-12 shrink-0 rounded-2xl overflow-hidden bg-background/80 border border-border/60 shadow-inner">
+                            <Image
+                              src={block.companyLogo}
+                              alt=""
+                              fill
+                              className="object-contain scale-110 p-0.5"
+                              sizes="48px"
+                            />
+                          </div>
+                        ) : null}
+                        <h3 className="min-w-0 flex-1 text-base font-semibold leading-snug tracking-tight text-foreground group-hover:text-primary sm:flex-none">
+                          <span className="inline-flex items-start gap-1.5">
+                            {block.company}
+                            <ExternalLink
+                              className="mt-0.5 h-3.5 w-3.5 shrink-0 text-muted-foreground group-hover:text-primary"
+                              aria-hidden
+                            />
+                          </span>
+                        </h3>
+                      </a>
+                    ) : (
+                      <>
+                        {block.companyLogo ? (
+                          <div className="relative h-12 w-12 shrink-0 rounded-2xl overflow-hidden bg-background/80 border border-border/60 shadow-inner">
+                            <Image
+                              src={block.companyLogo}
+                              alt={block.company}
+                              fill
+                              className="object-contain scale-110 p-0.5"
+                              sizes="48px"
+                            />
+                          </div>
+                        ) : null}
+                        <h3 className="min-w-0 flex-1 text-left text-base font-semibold leading-snug tracking-tight text-foreground sm:flex-none">
+                          {block.company}
+                        </h3>
+                      </>
+                    )}
                   </div>
 
                   <ul className="min-w-0 flex-1 space-y-2.5 border-l-2 border-primary/25 pl-3.5 sm:space-y-3 sm:pl-4">

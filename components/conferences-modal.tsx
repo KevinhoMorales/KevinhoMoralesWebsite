@@ -112,12 +112,7 @@ export function ConferencesModal({ conferences, open, onClose }: ConferencesModa
                     }}
                   >
                     {hasImages && (
-                      <ConferenceImagesCarousel
-                        images={imgs}
-                        alt={conf.title}
-                        sizes="(max-width: 640px) 100vw, 50vw"
-                        compact
-                      >
+                      <ConferenceImagesCarousel images={imgs} alt={conf.title} compact>
                         <Badge className={cn(CONFERENCE_BADGE_OVERLAY_CLASS, 'text-xs')}>
                           {confType(conf.type)}
                         </Badge>

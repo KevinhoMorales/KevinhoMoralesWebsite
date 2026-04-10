@@ -60,7 +60,8 @@
   },
   "experience": {
     "kicker": "Experiencia",
-    "title": "Dónde he trabajado"
+    "title": "Dónde he trabajado",
+    "companySiteAria": "Sitio web oficial de {{name}} (se abre en una pestaña nueva)"
   },
   "projects": {
     "kicker": "Proyectos",
@@ -309,6 +310,8 @@
     "waitlistPanel": {
       "title": "Lista de espera",
       "intro": "Registros desde el popup del libro (Firestore prod/admin/waitlist). Máx. 500 más recientes.",
+      "totalCount": "Total: {{count}} personas",
+      "tableSubset": "La tabla muestra las {{shown}} inscripciones más recientes ({{total}} en total en Firestore).",
       "refresh": "Actualizar",
       "loading": "Cargando…",
       "colEmail": "Correo",

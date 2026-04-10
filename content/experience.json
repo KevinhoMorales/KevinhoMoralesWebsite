@@ -16,7 +16,7 @@
     "type": "part-time",
     "startDate": "2025-02",
     "current": true,
-    "companyUrl": "https://www.linkedin.com/company/meniuz/",
+    "companyUrl": "https://meniuz.com/",
     "companyLogo": "/images/meniuz-logo.png"
   },
   {
@@ -27,7 +27,7 @@
     "startDate": "2021-04",
     "endDate": "2025-10",
     "current": false,
-    "companyUrl": "https://www.linkedin.com/company/meniuz/",
+    "companyUrl": "https://meniuz.com/",
     "companyLogo": "/images/meniuz-logo.png"
   },
   {
@@ -79,7 +79,7 @@
     "startDate": "2021-11",
     "endDate": "2024-02",
     "current": false,
-    "companyUrl": "https://www.linkedin.com/company/nearsure/",
+    "companyUrl": "https://www.nearsure.com/",
     "companyLogo": "/images/nearsure-logo.png"
   },
   {
@@ -134,7 +134,7 @@
     "startDate": "2020-04",
     "endDate": "2022-02",
     "current": false,
-    "companyUrl": "https://www.linkedin.com/in/kevinhomorales/",
+    "companyUrl": "https://www.yippy.store/",
     "companyLogo": "/images/kevin-morales-logo.png"
   },
   {
@@ -145,7 +145,7 @@
     "startDate": "2020-09",
     "endDate": "2021-02",
     "current": false,
-    "companyUrl": "https://www.linkedin.com/company/bayteq/",
+    "companyUrl": "https://www.bayteq.com/",
     "companyLogo": "/images/bayteq-logo.png"
   },
   {
@@ -156,7 +156,7 @@
     "startDate": "2020-06",
     "endDate": "2020-08",
     "current": false,
-    "companyUrl": "https://www.linkedin.com/in/kevinhomorales/",
+    "companyUrl": "https://www.kevinhmorales.com/",
     "companyLogo": "/images/kevin-morales-logo.png"
   },
   {
@@ -178,7 +178,7 @@
     "startDate": "2015-02",
     "endDate": "2019-09",
     "current": false,
-    "companyUrl": "https://www.linkedin.com/in/kevinhomorales/",
+    "companyUrl": "https://www.kevinhmorales.com/",
     "companyLogo": "/images/kevin-morales-logo.png"
   },
   {
@@ -189,7 +189,6 @@
     "startDate": "2018-01",
     "endDate": "2018-08",
     "current": false,
-    "companyUrl": "https://www.linkedin.com/in/kevinhomorales/",
     "companyLogo": "/images/kevin-morales-logo.png"
   }
 ]
