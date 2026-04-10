@@ -14,6 +14,7 @@ export function AdminShell({ children }: { children: React.ReactNode }) {
 
   const links = [
     { href: '/admin', label: t('admin.shell.home') },
+    { href: '/admin/analytics', label: t('admin.shell.analytics') },
     { href: '/admin/waitlist', label: t('admin.shell.waitlist') },
     { href: '/admin/conferences', label: t('admin.shell.conferences') },
     { href: '/admin/projects', label: t('admin.shell.projects') },
@@ -53,7 +54,7 @@ export function AdminShell({ children }: { children: React.ReactNode }) {
           </div>
         </div>
       </header>
-      <div className="container mx-auto px-4 py-8 max-w-4xl">{children}</div>
+      <div className="container mx-auto px-4 py-8 max-w-6xl">{children}</div>
     </div>
   );
 }

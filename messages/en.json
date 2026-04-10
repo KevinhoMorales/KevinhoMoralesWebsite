@@ -272,6 +272,7 @@
   "admin": {
     "shell": {
       "home": "Home",
+      "analytics": "Analytics",
       "waitlist": "Waitlist",
       "conferences": "Talks",
       "projects": "Projects",
@@ -300,12 +301,31 @@
     "home": {
       "title": "Dashboard",
       "intro": "Manage talks and projects published on the site (Firestore + Storage).",
+      "analyticsTitle": "Analytics",
+      "analyticsDesc": "Charts for waitlist signups (by day, source, community).",
       "waitlistTitle": "Waitlist",
       "waitlistDesc": "Book signups (Firestore prod/admin/waitlist).",
       "conferencesTitle": "Talks",
       "conferencesDesc": "Create, edit, and delete conference entries (site admin in Firestore).",
       "projectsTitle": "Projects",
       "projectsDesc": "Create, edit, and delete project entries (site admin in Firestore)."
+    },
+    "analytics": {
+      "title": "Analytics",
+      "intro": "Visual summaries for the book waitlist — same Firestore sample as the waitlist table (up to 500 most recent).",
+      "sampleNote": "Charts are based on those {{sample}} rows. Total people in Firestore: {{total}}.",
+      "chartSignupsByDay": "Signups by day",
+      "chartSignupsByDayHint": "Count per calendar day (UTC) in this sample.",
+      "chartHeardFrom": "Where they heard about it",
+      "chartHeardFromHint": "Optional answer from the signup form.",
+      "chartCommunities": "Communities / groups",
+      "chartCommunitiesHint": "Optional community field; top values in this sample.",
+      "heardUnknown": "Not specified",
+      "noDates": "No dated signups in this sample.",
+      "noCommunities": "No community names in this sample.",
+      "tooltipSignups": "Signups",
+      "tooltipCount": "Count",
+      "loadFailed": "Couldn’t load analytics"
     },
     "waitlistPanel": {
       "title": "Waitlist",

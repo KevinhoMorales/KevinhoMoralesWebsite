@@ -14,6 +14,12 @@ export function AdminHome() {
         <p className="text-muted-foreground text-sm mt-1">{t('admin.home.intro')}</p>
       </div>
       <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+        <Link href="/admin/analytics">
+          <Card className="p-6 hover:bg-muted/50 transition-colors h-full">
+            <h2 className="font-medium">{t('admin.home.analyticsTitle')}</h2>
+            <p className="text-sm text-muted-foreground mt-1">{t('admin.home.analyticsDesc')}</p>
+          </Card>
+        </Link>
         <Link href="/admin/waitlist">
           <Card className="p-6 hover:bg-muted/50 transition-colors h-full">
             <h2 className="font-medium">{t('admin.home.waitlistTitle')}</h2>
