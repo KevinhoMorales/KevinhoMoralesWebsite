@@ -118,7 +118,7 @@ export function ConferencesSection({ conferences }: ConferencesProps) {
       <section
         id="conferences"
         data-analytics-section="conferences"
-        className="scroll-mt-20 py-10 sm:py-12 md:py-14 px-4 sm:px-6 md:px-8 lg:px-12 xl:px-24 bg-secondary/30"
+        className="py-10 sm:py-12 md:py-14 px-4 sm:px-6 md:px-8 lg:px-12 xl:px-24 bg-secondary/30"
       >
         <div className="max-w-6xl mx-auto text-center">
           <p className="text-primary font-medium tracking-wide uppercase text-xs sm:text-sm mb-3">
@@ -137,7 +137,7 @@ export function ConferencesSection({ conferences }: ConferencesProps) {
     <section
       id="conferences"
       data-analytics-section="conferences"
-      className="scroll-mt-20 py-4 sm:py-5 md:py-6 px-4 sm:px-6 md:px-8 lg:px-12 xl:px-24 bg-secondary/30"
+      className="py-4 sm:py-5 md:py-6 px-4 sm:px-6 md:px-8 lg:px-12 xl:px-24 bg-secondary/30"
     >
       <div className="max-w-6xl mx-auto">
         <div>

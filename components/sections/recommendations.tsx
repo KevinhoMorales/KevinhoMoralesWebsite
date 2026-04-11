@@ -34,7 +34,7 @@ export function Recommendations({ testimonials }: RecommendationsProps) {
     <section
       id="recommendations"
       data-analytics-section="recommendations"
-      className="scroll-mt-20 overflow-x-hidden py-4 sm:py-5 md:py-6 px-4 sm:px-6 md:px-8 lg:px-12 xl:px-24"
+      className="overflow-x-hidden py-4 sm:py-5 md:py-6 px-4 sm:px-6 md:px-8 lg:px-12 xl:px-24"
     >
       <div className="max-w-6xl mx-auto">
         <ScrollReveal className="mb-8 sm:mb-10 text-center">

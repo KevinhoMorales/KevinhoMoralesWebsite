@@ -12,7 +12,7 @@ export function PodcastSectionUI() {
     <section
       id="podcast"
       data-analytics-section="podcast"
-      className="scroll-mt-20 py-4 sm:py-5 md:py-6 px-4 sm:px-6 md:px-8 lg:px-12 xl:px-24"
+      className="py-4 sm:py-5 md:py-6 px-4 sm:px-6 md:px-8 lg:px-12 xl:px-24"
     >
       <div className="max-w-6xl mx-auto">
         <ScrollReveal className="flex flex-col sm:flex-row sm:items-end sm:justify-between gap-4 sm:gap-6 mb-8 sm:mb-10">

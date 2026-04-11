@@ -5,9 +5,19 @@ export function prefersSmoothScroll(): boolean {
   return !window.matchMedia('(prefers-reduced-motion: reduce)').matches
 }
 
+/** Offset below fixed nav; prefer `scroll-padding-top` on `html` (see `globals.css`). */
+function getHashScrollOffsetPx(): number {
+  if (typeof document === 'undefined') return 80
+  const raw = getComputedStyle(document.documentElement).scrollPaddingTop
+  const n = Number.parseFloat(raw)
+  return Number.isFinite(n) && n > 0 ? n : 80
+}
+
 /**
- * Scroll to a section by id. Returns whether the element was found.
- * Prefer `scroll-margin` / `scroll-padding` on sections so the fixed nav does not cover titles.
+ * Scroll so the section’s top sits just under the fixed header.
+ * Uses `window.scrollTo` + geometry instead of `scrollIntoView`, which stacks badly with
+ * both `scroll-padding-top` (html) and `scroll-margin` (sections) in some browsers — e.g. `#conferences`
+ * landing one section too high (podcast).
  */
 export function scrollToSectionById(
   id: string,
@@ -15,15 +25,20 @@ export function scrollToSectionById(
 ): boolean {
   const el = document.getElementById(id)
   if (!el) return false
-  const behavior =
-    options?.behavior ?? (prefersSmoothScroll() ? 'smooth' : 'auto')
-  el.scrollIntoView({ behavior, block: 'start' })
+
+  const offset = getHashScrollOffsetPx()
+  const top = el.getBoundingClientRect().top + window.scrollY - offset
+  const behavior = options?.behavior ?? (prefersSmoothScroll() ? 'smooth' : 'auto')
+
+  window.scrollTo({
+    top: Math.max(0, top),
+    behavior,
+  })
   return true
 }
 
 /**
- * Retry scrolling for late-hydrating client islands or slow first paint (e.g. opening `/#conferences`).
- * Uses `auto` by default to avoid fighting the browser’s initial fragment scroll.
+ * Retry scrolling for late-hydrating client islands or layout after images/fonts.
  */
 export function scheduleScrollToSectionById(
   id: string,

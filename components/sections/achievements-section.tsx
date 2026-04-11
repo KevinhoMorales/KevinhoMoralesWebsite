@@ -16,7 +16,7 @@ export function AchievementsSection({ achievements }: { achievements: Achievemen
     <section
       id="achievements"
       data-analytics-section="achievements"
-      className="scroll-mt-20 bg-secondary/20 py-10 sm:py-12 md:py-14 px-4 sm:px-6 md:px-8 lg:px-12 xl:px-24"
+      className="bg-secondary/20 py-10 sm:py-12 md:py-14 px-4 sm:px-6 md:px-8 lg:px-12 xl:px-24"
     >
       <div className="max-w-6xl mx-auto">
         <ScrollReveal>
