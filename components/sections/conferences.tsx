@@ -109,13 +109,29 @@ export function ConferencesSection({ conferences }: ConferencesProps) {
   const [modalOpen, setModalOpen] = useState(false)
   const [detailConference, setDetailConference] = useState<Conference | null>(null)
 
-  if (conferences.length === 0) {
-    return null
-  }
-
   const previewConferences = conferences.slice(0, PREVIEW_COUNT)
   const remainingConferences = conferences.slice(PREVIEW_COUNT)
   const hasMore = remainingConferences.length > 0
+
+  if (conferences.length === 0) {
+    return (
+      <section
+        id="conferences"
+        data-analytics-section="conferences"
+        className="scroll-mt-20 py-10 sm:py-12 md:py-14 px-4 sm:px-6 md:px-8 lg:px-12 xl:px-24 bg-secondary/30"
+      >
+        <div className="max-w-6xl mx-auto text-center">
+          <p className="text-primary font-medium tracking-wide uppercase text-xs sm:text-sm mb-3">
+            {t('conferences.kicker')}
+          </p>
+          <h2 className="text-xl sm:text-2xl md:text-3xl font-bold text-balance">{t('conferences.title')}</h2>
+          <p className="mt-4 max-w-xl mx-auto text-sm sm:text-base text-muted-foreground">
+            {t('pages.conferences.empty')}
+          </p>
+        </div>
+      </section>
+    )
+  }
 
   return (
     <section

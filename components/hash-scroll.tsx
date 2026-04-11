@@ -2,11 +2,11 @@
 
 import { useEffect } from 'react'
 import { usePathname } from 'next/navigation'
-import { scrollToSectionById } from '@/lib/section-scroll'
+import { scheduleScrollToSectionById } from '@/lib/section-scroll'
 
 /**
- * After client navigation to `/` with a hash (e.g. from another route), scroll to the section.
- * In-page clicks use `handleHomeHashLinkClick` on nav links for reliable smooth scroll.
+ * After loading `/` with a hash (or client navigation to `/#…`), scroll to the section.
+ * Retries briefly so client components that hydrate after first paint still resolve.
  */
 export function HashScroll() {
   const pathname = usePathname()
@@ -14,16 +14,22 @@ export function HashScroll() {
   useEffect(() => {
     if (pathname !== '/') return
 
+    let cancelSchedule: (() => void) | undefined
+
     const applyHash = () => {
+      cancelSchedule?.()
       const hash = window.location.hash
       if (!hash || hash.length < 2) return
       const id = decodeURIComponent(hash.slice(1))
-      requestAnimationFrame(() => scrollToSectionById(id))
+      cancelSchedule = scheduleScrollToSectionById(id, { behavior: 'auto' })
     }
 
     applyHash()
     window.addEventListener('hashchange', applyHash)
-    return () => window.removeEventListener('hashchange', applyHash)
+    return () => {
+      window.removeEventListener('hashchange', applyHash)
+      cancelSchedule?.()
+    }
   }, [pathname])
 
   return null
