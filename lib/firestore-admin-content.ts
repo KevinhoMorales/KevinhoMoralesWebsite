@@ -131,6 +131,10 @@ function normalizeProject(data: Record<string, unknown>, docId: string): Project
     experience: asString(data.experience),
     platforms: asStringArray(data.platforms),
     tags: asStringArray(data.tags),
+    language: asString(data.language),
+    releaseDate: asString(data.releaseDate),
+    webFramework: asString(data.webFramework),
+    webHosting: asString(data.webHosting),
   };
 }
 

@@ -30,55 +30,10 @@ import {
   isPresencialNoVideoUrl,
 } from '@/lib/conference-video-url';
 import { compressImageForUpload } from '@/lib/compress-image-client';
+import { collectPastedImageFiles, isProbablyImageUrl } from '@/lib/admin-image-paste';
 
 /** Vercel suele limitar ~4.5 MB por request; multipart añade overhead. */
 const MAX_CONFERENCE_IMAGE_BYTES = 4 * 1024 * 1024;
-
-/**
- * Imágenes pegadas. No mezclar `files` e `items`: en muchos navegadores es la misma imagen con distinto
- * lastModified/nombre y acabábamos encolando duplicados.
- */
-function collectPastedImageFiles(data: DataTransfer | null): File[] {
-  if (!data) return [];
-
-  const isImageFile = (f: File | null | undefined): f is File => {
-    if (!f || f.size === 0) return false;
-    return (
-      f.type.startsWith('image/') || /\.(png|jpe?g|gif|webp|bmp)$/i.test(f.name)
-    );
-  };
-
-  if (data.files?.length) {
-    const fromFiles: File[] = [];
-    for (let i = 0; i < data.files.length; i++) {
-      const f = data.files.item(i);
-      if (isImageFile(f)) fromFiles.push(f);
-    }
-    if (fromFiles.length > 0) return fromFiles;
-  }
-
-  const fromItems: File[] = [];
-  if (data.items?.length) {
-    for (let i = 0; i < data.items.length; i++) {
-      const item = data.items[i];
-      if (item.kind !== 'file') continue;
-      const mime = item.type;
-      if (mime.startsWith('image/') || mime === '' || mime === 'image/x-png') {
-        const f = item.getAsFile();
-        if (isImageFile(f)) fromItems.push(f);
-      }
-    }
-  }
-
-  return fromItems;
-}
-
-function isProbablyImageUrl(s: string): boolean {
-  if (!s) return false;
-  if (s.startsWith('/') || s.startsWith('blob:')) return true;
-  if (s.startsWith('prod/')) return true;
-  return /^https?:\/\//i.test(s);
-}
 
 /** Primera imagen de la charla para la lista admin (Storage path o URL). */
 function firstConferenceListImageUrl(c: Conference): string | null {

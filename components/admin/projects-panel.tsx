@@ -1,7 +1,8 @@
 'use client';
 
 import { useCallback, useEffect, useState } from 'react';
-import { Loader2 } from 'lucide-react';
+import Image from 'next/image';
+import { ImageIcon, Loader2 } from 'lucide-react';
 import { adminFetch, getAdminIdToken } from '@/lib/admin-browser';
 import type { Project, ProjectLink } from '@/types';
 import { useI18n } from '@/components/i18n/locale-provider';
@@ -21,11 +22,25 @@ import { Label } from '@/components/ui/label';
 import { Textarea } from '@/components/ui/textarea';
 import { Card } from '@/components/ui/card';
 import { compressImageForUpload } from '@/lib/compress-image-client';
+import { cn } from '@/lib/utils';
+import { storageObjectPathToPublicUrl } from '@/lib/storage-public-url';
+import { orderProjectsForDisplay } from '@/lib/projects-order';
+import { collectPastedImageFiles, isProbablyImageUrl } from '@/lib/admin-image-paste';
 
 const linkTypes: ProjectLink['type'][] = ['appStore', 'playStore', 'website', 'github', 'other'];
 
+type PendingCover = { id: string; file: File; previewUrl: string };
+
 /** Misma regla que charlas: límite de cuerpo en Vercel (~4.5 MB). */
 const MAX_ADMIN_UPLOAD_BYTES = 4 * 1024 * 1024;
+
+/** Portada del proyecto en el listado admin (ruta Storage o URL). */
+function projectListCoverUrl(p: Project): string | null {
+  const ref = p.image?.trim();
+  if (!ref) return null;
+  const url = storageObjectPathToPublicUrl(ref);
+  return url || null;
+}
 
 const emptyForm: Project = {
   id: '',
@@ -33,8 +48,12 @@ const emptyForm: Project = {
   description: '',
   image: '',
   technologies: [],
-  category: 'web',
+  category: 'ios',
   links: [],
+  language: '',
+  releaseDate: '',
+  webFramework: '',
+  webHosting: '',
 };
 
 export function ProjectsPanel() {
@@ -49,12 +68,14 @@ export function ProjectsPanel() {
   const [platformsInput, setPlatformsInput] = useState('');
   const [deleteId, setDeleteId] = useState<string | null>(null);
   const [deleteLoading, setDeleteLoading] = useState(false);
+  /** Imagen pegada o elegida: se sube al pulsar Guardar (igual que charlas). */
+  const [pendingCover, setPendingCover] = useState<PendingCover | null>(null);
 
   const refresh = useCallback(async () => {
     setLoadError('');
     try {
       const rows = await adminFetch<Project[]>('/api/admin/projects');
-      setList(rows.sort((a, b) => a.title.localeCompare(b.title)));
+      setList(orderProjectsForDisplay(rows));
     } catch (e) {
       const raw = e instanceof Error ? e.message : t('admin.projects.loadFailed');
       setLoadError(translateAdminError(raw, t));
@@ -65,12 +86,65 @@ export function ProjectsPanel() {
     refresh();
   }, [refresh]);
 
+  function clearPendingCover() {
+    setPendingCover((prev) => {
+      if (prev) URL.revokeObjectURL(prev.previewUrl);
+      return null;
+    });
+  }
+
+  function queuePendingCover(file: File) {
+    const id =
+      typeof crypto !== 'undefined' && 'randomUUID' in crypto
+        ? crypto.randomUUID()
+        : `c-${Date.now()}-${Math.random().toString(36).slice(2)}`;
+    const previewUrl = URL.createObjectURL(file);
+    setPendingCover((prev) => {
+      if (prev) URL.revokeObjectURL(prev.previewUrl);
+      return { id, file, previewUrl };
+    });
+  }
+
   function startNew() {
     setIsNew(true);
     setForm(emptyForm);
     setTechInput('');
     setTagsInput('');
     setPlatformsInput('');
+    clearPendingCover();
+  }
+
+  function duplicateAsWebProject() {
+    const techFromInput = techInput
+      .split(',')
+      .map((s) => s.trim())
+      .filter(Boolean);
+    const technologies =
+      techFromInput.length > 0 ? techFromInput : [...(form.technologies ?? [])];
+    const linksFiltered = (form.links ?? []).filter((l) => l.type !== 'appStore' && l.type !== 'playStore');
+    const links =
+      linksFiltered.length > 0 ? linksFiltered : [{ type: 'website' as const, url: '' }];
+    setIsNew(true);
+    setForm({
+      ...emptyForm,
+      title: form.title.trim(),
+      description: form.description.trim(),
+      image: form.image?.trim() ?? '',
+      technologies,
+      category: 'web',
+      links,
+      language: form.language?.trim() ?? '',
+      releaseDate: form.releaseDate?.trim() ?? '',
+      experience: form.experience?.trim() ?? '',
+      platforms: [...(form.platforms ?? [])],
+      tags: [...(form.tags ?? [])],
+      webFramework: '',
+      webHosting: '',
+    });
+    setTechInput(technologies.join(', '));
+    setTagsInput((form.tags ?? []).join(', '));
+    setPlatformsInput((form.platforms ?? []).join(', '));
+    clearPendingCover();
   }
 
   function startEdit(p: Project) {
@@ -79,6 +153,7 @@ export function ProjectsPanel() {
     setTechInput((p.technologies ?? []).join(', '));
     setTagsInput((p.tags ?? []).join(', '));
     setPlatformsInput((p.platforms ?? []).join(', '));
+    clearPendingCover();
   }
 
   function setLink(i: number, patch: Partial<ProjectLink>) {
@@ -103,7 +178,7 @@ export function ProjectsPanel() {
     }));
   }
 
-  async function uploadCover(file: File) {
+  async function uploadCoverFile(file: File): Promise<string> {
     const fileToSend = await compressImageForUpload(file);
     if (fileToSend.size > MAX_ADMIN_UPLOAD_BYTES) {
       throw new Error(t('admin.projects.uploadTooLarge'));
@@ -145,10 +220,10 @@ export function ProjectsPanel() {
     }
 
     const text = await res.text();
-    let json: { url?: string; error?: string } | null = null;
+    let json: { url?: string; path?: string; error?: string } | null = null;
     if (text) {
       try {
-        json = JSON.parse(text) as { url?: string; error?: string };
+        json = JSON.parse(text) as { url?: string; path?: string; error?: string };
       } catch {
         /* HTML del proxy (413) */
       }
@@ -162,8 +237,63 @@ export function ProjectsPanel() {
       throw new Error(t('admin.projects.uploadFailed'));
     }
 
-    if (!json?.url) throw new Error(t('admin.projects.uploadFailed'));
-    setForm((f) => ({ ...f, image: json.url }));
+    const out = json?.url?.trim() || json?.path?.trim();
+    if (!out) throw new Error(t('admin.projects.uploadFailed'));
+    return out;
+  }
+
+  function onCoverPaste(e: React.ClipboardEvent<HTMLDivElement>) {
+    e.preventDefault();
+    const dt = e.clipboardData;
+
+    void (async () => {
+      const syncFiles = collectPastedImageFiles(dt);
+      if (syncFiles.length > 0) {
+        queuePendingCover(syncFiles[0]);
+        return;
+      }
+
+      try {
+        if (navigator.clipboard?.read) {
+          const clipItems = await navigator.clipboard.read();
+          const asyncFiles: File[] = [];
+          for (const item of clipItems) {
+            const imageTypes = item.types.filter((ty) => ty.startsWith('image/'));
+            if (imageTypes.length === 0) continue;
+            const type =
+              imageTypes.find((ty) => ty === 'image/png') ??
+              imageTypes.find((ty) => ty === 'image/jpeg' || ty === 'image/jpg') ??
+              imageTypes[0];
+            const blob = await item.getType(type);
+            const sub =
+              type === 'image/png'
+                ? 'png'
+                : type === 'image/jpeg' || type === 'image/jpg'
+                  ? 'jpg'
+                  : (type.split('/')[1] || 'png').replace(/\+/g, '-') || 'png';
+            asyncFiles.push(
+              new File([blob], `paste-${Date.now()}-${asyncFiles.length}.${sub}`, {
+                type: blob.type || type,
+              })
+            );
+          }
+          if (asyncFiles.length > 0) {
+            queuePendingCover(asyncFiles[0]);
+            return;
+          }
+        }
+      } catch {
+        /* Sin permiso o portapapeles no legible como imagen */
+      }
+
+      const text = dt?.getData('text/plain') ?? '';
+      if (!text) return;
+      const lines = text.split(/[\r\n]+/).map((s) => s.trim()).filter(Boolean);
+      const asUrls = lines.filter((l) => isProbablyImageUrl(l) && !l.startsWith('blob:'));
+      if (asUrls.length === 0) return;
+      clearPendingCover();
+      setForm((f) => ({ ...f, image: asUrls[0] }));
+    })();
   }
 
   async function save() {
@@ -188,13 +318,34 @@ export function ProjectsPanel() {
       technologies,
       links,
     };
-    if (form.image?.trim()) payload.image = form.image.trim();
     if (form.experience?.trim()) payload.experience = form.experience.trim();
     if (tags.length) payload.tags = tags;
     if (platforms.length) payload.platforms = platforms;
+    if (form.language?.trim()) payload.language = form.language.trim();
+    if (form.releaseDate?.trim()) payload.releaseDate = form.releaseDate.trim();
+    if (form.category === 'web') {
+      payload.webFramework = form.webFramework?.trim() ?? '';
+      payload.webHosting = form.webHosting?.trim() ?? '';
+    }
 
     setSaving(true);
     try {
+      let imageValue = form.image?.trim() ?? '';
+      if (pendingCover) {
+        const p = pendingCover;
+        try {
+          imageValue = await uploadCoverFile(p.file);
+          setForm((f) => ({ ...f, image: imageValue }));
+        } catch (err) {
+          const raw = err instanceof Error ? err.message : t('admin.projects.uploadFailed');
+          alert(translateAdminError(raw, t));
+          return;
+        }
+        URL.revokeObjectURL(p.previewUrl);
+        setPendingCover(null);
+      }
+      if (imageValue) payload.image = imageValue;
+
       if (isNew) {
         await adminFetch<{ id: string }>('/api/admin/projects', {
           method: 'POST',
@@ -242,6 +393,13 @@ export function ProjectsPanel() {
     flutter: t('admin.projects.categoryFlutter'),
   };
 
+  const isWeb = form.category === 'web';
+
+  const coverPreviewSrc =
+    pendingCover?.previewUrl ??
+    (form.image?.trim() ? storageObjectPathToPublicUrl(form.image.trim()) : '');
+  const hasCoverPreview = Boolean(coverPreviewSrc);
+
   return (
     <div className="space-y-8">
       <div className="flex items-center justify-between gap-4">
@@ -253,33 +411,78 @@ export function ProjectsPanel() {
       {loadError && <p className="text-sm text-destructive">{loadError}</p>}
 
       <div className="grid gap-8 lg:grid-cols-2">
-        <Card className="p-4 space-y-4 max-h-[70vh] overflow-y-auto">
-          <h2 className="font-medium text-sm text-muted-foreground">{t('admin.projects.list')}</h2>
+        <Card className="max-h-[70vh] space-y-4 overflow-y-auto rounded-2xl border-border/60 p-4 shadow-sm sm:p-5">
+          <h2 className="text-sm font-medium text-muted-foreground">{t('admin.projects.list')}</h2>
           <ul className="space-y-2">
-            {list.map((p) => (
-              <li
-                key={p.id}
-                className="flex flex-wrap items-center justify-between gap-2 rounded-md border p-2 text-sm"
-              >
-                <button
-                  type="button"
-                  className="text-left hover:underline font-medium"
-                  onClick={() => startEdit(p)}
+            {list.map((p) => {
+              const thumbSrc = projectListCoverUrl(p);
+              return (
+                <li
+                  key={p.id}
+                  className="flex items-center gap-2 rounded-xl border border-border/60 bg-background/40 p-2.5 text-sm transition-colors hover:bg-muted/35"
                 >
-                  {p.title}
-                </button>
-                <Button type="button" variant="ghost" size="sm" onClick={() => setDeleteId(p.id)}>
-                  {t('admin.projects.delete')}
-                </Button>
-              </li>
-            ))}
+                  <div className="flex min-w-0 flex-1 items-center gap-3">
+                    {thumbSrc ? (
+                      <Image
+                        src={thumbSrc}
+                        alt=""
+                        width={40}
+                        height={40}
+                        sizes="40px"
+                        className="h-10 w-10 shrink-0 rounded-lg border border-border/60 bg-muted object-cover"
+                      />
+                    ) : (
+                      <div
+                        className="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg border border-dashed border-border/60 bg-muted/40 text-muted-foreground"
+                        aria-hidden
+                      >
+                        <ImageIcon className="h-4 w-4 opacity-70" />
+                      </div>
+                    )}
+                    <button
+                      type="button"
+                      disabled={saving}
+                      className="min-w-0 flex-1 truncate text-left font-medium hover:underline disabled:cursor-not-allowed disabled:opacity-50 disabled:no-underline"
+                      onClick={() => startEdit(p)}
+                    >
+                      {p.title.trim() || t('admin.projects.untitled')}
+                    </button>
+                  </div>
+                  <Button
+                    type="button"
+                    variant="ghost"
+                    size="sm"
+                    className="shrink-0"
+                    disabled={saving}
+                    onClick={() => setDeleteId(p.id)}
+                  >
+                    {t('admin.projects.delete')}
+                  </Button>
+                </li>
+              );
+            })}
           </ul>
         </Card>
 
         <Card className="p-4 space-y-4 max-h-[85vh] overflow-y-auto">
-          <h2 className="font-medium text-sm text-muted-foreground">
-            {isNew ? t('admin.projects.formNew') : t('admin.projects.formEdit')}
-          </h2>
+          <div className="flex flex-wrap items-start justify-between gap-3">
+            <h2 className="font-medium text-sm text-muted-foreground">
+              {isNew ? t('admin.projects.formNew') : t('admin.projects.formEdit')}
+            </h2>
+            {!isNew && !isWeb ? (
+              <Button
+                type="button"
+                variant="outline"
+                size="sm"
+                className="shrink-0"
+                disabled={saving}
+                onClick={duplicateAsWebProject}
+                title={t('admin.projects.duplicateAsWebHint')}
+              >
+                {t('admin.projects.duplicateAsWeb')}
+              </Button>
+            ) : null}
+          </div>
           <div className="space-y-2">
             <Label htmlFor="pt">{t('admin.projects.labelTitle')}</Label>
             <Input
@@ -298,28 +501,64 @@ export function ProjectsPanel() {
             />
           </div>
           <div className="space-y-2">
-            <Label htmlFor="pi">{t('admin.projects.labelImageUrl')}</Label>
-            <Input
-              id="pi"
-              value={form.image ?? ''}
-              onChange={(e) => setForm((f) => ({ ...f, image: e.target.value }))}
-            />
-            <input
-              type="file"
-              accept="image/*"
-              className="text-xs"
-              onChange={async (e) => {
-                const f = e.target.files?.[0];
-                e.target.value = '';
-                if (!f) return;
-                try {
-                  await uploadCover(f);
-                } catch (err) {
-                  const raw = err instanceof Error ? err.message : t('admin.projects.uploadFailed');
-                  alert(translateAdminError(raw, t));
-                }
-              }}
-            />
+            <Label htmlFor="project-cover-paste">{t('admin.projects.labelImageUrl')}</Label>
+            <p className="text-xs text-muted-foreground">{t('admin.projects.imageUploadOnSave')}</p>
+            <div
+              id="project-cover-paste"
+              tabIndex={saving ? -1 : 0}
+              onPaste={saving ? undefined : onCoverPaste}
+              className={cn(
+                'flex w-full cursor-text flex-col rounded-md border border-dashed border-input bg-muted/20 px-3 outline-none transition-colors focus-visible:border-ring focus-visible:ring-[3px] focus-visible:ring-ring/50',
+                hasCoverPreview ? 'min-h-0 py-4' : 'min-h-[120px] items-center justify-center py-8 text-sm text-muted-foreground',
+                saving && 'pointer-events-none opacity-50'
+              )}
+            >
+              {!hasCoverPreview ? (
+                <span className="mx-auto max-w-[20rem] text-center leading-relaxed">
+                  {t('admin.projects.imagePasteZone')}
+                </span>
+              ) : (
+                <div className="relative mx-auto w-full max-w-[240px]">
+                  {/* eslint-disable-next-line @next/next/no-img-element */}
+                  <img
+                    src={coverPreviewSrc}
+                    alt=""
+                    className="h-40 w-full rounded-md border border-border bg-background object-contain p-1"
+                  />
+                  <button
+                    type="button"
+                    disabled={saving}
+                    className="absolute right-1 top-1 flex h-7 w-7 items-center justify-center rounded-md border border-border bg-background/90 text-sm font-semibold shadow hover:bg-destructive/15 hover:text-destructive disabled:opacity-40"
+                    aria-label={t('admin.conferences.removeImage')}
+                    onClick={(ev) => {
+                      ev.stopPropagation();
+                      clearPendingCover();
+                      setForm((f) => ({ ...f, image: '' }));
+                    }}
+                  >
+                    ×
+                  </button>
+                </div>
+              )}
+            </div>
+            <div className="flex flex-wrap items-center gap-2">
+              <Label htmlFor="project-cover-file" className="text-xs text-muted-foreground cursor-pointer">
+                {t('admin.conferences.uploadImage')}
+              </Label>
+              <input
+                id="project-cover-file"
+                type="file"
+                accept="image/*"
+                className="text-xs"
+                disabled={saving}
+                onChange={(e) => {
+                  const f = e.target.files?.[0];
+                  e.target.value = '';
+                  if (!f) return;
+                  queuePendingCover(f);
+                }}
+              />
+            </div>
           </div>
           <div className="space-y-2">
             <Label htmlFor="pcat">{t('admin.projects.labelCategory')}</Label>
@@ -339,6 +578,28 @@ export function ProjectsPanel() {
             </select>
           </div>
           <div className="space-y-2">
+            <Label htmlFor="plang">
+              {isWeb ? t('admin.projects.labelLanguageWeb') : t('admin.projects.labelLanguage')}
+            </Label>
+            <Input
+              id="plang"
+              placeholder={isWeb ? t('admin.projects.placeholderLanguageWeb') : 'Swift, SwiftUI, Dart…'}
+              value={form.language ?? ''}
+              onChange={(e) => setForm((f) => ({ ...f, language: e.target.value }))}
+            />
+          </div>
+          <div className="space-y-2">
+            <Label htmlFor="prel">
+              {isWeb ? t('admin.projects.labelReleaseDateWeb') : t('admin.projects.labelReleaseDate')}
+            </Label>
+            <Input
+              id="prel"
+              placeholder={isWeb ? t('admin.projects.placeholderReleaseDateWeb') : 'YYYY-MM-DD'}
+              value={form.releaseDate ?? ''}
+              onChange={(e) => setForm((f) => ({ ...f, releaseDate: e.target.value }))}
+            />
+          </div>
+          <div className="space-y-2">
             <Label htmlFor="ptech">{t('admin.projects.labelTech')}</Label>
             <Input id="ptech" value={techInput} onChange={(e) => setTechInput(e.target.value)} />
           </div>
@@ -351,9 +612,39 @@ export function ProjectsPanel() {
             />
           </div>
           <div className="space-y-2">
-            <Label htmlFor="pplat">{t('admin.projects.labelPlatforms')}</Label>
-            <Input id="pplat" value={platformsInput} onChange={(e) => setPlatformsInput(e.target.value)} />
+            <Label htmlFor="pplat">
+              {isWeb ? t('admin.projects.labelPlatformsWeb') : t('admin.projects.labelPlatforms')}
+            </Label>
+            <Input
+              id="pplat"
+              placeholder={isWeb ? t('admin.projects.placeholderPlatformsWeb') : undefined}
+              value={platformsInput}
+              onChange={(e) => setPlatformsInput(e.target.value)}
+            />
           </div>
+          {isWeb ? (
+            <div className="space-y-4 rounded-xl border border-border/60 bg-muted/20 p-4">
+              <p className="text-xs font-medium text-muted-foreground">{t('admin.projects.webSectionTitle')}</p>
+              <div className="space-y-2">
+                <Label htmlFor="pwebfw">{t('admin.projects.labelWebFramework')}</Label>
+                <Input
+                  id="pwebfw"
+                  placeholder={t('admin.projects.placeholderWebFramework')}
+                  value={form.webFramework ?? ''}
+                  onChange={(e) => setForm((f) => ({ ...f, webFramework: e.target.value }))}
+                />
+              </div>
+              <div className="space-y-2">
+                <Label htmlFor="pwebhost">{t('admin.projects.labelWebHosting')}</Label>
+                <Input
+                  id="pwebhost"
+                  placeholder={t('admin.projects.placeholderWebHosting')}
+                  value={form.webHosting ?? ''}
+                  onChange={(e) => setForm((f) => ({ ...f, webHosting: e.target.value }))}
+                />
+              </div>
+            </div>
+          ) : null}
           <div className="space-y-2">
             <Label htmlFor="ptags">{t('admin.projects.labelTags')}</Label>
             <Input id="ptags" value={tagsInput} onChange={(e) => setTagsInput(e.target.value)} />

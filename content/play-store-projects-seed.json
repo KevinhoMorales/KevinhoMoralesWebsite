@@ -1,0 +1,195 @@
+[
+  {
+    "id": "security-force-administrador-android",
+    "title": "Security Force Administrador",
+    "description": "App Android para administración del ecosistema Security Force (urbanizaciones y accesos).",
+    "category": "android",
+    "language": "Kotlin",
+    "technologies": [
+      "Kotlin"
+    ],
+    "experience": "Freelance",
+    "platforms": [
+      "Android"
+    ],
+    "tags": [
+      "Security",
+      "Play Store"
+    ],
+    "releaseDate": "2022-03-01",
+    "sortOrder": 20220301,
+    "links": [
+      {
+        "type": "playStore",
+        "url": "https://play.google.com/store/apps/details?id=com.kevinhomorales.urbamsadminkotlin",
+        "label": "Google Play"
+      }
+    ]
+  },
+  {
+    "id": "security-force-administradores-android",
+    "title": "Security Force Administradores",
+    "description": "Gestión de administradores en Security Force.",
+    "category": "android",
+    "language": "Kotlin",
+    "technologies": [
+      "Kotlin"
+    ],
+    "experience": "Freelance",
+    "platforms": [
+      "Android"
+    ],
+    "tags": [
+      "Security",
+      "Play Store"
+    ],
+    "releaseDate": "2022-03-01",
+    "sortOrder": 20220301,
+    "links": [
+      {
+        "type": "playStore",
+        "url": "https://play.google.com/store/apps/details?id=com.kevinhomorales.urbamsadminkotlin",
+        "label": "Google Play"
+      }
+    ]
+  },
+  {
+    "id": "security-force-garita-android",
+    "title": "Security Force Garita",
+    "description": "App para personal de garita y control de accesos Security Force.",
+    "category": "android",
+    "language": "Kotlin",
+    "technologies": [
+      "Kotlin"
+    ],
+    "experience": "Freelance",
+    "platforms": [
+      "Android"
+    ],
+    "tags": [
+      "Security",
+      "Play Store"
+    ],
+    "releaseDate": "2022-03-01",
+    "sortOrder": 20220301,
+    "links": [
+      {
+        "type": "playStore",
+        "url": "https://play.google.com/store/apps/details?id=com.kevinhomorales.urbamsgatekotlin",
+        "label": "Google Play"
+      }
+    ]
+  },
+  {
+    "id": "yippy-driver-android",
+    "title": "Yippy Driver",
+    "description": "App para conductores del ecosistema Yippy.",
+    "category": "android",
+    "language": "Java",
+    "technologies": [
+      "Java"
+    ],
+    "experience": "Freelance",
+    "platforms": [
+      "Android",
+      "Tablet"
+    ],
+    "tags": [
+      "Shopping",
+      "Play Store"
+    ],
+    "releaseDate": "2020-12-01",
+    "sortOrder": 20201201,
+    "links": [
+      {
+        "type": "playStore",
+        "url": "https://play.google.com/store/apps/details?id=com.yippy.driver.app",
+        "label": "Google Play"
+      }
+    ]
+  },
+  {
+    "id": "anclaideas-android",
+    "title": "Anclaideas",
+    "description": "Educación y contenido Anclaideas.",
+    "category": "android",
+    "language": "Java",
+    "technologies": [
+      "Java"
+    ],
+    "experience": "Freelance",
+    "platforms": [
+      "Android",
+      "Tablet"
+    ],
+    "tags": [
+      "Education",
+      "Play Store"
+    ],
+    "releaseDate": "2020-09-01",
+    "sortOrder": 20200901,
+    "links": [
+      {
+        "type": "playStore",
+        "url": "https://play.google.com/store/apps/details?id=com.kevinhomorales.anclaideas",
+        "label": "Google Play"
+      }
+    ]
+  },
+  {
+    "id": "js-aprende-android",
+    "title": "JS Aprende",
+    "description": "Aprendizaje y recursos JS Aprende.",
+    "category": "android",
+    "language": "Java",
+    "technologies": [
+      "Java"
+    ],
+    "experience": "Freelance",
+    "platforms": [
+      "Android",
+      "Tablet"
+    ],
+    "tags": [
+      "Education",
+      "Play Store"
+    ],
+    "releaseDate": "2020-08-24",
+    "sortOrder": 20200824,
+    "links": [
+      {
+        "type": "playStore",
+        "url": "https://play.google.com/store/apps/details?id=com.jonathanortega.jsaprende",
+        "label": "Google Play"
+      }
+    ]
+  },
+  {
+    "id": "ajelist-android",
+    "title": "AJELIST",
+    "description": "Productividad con AJELIST.",
+    "category": "android",
+    "language": "Kotlin",
+    "technologies": [
+      "Kotlin"
+    ],
+    "experience": "Freelance",
+    "platforms": [
+      "Android",
+      "Tablet"
+    ],
+    "tags": [
+      "Productivity",
+      "Play Store"
+    ],
+    "releaseDate": "2023-10-24",
+    "sortOrder": 20231024,
+    "links": [
+      {
+        "type": "playStore",
+        "url": "https://play.google.com/store/apps/details?id=com.kevinhomorales.providerskotlin",
+        "label": "Google Play"
+      }
+    ]
+  }
+]

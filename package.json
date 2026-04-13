@@ -16,6 +16,9 @@
     "scrape-images": "tsx scripts/scrape-images.ts",
     "update-profile-images": "tsx scripts/update-profile-with-local-images.ts",
     "import-testimonials": "tsx scripts/import-linkedin-testimonials.ts",
+    "seed:app-store-projects": "tsx scripts/seed-app-store-projects.ts",
+    "seed:play-store-projects": "tsx scripts/seed-app-store-projects.ts --file content/play-store-projects-seed.json",
+    "merge:duplicate-projects": "tsx scripts/merge-duplicate-projects.ts",
     "resend:publish-waitlist-template": "tsx scripts/resend-publish-waitlist-template.ts"
   },
   "dependencies": {

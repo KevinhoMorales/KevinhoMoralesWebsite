@@ -10,6 +10,7 @@ import { useI18n } from '@/components/i18n/locale-provider'
 import Image from 'next/image'
 import { ExternalLink, Smartphone, Globe, Layers, ArrowRight } from 'lucide-react'
 import { pickProjectsPreview } from '@/lib/projects-preview'
+import { displayProjectForFilter } from '@/lib/project-display'
 import type { Project, ProjectCategory } from '@/types'
 
 const categoryIcons: Record<string, typeof Smartphone> = {
@@ -51,11 +52,17 @@ export function ProjectsSection({ projects }: ProjectsProps) {
       className="py-4 sm:py-5 md:py-6 px-4 sm:px-6 md:px-8 lg:px-12 xl:px-24 bg-secondary/30"
     >
       <div className="max-w-6xl mx-auto">
-        <ScrollReveal className="mb-8 sm:mb-10">
+        <ScrollReveal className="mb-6 sm:mb-8">
           <p className="text-primary font-medium tracking-wide uppercase text-xs sm:text-sm mb-3">{t('projects.kicker')}</p>
           <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold text-balance">
             {t('projects.title')}
           </h2>
+          <p className="mt-3 max-w-2xl text-sm sm:text-base text-muted-foreground leading-relaxed">
+            {t('projects.description')}
+          </p>
+          <p className="mt-2 text-sm font-medium text-primary">
+            {t('projects.totalCount', { count: String(projects.length) })}
+          </p>
         </ScrollReveal>
 
         <ScrollReveal delay={0.1} className="flex flex-wrap gap-2 mb-6 sm:mb-8">
@@ -84,7 +91,8 @@ export function ProjectsSection({ projects }: ProjectsProps) {
             className="grid grid-cols-1 items-stretch gap-4 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 sm:gap-6"
           >
             {filteredProjects.map((project, index) => {
-              const mainLink = project.links[0]?.url || '#'
+              const shown = displayProjectForFilter(project, activeCategory)
+              const mainLink = shown.links[0]?.url || '#'
               return (
                 <StaggerItem key={project.id} delay={index * 0.06} className="h-full">
                   <Card className="flex h-full flex-col bg-card/50 border-border/50 overflow-hidden group hover:border-primary/50 transition-colors">
@@ -120,7 +128,7 @@ export function ProjectsSection({ projects }: ProjectsProps) {
                         </p>
                       </div>
                       <div className="mt-auto flex flex-wrap gap-2 pt-1">
-                        {project.technologies.map((tech) => (
+                        {shown.technologies.map((tech) => (
                           <Badge
                             key={tech}
                             variant="secondary"

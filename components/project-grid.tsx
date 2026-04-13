@@ -6,6 +6,8 @@ import Link from 'next/link';
 import { Button } from '@/components/ui/button';
 import { useI18n } from '@/components/i18n/locale-provider';
 import type { Project, ProjectCategory } from '@/types';
+import { displayProjectForFilter } from '@/lib/project-display';
+import { projectMatchesCategory } from '@/lib/project-category-match';
 
 interface ProjectGridProps {
   projects: Project[];
@@ -41,7 +43,7 @@ export function ProjectGrid({ projects, initialCategory = 'all' }: ProjectGridPr
 
   const filtered = category === 'all'
     ? projects
-    : projects.filter((p) => p.category === category);
+    : projects.filter((p) => projectMatchesCategory(p, category));
 
   return (
     <section>
@@ -62,11 +64,13 @@ export function ProjectGrid({ projects, initialCategory = 'all' }: ProjectGridPr
         <p className="text-sm text-muted-foreground py-8">{t('projects.emptyCategory')}</p>
       ) : (
         <div className="grid grid-cols-1 items-stretch gap-6 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
-          {filtered.map((project) => (
-            <article
-              key={project.id}
-              className="group flex h-full flex-col rounded-lg border bg-card p-4 transition-shadow hover:shadow-md"
-            >
+          {filtered.map((project) => {
+            const shown = displayProjectForFilter(project, category);
+            return (
+              <article
+                key={project.id}
+                className="group flex h-full flex-col rounded-lg border bg-card p-4 transition-shadow hover:shadow-md"
+              >
               {project.image && (
                 <div className="relative mb-4 aspect-video shrink-0 overflow-hidden rounded-md">
                   <Image
@@ -87,7 +91,7 @@ export function ProjectGrid({ projects, initialCategory = 'all' }: ProjectGridPr
                 </div>
                 <div className="mt-auto space-y-2">
                   <div className="flex flex-wrap gap-1">
-                    {project.technologies.slice(0, 4).map((tech) => (
+                    {shown.technologies.slice(0, 4).map((tech) => (
                       <span
                         key={tech}
                         className="rounded bg-muted px-2 py-0.5 text-xs"
@@ -97,9 +101,9 @@ export function ProjectGrid({ projects, initialCategory = 'all' }: ProjectGridPr
                     ))}
                   </div>
                   <div className="flex flex-wrap gap-2">
-                    {project.links.map((link) => (
+                    {shown.links.map((link) => (
                       <Link
-                        key={link.url}
+                        key={`${link.type}-${link.url}`}
                         href={link.url}
                         target="_blank"
                         rel="noopener noreferrer"
@@ -111,8 +115,9 @@ export function ProjectGrid({ projects, initialCategory = 'all' }: ProjectGridPr
                   </div>
                 </div>
               </div>
-            </article>
-          ))}
+              </article>
+            );
+          })}
         </div>
       )}
     </section>

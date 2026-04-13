@@ -1,6 +1,8 @@
 import * as fs from 'fs';
 import * as path from 'path';
-import type { Profile, Experience, Project, Conference, Testimonial, Achievement } from '@/types';
+import type { Profile, Experience, Project, ProjectCategory, Conference, Testimonial, Achievement } from '@/types';
+import { projectMatchesCategory } from '@/lib/project-category-match';
+import { PROJECT_CATEGORY_PARAMS } from '@/lib/projects-order';
 import { sortConferencesForDisplay } from '@/lib/conference-sort';
 import { signConferenceImagesForPublicRead } from '@/lib/conference-image-read-urls';
 import { expandConferenceImagesForPublic } from '@/lib/storage-public-url';
@@ -110,5 +112,6 @@ export function getAchievements(): Achievement[] {
 export async function getProjectsByCategory(category?: string): Promise<Project[]> {
   const projects = await getProjects();
   if (!category) return projects;
-  return projects.filter((p) => p.category === category);
+  if (!PROJECT_CATEGORY_PARAMS.includes(category as ProjectCategory)) return projects;
+  return projects.filter((p) => projectMatchesCategory(p, category as ProjectCategory));
 }

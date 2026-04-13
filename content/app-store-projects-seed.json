@@ -1,0 +1,805 @@
+[
+  {
+    "id": "security-force-residentes",
+    "title": "Security Force Residentes",
+    "description": "Security Force Residentes permitirá crear un código QR único para el ingreso a urbanizaciones que trabajen con nosotros.\n\nSíguenos en nuestras redes sociales:\n\nInstagram: https://www.instagram.com/securityforce.ec/\n\nFacebook: https://www.facebook.com/SecurityForce-102928471885156",
+    "category": "ios",
+    "language": "Swift",
+    "technologies": [
+      "Swift"
+    ],
+    "experience": "Freelance",
+    "platforms": [
+      "iPhone"
+    ],
+    "tags": [
+      "Security",
+      "App Store"
+    ],
+    "releaseDate": "2022-05-02",
+    "sortOrder": 20220502,
+    "links": [
+      {
+        "type": "appStore",
+        "url": "https://apps.apple.com/ec/app/security-force-residentes/id1621974359",
+        "label": "App Store"
+      }
+    ]
+  },
+  {
+    "id": "macro-empresas",
+    "title": "Macro Empresas",
+    "description": "Banca móvil empresarial (Technisys).",
+    "category": "ios",
+    "language": "Swift",
+    "technologies": [
+      "Swift"
+    ],
+    "experience": "Technisys",
+    "platforms": [
+      "iPhone",
+      "iPad"
+    ],
+    "tags": [
+      "Finance",
+      "App Store"
+    ],
+    "releaseDate": "2021-03-09",
+    "sortOrder": 20210309,
+    "links": [
+      {
+        "type": "appStore",
+        "url": "https://apps.apple.com/us/app/macro-empresas/id1465765093",
+        "label": "App Store"
+      }
+    ]
+  },
+  {
+    "id": "centro-artistico-center-stage",
+    "title": "Centro Artístico Center Stage",
+    "description": "App de lifestyle para el centro artístico Center Stage.",
+    "category": "ios",
+    "language": "Swift",
+    "technologies": [
+      "Swift"
+    ],
+    "experience": "Freelance",
+    "platforms": [
+      "iPhone"
+    ],
+    "tags": [
+      "Lifestyle",
+      "App Store"
+    ],
+    "releaseDate": "2021-10-01",
+    "sortOrder": 20211001,
+    "links": [
+      {
+        "type": "appStore",
+        "url": "https://apps.apple.com/us/app/centro-art%C3%ADstico-center-stage/id1574503847",
+        "label": "App Store"
+      }
+    ]
+  },
+  {
+    "id": "meniuz",
+    "title": "Meniuz",
+    "description": "Descubre menús y ofertas gastronómicas.",
+    "category": "ios",
+    "language": "Swift",
+    "technologies": [
+      "Swift"
+    ],
+    "experience": "Freelance",
+    "platforms": [
+      "iPhone"
+    ],
+    "tags": [
+      "Food & Drink",
+      "App Store"
+    ],
+    "releaseDate": "2021-05-26",
+    "sortOrder": 20210526,
+    "links": [
+      {
+        "type": "appStore",
+        "url": "https://apps.apple.com/us/app/meniuz/id1563662812",
+        "label": "App Store"
+      }
+    ]
+  },
+  {
+    "id": "calcustom",
+    "title": "Calcustom",
+    "description": "Utilidad de calendario personalizable.",
+    "category": "ios",
+    "language": "Swift",
+    "technologies": [
+      "Swift"
+    ],
+    "experience": "Freelance",
+    "platforms": [
+      "iPhone",
+      "iPad",
+      "Mac",
+      "iMessage"
+    ],
+    "tags": [
+      "Utilities",
+      "App Store"
+    ],
+    "releaseDate": "2021-04-29",
+    "sortOrder": 20210429,
+    "links": [
+      {
+        "type": "appStore",
+        "url": "https://apps.apple.com/us/app/calcustom/id1561896744",
+        "label": "App Store"
+      }
+    ]
+  },
+  {
+    "id": "banco-de-loja",
+    "title": "Banco de Loja",
+    "description": "App de referencia para Banco de Loja.",
+    "category": "ios",
+    "language": "Swift",
+    "technologies": [
+      "Swift"
+    ],
+    "experience": "Bayteq",
+    "platforms": [
+      "iPhone"
+    ],
+    "tags": [
+      "Reference",
+      "App Store"
+    ],
+    "releaseDate": "2020-11-09",
+    "sortOrder": 20201109,
+    "links": [
+      {
+        "type": "appStore",
+        "url": "https://apps.apple.com/ec/app/banco-de-loja/id1396238600?l=en",
+        "label": "App Store"
+      }
+    ]
+  },
+  {
+    "id": "salud-sa",
+    "title": "Salud SA",
+    "description": "App de referencia Salud SA.",
+    "category": "ios",
+    "language": "Swift",
+    "technologies": [
+      "Swift"
+    ],
+    "experience": "Bayteq",
+    "platforms": [
+      "iPhone"
+    ],
+    "tags": [
+      "Reference",
+      "App Store"
+    ],
+    "releaseDate": "2020-12-31",
+    "sortOrder": 20201231,
+    "links": [
+      {
+        "type": "appStore",
+        "url": "https://apps.apple.com/ec/app/salud-sa/id1276856377?l=en",
+        "label": "App Store"
+      }
+    ]
+  },
+  {
+    "id": "yippy-business",
+    "title": "Yippy Business",
+    "description": "Versión business de Yippy.",
+    "category": "ios",
+    "language": "Swift",
+    "technologies": [
+      "Swift"
+    ],
+    "experience": "Freelance",
+    "platforms": [
+      "iPhone"
+    ],
+    "tags": [
+      "Shopping",
+      "App Store"
+    ],
+    "releaseDate": "2021-02-06",
+    "sortOrder": 20210206,
+    "links": [
+      {
+        "type": "appStore",
+        "url": "https://apps.apple.com/us/app/yippy-business/id1549761525",
+        "label": "App Store"
+      }
+    ]
+  },
+  {
+    "id": "yippy-cerca-de-ti",
+    "title": "Yippy: Cerca de ti",
+    "description": "Compras locales y ofertas cercanas.",
+    "category": "ios",
+    "language": "Swift",
+    "technologies": [
+      "Swift"
+    ],
+    "experience": "Freelance",
+    "platforms": [
+      "iPhone"
+    ],
+    "tags": [
+      "Shopping",
+      "App Store"
+    ],
+    "releaseDate": "2020-12-01",
+    "sortOrder": 20201201,
+    "links": [
+      {
+        "type": "appStore",
+        "url": "https://apps.apple.com/us/app/yippy-cerca-de-ti/id1506152885",
+        "label": "App Store"
+      }
+    ]
+  },
+  {
+    "id": "vx-nutrition",
+    "title": "VX Nutrition",
+    "description": "Lifestyle y nutrición.",
+    "category": "ios",
+    "language": "Swift",
+    "technologies": [
+      "Swift"
+    ],
+    "experience": "Freelance",
+    "platforms": [
+      "iPhone"
+    ],
+    "tags": [
+      "Lifestyle",
+      "App Store"
+    ],
+    "releaseDate": "2020-09-22",
+    "sortOrder": 20200922,
+    "links": [
+      {
+        "type": "appStore",
+        "url": "https://apps.apple.com/es/app/vx-nutrition/id1531573410",
+        "label": "App Store"
+      }
+    ]
+  },
+  {
+    "id": "smartkey-gsm",
+    "title": "SmartKey GSM",
+    "description": "Productividad y gestión GSM.",
+    "category": "ios",
+    "language": "Swift",
+    "technologies": [
+      "Swift"
+    ],
+    "experience": "Freelance",
+    "platforms": [
+      "iPhone"
+    ],
+    "tags": [
+      "Productivity",
+      "App Store"
+    ],
+    "releaseDate": "2020-08-12",
+    "sortOrder": 20200812,
+    "links": []
+  },
+  {
+    "id": "tasky-be-more-productive",
+    "title": "Tasky: Be More Productive",
+    "description": "Tareas y productividad.",
+    "category": "ios",
+    "language": "Swift",
+    "technologies": [
+      "Swift"
+    ],
+    "experience": "Freelance",
+    "platforms": [
+      "iPhone",
+      "iPad"
+    ],
+    "tags": [
+      "Productivity",
+      "App Store"
+    ],
+    "releaseDate": "2020-06-25",
+    "sortOrder": 20200625,
+    "links": [
+      {
+        "type": "appStore",
+        "url": "https://apps.apple.com/us/app/tasky-be-more-productive/id1516001390",
+        "label": "App Store"
+      }
+    ]
+  },
+  {
+    "id": "weathery-beautiful-weather",
+    "title": "Weathery: Beautiful Weather",
+    "description": "Clima en iPhone, iPad, Mac e iMessage.",
+    "category": "ios",
+    "language": "Swift",
+    "technologies": [
+      "Swift"
+    ],
+    "experience": "Freelance",
+    "platforms": [
+      "iPhone",
+      "iPad",
+      "Mac",
+      "iMessage"
+    ],
+    "tags": [
+      "Weather",
+      "App Store"
+    ],
+    "releaseDate": "2020-05-15",
+    "sortOrder": 20200515,
+    "links": [
+      {
+        "type": "appStore",
+        "url": "https://apps.apple.com/us/app/weathery-beautiful-weather/id1522632976",
+        "label": "App Store"
+      }
+    ]
+  },
+  {
+    "id": "gme-driver",
+    "title": "GMe Driver: Make money driving",
+    "description": "App para conductores — viajes y ganancias.",
+    "category": "ios",
+    "language": "Swift",
+    "technologies": [
+      "Swift"
+    ],
+    "experience": "Kampcoe Properties",
+    "platforms": [
+      "iPhone",
+      "iPad",
+      "iMessage"
+    ],
+    "tags": [
+      "Travel",
+      "App Store"
+    ],
+    "releaseDate": "2019-10-24",
+    "sortOrder": 20191024,
+    "links": [
+      {
+        "type": "appStore",
+        "url": "https://apps.apple.com/us/app/gme-driver-make-money-driving/id1482185549",
+        "label": "App Store"
+      }
+    ]
+  },
+  {
+    "id": "gme-decide-your-taxi-price",
+    "title": "GMe: Decide your taxi price",
+    "description": "App de pasajeros — define tu precio de taxi.",
+    "category": "ios",
+    "language": "Swift",
+    "technologies": [
+      "Swift"
+    ],
+    "experience": "Kampcoe Properties",
+    "platforms": [
+      "iPhone",
+      "iPad",
+      "iMessage"
+    ],
+    "tags": [
+      "Travel",
+      "App Store"
+    ],
+    "releaseDate": "2019-10-24",
+    "sortOrder": 20191024,
+    "links": [
+      {
+        "type": "appStore",
+        "url": "https://apps.apple.com/us/app/gme-decide-your-taxi-price/id1482189829",
+        "label": "App Store"
+      }
+    ]
+  },
+  {
+    "id": "bedford-bagel-bakery",
+    "title": "Bedford Bagel Bakery",
+    "description": "Pedidos y shopping para la bakery.",
+    "category": "ios",
+    "language": "Swift",
+    "technologies": [
+      "Swift"
+    ],
+    "experience": "Kampcoe Properties",
+    "platforms": [
+      "iPhone",
+      "iPad"
+    ],
+    "tags": [
+      "Shopping",
+      "App Store"
+    ],
+    "releaseDate": "2020-05-22",
+    "sortOrder": 20200522,
+    "links": [
+      {
+        "type": "appStore",
+        "url": "https://apps.apple.com/la/app/bedford-bakery/id1514278000",
+        "label": "App Store"
+      }
+    ]
+  },
+  {
+    "id": "pagame-easy-way-to-charge",
+    "title": "Págame: Easy way to charge",
+    "description": "Cobros y finanzas.",
+    "category": "ios",
+    "language": "Swift",
+    "technologies": [
+      "Swift"
+    ],
+    "experience": "Kampcoe Properties",
+    "platforms": [
+      "iPhone",
+      "iPad"
+    ],
+    "tags": [
+      "Finance",
+      "App Store"
+    ],
+    "releaseDate": "2020-04-29",
+    "sortOrder": 20200429,
+    "links": [
+      {
+        "type": "appStore",
+        "url": "https://apps.apple.com/la/app/p%C3%A1game-easy-way-to-charge/id1502119779",
+        "label": "App Store"
+      }
+    ]
+  },
+  {
+    "id": "scanner-qr",
+    "title": "Scanner QR",
+    "description": "Escáner QR.",
+    "category": "ios",
+    "language": "Swift",
+    "technologies": [
+      "Swift"
+    ],
+    "experience": "Freelance",
+    "platforms": [
+      "iPhone",
+      "iPad"
+    ],
+    "tags": [
+      "Photo & Video",
+      "App Store"
+    ],
+    "releaseDate": "2018-08-17",
+    "sortOrder": 20180817,
+    "links": [
+      {
+        "type": "appStore",
+        "url": "https://apps.apple.com/us/app/scanner-qr/id1427117800",
+        "label": "App Store"
+      }
+    ]
+  },
+  {
+    "id": "clean-now",
+    "title": "Clean Now",
+    "description": "Lifestyle.",
+    "category": "ios",
+    "language": "Swift",
+    "technologies": [
+      "Swift"
+    ],
+    "experience": "Freelance",
+    "platforms": [
+      "iPhone"
+    ],
+    "tags": [
+      "Lifestyle",
+      "App Store"
+    ],
+    "releaseDate": "2019-01-09",
+    "sortOrder": 20190109,
+    "links": [
+      {
+        "type": "appStore",
+        "url": "https://apps.apple.com/ec/app/cleannow/id1448624210?l=en",
+        "label": "App Store"
+      }
+    ]
+  },
+  {
+    "id": "holy-food",
+    "title": "Holy Food",
+    "description": "Libros / contenido Holy Food.",
+    "category": "ios",
+    "language": "Swift",
+    "technologies": [
+      "Swift"
+    ],
+    "experience": "Freelance",
+    "platforms": [
+      "iPhone"
+    ],
+    "tags": [
+      "Books",
+      "App Store"
+    ],
+    "releaseDate": "2018-07-01",
+    "sortOrder": 20180701,
+    "links": [
+      {
+        "type": "appStore",
+        "url": "https://apps.apple.com/us/app/holy-food/id1378159914",
+        "label": "App Store"
+      }
+    ]
+  },
+  {
+    "id": "xtreme-3t-tic-tac-toe",
+    "title": "Xtreme 3T Tic Tac Toe",
+    "description": "Juego tres en raya.",
+    "category": "ios",
+    "language": "Swift",
+    "technologies": [
+      "Swift"
+    ],
+    "experience": "Freelance",
+    "platforms": [
+      "iPhone"
+    ],
+    "tags": [
+      "Game",
+      "App Store"
+    ],
+    "releaseDate": "2018-04-20",
+    "sortOrder": 20180420,
+    "links": [
+      {
+        "type": "appStore",
+        "url": "https://apps.apple.com/ec/app/xtreme-3t-tic-tac-toe/id1376522383?l=en",
+        "label": "App Store"
+      }
+    ]
+  },
+  {
+    "id": "global-bank",
+    "title": "Global Bank",
+    "description": "Banca móvil (Objective-C, Technisys).",
+    "category": "ios",
+    "language": "Objective-C",
+    "technologies": [
+      "Objective-C"
+    ],
+    "experience": "Technisys",
+    "platforms": [
+      "iPhone",
+      "iPad"
+    ],
+    "tags": [
+      "Finance",
+      "App Store"
+    ],
+    "releaseDate": "2021-01-12",
+    "sortOrder": 20210112,
+    "links": [
+      {
+        "type": "appStore",
+        "url": "https://apps.apple.com/pa/app/global-mobile/id1289218637",
+        "label": "App Store"
+      }
+    ]
+  },
+  {
+    "id": "botca-store",
+    "title": "Botca Store",
+    "description": "Tienda y shopping.",
+    "category": "ios",
+    "language": "Swift",
+    "technologies": [
+      "Swift"
+    ],
+    "experience": "Freelance",
+    "platforms": [
+      "iPhone"
+    ],
+    "tags": [
+      "Shopping",
+      "App Store"
+    ],
+    "releaseDate": "2023-11-16",
+    "sortOrder": 20231116,
+    "links": [
+      {
+        "type": "appStore",
+        "url": "https://apps.apple.com/us/app/botca-store/id6467423858",
+        "label": "App Store"
+      }
+    ]
+  },
+  {
+    "id": "on-meet",
+    "title": "On-Meet",
+    "description": "Utilidades y seguridad para reuniones.",
+    "category": "ios",
+    "language": "Swift",
+    "technologies": [
+      "Swift"
+    ],
+    "experience": "Freelance",
+    "platforms": [
+      "iPhone"
+    ],
+    "tags": [
+      "Utilities",
+      "Security",
+      "App Store"
+    ],
+    "releaseDate": "2024-01-25",
+    "sortOrder": 20240125,
+    "links": [
+      {
+        "type": "appStore",
+        "url": "https://apps.apple.com/ec/app/on-meet/id1570201533",
+        "label": "App Store"
+      }
+    ]
+  },
+  {
+    "id": "livo-home",
+    "title": "Livo Home",
+    "description": "Lifestyle — gestión y hogar.",
+    "category": "ios",
+    "language": "Swift",
+    "technologies": [
+      "Swift"
+    ],
+    "experience": "Freelance",
+    "platforms": [
+      "iPhone"
+    ],
+    "tags": [
+      "Lifestyle",
+      "App Store"
+    ],
+    "releaseDate": "2024-01-25",
+    "sortOrder": 20240125,
+    "links": [
+      {
+        "type": "appStore",
+        "url": "https://apps.apple.com/es/app/livo-home/id1669247260",
+        "label": "App Store"
+      }
+    ]
+  },
+  {
+    "id": "elite-padel-ranking-oficial",
+    "title": "Élite Padel: Ranking Oficial",
+    "description": "Ranking oficial de pádel — SwiftUI.",
+    "category": "ios",
+    "language": "SwiftUI",
+    "technologies": [
+      "SwiftUI"
+    ],
+    "experience": "DevLokos Enterprise",
+    "platforms": [
+      "iPhone",
+      "iPad"
+    ],
+    "tags": [
+      "Sport",
+      "Padel",
+      "App Store"
+    ],
+    "releaseDate": "2025-03-29",
+    "sortOrder": 20250329,
+    "links": [
+      {
+        "type": "appStore",
+        "url": "https://apps.apple.com/jm/app/%C3%A9lite-padel-ranking-oficial/id6742730017",
+        "label": "App Store"
+      }
+    ]
+  },
+  {
+    "id": "padeltrack",
+    "title": "PadelTrack",
+    "description": "Seguimiento de pádel — SwiftUI.",
+    "category": "ios",
+    "language": "SwiftUI",
+    "technologies": [
+      "SwiftUI"
+    ],
+    "experience": "DevLokos Enterprise",
+    "platforms": [
+      "iPhone",
+      "iPad"
+    ],
+    "tags": [
+      "Sport",
+      "Padel",
+      "App Store"
+    ],
+    "releaseDate": "2026-09-10",
+    "sortOrder": 20260910,
+    "links": [
+      {
+        "type": "appStore",
+        "url": "https://apps.apple.com/ec/app/padeltrack/id6749497707",
+        "label": "App Store"
+      }
+    ]
+  },
+  {
+    "id": "devlokos-app",
+    "title": "DevLokos",
+    "description": "App DevLokos — Flutter (Dart).",
+    "category": "flutter",
+    "language": "Dart",
+    "technologies": [
+      "Dart",
+      "Flutter"
+    ],
+    "experience": "DevLokos Enterprise",
+    "platforms": [
+      "iPhone",
+      "iPad"
+    ],
+    "tags": [
+      "Podcast",
+      "App Store"
+    ],
+    "releaseDate": "2025-10-28",
+    "sortOrder": 20251028,
+    "links": [
+      {
+        "type": "appStore",
+        "url": "https://apps.apple.com/ec/app/devlokos/id6754109507",
+        "label": "App Store"
+      }
+    ]
+  },
+  {
+    "id": "still-waiting",
+    "title": "Still Waiting",
+    "description": "Utilidades y lifestyle.",
+    "category": "ios",
+    "language": "Swift",
+    "technologies": [
+      "Swift"
+    ],
+    "experience": "DevLokos Enterprise",
+    "platforms": [
+      "iPhone",
+      "iPad",
+      "Mac"
+    ],
+    "tags": [
+      "Utilities",
+      "Lifestyle",
+      "App Store"
+    ],
+    "releaseDate": "2026-01-26",
+    "sortOrder": 20260126,
+    "links": [
+      {
+        "type": "appStore",
+        "url": "https://apps.apple.com/us/app/still-waiting/id6757965516",
+        "label": "App Store"
+      }
+    ]
+  }
+]

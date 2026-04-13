@@ -9,8 +9,8 @@ import {
   getAchievements,
 } from '@/lib/content';
 import { mergeExperienceByCompany } from '@/lib/experience-merge';
-import { withCanonical } from '@/lib/site';
 import { orderProjectsForDisplay } from '@/lib/projects-order';
+import { withCanonical } from '@/lib/site';
 import { Hero } from '@/components/sections/hero';
 import { About } from '@/components/sections/about';
 import { ExperienceSection } from '@/components/sections/experience';

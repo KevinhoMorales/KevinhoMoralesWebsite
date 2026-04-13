@@ -14,17 +14,41 @@ export function parseProjectsCategoryParam(raw: string | string[] | undefined): 
   return PROJECT_CATEGORY_PARAMS.includes(v as ProjectCategory) ? (v as ProjectCategory) : 'all'
 }
 
+/** Timestamp UTC para ordenar; null si no hay fecha utilizable. */
+function releaseDateSortMs(project: Project): number | null {
+  const r = project.releaseDate?.trim()
+  if (!r) return null
+  const ymd = r.match(/^(\d{4})-(\d{2})-(\d{2})/)
+  if (ymd) {
+    const y = Number(ymd[1])
+    const mo = Number(ymd[2])
+    const d = Number(ymd[3])
+    const t = Date.UTC(y, mo - 1, d)
+    return Number.isNaN(t) ? null : t
+  }
+  const parsed = Date.parse(r)
+  return Number.isNaN(parsed) ? null : parsed
+}
+
 /**
- * Stable list order for listings. If any project has `sortOrder`, items with it come first (higher = newer),
- * then the rest in original order. If none have `sortOrder`, preserves input order (e.g. JSON / Firestore order).
+ * Listados: más reciente primero (`releaseDate`), luego `sortOrder` (mayor = más nuevo en seeds),
+ * luego orden de entrada. Sin fecha van después de los que tienen fecha.
  */
 export function orderProjectsForDisplay(projects: Project[]): Project[] {
   if (projects.length === 0) return []
   const indexed = projects.map((p, i) => ({ p, i }))
-  const hasSort = indexed.some(({ p }) => p.sortOrder != null)
-  if (!hasSort) return [...projects]
   return indexed
     .sort((a, b) => {
+      const da = releaseDateSortMs(a.p)
+      const db = releaseDateSortMs(b.p)
+      if (da != null && db != null) {
+        if (db !== da) return db - da
+      } else if (da != null && db == null) {
+        return -1
+      } else if (da == null && db != null) {
+        return 1
+      }
+
       const ao = a.p.sortOrder
       const bo = b.p.sortOrder
       if (ao != null && bo != null && bo !== ao) return bo - ao

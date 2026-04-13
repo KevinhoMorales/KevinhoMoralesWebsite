@@ -121,7 +121,7 @@ export function ExperienceSection({ experiences, previewLimit }: ExperienceProps
           <ScrollReveal delay={0.12} className="mt-8 sm:mt-10 flex justify-center">
             <Button variant="outline" size="lg" className="gap-2 rounded-xl" asChild>
               <Link href="/experience">
-                {t('projects.seeMore')}
+                {t('experience.seeMore')}
                 <ArrowRight className="h-4 w-4" aria-hidden />
               </Link>
             </Button>
