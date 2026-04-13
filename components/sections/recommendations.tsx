@@ -62,15 +62,12 @@ export function Recommendations({ testimonials }: RecommendationsProps) {
           <div className="overflow-hidden motion-reduce:overflow-x-auto motion-reduce:snap-x">
             <div
               className={cn(
-                'flex w-max gap-4 sm:gap-5 py-2',
+                'flex w-max items-start gap-4 sm:gap-5 py-2',
                 'motion-safe:animate-testimonials-marquee motion-safe:group-hover/carousel:[animation-play-state:paused]'
               )}
             >
-              {loop.map((item, index) => (
-                <article
-                  key={`${item.id}-${index}`}
-                  className="motion-reduce:snap-start motion-reduce:snap-always shrink-0 w-[280px] sm:w-[300px] md:w-[320px]"
-                >
+              {loop.map((item, index) => {
+                const card = (
                   <Card
                     className={cn(
                       'bg-card/50 border-border/50 h-full transition-all duration-300 ease-out',
@@ -78,31 +75,27 @@ export function Recommendations({ testimonials }: RecommendationsProps) {
                     )}
                   >
                     <CardContent className="p-3 sm:p-4 space-y-2">
-                      <Quote className="h-5 w-5 sm:h-6 sm:w-6 text-primary/30" />
-                      <p className="text-muted-foreground text-xs sm:text-sm leading-relaxed italic line-clamp-4">
+                      <Quote className="h-5 w-5 sm:h-6 sm:w-6 text-primary/30 shrink-0" />
+                      <p className="text-muted-foreground text-xs sm:text-sm leading-relaxed italic">
                         &ldquo;{item.quote}&rdquo;
                       </p>
                       <div className="flex items-center gap-2 sm:gap-3 pt-1">
                         <Avatar className="h-8 w-8 sm:h-9 sm:w-9 shrink-0 border border-primary/20">
-                          <AvatarImage src={item.avatar} alt={item.author} />
+                          <AvatarImage src={item.avatar} alt="" />
                           <AvatarFallback className="bg-secondary text-[10px] sm:text-xs">
                             {getInitials(item.author)}
                           </AvatarFallback>
                         </Avatar>
-                        <div className="min-w-0">
-                          {item.linkedinUrl ? (
-                            <a
-                              href={item.linkedinUrl}
-                              target="_blank"
-                              rel="noopener noreferrer"
-                              className="font-semibold text-sm hover:text-primary transition-colors truncate block"
-                            >
-                              {item.author}
-                            </a>
-                          ) : (
-                            <p className="font-semibold text-sm truncate">{item.author}</p>
-                          )}
-                          <p className="text-xs text-muted-foreground truncate">
+                        <div className="min-w-0 text-left">
+                          <p
+                            className={cn(
+                              'font-semibold text-sm truncate',
+                              item.linkedinUrl && 'group-hover:text-primary transition-colors'
+                            )}
+                          >
+                            {item.author}
+                          </p>
+                          <p className="text-xs text-muted-foreground">
                             {item.role}
                             {item.company && ` at ${item.company}`}
                           </p>
@@ -110,8 +103,32 @@ export function Recommendations({ testimonials }: RecommendationsProps) {
                       </div>
                     </CardContent>
                   </Card>
-                </article>
-              ))}
+                )
+
+                return (
+                  <article
+                    key={`${item.id}-${index}`}
+                    className="motion-reduce:snap-start motion-reduce:snap-always shrink-0 w-[280px] sm:w-[300px] md:w-[360px]"
+                  >
+                    {item.linkedinUrl ? (
+                      <a
+                        href={item.linkedinUrl}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className={cn(
+                          'group block h-full rounded-xl outline-none',
+                          'focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background'
+                        )}
+                        aria-label={t('recommendations.linkedInCardAria', { name: item.author })}
+                      >
+                        {card}
+                      </a>
+                    ) : (
+                      card
+                    )}
+                  </article>
+                )
+              })}
             </div>
           </div>
         </div>
