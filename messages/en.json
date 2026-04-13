@@ -34,7 +34,10 @@
     "downloadResume": "Download Resume",
     "calendlyConfirm": "Calendly will open to schedule a meeting. Continue?",
     "contactConfirm": "You'll be taken to the contact section. Continue?",
-    "cvConfirm": "Kevin Morales's résumé will download as a PDF in the language of the site (English or Spanish). If you're viewing in Portuguese, the English version is used. Continue?"
+    "cvDialogTitle": "Download CV?",
+    "cvDialogDescription": "The PDF matches the language of the site: English or Spanish. If the site is in Portuguese, the English CV is downloaded.",
+    "cvDialogConfirm": "Download",
+    "cvDialogCancel": "Cancel"
   },
   "about": {
     "kicker": "About Me",

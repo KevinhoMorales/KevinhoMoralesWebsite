@@ -34,7 +34,10 @@
     "downloadResume": "Descargar CV",
     "calendlyConfirm": "Se abrirá Calendly para agendar una reunión. ¿Continuar?",
     "contactConfirm": "Irás a la sección de contacto para conectarte. ¿Continuar?",
-    "cvConfirm": "Se descargará el currículum de Kevin Morales en PDF según el idioma del sitio (inglés o español). En portugués se usa la versión en inglés. ¿Continuar?"
+    "cvDialogTitle": "¿Descargar CV?",
+    "cvDialogDescription": "El PDF será el del idioma del sitio: inglés o español. Si el sitio está en portugués, se descarga la versión en inglés.",
+    "cvDialogConfirm": "Descargar",
+    "cvDialogCancel": "Cancelar"
   },
   "about": {
     "kicker": "Sobre mí",

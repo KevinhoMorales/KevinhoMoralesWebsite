@@ -1,10 +1,21 @@
 'use client'
 
 import Image from 'next/image'
+import { useState } from 'react'
 import { TypeAnimation } from 'react-type-animation'
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 import { Button } from '@/components/ui/button'
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+} from '@/components/ui/alert-dialog'
 import { ArrowDown, MessageCircle, FileText } from 'lucide-react'
 import { useI18n } from '@/components/i18n/locale-provider'
 import { handleHomeHashLinkClick } from '@/lib/section-scroll'
@@ -48,6 +59,7 @@ async function triggerCvDownload(href: string, filename: string): Promise<void> 
 export function Hero({ profile }: HeroProps) {
   const { t, locale } = useI18n()
   const pathname = usePathname()
+  const [cvDialogOpen, setCvDialogOpen] = useState(false)
   const cvHref =
     locale === 'es'
       ? profile.cvLinks?.spanish ?? profile.cvLinks?.english
@@ -116,23 +128,42 @@ export function Hero({ profile }: HeroProps) {
                 </Link>
               </Button>
               {(cvHref || profile.socialLinks?.website) && (
-                <Button
-                  variant="outline"
-                  size="lg"
-                  className="gap-2"
-                  onClick={() => {
-                    void (async () => {
-                      if (!window.confirm(t('hero.cvConfirm'))) return
-                      const href = cvHref || profile.socialLinks?.website || ''
-                      if (!href) return
-                      const filename = cvHref ? cvFilenameFromHref(cvHref) : 'Kevin-Morales-Resume.pdf'
-                      await triggerCvDownload(href, filename)
-                    })()
-                  }}
-                >
-                  <FileText className="h-4 w-4" />
-                  {t('hero.downloadResume')}
-                </Button>
+                <>
+                  <Button
+                    type="button"
+                    variant="outline"
+                    size="lg"
+                    className="gap-2"
+                    onClick={() => setCvDialogOpen(true)}
+                  >
+                    <FileText className="h-4 w-4" />
+                    {t('hero.downloadResume')}
+                  </Button>
+                  <AlertDialog open={cvDialogOpen} onOpenChange={setCvDialogOpen}>
+                    <AlertDialogContent>
+                      <AlertDialogHeader>
+                        <AlertDialogTitle>{t('hero.cvDialogTitle')}</AlertDialogTitle>
+                        <AlertDialogDescription className="text-left">
+                          {t('hero.cvDialogDescription')}
+                        </AlertDialogDescription>
+                      </AlertDialogHeader>
+                      <AlertDialogFooter>
+                        <AlertDialogCancel>{t('hero.cvDialogCancel')}</AlertDialogCancel>
+                        <AlertDialogAction
+                          onClick={(e) => {
+                            e.preventDefault()
+                            const href = cvHref || profile.socialLinks?.website || ''
+                            if (!href) return
+                            const filename = cvHref ? cvFilenameFromHref(cvHref) : 'Kevin-Morales-Resume.pdf'
+                            void triggerCvDownload(href, filename).finally(() => setCvDialogOpen(false))
+                          }}
+                        >
+                          {t('hero.cvDialogConfirm')}
+                        </AlertDialogAction>
+                      </AlertDialogFooter>
+                    </AlertDialogContent>
+                  </AlertDialog>
+                </>
               )}
             </div>
           </div>
