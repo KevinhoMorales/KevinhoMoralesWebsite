@@ -5,7 +5,7 @@ import { useMemo } from 'react'
 import { Card, CardContent } from '@/components/ui/card'
 import { ScrollReveal, StaggerContainer, StaggerItem } from '@/components/scroll-reveal'
 import { useI18n } from '@/components/i18n/locale-provider'
-import { Heart, Code, Users, Mic } from 'lucide-react'
+import { Heart, Code, Users, Mic, BookOpen } from 'lucide-react'
 import type { Profile } from '@/types'
 
 interface AboutProps {
@@ -20,6 +20,7 @@ export function About({ profile }: AboutProps) {
       { icon: Code, title: t('about.hYears'), description: t('about.hYearsDesc') },
       { icon: Users, title: t('about.hCommunity'), description: t('about.hCommunityDesc') },
       { icon: Mic, title: t('about.hSpeaker'), description: t('about.hSpeakerDesc') },
+      { icon: BookOpen, title: t('about.hBook'), description: t('about.hBookDesc') },
       { icon: Heart, title: t('about.hPassion'), description: t('about.hPassionDesc') },
     ],
     [t]
@@ -54,16 +55,18 @@ export function About({ profile }: AboutProps) {
               &ldquo;{t('about.motto')}&rdquo;
             </p>
 
-            <StaggerContainer className="grid grid-cols-2 md:grid-cols-4 gap-3 sm:gap-4 pt-4 sm:pt-6 items-stretch">
+            <StaggerContainer className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-3 sm:gap-4 pt-4 sm:pt-6 items-start">
               {highlights.map((item, index) => (
-                <StaggerItem key={`${item.title}-${index}`} delay={index * 0.06} className="min-h-0 h-full">
-                <Card className="bg-card/50 border-border/50 h-full flex flex-col">
-                  <CardContent className="p-3 sm:p-4 text-center flex flex-col flex-1 justify-center gap-0.5">
-                    <item.icon className="h-5 w-5 sm:h-6 sm:w-6 text-primary mx-auto mb-1 sm:mb-2 shrink-0" />
-                    <p className="font-semibold text-xs sm:text-sm">{item.title}</p>
-                    <p className="text-[10px] sm:text-xs text-muted-foreground">{item.description}</p>
-                  </CardContent>
-                </Card>
+                <StaggerItem key={`${item.title}-${index}`} delay={index * 0.06} className="min-h-0 w-full">
+                  <Card className="bg-card/50 border-border/50 w-full">
+                    <CardContent className="px-2.5 py-3 sm:px-3 sm:py-3.5 text-center flex flex-col gap-1">
+                      <item.icon className="h-5 w-5 sm:h-5 sm:w-5 text-primary mx-auto shrink-0" />
+                      <p className="font-semibold text-xs sm:text-sm leading-tight">{item.title}</p>
+                      <p className="text-[10px] sm:text-xs text-muted-foreground leading-snug">
+                        {item.description}
+                      </p>
+                    </CardContent>
+                  </Card>
                 </StaggerItem>
               ))}
             </StaggerContainer>
