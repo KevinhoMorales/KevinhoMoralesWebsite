@@ -5,7 +5,7 @@ import { useMemo } from 'react'
 import { Card, CardContent } from '@/components/ui/card'
 import { ScrollReveal, StaggerContainer, StaggerItem } from '@/components/scroll-reveal'
 import { useI18n } from '@/components/i18n/locale-provider'
-import { Heart, Code, Users, Mic, BookOpen } from 'lucide-react'
+import { Heart, Code, Users, Mic, BookOpen, Rocket } from 'lucide-react'
 import type { Profile } from '@/types'
 
 interface AboutProps {
@@ -19,6 +19,7 @@ export function About({ profile }: AboutProps) {
     () => [
       { icon: Code, title: t('about.hYears'), description: t('about.hYearsDesc') },
       { icon: Users, title: t('about.hCommunity'), description: t('about.hCommunityDesc') },
+      { icon: Rocket, title: t('about.hEntrepreneur'), description: t('about.hEntrepreneurDesc') },
       { icon: Mic, title: t('about.hSpeaker'), description: t('about.hSpeakerDesc') },
       { icon: BookOpen, title: t('about.hBook'), description: t('about.hBookDesc') },
       { icon: Heart, title: t('about.hPassion'), description: t('about.hPassionDesc') },
@@ -55,7 +56,7 @@ export function About({ profile }: AboutProps) {
               &ldquo;{t('about.motto')}&rdquo;
             </p>
 
-            <StaggerContainer className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-3 sm:gap-4 pt-4 sm:pt-6 items-start">
+            <StaggerContainer className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-3 gap-3 sm:gap-4 pt-4 sm:pt-6 items-start">
               {highlights.map((item, index) => (
                 <StaggerItem key={`${item.title}-${index}`} delay={index * 0.06} className="min-h-0 w-full">
                   <Card className="bg-card/50 border-border/50 w-full">
