@@ -34,7 +34,7 @@
     "downloadResume": "Download Resume",
     "calendlyConfirm": "Calendly will open to schedule a meeting. Continue?",
     "contactConfirm": "You'll be taken to the contact section. Continue?",
-    "cvConfirm": "Kevin Morales's résumé (PDF) will download. Continue?"
+    "cvConfirm": "Kevin Morales's résumé will download as a PDF in the language of the site (English or Spanish). If you're viewing in Portuguese, the English version is used. Continue?"
   },
   "about": {
     "kicker": "About Me",
@@ -66,7 +66,7 @@
   },
   "projects": {
     "kicker": "Projects",
-    "title": "Selected work",
+    "title": "Featured projects",
     "description": "Apps and products on the App Store, Play Store, and the web—native Swift and Kotlin, Flutter, and full-stack pieces where the product needs them.",
     "totalCount": "{{count}} projects in total",
     "seeMore": "See more",

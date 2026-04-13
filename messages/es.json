@@ -34,7 +34,7 @@
     "downloadResume": "Descargar CV",
     "calendlyConfirm": "Se abrirá Calendly para agendar una reunión. ¿Continuar?",
     "contactConfirm": "Irás a la sección de contacto para conectarte. ¿Continuar?",
-    "cvConfirm": "Se descargará el currículum de Kevin Morales (PDF). ¿Continuar?"
+    "cvConfirm": "Se descargará el currículum de Kevin Morales en PDF según el idioma del sitio (inglés o español). En portugués se usa la versión en inglés. ¿Continuar?"
   },
   "about": {
     "kicker": "Sobre mí",
@@ -66,7 +66,7 @@
   },
   "projects": {
     "kicker": "Proyectos",
-    "title": "Trabajos destacados",
+    "title": "Proyectos destacados",
     "description": "Apps y productos en App Store, Play Store y web: Swift y Kotlin nativos, Flutter y piezas full-stack cuando el producto lo requiere.",
     "totalCount": "{{count}} proyectos en total",
     "seeMore": "Ver más",

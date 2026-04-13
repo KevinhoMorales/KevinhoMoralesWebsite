@@ -19,7 +19,20 @@ interface FooterProps {
   profile: Profile
 }
 
-const SOCIAL_USERNAME = 'devlokos'
+function footerSocialHandle(profile: Profile): string {
+  const raw = profile.socialHandle?.trim()
+  if (raw) return raw.replace(/^@+/, '')
+  const tw = profile.socialLinks?.twitter
+  if (tw) {
+    try {
+      const seg = new URL(tw).pathname.replace(/^\//, '').split('/').filter(Boolean)[0]
+      if (seg) return seg
+    } catch {
+      /* invalid url */
+    }
+  }
+  return 'kevinhomorales'
+}
 
 const socialIconConfig = [
   { name: 'LinkedIn', icon: FaLinkedinIn, key: 'linkedin' as const },
@@ -33,6 +46,7 @@ const socialIconConfig = [
 export function Footer({ profile }: FooterProps) {
   const { t } = useI18n()
   const links = profile.socialLinks || {}
+  const handle = footerSocialHandle(profile)
   const currentYear = new Date().getFullYear()
 
   return (
@@ -43,7 +57,7 @@ export function Footer({ profile }: FooterProps) {
             <h3 className="font-semibold text-base sm:text-lg mb-2 sm:mb-3">{profile.name}</h3>
             <div className="mb-4 sm:mb-6">
               <p className="text-xs font-medium text-muted-foreground tracking-wider mb-3">
-                @{SOCIAL_USERNAME}
+                @{handle}
               </p>
               <div className="flex flex-wrap gap-3">
                 {socialIconConfig.map(({ name, icon: Icon, key }) => {

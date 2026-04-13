@@ -14,9 +14,18 @@ interface HeroProps {
   profile: Profile
 }
 
+function cvFilenameFromHref(href: string): string {
+  const name = href.split('/').pop()
+  return name && name.length > 0 ? name : 'Kevin-Morales-Resume.pdf'
+}
+
 export function Hero({ profile }: HeroProps) {
   const { t, locale } = useI18n()
   const pathname = usePathname()
+  const cvHref =
+    locale === 'es'
+      ? profile.cvLinks?.spanish ?? profile.cvLinks?.english
+      : profile.cvLinks?.english ?? profile.cvLinks?.spanish
   const avatarSrc =
     (profile as { heroImage?: string }).heroImage ||
     (profile as { profileImageLocal?: string }).profileImageLocal ||
@@ -80,7 +89,7 @@ export function Hero({ profile }: HeroProps) {
                   {t('hero.letsTalk')}
                 </Link>
               </Button>
-              {(profile.cvLinks?.english || profile.socialLinks?.website) && (
+              {(cvHref || profile.socialLinks?.website) && (
                 <Button
                   variant="outline"
                   size="lg"
@@ -88,8 +97,8 @@ export function Hero({ profile }: HeroProps) {
                   onClick={() => {
                     if (window.confirm(t('hero.cvConfirm'))) {
                       const link = document.createElement('a')
-                      link.href = profile.cvLinks?.english || profile.socialLinks?.website || '#'
-                      link.download = 'Kevin-Morales-Resume.pdf'
+                      link.href = cvHref || profile.socialLinks?.website || '#'
+                      link.download = cvHref ? cvFilenameFromHref(cvHref) : 'Kevin-Morales-Resume.pdf'
                       link.target = '_blank'
                       link.rel = 'noopener noreferrer'
                       link.click()

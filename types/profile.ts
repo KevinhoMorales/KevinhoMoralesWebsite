@@ -20,6 +20,8 @@ export interface Profile {
   images?: string[];
   profileImageLocal?: string;
   heroImage?: string;
+  /** Handle mostrado en el pie (sin @); ej. kevinhomorales */
+  socialHandle?: string;
   socialLinks?: {
     linkedin?: string;
     twitter?: string;
