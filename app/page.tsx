@@ -46,11 +46,11 @@ export default async function Home() {
       <About profile={profile} />
       <ExperienceSection experiences={experience} previewLimit={3} />
       <ProjectsSection projects={projects} />
-      <ArticlesSection />
-      <PodcastSectionUI />
       <ConferencesSection conferences={conferences} />
-      <Recommendations testimonials={testimonials} />
+      <PodcastSectionUI />
+      <ArticlesSection />
       <AchievementsSection achievements={achievements} />
+      <Recommendations testimonials={testimonials} />
       <Connect profile={profile} />
       <Footer profile={profile} />
     </main>

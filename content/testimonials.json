@@ -5,7 +5,8 @@
     "author": "Etna Estrella",
     "role": "Project Manager",
     "company": "Bayteq",
-    "linkedinUrl": "https://www.linkedin.com/in/etna-estrella-ec1/"
+    "linkedinUrl": "https://www.linkedin.com/in/etna-estrella-ec1/",
+    "avatar": "/testimonials/etna-estrella.png"
   },
   {
     "id": "2",
@@ -13,7 +14,8 @@
     "author": "José Guambo",
     "role": "Jr. Developer",
     "company": "PPM",
-    "linkedinUrl": "https://www.linkedin.com/in/jos%C3%A9-guambo-28031117a/"
+    "linkedinUrl": "https://www.linkedin.com/in/jos%C3%A9-guambo-28031117a/",
+    "avatar": "/testimonials/jose-guambo.png"
   },
   {
     "id": "3",
@@ -21,7 +23,8 @@
     "author": "Natalia Mayorquin Cuestas",
     "role": "Human Resource",
     "company": "Rappi",
-    "linkedinUrl": "https://www.linkedin.com/in/natalia-mayorquin-cuestas/"
+    "linkedinUrl": "https://www.linkedin.com/in/natalia-mayorquin-cuestas/",
+    "avatar": "/testimonials/natalia-mayorquin.png"
   },
   {
     "id": "4",
@@ -29,7 +32,8 @@
     "author": "Mayra Rodriguez",
     "role": "CTO",
     "company": "LIVO Home",
-    "linkedinUrl": "https://www.linkedin.com/in/mayrascript/"
+    "linkedinUrl": "https://www.linkedin.com/in/mayrascript/",
+    "avatar": "/testimonials/mayra-rodriguez.png"
   },
   {
     "id": "5",
@@ -37,7 +41,8 @@
     "author": "Alexis Poveda",
     "role": "Sr. Backend Developer",
     "company": "Technisys",
-    "linkedinUrl": "https://www.linkedin.com/in/alexis-poveda-233a4720b/"
+    "linkedinUrl": "https://www.linkedin.com/in/alexis-poveda-233a4720b/",
+    "avatar": "/testimonials/alexis-poveda.png"
   },
   {
     "id": "6",
@@ -45,7 +50,8 @@
     "author": "Florencia Pellegrino",
     "role": "Project Manager",
     "company": "Technisys",
-    "linkedinUrl": "https://www.linkedin.com/in/florencia-pellegrino-05008664/"
+    "linkedinUrl": "https://www.linkedin.com/in/florencia-pellegrino-05008664/",
+    "avatar": "/testimonials/florencia-pellegrino.png"
   },
   {
     "id": "7",
@@ -53,7 +59,8 @@
     "author": "Andrés Roberto Coello Goyes",
     "role": "Full Stack",
     "company": "GGTECH Entertainment",
-    "linkedinUrl": "https://www.linkedin.com/in/andr%C3%A9s-roberto-coello-goyes/"
+    "linkedinUrl": "https://www.linkedin.com/in/andr%C3%A9s-roberto-coello-goyes/",
+    "avatar": "/testimonials/andres-coello-goyes.png"
   },
   {
     "id": "8",
@@ -61,6 +68,7 @@
     "author": "Martín Mateos",
     "role": "Scrum Master",
     "company": "Banco Macro",
-    "linkedinUrl": "https://www.linkedin.com/in/mmateos-agile"
+    "linkedinUrl": "https://www.linkedin.com/in/mmateos-agile",
+    "avatar": "/testimonials/martin-mateos.png"
   }
 ]

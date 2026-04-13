@@ -2,7 +2,17 @@
 
 import Link from 'next/link';
 import { TranslatedPageHeader } from '@/components/i18n/translated-page-header';
+import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import type { Testimonial } from '@/types';
+
+function getInitials(name: string): string {
+  return name
+    .split(' ')
+    .map((n) => n[0])
+    .join('')
+    .toUpperCase()
+    .slice(0, 2);
+}
 
 export function TestimonialsPageClient({ testimonials }: { testimonials: Testimonial[] }) {
   return (
@@ -15,23 +25,29 @@ export function TestimonialsPageClient({ testimonials }: { testimonials: Testimo
             className="border-l-4 border-primary pl-6 py-2"
           >
             <p className="text-foreground mb-4">&ldquo;{item.quote}&rdquo;</p>
-            <footer>
-              {item.linkedinUrl ? (
-                <Link
-                  href={item.linkedinUrl}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="font-medium hover:text-primary"
-                >
-                  {item.author}
-                </Link>
-              ) : (
-                <span className="font-medium">{item.author}</span>
-              )}
-              <span className="text-muted-foreground">
-                {' '}— {item.role}
-                {item.company && ` at ${item.company}`}
-              </span>
+            <footer className="flex items-center gap-3">
+              <Avatar className="h-10 w-10 shrink-0 border border-primary/20">
+                <AvatarImage src={item.avatar} alt={item.author} />
+                <AvatarFallback className="bg-secondary text-xs">{getInitials(item.author)}</AvatarFallback>
+              </Avatar>
+              <div className="min-w-0">
+                {item.linkedinUrl ? (
+                  <Link
+                    href={item.linkedinUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="font-medium hover:text-primary"
+                  >
+                    {item.author}
+                  </Link>
+                ) : (
+                  <span className="font-medium">{item.author}</span>
+                )}
+                <span className="text-muted-foreground block text-sm">
+                  {item.role}
+                  {item.company && ` at ${item.company}`}
+                </span>
+              </div>
             </footer>
           </blockquote>
         ))}
