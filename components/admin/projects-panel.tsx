@@ -114,39 +114,6 @@ export function ProjectsPanel() {
     clearPendingCover();
   }
 
-  function duplicateAsWebProject() {
-    const techFromInput = techInput
-      .split(',')
-      .map((s) => s.trim())
-      .filter(Boolean);
-    const technologies =
-      techFromInput.length > 0 ? techFromInput : [...(form.technologies ?? [])];
-    const linksFiltered = (form.links ?? []).filter((l) => l.type !== 'appStore' && l.type !== 'playStore');
-    const links =
-      linksFiltered.length > 0 ? linksFiltered : [{ type: 'website' as const, url: '' }];
-    setIsNew(true);
-    setForm({
-      ...emptyForm,
-      title: form.title.trim(),
-      description: form.description.trim(),
-      image: form.image?.trim() ?? '',
-      technologies,
-      category: 'web',
-      links,
-      language: form.language?.trim() ?? '',
-      releaseDate: form.releaseDate?.trim() ?? '',
-      experience: form.experience?.trim() ?? '',
-      platforms: [...(form.platforms ?? [])],
-      tags: [...(form.tags ?? [])],
-      webFramework: '',
-      webHosting: '',
-    });
-    setTechInput(technologies.join(', '));
-    setTagsInput((form.tags ?? []).join(', '));
-    setPlatformsInput((form.platforms ?? []).join(', '));
-    clearPendingCover();
-  }
-
   function startEdit(p: Project) {
     setIsNew(false);
     setForm({ ...p, links: [...(p.links ?? [])] });
@@ -465,24 +432,9 @@ export function ProjectsPanel() {
         </Card>
 
         <Card className="p-4 space-y-4 max-h-[85vh] overflow-y-auto">
-          <div className="flex flex-wrap items-start justify-between gap-3">
-            <h2 className="font-medium text-sm text-muted-foreground">
-              {isNew ? t('admin.projects.formNew') : t('admin.projects.formEdit')}
-            </h2>
-            {!isNew && !isWeb ? (
-              <Button
-                type="button"
-                variant="outline"
-                size="sm"
-                className="shrink-0"
-                disabled={saving}
-                onClick={duplicateAsWebProject}
-                title={t('admin.projects.duplicateAsWebHint')}
-              >
-                {t('admin.projects.duplicateAsWeb')}
-              </Button>
-            ) : null}
-          </div>
+          <h2 className="font-medium text-sm text-muted-foreground">
+            {isNew ? t('admin.projects.formNew') : t('admin.projects.formEdit')}
+          </h2>
           <div className="space-y-2">
             <Label htmlFor="pt">{t('admin.projects.labelTitle')}</Label>
             <Input

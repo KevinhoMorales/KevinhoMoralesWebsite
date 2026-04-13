@@ -434,8 +434,6 @@
       "placeholderWebFramework": "Next.js, React, Vite, Astro…",
       "labelWebHosting": "Hosting / CDN",
       "placeholderWebHosting": "Vercel, Netlify, Firebase Hosting…",
-      "duplicateAsWeb": "Duplicate as web project",
-      "duplicateAsWebHint": "New draft: Web category, App Store / Play links removed, other links kept. Save to add the second entry.",
       "labelTech": "Technologies (comma-separated)",
       "labelExperience": "Experience / client",
       "labelPlatforms": "Platforms (comma-separated)",

@@ -434,8 +434,6 @@
       "placeholderWebFramework": "Next.js, React, Vite, Astro…",
       "labelWebHosting": "Hospedagem / CDN",
       "placeholderWebHosting": "Vercel, Netlify, Firebase Hosting…",
-      "duplicateAsWeb": "Duplicar como projeto web",
-      "duplicateAsWebHint": "Novo rascunho: categoria Web, links de lojas removidos, demais mantidos. Salve para criar a segunda entrada.",
       "labelTech": "Tecnologias (vírgula)",
       "labelExperience": "Experiência / cliente",
       "labelPlatforms": "Plataformas (vírgula)",

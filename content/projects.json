@@ -87,13 +87,12 @@
   {
     "id": "devlokos",
     "title": "DevLokos",
-    "description": "Tech podcast app",
+    "description": "Podcast y comunidad DevLokos (app Flutter / iOS y Android).",
     "technologies": [
-      "React",
-      "Swift",
-      "Dart"
+      "Dart",
+      "Flutter"
     ],
-    "category": "web",
+    "category": "flutter",
     "links": [
       {
         "type": "website",
@@ -111,11 +110,45 @@
     "experience": "DevLokos Enterprise",
     "platforms": [
       "iPhone",
-      "iPad"
+      "iPad",
+      "Android"
     ],
     "tags": [
-      "Podcast"
-    ]
+      "Podcast",
+      "App"
+    ],
+    "releaseDate": "2025-10-28"
+  },
+  {
+    "id": "devlokos-web",
+    "title": "DevLokos (Web)",
+    "description": "Sitio web, comunidad y podcast DevLokos (React).",
+    "technologies": [
+      "React",
+      "TypeScript"
+    ],
+    "category": "web",
+    "links": [
+      {
+        "type": "website",
+        "url": "https://devlokos.com/"
+      },
+      {
+        "type": "github",
+        "url": "https://github.com/devlokos"
+      }
+    ],
+    "experience": "DevLokos Enterprise",
+    "platforms": [
+      "Web",
+      "Responsive"
+    ],
+    "tags": [
+      "Podcast",
+      "Community"
+    ],
+    "webFramework": "React",
+    "webHosting": "Vercel"
   },
   {
     "id": "padeltrack",

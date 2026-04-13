@@ -769,6 +769,16 @@
         "type": "appStore",
         "url": "https://apps.apple.com/ec/app/devlokos/id6754109507",
         "label": "App Store"
+      },
+      {
+        "type": "playStore",
+        "url": "https://play.google.com/store/apps/details?id=com.devlokos.devlokosdart",
+        "label": "Play Store"
+      },
+      {
+        "type": "website",
+        "url": "https://devlokos.com/",
+        "label": "Web"
       }
     ]
   },
