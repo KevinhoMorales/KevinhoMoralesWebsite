@@ -152,7 +152,8 @@
   },
   "recommendations": {
     "kicker": "Testimonials",
-    "title": "What people say"
+    "title": "What people say",
+    "linkedInCardAria": "Open {{name}}'s LinkedIn profile"
   },
   "connect": {
     "kicker": "Contact",

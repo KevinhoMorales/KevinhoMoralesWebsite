@@ -21,9 +21,21 @@ type Labels = {
   attendees: string;
   photosNote: string;
   footer: string;
+  details: string;
+  photos: string;
+  viewEvent: string;
+  watchVideo: string;
   types: Record<Conference['type'], string>;
   platforms: Record<(typeof CONFERENCE_LOCATION_PLATFORMS)[number], string>;
 };
+
+const PRIMARY: [number, number, number] = [14, 110, 92];
+const SLATE_50: [number, number, number] = [248, 250, 252];
+const SLATE_200: [number, number, number] = [226, 232, 240];
+const SLATE_500: [number, number, number] = [100, 116, 139];
+const SLATE_600: [number, number, number] = [71, 85, 105];
+const SLATE_800: [number, number, number] = [30, 41, 59];
+const SLATE_900: [number, number, number] = [15, 23, 42];
 
 const LABELS: Record<ConferencePdfLocale, Labels> = {
   en: {
@@ -41,6 +53,10 @@ const LABELS: Record<ConferencePdfLocale, Labels> = {
     attendees: 'Attendees',
     photosNote: 'more photos in admin',
     footer: 'Exported from Kevin Morales — Talks admin',
+    details: 'Talk details',
+    photos: 'Photos',
+    viewEvent: 'Open event page →',
+    watchVideo: 'Watch recording →',
     types: {
       virtual_conference: 'Virtual conference',
       conference: 'Conference',
@@ -71,8 +87,12 @@ const LABELS: Record<ConferencePdfLocale, Labels> = {
     video: 'Video',
     event: 'Evento',
     attendees: 'Asistentes',
-    photosNote: 'fotos más en el admin',
+    photosNote: 'más fotos en el admin',
     footer: 'Exportado desde Kevin Morales — Admin de charlas',
+    details: 'Detalle de la charla',
+    photos: 'Fotografías',
+    viewEvent: 'Ver página del evento →',
+    watchVideo: 'Ver grabación →',
     types: {
       virtual_conference: 'Conferencia virtual',
       conference: 'Conferencia',
@@ -105,6 +125,10 @@ const LABELS: Record<ConferencePdfLocale, Labels> = {
     attendees: 'Participantes',
     photosNote: 'mais fotos no admin',
     footer: 'Exportado de Kevin Morales — Admin de palestras',
+    details: 'Detalhes da palestra',
+    photos: 'Fotografias',
+    viewEvent: 'Abrir página do evento →',
+    watchVideo: 'Assistir gravação →',
     types: {
       virtual_conference: 'Conferência virtual',
       conference: 'Conferência',
@@ -139,14 +163,12 @@ function venueLine(c: Conference, L: Labels): string | null {
   return Array.from(new Set(bits)).join(' · ');
 }
 
-function drawLines(doc: jsPDF, lines: string[], x: number, y: number, lh: number): number {
-  let cy = y;
-  for (const line of lines) {
-    doc.text(line, x, cy);
-    cy += lh;
-  }
-  return cy;
-}
+type LoadedPdfImage = {
+  dataUrl: string;
+  fmt: 'PNG' | 'JPEG' | 'WEBP';
+  width: number;
+  height: number;
+};
 
 async function fetchImageForPdf(
   url: string
@@ -188,6 +210,145 @@ function parseLocale(v: string | null): ConferencePdfLocale {
 
 export { parseLocale };
 
+function drawMetaCard(
+  doc: jsPDF,
+  y: number,
+  m: number,
+  maxW: number,
+  label: string,
+  value: string,
+  labelGap: number,
+  bodyLh: number
+): number {
+  doc.setFont('helvetica', 'normal');
+  doc.setFontSize(10);
+  const valueW = maxW - labelGap - 6;
+  const wrapped = value.trim()
+    ? (doc.splitTextToSize(value.trim(), valueW) as string[])
+    : ['—'];
+  const valueH = Math.max(bodyLh, wrapped.length * bodyLh);
+  const totalH = valueH + 8;
+
+  doc.setFillColor(...SLATE_50);
+  doc.rect(m, y, maxW, totalH, 'F');
+  doc.setDrawColor(...SLATE_200);
+  doc.setLineWidth(0.15);
+  doc.rect(m, y, maxW, totalH, 'S');
+  doc.setFillColor(...PRIMARY);
+  doc.rect(m, y, 1.4, totalH, 'F');
+
+  doc.setFont('helvetica', 'bold');
+  doc.setFontSize(7.5);
+  doc.setTextColor(...SLATE_500);
+  doc.text(label.toUpperCase(), m + 5, y + 5.2);
+
+  doc.setFont('helvetica', 'normal');
+  doc.setFontSize(10);
+  doc.setTextColor(...SLATE_900);
+  let vy = y + 5;
+  for (const line of wrapped) {
+    doc.text(line, m + labelGap, vy);
+    vy += bodyLh;
+  }
+
+  return y + totalH + 2.5;
+}
+
+function drawLinkCard(
+  doc: jsPDF,
+  y: number,
+  m: number,
+  maxW: number,
+  label: string,
+  linkText: string,
+  url: string,
+  labelGap: number
+): number {
+  const totalH = 14;
+
+  doc.setFillColor(...SLATE_50);
+  doc.rect(m, y, maxW, totalH, 'F');
+  doc.setDrawColor(...SLATE_200);
+  doc.setLineWidth(0.15);
+  doc.rect(m, y, maxW, totalH, 'S');
+  doc.setFillColor(...PRIMARY);
+  doc.rect(m, y, 1.4, totalH, 'F');
+
+  doc.setFont('helvetica', 'bold');
+  doc.setFontSize(7.5);
+  doc.setTextColor(...SLATE_500);
+  doc.text(label.toUpperCase(), m + 5, y + 5.2);
+
+  doc.setFont('helvetica', 'normal');
+  doc.setFontSize(10);
+  doc.setTextColor(...PRIMARY);
+  doc.textWithLink(linkText, m + labelGap, y + 5.2, { url });
+  doc.setTextColor(...SLATE_900);
+
+  return y + totalH + 2.5;
+}
+
+function drawPhotoGrid(
+  doc: jsPDF,
+  y: number,
+  m: number,
+  maxW: number,
+  yMax: number,
+  items: LoadedPdfImage[]
+): number {
+  const gap = 3.5;
+  const n = items.length;
+  if (n === 0) return y;
+
+  const availableH = yMax - y;
+  if (availableH < 24) return y;
+
+  const maxRowH = Math.min(52, availableH - 2);
+
+  if (n === 1) {
+    const props = items[0];
+    let hUse = Math.min(maxRowH, (props.height * maxW) / props.width);
+    let wUse = (props.width * hUse) / props.height;
+    if (wUse > maxW) {
+      wUse = maxW;
+      hUse = (props.height * wUse) / props.width;
+    }
+    doc.setDrawColor(...SLATE_200);
+    doc.setLineWidth(0.2);
+    doc.roundedRect(m, y, wUse, hUse, 1.2, 1.2, 'S');
+    doc.addImage(items[0].dataUrl, items[0].fmt, m, y, wUse, hUse);
+    return y + hUse + 5;
+  }
+
+  const cols = n;
+  const cellW = (maxW - (cols - 1) * gap) / cols;
+  let rowMaxH = 0;
+  const layout: { x: number; y: number; w: number; h: number; idx: number }[] = [];
+
+  for (let i = 0; i < n; i++) {
+    const props = items[i];
+    let hUse = Math.min(maxRowH, (props.height * cellW) / props.width);
+    let wUse = (props.width * hUse) / props.height;
+    if (wUse > cellW) {
+      wUse = cellW;
+      hUse = (props.height * wUse) / props.width;
+    }
+    const x = m + i * (cellW + gap) + (cellW - wUse) / 2;
+    layout.push({ x, y, w: wUse, h: hUse, idx: i });
+    rowMaxH = Math.max(rowMaxH, hUse);
+  }
+
+  for (const p of layout) {
+    doc.setDrawColor(...SLATE_200);
+    doc.setLineWidth(0.2);
+    doc.roundedRect(p.x, y, p.w, p.h, 1, 1, 'S');
+    const im = items[p.idx];
+    doc.addImage(im.dataUrl, im.fmt, p.x, y, p.w, p.h);
+  }
+
+  return y + rowMaxH + 5;
+}
+
 export async function buildConferencesPdfBuffer(
   conferences: Conference[],
   locale: ConferencePdfLocale
@@ -196,41 +357,47 @@ export async function buildConferencesPdfBuffer(
   const doc = new jsPDF({ unit: 'mm', format: 'a4' });
   const W = doc.internal.pageSize.getWidth();
   const H = doc.internal.pageSize.getHeight();
-  const m = 16;
+  const m = 14;
   const maxW = W - 2 * m;
-  const bodyLh = 5;
-  const labelGap = 34;
+  const bodyLh = 4.8;
+  const labelGap = 42;
+  const footerH = 11;
 
   for (let i = 0; i < conferences.length; i++) {
     const c = conferences[i];
     if (i > 0) doc.addPage();
 
-    let y = m;
-    doc.setFont('helvetica', 'bold');
-    doc.setFontSize(17);
-    doc.setTextColor(15, 23, 42);
     const title = (c.title || '').trim() || L.untitled;
-    const titleLines = doc.splitTextToSize(title, maxW);
-    y = drawLines(doc, titleLines, m, y + 6, 7);
-    y += 3;
+    doc.setFont('helvetica', 'bold');
+    doc.setFontSize(15);
+    const titleLines = doc.splitTextToSize(title, maxW) as string[];
+    const headerH = Math.max(30, 11 + titleLines.length * 6.8 + 10);
 
-    doc.setFont('helvetica', 'normal');
-    doc.setFontSize(10);
-    doc.setTextColor(30, 41, 59);
+    doc.setFillColor(...PRIMARY);
+    doc.rect(0, 0, W, headerH, 'F');
+
+    doc.setTextColor(255, 255, 255);
+    doc.setFont('helvetica', 'bold');
+    doc.setFontSize(15);
+    let ty = 12;
+    for (const line of titleLines) {
+      doc.text(line, m, ty);
+      ty += 6.8;
+    }
+    doc.setTextColor(...SLATE_900);
+
+    let y = headerH + 7;
+
+    doc.setFont('helvetica', 'bold');
+    doc.setFontSize(9);
+    doc.setTextColor(...PRIMARY);
+    doc.text(L.details.toUpperCase(), m, y);
+    y += 5;
 
     const row = (label: string, value: string | undefined | null) => {
       const v = (value ?? '').trim();
       if (!v) return;
-      doc.setFont('helvetica', 'bold');
-      doc.text(`${label}:`, m, y);
-      doc.setFont('helvetica', 'normal');
-      const wrapped = doc.splitTextToSize(v, maxW - labelGap);
-      let vy = y;
-      for (const line of wrapped) {
-        doc.text(line, m + labelGap, vy);
-        vy += bodyLh;
-      }
-      y = Math.max(y + bodyLh, vy) + 2;
+      y = drawMetaCard(doc, y, m, maxW, label, v, labelGap, bodyLh);
     };
 
     row(L.topic, c.topic);
@@ -244,47 +411,70 @@ export async function buildConferencesPdfBuffer(
     row(L.city, c.city);
     row(L.country, c.country);
     if (c.tags?.length) row(L.tags, c.tags.join(', '));
-    if (hasWatchableVideoUrl(c.videoUrl)) row(L.video, c.videoUrl);
-    if (c.eventUrl?.trim()) row(L.event, c.eventUrl);
 
-    y += 3;
+    if (hasWatchableVideoUrl(c.videoUrl) && c.videoUrl?.trim()) {
+      y = drawLinkCard(doc, y, m, maxW, L.video, L.watchVideo, c.videoUrl.trim(), labelGap);
+    }
 
-    const imgs = (c.images ?? []).map((r) => storageObjectPathToPublicUrl(r)).filter(Boolean);
-    const yImgStart = y;
-    const yMax = H - m - 14;
-    const maxImagesOnPage = 4;
-    let shown = 0;
+    if (c.eventUrl?.trim()) {
+      y = drawLinkCard(doc, y, m, maxW, L.event, L.viewEvent, c.eventUrl.trim(), labelGap);
+    }
 
-    for (let j = 0; j < imgs.length && shown < maxImagesOnPage; j++) {
-      const got = await fetchImageForPdf(imgs[j]);
+    y += 4;
+
+    const imgPaths = (c.images ?? []).map((r) => storageObjectPathToPublicUrl(r)).filter(Boolean);
+    const maxPhotosInPdf = 3;
+    const loaded: LoadedPdfImage[] = [];
+
+    for (let j = 0; j < imgPaths.length && loaded.length < maxPhotosInPdf; j++) {
+      const got = await fetchImageForPdf(imgPaths[j]);
       if (!got) continue;
       try {
         const props = doc.getImageProperties(got.dataUrl);
-        const remaining = yMax - y;
-        if (remaining < 22) break;
-        const targetH = Math.min(48, remaining - 2, (props.height * maxW) / props.width);
-        const targetW = (props.width * targetH) / props.height;
-        const wUse = Math.min(maxW, targetW);
-        const hUse = (props.height * wUse) / props.width;
-        doc.addImage(got.dataUrl, got.fmt, m, y, wUse, hUse);
-        y += hUse + 4;
-        shown += 1;
+        loaded.push({
+          dataUrl: got.dataUrl,
+          fmt: got.fmt,
+          width: props.width,
+          height: props.height,
+        });
       } catch {
-        /* formato no soportado por el motor PDF */
+        /* formato no soportado */
       }
     }
 
-    if (imgs.length > shown) {
-      doc.setFontSize(8);
-      doc.setTextColor(100, 116, 139);
-      doc.text(`+${imgs.length - shown} ${L.photosNote}`, m, Math.max(y, yImgStart + 6));
-      doc.setTextColor(30, 41, 59);
+    const yContentMax = H - m - footerH;
+
+    if (loaded.length > 0) {
+      if (y > yContentMax - 35) {
+        doc.addPage();
+        y = m;
+      }
+
+      doc.setFont('helvetica', 'bold');
+      doc.setFontSize(9);
+      doc.setTextColor(...PRIMARY);
+      doc.text(L.photos.toUpperCase(), m, y);
+      y += 5;
+
+      y = drawPhotoGrid(doc, y, m, maxW, yContentMax, loaded);
     }
 
-    doc.setFontSize(8);
+    if (imgPaths.length > loaded.length) {
+      doc.setFont('helvetica', 'italic');
+      doc.setFontSize(8);
+      doc.setTextColor(...SLATE_500);
+      doc.text(`+${imgPaths.length - loaded.length} ${L.photosNote}`, m, Math.min(y, yContentMax - 2));
+      doc.setFont('helvetica', 'normal');
+      doc.setTextColor(...SLATE_900);
+    }
+
+    doc.setDrawColor(...SLATE_200);
+    doc.setLineWidth(0.25);
+    doc.line(m, H - 10, W - m, H - 10);
+    doc.setFontSize(7.5);
     doc.setTextColor(148, 163, 184);
-    doc.text(L.footer, m, H - 8);
-    doc.setTextColor(0, 0, 0);
+    doc.setFont('helvetica', 'normal');
+    doc.text(L.footer, m, H - 5.5);
   }
 
   const out = doc.output('arraybuffer');
