@@ -33,8 +33,6 @@ const PRIMARY: [number, number, number] = [14, 110, 92];
 const SLATE_50: [number, number, number] = [248, 250, 252];
 const SLATE_200: [number, number, number] = [226, 232, 240];
 const SLATE_500: [number, number, number] = [100, 116, 139];
-const SLATE_600: [number, number, number] = [71, 85, 105];
-const SLATE_800: [number, number, number] = [30, 41, 59];
 const SLATE_900: [number, number, number] = [15, 23, 42];
 
 const LABELS: Record<ConferencePdfLocale, Labels> = {
