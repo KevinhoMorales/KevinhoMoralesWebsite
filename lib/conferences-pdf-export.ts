@@ -53,8 +53,8 @@ const LABELS: Record<ConferencePdfLocale, Labels> = {
     footer: 'Exported from Kevin Morales — Talks admin',
     details: 'Talk details',
     photos: 'Photos',
-    viewEvent: 'Open event page →',
-    watchVideo: 'Watch recording →',
+    viewEvent: 'Open event page',
+    watchVideo: 'Watch recording',
     types: {
       virtual_conference: 'Virtual conference',
       conference: 'Conference',
@@ -89,8 +89,8 @@ const LABELS: Record<ConferencePdfLocale, Labels> = {
     footer: 'Exportado desde Kevin Morales — Admin de charlas',
     details: 'Detalle de la charla',
     photos: 'Fotografías',
-    viewEvent: 'Ver página del evento →',
-    watchVideo: 'Ver grabación →',
+    viewEvent: 'Ver página del evento',
+    watchVideo: 'Ver grabación',
     types: {
       virtual_conference: 'Conferencia virtual',
       conference: 'Conferencia',
@@ -125,8 +125,8 @@ const LABELS: Record<ConferencePdfLocale, Labels> = {
     footer: 'Exportado de Kevin Morales — Admin de palestras',
     details: 'Detalhes da palestra',
     photos: 'Fotografias',
-    viewEvent: 'Abrir página do evento →',
-    watchVideo: 'Assistir gravação →',
+    viewEvent: 'Abrir página do evento',
+    watchVideo: 'Assistir gravação',
     types: {
       virtual_conference: 'Conferência virtual',
       conference: 'Conferência',
@@ -277,11 +277,26 @@ function drawLinkCard(
   doc.setTextColor(...SLATE_500);
   doc.text(label.toUpperCase(), m + 5, y + 5.2);
 
+  const textX = m + labelGap;
+  const textY = y + 5.2;
+
   doc.setFont('helvetica', 'normal');
   doc.setFontSize(10);
   doc.setTextColor(...PRIMARY);
-  doc.textWithLink(linkText, m + labelGap, y + 5.2, { url });
+  /** `textWithLink` provoca espaciado letra a letra en varios visores; texto normal + link + subrayado. */
+  doc.text(linkText, textX, textY);
+
+  const textW = doc.getTextWidth(linkText);
+  const padX = 1;
+  const hitH = 6.8;
+  doc.link(textX - padX, textY - 4.5, textW + 2 * padX, hitH, { url });
+
+  doc.setDrawColor(...PRIMARY);
+  doc.setLineWidth(0.4);
+  doc.line(textX, textY + 1, textX + textW, textY + 1);
+
   doc.setTextColor(...SLATE_900);
+  doc.setLineWidth(0.15);
 
   return y + totalH + 2.5;
 }
