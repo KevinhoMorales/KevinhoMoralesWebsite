@@ -19,9 +19,7 @@
     "podcast": "Podcast",
     "speaking": "Speaking",
     "adminLogin": "Access",
-    "waitlist": "Get the book",
-    "waitlistChip": "Book",
-    "waitlistBook": "Get the book",
+    "book": "Book",
     "openMenu": "Open menu",
     "toggleMenu": "Toggle menu",
     "site": "Site",
@@ -64,6 +62,20 @@
     "bioP2": "Passionate community leader and mentor, dedicated to fostering technological growth through Google Developer Groups (GDG) and educational content creation. Committed to code quality, collaborative problem-solving, and continuous learning.",
     "bioP3": "Podcast host and founder of DevLokos.",
     "motto": "Be DIFFERENT and leave a legacy to the world that everything is possible when you have it in your mind."
+  },
+  "bookSection": {
+    "kicker": "Book",
+    "title": "Dominando Kotlin, Swift y Dart",
+    "subtitle": "A practical Spanish-language guide to shipping solid apps with three core languages for mobile and multi-platform development.",
+    "body": "The waitlist pre-order window has closed. The book is heading toward official launch—built for real teams, with architecture, code quality, and product-minded engineering.",
+    "bulletArchitecture": "Architecture, modularization, and production-grade practices.",
+    "bulletInterop": "Kotlin, Swift, and Dart: strengths and how they fit modern multi-platform work.",
+    "bulletCareer": "From fundamentals to decisions that move your career as a mobile engineer.",
+    "ctaStore": "Buy the book",
+    "storeSoon": "The public purchase link will go live at launch. Until then, reach out via contact.",
+    "ctaContact": "Contact",
+    "coverAlt": "Book cover: Dominando Kotlin, Swift y Dart — Kevin Morales",
+    "promoAlt": "Promotional artwork for Dominando Kotlin, Swift y Dart: book mockup on a desk with benefit copy for multi-platform developers."
   },
   "experience": {
     "kicker": "Experience",

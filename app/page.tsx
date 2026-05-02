@@ -17,6 +17,7 @@ import { ExperienceSection } from '@/components/sections/experience';
 import { ProjectsSection } from '@/components/sections/projects';
 import { PodcastSectionUI } from '@/components/sections/podcast-section';
 import { ArticlesSection } from '@/components/sections/articles-section';
+import { BookSection } from '@/components/sections/book-section';
 import { AchievementsSection } from '@/components/sections/achievements-section';
 import { ConferencesSection } from '@/components/sections/conferences';
 import { Recommendations } from '@/components/sections/recommendations';
@@ -49,6 +50,7 @@ export default async function Home() {
       <ConferencesSection conferences={conferences} />
       <PodcastSectionUI />
       <ArticlesSection />
+      <BookSection />
       <AchievementsSection achievements={achievements} />
       <Recommendations testimonials={testimonials} />
       <Connect profile={profile} />

@@ -27,7 +27,9 @@ import { cn } from '@/lib/utils';
 
 import { useWaitlist } from './waitlist-context';
 
-const BOOK_SRC = '/images/book-waitlist.png';
+import { BOOK_COVER_PATH } from '@/lib/book-cover-path';
+
+const BOOK_SRC = BOOK_COVER_PATH;
 
 const HEARD_FROM_SELECT_KEYS = WAITLIST_HEARD_FROM_VALUES.filter((v) => v !== '');
 

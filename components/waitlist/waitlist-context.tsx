@@ -10,6 +10,7 @@ import {
   safeSessionGet,
   safeSessionSet,
 } from '@/components/waitlist/waitlist-storage';
+import { isWaitlistAutoPopupAllowed } from '@/lib/waitlist-signups-config';
 
 const STORAGE_DISMISSED = 'km-waitlist-dismissed-v1';
 const STORAGE_JOINED = 'km-waitlist-joined-v1';
@@ -51,6 +52,7 @@ export function WaitlistProvider({ children }: { children: ReactNode }) {
 
   useEffect(() => {
     if (!pathname || pathname.startsWith('/admin')) return;
+    if (!isWaitlistAutoPopupAllowed()) return;
 
     const joined = safeLocalGet(STORAGE_JOINED) === '1';
     const dismissed = safeLocalGet(STORAGE_DISMISSED) === '1';

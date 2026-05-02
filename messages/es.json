@@ -19,9 +19,7 @@
     "podcast": "Podcast",
     "speaking": "Charlas",
     "adminLogin": "Acceso",
-    "waitlist": "Obtén el libro",
-    "waitlistChip": "Libro",
-    "waitlistBook": "Obtén el libro",
+    "book": "Libro",
     "openMenu": "Abrir menú",
     "toggleMenu": "Menú",
     "site": "Sitio",
@@ -64,6 +62,20 @@
     "bioP2": "Líder comunitario y mentor, enfocado en impulsar el crecimiento tecnológico a través de Google Developer Groups (GDG) y contenido educativo. Comprometido con la calidad del código, el trabajo en equipo para resolver problemas y el aprendizaje continuo.",
     "bioP3": "Conductor del podcast y fundador de DevLokos.",
     "motto": "Sé DIFERENTE y deja un legado al mundo: todo es posible cuando lo tienes claro en la mente."
+  },
+  "bookSection": {
+    "kicker": "Libro",
+    "title": "Dominando Kotlin, Swift y Dart",
+    "subtitle": "Guía práctica en español para construir apps sólidas con tres lenguajes centrales del desarrollo mobile y multiplataforma.",
+    "body": "La etapa de lista de espera con precio de preventa ya cerró. El libro avanza hacia el lanzamiento oficial: contenido orientado a equipos reales, con arquitectura, calidad de código y decisiones de producto.",
+    "bulletArchitecture": "Arquitectura, modularización y prácticas aplicadas a codebases de producción.",
+    "bulletInterop": "Kotlin, Swift y Dart: fortalezas de cada uno y cómo encajan en estrategias multiplataforma.",
+    "bulletCareer": "De fundamentos a criterios que marcan tu carrera como mobile engineer.",
+    "ctaStore": "Comprar el libro",
+    "storeSoon": "El enlace de compra público se publicará con el lanzamiento. Mientras tanto, puedes escribirme desde contacto.",
+    "ctaContact": "Contacto",
+    "coverAlt": "Portada: Dominando Kotlin, Swift y Dart — Kevin Morales",
+    "promoAlt": "Ilustración promocional del libro Dominando Kotlin, Swift y Dart: mockup del libro en un escritorio con texto de beneficio para desarrolladores multiplataforma."
   },
   "experience": {
     "kicker": "Experiencia",

@@ -22,6 +22,7 @@
 
 # Firebase Admin SDK (clave privada; mantener solo en local)
 Kevinho Morales Firebase Admin SDK.json
+firebase-admin.local.json
 
 # debug
 npm-debug.log*

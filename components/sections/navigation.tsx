@@ -10,10 +10,9 @@ import { Sheet, SheetContent, SheetTrigger } from '@/components/ui/sheet'
 import { ThemeToggle } from '@/components/theme-toggle'
 import { LocaleSwitcher } from '@/components/i18n/locale-switcher'
 import { useI18n } from '@/components/i18n/locale-provider'
-import { useWaitlist } from '@/components/waitlist/waitlist-context'
 import { handleHomeHashLinkClick } from '@/lib/section-scroll'
 import { cn } from '@/lib/utils'
-import { ChevronDown, Menu, Sparkles } from 'lucide-react'
+import { ChevronDown, Menu } from 'lucide-react'
 
 function NavMoreDropdown({
   items,
@@ -52,14 +51,14 @@ function NavMoreDropdown({
   }, [open])
 
   return (
-    <div className="relative" ref={wrapRef}>
+    <div className="relative shrink-0 overflow-visible" ref={wrapRef}>
       <button
         type="button"
         aria-expanded={open}
         aria-haspopup="menu"
         aria-label={moreAria}
         onClick={() => setOpen((v) => !v)}
-        className="inline-flex items-center gap-0.5 px-3 xl:px-4 py-2 text-xs xl:text-sm font-medium text-muted-foreground hover:text-foreground hover:bg-secondary/50 rounded-full transition-colors whitespace-nowrap"
+        className="relative z-10 inline-flex items-center gap-0.5 px-3 xl:px-4 py-2 text-xs xl:text-sm font-medium text-muted-foreground hover:text-foreground hover:bg-secondary/50 rounded-full transition-colors whitespace-nowrap"
       >
         {moreLabel}
         <ChevronDown className={cn('h-3.5 w-3.5 shrink-0 transition-transform duration-200', open && 'rotate-180')} aria-hidden />
@@ -67,7 +66,7 @@ function NavMoreDropdown({
       {open ? (
         <div
           role="menu"
-          className="absolute right-0 top-full z-[100] mt-1.5 min-w-[12rem] overflow-hidden rounded-xl border border-border bg-popover py-1 text-popover-foreground shadow-lg"
+          className="absolute right-0 top-full z-[100] mt-1.5 min-w-[13.5rem] overflow-hidden rounded-xl border border-border bg-popover py-1 text-popover-foreground shadow-lg"
         >
           {items.map((item) => (
             <Link
@@ -109,7 +108,6 @@ function NavMoreDropdown({
 export function Navigation() {
   const { t } = useI18n()
   const pathname = usePathname()
-  const { navTeaserVisible, openWaitlist, waitlistJoined } = useWaitlist()
   const [isScrolled, setIsScrolled] = useState(false)
   const [isOpen, setIsOpen] = useState(false)
 
@@ -124,6 +122,7 @@ export function Navigation() {
 
   const navMore = useMemo(
     () => [
+      { name: t('nav.book'), href: '/#book' },
       { name: t('nav.articles'), href: '/#articles' },
       { name: t('nav.podcast'), href: '/#podcast' },
       { name: t('nav.about'), href: '/#about' },
@@ -135,9 +134,6 @@ export function Navigation() {
     () => ({ name: t('nav.adminLogin'), href: '/admin/login' }),
     [t]
   )
-
-  /** CTA del libro: visible siempre (excepto admin). Siempre estilo primario (gradiente); el estado “joined” no debe apagar el CTA en la barra. */
-  const showBookNav = pathname != null && !pathname.startsWith('/admin')
 
   useEffect(() => {
     const handleScroll = () => setIsScrolled(window.scrollY > 50)
@@ -166,19 +162,13 @@ export function Navigation() {
             height={36}
             className="h-8 w-8 rounded-full object-cover ring-2 ring-primary/30 sm:h-9 sm:w-9"
           />
-          <span
-            className={cn(
-              'hidden truncate',
-              /* Con CTA del libro en barra: en móvil solo avatar + chip; el nombre vuelve desde sm */
-              showBookNav ? 'sm:inline' : 'xs:inline'
-            )}
-          >
+          <span className="hidden truncate xs:inline">
             Kevin Morales
           </span>
         </Link>
 
         <div className="flex min-w-0 flex-1 items-center justify-end gap-1.5 sm:gap-2">
-          <div className="hidden shrink-0 items-center gap-0.5 rounded-full bg-secondary/30 px-1.5 py-1 lg:flex">
+          <div className="hidden shrink-0 items-center gap-0.5 overflow-visible rounded-full bg-secondary/30 py-1 pl-1.5 pr-3 lg:flex">
             {navMain.map((item) => (
               <Link
                 key={item.href}
@@ -197,30 +187,6 @@ export function Navigation() {
               pathname={pathname}
             />
           </div>
-
-          {showBookNav ? (
-            <button
-              type="button"
-              onClick={() => openWaitlist('nav')}
-              aria-label={t('nav.waitlist')}
-              className={cn(
-                'group relative inline-flex shrink-0 items-center rounded-full border-2 border-yellow-400 bg-gradient-to-r from-primary via-teal-600 to-primary bg-[length:200%_100%] font-semibold tracking-tight text-primary-foreground shadow-md shadow-primary/40 shadow-[0_0_0_1px_rgba(250,204,21,0.35)]',
-                'gap-1.5 px-2.5 py-1.5 text-[11px] sm:gap-2 sm:px-3.5 sm:py-2 sm:text-xs',
-                'animate-shimmer transition-[filter,transform] hover:brightness-110 hover:border-yellow-300 hover:shadow-lg hover:shadow-primary/45 focus:outline-none focus-visible:ring-2 focus-visible:ring-yellow-400 focus-visible:ring-offset-2 active:scale-[0.98] dark:border-yellow-400/95'
-              )}
-            >
-              <span className="pointer-events-none absolute -inset-px rounded-full bg-gradient-to-r from-primary/0 via-white/25 to-primary/0 opacity-0 blur-px transition-opacity group-hover:opacity-100" aria-hidden />
-              <Sparkles className="h-3.5 w-3.5 shrink-0 text-primary-foreground opacity-95 sm:h-4 sm:w-4" aria-hidden />
-              <span className="truncate sm:hidden">{t('nav.waitlistChip')}</span>
-              <span className="hidden whitespace-nowrap sm:inline">{t('nav.waitlist')}</span>
-              {navTeaserVisible && !waitlistJoined ? (
-                <>
-                  <span className="absolute -right-0.5 -top-0.5 flex h-2.5 w-2.5 rounded-full bg-primary-foreground/90 motion-safe:animate-ping" aria-hidden />
-                  <span className="absolute -right-0.5 -top-0.5 flex h-2.5 w-2.5 rounded-full bg-amber-300 ring-2 ring-primary" aria-hidden />
-                </>
-              ) : null}
-            </button>
-          ) : null}
 
           <span className="inline-flex shrink-0">
             <LocaleSwitcher />
@@ -262,7 +228,7 @@ export function Navigation() {
                     {t('nav.content')}
                   </p>
                   {navMore.map((item) => (
-                    <Button key={item.href} variant="ghost" className="h-11 justify-start text-base" asChild>
+                    <Button key={`${item.href}-${item.name}`} variant="ghost" className="h-11 justify-start text-base" asChild>
                       <Link
                         href={item.href}
                         onClick={(e) => {
