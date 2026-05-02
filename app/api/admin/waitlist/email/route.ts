@@ -3,6 +3,9 @@ import { NextResponse } from 'next/server';
 import { AdminUnauthorized, assertAdminUser, adminUnauthorizedResponse } from '@/lib/admin-api-server';
 import { sendWaitlistAdminBulkEmails } from '@/lib/send-waitlist-admin-bulk';
 
+/** Hasta ~100 destinatarios con pausas de 10s entre lotes de 5 puede tardar >2 min (requiere límite de función en Vercel, p. ej. Pro). */
+export const maxDuration = 300;
+
 export async function POST(req: Request) {
   try {
     await assertAdminUser(req);

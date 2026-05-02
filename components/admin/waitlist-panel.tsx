@@ -426,19 +426,21 @@ export function WaitlistPanel() {
           }
         }}
       >
-        <DialogContent className="flex max-h-[min(90vh,720px)] flex-col sm:max-w-lg">
-          <DialogHeader>
-            <DialogTitle>{t('admin.waitlistPanel.emailDialogTitle')}</DialogTitle>
-            <DialogDescription>
+        <DialogContent className="flex max-h-[min(90vh,720px)] flex-col gap-0 p-6 sm:p-8 sm:max-w-lg">
+          <DialogHeader className="gap-2 space-y-0 sm:text-left">
+            <DialogTitle className="pr-8 text-lg">{t('admin.waitlistPanel.emailDialogTitle')}</DialogTitle>
+            <DialogDescription className="text-pretty leading-relaxed">
               {t('admin.waitlistPanel.emailDialogDesc', { max: String(ADMIN_WAITLIST_BULK_MAX) })}
             </DialogDescription>
-            <p className="text-foreground pt-1 text-sm font-medium">
+            <p className="text-foreground mt-3 text-sm font-medium leading-normal">
               {t('admin.waitlistPanel.emailDialogRecipientCount', { count: String(selectedRecipientCount) })}
             </p>
           </DialogHeader>
-          <div className="flex min-h-0 flex-1 flex-col space-y-3 overflow-y-auto py-1">
-            <div className="space-y-2">
-              <Label htmlFor="waitlist-bulk-subject">{t('admin.waitlistPanel.emailDialogSubject')}</Label>
+          <div className="mt-5 flex min-h-0 flex-1 flex-col gap-6 overflow-y-auto pr-0.5">
+            <div className="space-y-2.5">
+              <Label htmlFor="waitlist-bulk-subject" className="text-sm font-medium">
+                {t('admin.waitlistPanel.emailDialogSubject')}
+              </Label>
               <Input
                 id="waitlist-bulk-subject"
                 value={emailSubject}
@@ -446,26 +448,29 @@ export function WaitlistPanel() {
                 placeholder={t('admin.waitlistPanel.emailDialogSubjectPlaceholder')}
                 disabled={emailSending}
                 autoComplete="off"
+                className="h-11 px-3.5 py-2.5"
               />
             </div>
-            <div className="flex min-h-0 flex-1 flex-col space-y-2">
-              <Label htmlFor="waitlist-bulk-body">{t('admin.waitlistPanel.emailDialogBody')}</Label>
+            <div className="flex min-h-0 flex-1 flex-col gap-2.5">
+              <Label htmlFor="waitlist-bulk-body" className="text-sm font-medium">
+                {t('admin.waitlistPanel.emailDialogBody')}
+              </Label>
               <Textarea
                 id="waitlist-bulk-body"
                 value={emailBody}
                 onChange={(e) => setEmailBody(e.target.value)}
                 placeholder={t('admin.waitlistPanel.emailDialogBodyPlaceholder')}
                 disabled={emailSending}
-                className="min-h-[200px] flex-1 resize-y"
+                className="min-h-[200px] flex-1 resize-y px-3.5 py-3.5 leading-relaxed"
               />
             </div>
             {emailFeedback?.type === 'error' ? (
-              <p className="text-destructive text-sm" role="alert">
+              <p className="text-destructive mt-1 text-sm leading-relaxed" role="alert">
                 {emailFeedback.message}
               </p>
             ) : null}
             {emailFeedback?.type === 'ok' ? (
-              <div className="space-y-1 text-sm" role="status">
+              <div className="mt-1 space-y-2 text-sm leading-relaxed" role="status">
                 <p className="font-medium text-emerald-600 dark:text-emerald-400">
                   {t('admin.waitlistPanel.emailResultOk', {
                     sent: String(emailFeedback.sent),
@@ -486,7 +491,7 @@ export function WaitlistPanel() {
               </div>
             ) : null}
           </div>
-          <DialogFooter className="gap-2 sm:gap-0">
+          <DialogFooter className="mt-8 flex-col-reverse gap-3 border-t border-border/50 pt-6 sm:flex-row sm:justify-end sm:gap-2">
             <Button type="button" variant="outline" onClick={() => setEmailDialogOpen(false)} disabled={emailSending}>
               {t('admin.common.cancel')}
             </Button>
