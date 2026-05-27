@@ -2,17 +2,19 @@
 
 import Image from 'next/image'
 import Link from 'next/link'
-import { BookOpen, ExternalLink, Mail } from 'lucide-react'
+import { BookOpen, Mail } from 'lucide-react'
+import { FaAmazon } from 'react-icons/fa'
+import { SiGumroad } from 'react-icons/si'
 
 import { Button } from '@/components/ui/button'
 import { Card, CardContent } from '@/components/ui/card'
 import { ScrollReveal } from '@/components/scroll-reveal'
 import { useI18n } from '@/components/i18n/locale-provider'
 import { BOOK_SECTION_PROMO_PATH } from '@/lib/book-cover-path'
+import { BOOK_AMAZON_URL, BOOK_GUMROAD_URL } from '@/lib/book-store-links'
 
 export function BookSection() {
   const { t } = useI18n()
-  const storeUrl = (process.env.NEXT_PUBLIC_BOOK_STORE_URL ?? '').trim()
 
   return (
     <section
@@ -75,16 +77,28 @@ export function BookSection() {
             </ul>
 
             <div className="flex flex-col gap-3 pt-2 sm:flex-row sm:flex-wrap">
-              {storeUrl ? (
-                <Button asChild className="rounded-full">
-                  <a href={storeUrl} target="_blank" rel="noopener noreferrer">
-                    {t('bookSection.ctaStore')}
-                    <ExternalLink className="ml-2 h-4 w-4" aria-hidden />
-                  </a>
-                </Button>
-              ) : (
-                <p className="text-sm text-muted-foreground sm:self-center">{t('bookSection.storeSoon')}</p>
-              )}
+              <Button asChild className="rounded-full">
+                <a
+                  href={BOOK_AMAZON_URL}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  aria-label={t('bookSection.ctaAmazonAria')}
+                >
+                  <FaAmazon className="mr-2 h-4 w-4" aria-hidden />
+                  {t('bookSection.ctaAmazon')}
+                </a>
+              </Button>
+              <Button variant="outline" asChild className="rounded-full">
+                <a
+                  href={BOOK_GUMROAD_URL}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  aria-label={t('bookSection.ctaGumroadAria')}
+                >
+                  <SiGumroad className="mr-2 h-4 w-4" aria-hidden />
+                  {t('bookSection.ctaGumroad')}
+                </a>
+              </Button>
               <Button variant="outline" asChild className="rounded-full">
                 <Link href="/#connect">
                   <Mail className="mr-2 h-4 w-4" aria-hidden />
