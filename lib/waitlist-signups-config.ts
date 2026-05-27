@@ -8,7 +8,7 @@ export function isWaitlistAcceptingSubmissions(): boolean {
   return v !== 'false' && v !== '0' && v !== 'no';
 }
 
-/** Popup de lista de espera desactivado: el anuncio del libro usa book-launch modal. */
+/** Popup automático de lista de espera desactivado (libro disponible en sección #book). */
 export function isWaitlistAutoPopupAllowed(): boolean {
   return false;
 }

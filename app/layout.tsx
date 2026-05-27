@@ -11,7 +11,6 @@ import { HashScroll } from '@/components/hash-scroll';
 import { Navigation } from '@/components/sections/navigation';
 import { SiteJsonLd } from '@/components/seo/site-json-ld';
 import { WaitlistRoot } from '@/components/waitlist/waitlist-root';
-import { BookLaunchRoot } from '@/components/book-launch/book-launch-root';
 import { ErrorBoundary } from '@/components/error-boundary';
 import { LocaleProvider } from '@/components/i18n/locale-provider';
 import { COOKIE_NAME, isLocale } from '@/lib/i18n/config';
@@ -110,7 +109,6 @@ export default async function RootLayout({
         <LocaleProvider initialLocale={initialLocale}>
           <ThemeProvider>
             <WaitlistRoot>
-              <BookLaunchRoot>
               <FirebaseAnalytics />
               <Analytics />
               <AnalyticsPageViewsBoundary />
@@ -123,7 +121,6 @@ export default async function RootLayout({
                   <ErrorBoundary>{children}</ErrorBoundary>
                 </div>
               </div>
-              </BookLaunchRoot>
             </WaitlistRoot>
           </ThemeProvider>
         </LocaleProvider>
