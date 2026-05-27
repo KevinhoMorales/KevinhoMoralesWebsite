@@ -116,13 +116,13 @@ export function Navigation() {
       { name: t('nav.experience'), href: '/#experience' },
       { name: t('nav.speaking'), href: '/#conferences' },
       { name: t('nav.projects'), href: '/#projects' },
+      { name: t('nav.getBook'), href: '/#book' },
     ],
     [t]
   )
 
   const navMore = useMemo(
     () => [
-      { name: t('nav.book'), href: '/#book' },
       { name: t('nav.articles'), href: '/#articles' },
       { name: t('nav.podcast'), href: '/#podcast' },
       { name: t('nav.about'), href: '/#about' },

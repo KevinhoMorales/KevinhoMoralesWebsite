@@ -18,6 +18,7 @@
     "articles": "Articles",
     "podcast": "Podcast",
     "speaking": "Speaking",
+    "getBook": "Get my book",
     "adminLogin": "Access",
     "book": "Book",
     "openMenu": "Open menu",
@@ -78,6 +79,11 @@
     "ctaContact": "Contact",
     "coverAlt": "Book cover: Dominando Kotlin, Swift y Dart — Kevin Morales",
     "promoAlt": "Promotional artwork for Dominando Kotlin, Swift y Dart: book mockup on a desk with benefit copy for multi-platform developers."
+  },
+  "bookLaunch": {
+    "title": "Dominando Kotlin, Swift y Dart",
+    "body": "Now available on Amazon and Gumroad—a practical Spanish guide for mobile and multi-platform development.",
+    "close": "Not now"
   },
   "experience": {
     "kicker": "Experience",

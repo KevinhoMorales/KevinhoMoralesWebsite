@@ -1,17 +1,13 @@
 'use client'
 
 import Image from 'next/image'
-import Link from 'next/link'
-import { BookOpen, Mail } from 'lucide-react'
-import { FaAmazon } from 'react-icons/fa'
-import { SiGumroad } from 'react-icons/si'
+import { BookOpen } from 'lucide-react'
 
-import { Button } from '@/components/ui/button'
+import { BookStoreButtons } from '@/components/book/book-store-buttons'
 import { Card, CardContent } from '@/components/ui/card'
 import { ScrollReveal } from '@/components/scroll-reveal'
 import { useI18n } from '@/components/i18n/locale-provider'
 import { BOOK_SECTION_PROMO_PATH } from '@/lib/book-cover-path'
-import { BOOK_AMAZON_URL, BOOK_GUMROAD_URL } from '@/lib/book-store-links'
 
 export function BookSection() {
   const { t } = useI18n()
@@ -76,36 +72,7 @@ export function BookSection() {
               </li>
             </ul>
 
-            <div className="flex flex-col gap-3 pt-2 sm:flex-row sm:flex-wrap">
-              <Button asChild className="rounded-full">
-                <a
-                  href={BOOK_AMAZON_URL}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  aria-label={t('bookSection.ctaAmazonAria')}
-                >
-                  <FaAmazon className="mr-2 h-4 w-4" aria-hidden />
-                  {t('bookSection.ctaAmazon')}
-                </a>
-              </Button>
-              <Button variant="outline" asChild className="rounded-full">
-                <a
-                  href={BOOK_GUMROAD_URL}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  aria-label={t('bookSection.ctaGumroadAria')}
-                >
-                  <SiGumroad className="mr-2 h-4 w-4" aria-hidden />
-                  {t('bookSection.ctaGumroad')}
-                </a>
-              </Button>
-              <Button variant="outline" asChild className="rounded-full">
-                <Link href="/#connect">
-                  <Mail className="mr-2 h-4 w-4" aria-hidden />
-                  {t('bookSection.ctaContact')}
-                </Link>
-              </Button>
-            </div>
+            <BookStoreButtons className="pt-2" showContact />
           </ScrollReveal>
         </div>
       </div>
