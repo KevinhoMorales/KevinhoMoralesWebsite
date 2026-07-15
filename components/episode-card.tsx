@@ -13,13 +13,6 @@ interface EpisodeCardProps {
   onClick: () => void;
 }
 
-function normalizeForSearch(text: string): string {
-  return text
-    .normalize('NFD')
-    .replace(/[\u0300-\u036f]/g, '')
-    .toLowerCase();
-}
-
 export function EpisodeCard({ episode, onClick }: EpisodeCardProps) {
   const { t, locale } = useI18n();
   return (
@@ -71,5 +64,3 @@ export function EpisodeCard({ episode, onClick }: EpisodeCardProps) {
     </button>
   );
 }
-
-export { normalizeForSearch };

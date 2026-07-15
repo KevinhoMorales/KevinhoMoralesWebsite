@@ -24,6 +24,7 @@ import { Recommendations } from '@/components/sections/recommendations';
 import { Connect } from '@/components/sections/connect';
 import { Footer } from '@/components/sections/footer';
 import { HomeSectionAnalytics } from '@/components/home-section-analytics';
+import { HomeSfPhotoSection } from '@/components/sections/home-sf-photo-section';
 
 export const metadata: Metadata = {
   title: 'Mobile & Software Engineer',
@@ -46,6 +47,7 @@ export default async function Home() {
       <Hero profile={profile} />
       <About profile={profile} />
       <ExperienceSection experiences={experience} previewLimit={3} />
+      <HomeSfPhotoSection />
       <ProjectsSection projects={projects} />
       <ConferencesSection conferences={conferences} />
       <PodcastSectionUI />

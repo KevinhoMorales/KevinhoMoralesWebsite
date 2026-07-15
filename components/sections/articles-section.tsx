@@ -1,9 +1,9 @@
 'use client'
 
 import { useEffect, useState } from 'react'
-import Link from 'next/link'
 import Image from 'next/image'
 import { Card, CardContent } from '@/components/ui/card'
+import { ArticlesModal } from '@/components/articles-modal'
 import { ScrollReveal, StaggerContainer, StaggerItem } from '@/components/scroll-reveal'
 import { Button } from '@/components/ui/button'
 import { useI18n } from '@/components/i18n/locale-provider'
@@ -27,6 +27,7 @@ export function ArticlesSection() {
   const [articles, setArticles] = useState<Article[]>([])
   const [loading, setLoading] = useState(true)
   const [loadFailed, setLoadFailed] = useState(false)
+  const [modalOpen, setModalOpen] = useState(false)
 
   useEffect(() => {
     fetch(`/api/articles?limit=${FETCH_LIMIT}`)
@@ -163,15 +164,21 @@ export function ArticlesSection() {
 
         {hasMoreOnSite ? (
           <ScrollReveal delay={0.1} className="mt-8 sm:mt-10 flex justify-center">
-            <Button variant="outline" size="lg" className="gap-2 rounded-xl" asChild>
-              <Link href="/articles">
-                {t('articles.seeMore')}
-                <ArrowRight className="h-4 w-4" aria-hidden />
-              </Link>
+            <Button
+              type="button"
+              variant="outline"
+              size="lg"
+              className="gap-2 rounded-xl"
+              onClick={() => setModalOpen(true)}
+            >
+              {t('articles.seeMore')}
+              <ArrowRight className="h-4 w-4" aria-hidden />
             </Button>
           </ScrollReveal>
         ) : null}
       </div>
+
+      <ArticlesModal open={modalOpen} onClose={() => setModalOpen(false)} />
     </section>
   )
 }

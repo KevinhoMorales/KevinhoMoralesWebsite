@@ -25,34 +25,7 @@ interface HeroProps {
   profile: Profile
 }
 
-function cvFilenameFromHref(href: string): string {
-  const name = href.split('/').pop()?.split('?')[0]
-  return name && name.length > 0 ? name : 'Kevin-Morales-Resume.pdf'
-}
-
-/** Descarga fiable en producción: `download` + `target=_blank` suele abrir pestaña en lugar de guardar. */
-async function triggerCvDownload(href: string, filename: string): Promise<void> {
-  const isLocalAsset = href.startsWith('/')
-  if (isLocalAsset) {
-    try {
-      const res = await fetch(href, { credentials: 'same-origin' })
-      if (!res.ok) throw new Error(String(res.status))
-      const blob = await res.blob()
-      const url = URL.createObjectURL(blob)
-      const a = document.createElement('a')
-      a.href = url
-      a.download = filename
-      a.style.display = 'none'
-      document.body.appendChild(a)
-      a.click()
-      document.body.removeChild(a)
-      URL.revokeObjectURL(url)
-      return
-    } catch {
-      window.location.assign(href)
-      return
-    }
-  }
+function openCvInNewTab(href: string): void {
   window.open(href, '_blank', 'noopener,noreferrer')
 }
 
@@ -154,8 +127,8 @@ export function Hero({ profile }: HeroProps) {
                             e.preventDefault()
                             const href = cvHref || profile.socialLinks?.website || ''
                             if (!href) return
-                            const filename = cvHref ? cvFilenameFromHref(cvHref) : 'Kevin-Morales-Resume.pdf'
-                            void triggerCvDownload(href, filename).finally(() => setCvDialogOpen(false))
+                            openCvInNewTab(href)
+                            setCvDialogOpen(false)
                           }}
                         >
                           {t('hero.cvDialogConfirm')}

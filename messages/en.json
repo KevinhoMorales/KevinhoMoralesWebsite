@@ -30,13 +30,27 @@
     "hiIm": "Hi, I'm {{name}}",
     "exploreWork": "Explore my work",
     "letsTalk": "Let's talk",
-    "downloadResume": "Download Resume",
+    "downloadResume": "View Resume",
     "calendlyConfirm": "Calendly will open to schedule a meeting. Continue?",
     "contactConfirm": "You'll be taken to the contact section. Continue?",
-    "cvDialogTitle": "Download CV?",
-    "cvDialogDescription": "The PDF matches the language of the site: English or Spanish. If the site is in Portuguese, the English CV is downloaded.",
-    "cvDialogConfirm": "Download",
+    "cvDialogTitle": "Open CV in a new tab?",
+    "cvDialogDescription": "The PDF will open in a new tab so you can view and download it from your browser. It matches the site language: English or Spanish. If the site is in Portuguese, the English CV opens.",
+    "cvDialogConfirm": "Open",
     "cvDialogCancel": "Cancel"
+  },
+  "homePhotos": {
+    "sf": {
+      "alt": "Kevin in San Francisco with the Golden Gate Bridge",
+      "caption": "Connecting with the tech community wherever I am."
+    },
+    "cursor": {
+      "alt": "Kevin presenting about Cursor at an event",
+      "caption": "Sharing AI and development at conferences and meetups."
+    },
+    "podcast": {
+      "alt": "Kevin in the DevLokos studio",
+      "caption": "Recording episodes with developers and tech leaders."
+    }
   },
   "about": {
     "kicker": "About Me",
@@ -84,7 +98,14 @@
     "kicker": "Experience",
     "title": "Where I've worked",
     "seeMore": "See more",
-    "companySiteAria": "Official website of {{name}} (opens in new tab)"
+    "companySiteAria": "Official website of {{name}} (opens in new tab)",
+    "formerlyKnownAs": "formerly {{name}}",
+    "currentRole": "Current",
+    "employmentType": {
+      "fullTime": "Full-time",
+      "partTime": "Part-time",
+      "freelance": "Freelance"
+    }
   },
   "projects": {
     "kicker": "Projects",
@@ -291,9 +312,26 @@
     "body": "Your support means the world to me. Thank you! ☕",
     "continue": "Continue to Buy Me a Coffee"
   },
+  "browseModal": {
+    "noResults": "No results match your search.",
+    "searchPlaceholder": "Search…"
+  },
   "conferencesModal": {
     "title": "More talks",
-    "closeAria": "Close"
+    "closeAria": "Close",
+    "searchPlaceholder": "Search by title, topic, or location…"
+  },
+  "projectsModal": {
+    "title": "All projects",
+    "searchPlaceholder": "Search by name, description, or technology…"
+  },
+  "experienceModal": {
+    "title": "Full experience",
+    "searchPlaceholder": "Search by company or role…"
+  },
+  "articlesModal": {
+    "title": "More articles",
+    "searchPlaceholder": "Search by title or excerpt…"
   },
   "admin": {
     "shell": {

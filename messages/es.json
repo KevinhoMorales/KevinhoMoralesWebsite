@@ -30,13 +30,27 @@
     "hiIm": "Hola, soy {{name}}",
     "exploreWork": "Explorar mi trabajo",
     "letsTalk": "Hablemos",
-    "downloadResume": "Descargar CV",
+    "downloadResume": "Ver CV",
     "calendlyConfirm": "Se abrirá Calendly para agendar una reunión. ¿Continuar?",
     "contactConfirm": "Irás a la sección de contacto para conectarte. ¿Continuar?",
-    "cvDialogTitle": "¿Descargar CV?",
-    "cvDialogDescription": "El PDF será el del idioma del sitio: inglés o español. Si el sitio está en portugués, se descarga la versión en inglés.",
-    "cvDialogConfirm": "Descargar",
+    "cvDialogTitle": "¿Abrir CV en una pestaña nueva?",
+    "cvDialogDescription": "El PDF se abrirá en una pestaña nueva para que puedas verlo y descargarlo desde el navegador. Será el del idioma del sitio: inglés o español. Si el sitio está en portugués, se abre la versión en inglés.",
+    "cvDialogConfirm": "Abrir",
     "cvDialogCancel": "Cancelar"
+  },
+  "homePhotos": {
+    "sf": {
+      "alt": "Kevin en San Francisco con el Golden Gate Bridge",
+      "caption": "Conectando con la comunidad tech, donde sea que esté."
+    },
+    "cursor": {
+      "alt": "Kevin presentando sobre Cursor en un evento",
+      "caption": "Compartiendo IA y desarrollo en conferencias y meetups."
+    },
+    "podcast": {
+      "alt": "Kevin en el estudio de DevLokos",
+      "caption": "Grabando episodios con desarrolladores y líderes tech."
+    }
   },
   "about": {
     "kicker": "Sobre mí",
@@ -84,7 +98,14 @@
     "kicker": "Experiencia",
     "title": "Dónde he trabajado",
     "seeMore": "Ver más",
-    "companySiteAria": "Sitio web oficial de {{name}} (se abre en una pestaña nueva)"
+    "companySiteAria": "Sitio web oficial de {{name}} (se abre en una pestaña nueva)",
+    "formerlyKnownAs": "Antes {{name}}",
+    "currentRole": "Actual",
+    "employmentType": {
+      "fullTime": "Tiempo completo",
+      "partTime": "Medio tiempo",
+      "freelance": "Freelance"
+    }
   },
   "projects": {
     "kicker": "Proyectos",
@@ -291,9 +312,26 @@
     "body": "Tu apoyo lo significa todo para mí. ¡Gracias! ☕",
     "continue": "Ir a Buy Me a Coffee"
   },
+  "browseModal": {
+    "noResults": "No hay resultados para tu búsqueda.",
+    "searchPlaceholder": "Buscar…"
+  },
   "conferencesModal": {
     "title": "Más charlas",
-    "closeAria": "Cerrar"
+    "closeAria": "Cerrar",
+    "searchPlaceholder": "Buscar por título, tema o lugar…"
+  },
+  "projectsModal": {
+    "title": "Todos los proyectos",
+    "searchPlaceholder": "Buscar por nombre, descripción o tecnología…"
+  },
+  "experienceModal": {
+    "title": "Experiencia completa",
+    "searchPlaceholder": "Buscar por empresa o rol…"
+  },
+  "articlesModal": {
+    "title": "Más artículos",
+    "searchPlaceholder": "Buscar por título o extracto…"
   },
   "admin": {
     "shell": {

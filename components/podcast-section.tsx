@@ -1,7 +1,8 @@
 'use client';
 
 import { useEffect, useState, useMemo } from 'react';
-import { EpisodeCard, normalizeForSearch } from './episode-card';
+import { EpisodeCard } from './episode-card';
+import { normalizeForSearch } from '@/lib/normalize-for-search';
 import { EpisodeModal } from './episode-modal';
 import { Button } from '@/components/ui/button';
 import { useI18n } from '@/components/i18n/locale-provider';

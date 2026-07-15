@@ -30,13 +30,27 @@
     "hiIm": "Oi, eu sou {{name}}",
     "exploreWork": "Ver meu trabalho",
     "letsTalk": "Vamos conversar",
-    "downloadResume": "Baixar currículo",
+    "downloadResume": "Ver currículo",
     "calendlyConfirm": "O Calendly abrirá para agendar uma reunião. Continuar?",
     "contactConfirm": "Você irá para a seção de contato. Continuar?",
-    "cvDialogTitle": "Baixar currículo?",
-    "cvDialogDescription": "O PDF segue o idioma do site: inglês ou espanhol. Com o site em português, baixamos a versão em inglês.",
-    "cvDialogConfirm": "Baixar",
+    "cvDialogTitle": "Abrir currículo em uma nova aba?",
+    "cvDialogDescription": "O PDF abrirá em uma nova aba para você visualizar e baixar pelo navegador. Segue o idioma do site: inglês ou espanhol. Com o site em português, abrimos a versão em inglês.",
+    "cvDialogConfirm": "Abrir",
     "cvDialogCancel": "Cancelar"
+  },
+  "homePhotos": {
+    "sf": {
+      "alt": "Kevin em San Francisco com a Golden Gate Bridge",
+      "caption": "Conectando com a comunidade tech, onde quer que esteja."
+    },
+    "cursor": {
+      "alt": "Kevin apresentando sobre o Cursor em um evento",
+      "caption": "Compartilhando IA e desenvolvimento em conferências e meetups."
+    },
+    "podcast": {
+      "alt": "Kevin no estúdio do DevLokos",
+      "caption": "Gravando episódios com desenvolvedores e líderes tech."
+    }
   },
   "about": {
     "kicker": "Sobre mim",
@@ -84,7 +98,14 @@
     "kicker": "Experiência",
     "title": "Onde trabalhei",
     "seeMore": "Ver mais",
-    "companySiteAria": "Site oficial de {{name}} (abre numa nova aba)"
+    "companySiteAria": "Site oficial de {{name}} (abre numa nova aba)",
+    "formerlyKnownAs": "Anteriormente {{name}}",
+    "currentRole": "Atual",
+    "employmentType": {
+      "fullTime": "Tempo integral",
+      "partTime": "Meio período",
+      "freelance": "Freelance"
+    }
   },
   "projects": {
     "kicker": "Projetos",
@@ -291,9 +312,26 @@
     "body": "Seu apoio significa muito para mim. Obrigado! ☕",
     "continue": "Ir ao Buy Me a Coffee"
   },
+  "browseModal": {
+    "noResults": "Nenhum resultado para sua busca.",
+    "searchPlaceholder": "Buscar…"
+  },
   "conferencesModal": {
     "title": "Mais palestras",
-    "closeAria": "Fechar"
+    "closeAria": "Fechar",
+    "searchPlaceholder": "Buscar por título, tema ou local…"
+  },
+  "projectsModal": {
+    "title": "Todos os projetos",
+    "searchPlaceholder": "Buscar por nome, descrição ou tecnologia…"
+  },
+  "experienceModal": {
+    "title": "Experiência completa",
+    "searchPlaceholder": "Buscar por empresa ou cargo…"
+  },
+  "articlesModal": {
+    "title": "Mais artigos",
+    "searchPlaceholder": "Buscar por título ou resumo…"
   },
   "admin": {
     "shell": {

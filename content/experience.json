@@ -1,13 +1,26 @@
 [
   {
+    "id": "19",
+    "company": "SoFi Technology Solutions",
+    "companyFormerName": "Galileo Financial Technologies",
+    "role": "Senior Software Engineer (IC3)",
+    "type": "full-time",
+    "startDate": "2026-07",
+    "current": true,
+    "companyUrl": "https://www.sofi.com/",
+    "companyLogo": "/images/sofi-tech-solutions-logo.png",
+    "description": "Leading the architecture and evolution of enterprise mobile banking platforms for financial institutions across Latin America.\n\nI specialize in designing secure, scalable, and high-performance mobile solutions, delivering strategic banking capabilities such as Payments, Wire Transfers, QR Payments, Investments, Credit Cards, Payroll, Fixed-Term Deposits, E-Checks, and Authorization workflows.\n\nMy role combines software architecture, technical leadership, and engineering excellence. I mentor mobile teams, define architectural standards, lead code quality initiatives, and drive the adoption of modern technologies including Swift, SwiftUI, MVVM, GraphQL, and performance optimization practices to build resilient products that serve millions of users."
+  },
+  {
     "id": "1",
-    "company": "Galileo Financial Technologies",
+    "company": "SoFi Technology Solutions",
     "role": "Senior iOS Engineer",
     "type": "full-time",
     "startDate": "2023-04",
-    "current": true,
-    "companyUrl": "https://www.galileo-ft.com/",
-    "companyLogo": "/images/galileo-logo.png"
+    "endDate": "2026-07",
+    "current": false,
+    "companyUrl": "https://www.sofi.com/",
+    "companyLogo": "/images/sofi-tech-solutions-logo.png"
   },
   {
     "id": "2",
@@ -29,6 +42,17 @@
     "current": false,
     "companyUrl": "https://meniuz.com/",
     "companyLogo": "/images/meniuz-logo.png"
+  },
+  {
+    "id": "20",
+    "company": "EDteam",
+    "role": "Instructor",
+    "type": "freelance",
+    "startDate": "2024-02",
+    "current": true,
+    "companyUrl": "https://ed.team/",
+    "companyLogo": "/images/edteam-logo.png",
+    "description": "At EDteam, I work as a freelance instructor and technical content creator, designing courses, hands-on labs, and real-world projects focused on application development, software architecture, modern backend systems, and AI integration into production-ready products.\n\nI build learning experiences focused on \"learning by building,\" creating practical applications and examples using technologies such as Swift, Kotlin, React, TypeScript, Firebase, Spring Boot, Docker, and cloud services. I also research and adapt emerging technologies for up-to-date educational content, including Generative AI, Agent Platform (Vertex AI), cross-platform development, and modern tools from the Google and Apple ecosystems.\n\nAdditionally, I contribute to curriculum planning, demo project architecture, educational experience optimization, and the creation of industry-oriented technical content for developers and engineering teams."
   },
   {
     "id": "4",
@@ -66,10 +90,11 @@
     "company": "Cursor",
     "role": "Cursor Ambassador",
     "type": "freelance",
-    "startDate": "2023-11",
+    "startDate": "2025-11",
     "current": true,
     "companyUrl": "https://cursor.com/",
-    "companyLogo": "/images/cursor-logo.png"
+    "companyLogo": "/images/cursor-logo.png",
+    "description": "As the Cursor Ambassador for Ecuador, I officially represent the platform and its vision to integrate artificial intelligence into developers' everyday workflows.\n\nMy role focuses on promoting Cursor as an AI-powered development environment, helping professionals embrace new ways to write, optimize, and understand code more efficiently.\n\nThrough DevLokos, I lead events, workshops, and community initiatives aimed at practical learning and at strengthening Ecuador's tech ecosystem — building a space where innovation and collaboration drive progress."
   },
   {
     "id": "8",

@@ -8,6 +8,7 @@ export interface Experience {
   current?: boolean;
   companyUrl?: string;
   companyLogo?: string;
+  companyFormerName?: string;
   description?: string;
 }
 
@@ -18,6 +19,7 @@ export interface ExperienceRoleLine {
   startDate: string;
   endDate?: string;
   current?: boolean;
+  description?: string;
 }
 
 export interface MergedExperience {
@@ -25,5 +27,6 @@ export interface MergedExperience {
   company: string;
   companyUrl?: string;
   companyLogo?: string;
+  companyFormerName?: string;
   roles: ExperienceRoleLine[];
 }

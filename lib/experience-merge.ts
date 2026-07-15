@@ -40,6 +40,7 @@ export function mergeExperienceByCompany(experiences: Experience[]): MergedExper
       startDate: exp.startDate,
       endDate: exp.endDate,
       current: exp.current,
+      description: exp.description,
     }));
 
     const canonicalId = [...items].sort((a, b) => a.index - b.index)[0].exp.id;
@@ -51,6 +52,7 @@ export function mergeExperienceByCompany(experiences: Experience[]): MergedExper
         company: firstInFile.company,
         companyUrl: firstInFile.companyUrl,
         companyLogo: firstInFile.companyLogo,
+        companyFormerName: firstInFile.companyFormerName,
         roles,
       },
     });
