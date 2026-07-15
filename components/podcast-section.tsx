@@ -1,6 +1,7 @@
 'use client';
 
-import { useEffect, useState, useMemo } from 'react';
+import { useEffect, useState, useMemo, useCallback } from 'react';
+import { PodcastEpisodesPager } from './podcast-episodes-pager';
 import { EpisodeCard } from './episode-card';
 import { normalizeForSearch } from '@/lib/normalize-for-search';
 import { EpisodeModal } from './episode-modal';
@@ -27,6 +28,7 @@ export function PodcastSection({ preview = false }: PodcastSectionProps) {
   const [search, setSearch] = useState('');
   const [season, setSeason] = useState<1 | 2 | 'all'>('all');
   const [page, setPage] = useState(1);
+  const [slideDirection, setSlideDirection] = useState(0);
 
   useEffect(() => {
     fetch('/api/episodes')
@@ -75,14 +77,19 @@ export function PodcastSection({ preview = false }: PodcastSectionProps) {
   }, [episodes, search, season]);
 
   const totalPages = Math.ceil(filteredEpisodes.length / EPISODES_PER_PAGE);
-  const paginatedEpisodes = useMemo(() => {
-    const start = (page - 1) * EPISODES_PER_PAGE;
-    return filteredEpisodes.slice(start, start + EPISODES_PER_PAGE);
-  }, [filteredEpisodes, page]);
 
   useEffect(() => {
     setPage(1);
+    setSlideDirection(0);
   }, [search, season]);
+
+  const goToPage = useCallback(
+    (next: number) => {
+      setSlideDirection(next > page ? 1 : -1);
+      setPage(next);
+    },
+    [page]
+  );
 
   if (loading) {
     return (
@@ -141,7 +148,7 @@ export function PodcastSection({ preview = false }: PodcastSectionProps) {
 
   const displayEpisodes = preview
     ? filteredEpisodes.slice(0, HOME_PREVIEW_EPISODES)
-    : paginatedEpisodes;
+    : [];
 
   return (
     <div className="space-y-6">
@@ -181,15 +188,25 @@ export function PodcastSection({ preview = false }: PodcastSectionProps) {
       </div>
       )}
 
-      <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3 sm:gap-6">
-        {displayEpisodes.map((episode) => (
-          <EpisodeCard
-            key={episode.videoId}
-            episode={episode}
-            onClick={() => setSelectedEpisode(episode)}
-          />
-        ))}
-      </div>
+      {!preview ? (
+        <PodcastEpisodesPager
+          episodes={filteredEpisodes}
+          page={page}
+          direction={slideDirection}
+          perPage={EPISODES_PER_PAGE}
+          onSelectEpisode={setSelectedEpisode}
+        />
+      ) : (
+        <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3 sm:gap-6">
+          {displayEpisodes.map((episode) => (
+            <EpisodeCard
+              key={episode.videoId}
+              episode={episode}
+              onClick={() => setSelectedEpisode(episode)}
+            />
+          ))}
+        </div>
+      )}
 
       {/* Paginación - oculta en preview */}
       {!preview && totalPages > 1 && (
@@ -197,7 +214,7 @@ export function PodcastSection({ preview = false }: PodcastSectionProps) {
           <Button
             variant="outline"
             size="sm"
-            onClick={() => setPage((p) => Math.max(1, p - 1))}
+            onClick={() => goToPage(Math.max(1, page - 1))}
             disabled={page <= 1}
           >
             {t('podcast.prev')}
@@ -208,7 +225,7 @@ export function PodcastSection({ preview = false }: PodcastSectionProps) {
           <Button
             variant="outline"
             size="sm"
-            onClick={() => setPage((p) => Math.min(totalPages, p + 1))}
+            onClick={() => goToPage(Math.min(totalPages, page + 1))}
             disabled={page >= totalPages}
           >
             {t('podcast.next')}
