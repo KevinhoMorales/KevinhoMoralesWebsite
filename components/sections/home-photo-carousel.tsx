@@ -70,8 +70,8 @@ export function HomePhotoCarousel({
 
   const content = (
     <ScrollReveal variant={variant} className={className}>
-      <Card className="overflow-hidden border-border/50 bg-card/50 shadow-sm">
-        <CardContent className="p-0">
+      <Card className="h-full gap-0 overflow-hidden border-border/50 bg-card/50 py-0 shadow-sm">
+        <CardContent className="flex h-full min-h-0 flex-col p-0">
           <div
             className={cn('group/carousel relative w-full overflow-hidden', aspectClasses[aspect])}
             role="region"
@@ -151,7 +151,7 @@ export function HomePhotoCarousel({
           </div>
 
           {current.caption ? (
-            <p className="px-4 py-3 text-sm text-muted-foreground sm:px-5 sm:py-4 sm:text-base">
+            <p className="shrink-0 px-4 py-3 text-sm text-muted-foreground sm:px-5 sm:py-4 sm:text-base">
               {current.caption}
             </p>
           ) : null}

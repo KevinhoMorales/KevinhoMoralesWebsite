@@ -39,16 +39,17 @@ export function PodcastSectionUI() {
           </Button>
         </ScrollReveal>
 
-        <div className="grid grid-cols-1 items-start gap-8 lg:grid-cols-2 lg:gap-10">
+        <div className="grid grid-cols-1 gap-8 lg:grid-cols-2 lg:items-stretch lg:gap-10">
           <HomePhotoMoment
             src="/images/devlokos-studio.jpg"
             alt={t('homePhotos.podcast.alt')}
             caption={t('homePhotos.podcast.caption')}
             variant="fade-right"
             aspect="wide"
+            fillColumn
           />
 
-          <ScrollReveal variant="fade-left" delay={0.15}>
+          <ScrollReveal variant="fade-left" delay={0.15} className="min-h-0">
             <PodcastSection />
           </ScrollReveal>
         </div>

@@ -15,6 +15,8 @@ interface HomePhotoMomentProps {
   variant?: PhotoVariant
   aspect?: PhotoAspect
   className?: string
+  /** Stretch image to fill a tall grid column (e.g. podcast sidebar) */
+  fillColumn?: boolean
   /** Wrap in section padding when used standalone between homepage sections */
   standalone?: boolean
 }
@@ -32,13 +34,24 @@ export function HomePhotoMoment({
   variant = 'fade-up',
   aspect = 'video',
   className,
+  fillColumn = false,
   standalone = false,
 }: HomePhotoMomentProps) {
   const content = (
-    <ScrollReveal variant={variant} className={className}>
-      <Card className="overflow-hidden border-border/50 bg-card/50 shadow-sm">
-        <CardContent className="p-0">
-          <div className={cn('relative w-full overflow-hidden', aspectClasses[aspect])}>
+    <ScrollReveal
+      variant={variant}
+      className={cn(fillColumn && 'h-full min-h-0', className)}
+    >
+      <Card className="h-full gap-0 overflow-hidden border-border/50 bg-card/50 py-0 shadow-sm">
+        <CardContent className="flex h-full min-h-0 flex-col p-0">
+          <div
+            className={cn(
+              'relative w-full overflow-hidden',
+              fillColumn
+                ? cn(aspectClasses[aspect], 'lg:aspect-auto lg:min-h-[220px] lg:flex-1')
+                : aspectClasses[aspect]
+            )}
+          >
             <Image
               src={src}
               alt={alt}
@@ -48,7 +61,7 @@ export function HomePhotoMoment({
             />
           </div>
           {caption ? (
-            <p className="px-4 py-3 text-sm text-muted-foreground sm:px-5 sm:py-4 sm:text-base">
+            <p className="shrink-0 px-4 py-3 text-sm text-muted-foreground sm:px-5 sm:py-4 sm:text-base">
               {caption}
             </p>
           ) : null}
