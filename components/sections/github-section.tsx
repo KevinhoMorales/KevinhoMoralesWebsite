@@ -1,6 +1,5 @@
 'use client'
 
-import { Badge } from '@/components/ui/badge'
 import { Button } from '@/components/ui/button'
 import { Card, CardContent } from '@/components/ui/card'
 import { ScrollReveal, StaggerContainer, StaggerItem } from '@/components/scroll-reveal'
@@ -51,10 +50,7 @@ export function GithubSection({ repos, profileUrl }: GithubSectionProps) {
                     ) : null}
                   </div>
                   <p className="hidden flex-1 text-sm text-muted-foreground leading-relaxed sm:block">{repo.description}</p>
-                  <div className="flex items-center justify-between gap-1.5 pt-1 sm:gap-2">
-                    <Badge variant="outline" className="text-[10px] sm:text-xs">
-                      {repo.language}
-                    </Badge>
+                  <div className="flex justify-end pt-1 sm:pt-2">
                     <Button variant="ghost" size="sm" className="h-7 gap-1 px-1.5 text-[10px] sm:h-8 sm:px-2 sm:text-xs" asChild>
                       <a href={repo.url} target="_blank" rel="noopener noreferrer">
                         <span className="hidden xs:inline sm:inline">{t('githubSection.viewOnGithub')}</span>

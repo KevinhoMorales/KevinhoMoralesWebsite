@@ -1,6 +1,6 @@
 import * as fs from 'fs';
 import * as path from 'path';
-import type { Profile, Experience, Project, ProjectCategory, Conference, Testimonial, Achievement, SkillCategory, LearnHubItem, GithubRepo } from '@/types';
+import type { Profile, Experience, Project, ProjectCaseStudy, ProjectCategory, Conference, Testimonial, Achievement, SkillCategory, LearnHubItem, GithubRepo } from '@/types';
 import { projectMatchesCategory } from '@/lib/project-category-match';
 import { PROJECT_CATEGORY_PARAMS } from '@/lib/projects-order';
 import { sortConferencesForDisplay } from '@/lib/conference-sort';
@@ -63,6 +63,40 @@ function isNonEmptyString(value: unknown): value is string {
   return typeof value === 'string' && value.trim().length > 0;
 }
 
+/** Proyectos duplicados u obsoletos que no deben mostrarse (p. ej. `devlokos-web` sin imagen). */
+const EXCLUDED_PROJECT_IDS = new Set(['devlokos-web']);
+
+function getProjectDescriptionOverrides(): Record<string, string> {
+  try {
+    return readJson<Record<string, string>>('project-descriptions.json');
+  } catch {
+    return {};
+  }
+}
+
+function getProjectCaseStudyOverrides(): Record<string, ProjectCaseStudy> {
+  try {
+    return readJson<Record<string, ProjectCaseStudy>>('project-case-studies.json');
+  } catch {
+    return {};
+  }
+}
+
+function applyProjectEnrichments(projects: Project[]): Project[] {
+  const descriptions = getProjectDescriptionOverrides();
+  const caseStudies = getProjectCaseStudyOverrides();
+
+  return projects
+    .filter((project) => !EXCLUDED_PROJECT_IDS.has(project.id))
+    .map((project) => ({
+      ...project,
+      description: isNonEmptyString(descriptions[project.id])
+        ? descriptions[project.id]
+        : project.description,
+      caseStudy: caseStudies[project.id] ?? project.caseStudy,
+    }));
+}
+
 /** Fusiona Firestore con `projects.json`: añade faltantes y enriquece image, links, caseStudy, etc. */
 function mergeProjectsFromJson(remote: Project[], local: Project[]): Project[] {
   if (local.length === 0) return remote;
@@ -70,6 +104,8 @@ function mergeProjectsFromJson(remote: Project[], local: Project[]): Project[] {
   const byId = new Map(remote.map((project) => [project.id, project]));
 
   for (const localProject of local) {
+    if (EXCLUDED_PROJECT_IDS.has(localProject.id)) continue;
+
     const existing = byId.get(localProject.id);
     if (!existing) {
       byId.set(localProject.id, localProject);
@@ -119,16 +155,18 @@ export function getExperience(): Experience[] {
 export async function getProjects(): Promise<Project[]> {
   const jsonProjects = readJson<Project[]>('projects.json');
   if (ssrSkipRemoteFirestoreForProjects()) {
-    return jsonProjects;
+    return applyProjectEnrichments(jsonProjects);
   }
   try {
     const fromDb = await withSsrBudget(adminFetchProjectsSafe());
-    if (fromDb === null) return jsonProjects;
-    if (fromDb.length > 0) return mergeProjectsFromJson(fromDb, jsonProjects);
-    return jsonProjects;
+    if (fromDb === null) return applyProjectEnrichments(jsonProjects);
+    if (fromDb.length > 0) {
+      return applyProjectEnrichments(mergeProjectsFromJson(fromDb, jsonProjects));
+    }
+    return applyProjectEnrichments(jsonProjects);
   } catch (e) {
     console.error('[content] getProjects:', e);
-    return jsonProjects;
+    return applyProjectEnrichments(jsonProjects);
   }
 }
 

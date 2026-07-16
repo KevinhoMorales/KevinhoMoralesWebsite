@@ -2,7 +2,7 @@
   {
     "id": "security-force-administrador-android",
     "title": "Security Force Administrador",
-    "description": "App Android para administración del ecosistema Security Force (urbanizaciones y accesos).",
+    "description": "App Android de administración Security Force: gestión de urbanizaciones, accesos y operación del ecosistema de seguridad residencial.",
     "category": "android",
     "language": "Kotlin",
     "technologies": [
@@ -24,12 +24,22 @@
         "url": "https://play.google.com/store/apps/details?id=com.kevinhomorales.urbamsadminkotlin",
         "label": "Google Play"
       }
-    ]
+    ],
+    "caseStudy": {
+      "problem": "Los administradores de urbanizaciones Security Force necesitaban operar accesos y comunidades desde Android.",
+      "approach": "Construimos la app de administración en Kotlin integrada al ecosistema Security Force con gestión de accesos y residentes.",
+      "impact": "Herramienta Android publicada que centraliza la operación administrativa de comunidades protegidas.",
+      "highlights": [
+        "Administración en Android",
+        "Ecosistema Security Force",
+        "Gestión de accesos"
+      ]
+    }
   },
   {
     "id": "security-force-administradores-android",
     "title": "Security Force Administradores",
-    "description": "Gestión de administradores en Security Force.",
+    "description": "App Android para administradores de Security Force: supervisión de accesos, residentes y configuración de comunidades protegidas.",
     "category": "android",
     "language": "Kotlin",
     "technologies": [
@@ -51,12 +61,22 @@
         "url": "https://play.google.com/store/apps/details?id=com.kevinhomorales.urbamsadminkotlin",
         "label": "Google Play"
       }
-    ]
+    ],
+    "caseStudy": {
+      "problem": "Los supervisores de Security Force requerían control de residentes, accesos y configuración de urbanizaciones en móvil.",
+      "approach": "Desarrollamos la app Android en Kotlin con paneles de supervisión y flujos para administradores.",
+      "impact": "App en Play Store que refuerza la operación diaria de administradores en comunidades residenciales.",
+      "highlights": [
+        "Supervisión de accesos",
+        "Configuración de comunidades",
+        "Kotlin en Android"
+      ]
+    }
   },
   {
     "id": "security-force-garita-android",
     "title": "Security Force Garita",
-    "description": "App para personal de garita y control de accesos Security Force.",
+    "description": "App Android para personal de garita Security Force: control de accesos, verificación de visitantes y operación en puntos de entrada de urbanizaciones.",
     "category": "android",
     "language": "Kotlin",
     "technologies": [
@@ -78,12 +98,22 @@
         "url": "https://play.google.com/store/apps/details?id=com.kevinhomorales.urbamsgatekotlin",
         "label": "Google Play"
       }
-    ]
+    ],
+    "caseStudy": {
+      "problem": "El personal de garita necesitaba verificar visitantes y controlar entradas de forma rápida en el punto de acceso.",
+      "approach": "Implementamos la app Android para garitas con validación de accesos, registro de visitantes y flujos operativos en tiempo real.",
+      "impact": "Herramienta móvil que agiliza el control en garitas de urbanizaciones Security Force.",
+      "highlights": [
+        "Control en punto de entrada",
+        "Verificación de visitantes",
+        "Operación en tiempo real"
+      ]
+    }
   },
   {
     "id": "yippy-driver-android",
     "title": "Yippy Driver",
-    "description": "App para conductores del ecosistema Yippy.",
+    "description": "App Android Yippy Driver para conductores del ecosistema Yippy: gestión de viajes, entregas y operación diaria en la plataforma de compras locales.",
     "category": "android",
     "language": "Java",
     "technologies": [
@@ -106,12 +136,22 @@
         "url": "https://play.google.com/store/apps/details?id=com.yippy.driver.app",
         "label": "Google Play"
       }
-    ]
+    ],
+    "caseStudy": {
+      "problem": "Conductores del ecosistema Yippy necesitaban gestionar entregas y viajes desde Android.",
+      "approach": "Desarrollamos Yippy Driver en Java con flujos de operación, entregas y gestión diaria para conductores.",
+      "impact": "App Android publicada que sostiene la logística del marketplace Yippy.",
+      "highlights": [
+        "App para conductores",
+        "Entregas y viajes",
+        "Operación en Android"
+      ]
+    }
   },
   {
     "id": "anclaideas-android",
     "title": "Anclaideas",
-    "description": "Educación y contenido Anclaideas.",
+    "description": "Plataforma educativa Android Anclaideas con acceso a contenido formativo, recursos de aprendizaje y herramientas para estudiantes y docentes.",
     "category": "android",
     "language": "Java",
     "technologies": [
@@ -134,12 +174,22 @@
         "url": "https://play.google.com/store/apps/details?id=com.kevinhomorales.anclaideas",
         "label": "Google Play"
       }
-    ]
+    ],
+    "caseStudy": {
+      "problem": "Anclaideas requería llevar su contenido educativo a Android para que estudiantes y docentes accedan a recursos desde cualquier lugar.",
+      "approach": "Desarrollamos la app Android en Java con navegación de contenido formativo, recursos de aprendizaje y experiencia adaptada a tablets.",
+      "impact": "Plataforma educativa móvil que amplía el alcance del contenido Anclaideas en dispositivos Android.",
+      "highlights": [
+        "Contenido educativo en Android",
+        "Soporte para tablet",
+        "Recursos de aprendizaje accesibles"
+      ]
+    }
   },
   {
     "id": "js-aprende-android",
     "title": "JS Aprende",
-    "description": "Aprendizaje y recursos JS Aprende.",
+    "description": "App educativa JS Aprende para Android: tutoriales, recursos y contenido de aprendizaje de JavaScript para desarrolladores principiantes.",
     "category": "android",
     "language": "Java",
     "technologies": [
@@ -162,12 +212,22 @@
         "url": "https://play.google.com/store/apps/details?id=com.jonathanortega.jsaprende",
         "label": "Google Play"
       }
-    ]
+    ],
+    "caseStudy": {
+      "problem": "Principiantes en programación necesitaban tutoriales y recursos de JavaScript accesibles desde Android.",
+      "approach": "Creamos la app educativa en Java con lecciones, recursos y navegación orientada al aprendizaje de JS.",
+      "impact": "Herramienta educativa en Play Store para quienes inician en desarrollo web con JavaScript.",
+      "highlights": [
+        "Educación en JavaScript",
+        "Android nativo en Java",
+        "Recursos para principiantes"
+      ]
+    }
   },
   {
     "id": "ajelist-android",
     "title": "AJELIST",
-    "description": "Productividad con AJELIST.",
+    "description": "App Android de productividad AJELIST para gestionar proveedores, servicios y flujos operativos del negocio desde el móvil.",
     "category": "android",
     "language": "Kotlin",
     "technologies": [
@@ -190,6 +250,16 @@
         "url": "https://play.google.com/store/apps/details?id=com.kevinhomorales.providerskotlin",
         "label": "Google Play"
       }
-    ]
+    ],
+    "caseStudy": {
+      "problem": "Los negocios que usan AJELIST necesitaban gestionar proveedores y operaciones desde el móvil sin depender de procesos manuales o escritorio.",
+      "approach": "Construimos la app Android en Kotlin con flujos de productividad para administrar proveedores, servicios y tareas operativas del día a día.",
+      "impact": "Herramienta móvil publicada en Play Store que acerca la gestión del negocio al equipo en campo.",
+      "highlights": [
+        "Android nativo con Kotlin",
+        "Gestión de proveedores y servicios",
+        "Productividad operativa en móvil"
+      ]
+    }
   }
 ]

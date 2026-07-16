@@ -46,20 +46,36 @@ export function Hero({ profile, achievements = [] }: HeroProps) {
     profile.images?.[1] ||
     profile.images?.[0] ||
     '/images/profile-main.png'
+  const heroBackground = profile.heroBackground || '/images/hero-background-nyc.jpg'
 
   return (
     <section
       id="hero"
       data-analytics-section="hero"
-      className="min-h-0 flex flex-col justify-center overflow-x-hidden px-4 sm:px-6 md:px-8 lg:px-12 xl:px-24 py-6 sm:py-4 md:py-4 lg:min-h-[50vh] xl:min-h-[45vh]"
+      className="relative isolate min-h-0 flex flex-col justify-center overflow-x-hidden px-4 sm:px-6 md:px-8 lg:px-12 xl:px-24 py-8 sm:py-10 md:py-12 lg:min-h-[52vh] xl:min-h-[48vh]"
     >
-      <div className="max-w-6xl mx-auto w-full">
+      <div className="pointer-events-none absolute inset-0 -z-10 overflow-hidden" aria-hidden>
+        <Image
+          src={heroBackground}
+          alt=""
+          fill
+          priority
+          className="object-cover object-[center_35%] sm:object-[center_40%] lg:object-center scale-105"
+          sizes="100vw"
+        />
+        <div className="absolute inset-0 bg-background/65 dark:bg-background/78" />
+        <div className="absolute inset-0 bg-gradient-to-r from-background from-0% via-background/88 via-40% to-background/50 to-100% dark:from-background dark:via-background/92 dark:to-background/58" />
+        <div className="absolute inset-0 bg-gradient-to-t from-background via-background/35 to-transparent dark:from-background dark:via-background/45" />
+        <div className="absolute inset-0 bg-[radial-gradient(ellipse_90%_70%_at_50%_-20%,rgba(13,148,136,0.16),transparent_58%)] dark:bg-[radial-gradient(ellipse_90%_70%_at_50%_-20%,rgba(13,148,136,0.1),transparent_58%)]" />
+      </div>
+
+      <div className="relative z-10 max-w-6xl mx-auto w-full">
         <div className="grid gap-6 lg:grid-cols-[minmax(0,1fr)_minmax(0,1fr)] lg:gap-8 xl:gap-10 items-center min-w-0 w-full">
           {/* Avatar primero en móvil para mejor jerarquía visual */}
           <div className="flex justify-center lg:hidden order-first motion-hero-in">
             <div className="relative">
               <div className="absolute -inset-2 sm:-inset-3 bg-primary/20 rounded-full blur-2xl sm:blur-3xl" />
-              <div className="relative h-28 w-28 xs:h-32 xs:w-32 sm:h-40 sm:w-40 md:h-44 md:w-44 rounded-full overflow-hidden border-4 border-primary/20">
+              <div className="relative h-28 w-28 xs:h-32 xs:w-32 sm:h-40 sm:w-40 md:h-44 md:w-44 rounded-full overflow-hidden border-4 border-primary/25 shadow-xl shadow-black/15 ring-2 ring-background/80 dark:shadow-black/40">
                 <Image
                   src={avatarSrc}
                   alt={profile.name}
@@ -147,7 +163,7 @@ export function Hero({ profile, achievements = [] }: HeroProps) {
           <div className="hidden lg:flex justify-center xl:justify-end order-2 motion-hero-in motion-hero-delay">
             <div className="relative">
               <div className="absolute -inset-3 xl:-inset-4 bg-primary/20 rounded-full blur-3xl" />
-              <div className="relative h-56 w-56 xl:h-64 xl:w-64 rounded-full overflow-hidden border-4 border-primary/20">
+              <div className="relative h-56 w-56 xl:h-64 xl:w-64 rounded-full overflow-hidden border-4 border-primary/25 shadow-xl shadow-black/15 ring-2 ring-background/80 dark:shadow-black/40">
                 <Image
                   src={avatarSrc}
                   alt={profile.name}

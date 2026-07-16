@@ -13,7 +13,7 @@ export const metadata: Metadata = {
 export default function ContactPage() {
   const profile = getProfile()
   return (
-    <main className="min-h-[50vh]">
+    <main className="min-h-[calc(100dvh-4rem)]">
       <Connect profile={profile} />
     </main>
   )

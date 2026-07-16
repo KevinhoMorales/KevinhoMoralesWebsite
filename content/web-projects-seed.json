@@ -1,5 +1,50 @@
 [
   {
+    "id": "devlokos",
+    "title": "DevLokos",
+    "description": "Sitio web oficial del podcast y comunidad DevLokos: episodios, blog, recursos para desarrolladores, eventos y presencia digital de la marca — construido con Next.js y desplegado en Vercel.",
+    "image": "/images/devlokos-logo.png",
+    "technologies": [
+      "Next.js",
+      "React",
+      "TypeScript",
+      "Vercel"
+    ],
+    "category": "web",
+    "language": "TypeScript",
+    "links": [
+      {
+        "type": "website",
+        "url": "https://devlokos.com/"
+      },
+      {
+        "type": "github",
+        "url": "https://github.com/devlokos"
+      }
+    ],
+    "experience": "DevLokos Enterprise",
+    "platforms": [
+      "Web",
+      "Responsive"
+    ],
+    "tags": [
+      "Podcast",
+      "Community"
+    ],
+    "webFramework": "Next.js",
+    "webHosting": "Vercel",
+    "caseStudy": {
+      "problem": "DevLokos necesitaba un sitio web que unificara podcast, comunidad, eventos y presencia de marca en un solo canal digital.",
+      "approach": "Construimos el sitio con Next.js y React, desplegado en Vercel, con episodios, blog, recursos para desarrolladores y secciones de comunidad.",
+      "impact": "Plataforma web oficial que centraliza la marca DevLokos y refuerza su alcance como comunidad tecnológica en Ecuador.",
+      "highlights": [
+        "Next.js desplegado en Vercel",
+        "Podcast, blog y comunidad",
+        "Presencia digital unificada"
+      ]
+    }
+  },
+  {
     "id": "santo-domingo-pickleball-club",
     "title": "Santo Domingo Pickleball Club",
     "description": "Sitio web oficial del Santo Domingo Pickleball Club: promueve el pickleball en Ecuador con entrenamientos para todos los niveles, torneos, información de canchas, inscripción al Santo Domingo Pickleball Open 2026 y una comunidad deportiva inclusiva en Santo Domingo de los Tsáchilas.",
@@ -29,6 +74,16 @@
     ],
     "releaseDate": "2026-06-01",
     "sortOrder": 20260601,
-    "webFramework": "Next.js"
+    "webFramework": "Next.js",
+    "caseStudy": {
+      "problem": "El Santo Domingo Pickleball Club necesitaba una presencia digital profesional para promover el deporte, comunicar entrenamientos y torneos, y facilitar inscripciones a eventos como el Santo Domingo Pickleball Open 2026.",
+      "approach": "Desarrollamos un sitio web responsive con información del club, instalaciones, equipo, galería, cronograma del torneo, formulario de contacto e inscripción, destacando la misión de fomentar una comunidad deportiva inclusiva en Ecuador.",
+      "impact": "Plataforma web publicada que centraliza la oferta del club — entrenamientos, eventos, canchas y registro al torneo — y refuerza el crecimiento del pickleball en Santo Domingo de los Tsáchilas.",
+      "highlights": [
+        "Sitio oficial del club con torneo Open 2026",
+        "Entrenamientos, canchas y comunidad para todos los niveles",
+        "Inscripción, contacto y galería en un solo lugar"
+      ]
+    }
   }
 ]

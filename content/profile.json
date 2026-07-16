@@ -37,6 +37,7 @@
   },
   "profileImageLocal": "/images/profile-main.png",
   "heroImage": "/images/profile-hero.png",
+  "heroBackground": "/images/hero-background-nyc.jpg",
   "familyImage": "/images/family.png",
   "speakingImage": "/images/kevin-cursor-talk.jpg"
 }

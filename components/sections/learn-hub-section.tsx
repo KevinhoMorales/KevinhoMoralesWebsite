@@ -5,7 +5,6 @@ import Image from 'next/image'
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 import { AnimatePresence, motion, useReducedMotion } from 'framer-motion'
-import { Badge } from '@/components/ui/badge'
 import { Button } from '@/components/ui/button'
 import { FilterChipRow, filterChipClass } from '@/components/ui/filter-chip-row'
 import { Card, CardContent } from '@/components/ui/card'
@@ -104,9 +103,6 @@ export function LearnHubSection({ items }: LearnHubSectionProps) {
                           </div>
                         ) : null}
                         <div className="min-w-0 flex-1">
-                          <Badge variant="secondary" className="mb-1 text-[9px] uppercase sm:mb-2 sm:text-[10px]">
-                            {filterLabel(item.type)}
-                          </Badge>
                           <h3 className="line-clamp-2 text-xs font-semibold leading-snug sm:text-sm md:text-base">{item.title}</h3>
                         </div>
                       </div>

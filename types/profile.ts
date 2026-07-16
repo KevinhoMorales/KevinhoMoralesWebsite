@@ -21,6 +21,8 @@ export interface Profile {
   images?: string[];
   profileImageLocal?: string;
   heroImage?: string;
+  /** Foto de fondo del hero (p. ej. skyline NYC). */
+  heroBackground?: string;
   /** Handle mostrado en el pie (sin @); ej. kevinhomorales */
   socialHandle?: string;
   socialLinks?: {

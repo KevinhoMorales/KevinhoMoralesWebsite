@@ -1,5 +1,5 @@
 export type { Profile } from './profile';
-export type { Project, ProjectCategory, ProjectLink } from './project';
+export type { Project, ProjectCategory, ProjectLink, ProjectCaseStudy } from './project';
 export type { Experience, MergedExperience, ExperienceRoleLine } from './experience';
 export type { Conference, ConferenceLocationPlatform } from './conference';
 export { CONFERENCE_LOCATION_PLATFORMS } from './conference';

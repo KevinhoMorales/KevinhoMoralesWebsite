@@ -19,7 +19,7 @@ export function EpisodeCard({ episode, onClick }: EpisodeCardProps) {
     <button
       type="button"
       onClick={onClick}
-      className="group flex h-full w-full min-w-0 flex-col overflow-hidden rounded-lg border bg-card text-left transition-shadow hover:shadow-md focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2"
+      className="group flex h-full w-full min-w-0 flex-col overflow-hidden rounded-xl border bg-card text-left transition-shadow hover:shadow-md focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2"
     >
       <div className="relative aspect-[4/3] shrink-0 sm:aspect-video">
         <Image

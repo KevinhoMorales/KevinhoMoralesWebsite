@@ -50,7 +50,7 @@ export function Footer({ profile }: FooterProps) {
   const currentYear = new Date().getFullYear()
 
   return (
-    <footer className="py-4 sm:py-6 px-4 sm:px-6 md:px-8 lg:px-12 xl:px-24 bg-secondary/20">
+    <footer className="bg-secondary/20 px-4 pt-4 sm:px-6 sm:pt-6 md:px-8 lg:px-12 xl:px-24 pb-[calc(2.5rem+env(safe-area-inset-bottom,0px))] sm:pb-[calc(3rem+env(safe-area-inset-bottom,0px))]">
       <div className="max-w-6xl mx-auto">
         <ScrollReveal className="mb-6">
           <div>
@@ -97,7 +97,7 @@ export function Footer({ profile }: FooterProps) {
         <ScrollReveal delay={0.1}>
         <Separator className="mb-6" />
 
-        <div className="text-center text-xs sm:text-sm text-muted-foreground">
+        <div className="pb-2 text-center text-xs sm:text-sm text-muted-foreground">
           <p className="inline-flex flex-wrap items-center justify-center gap-x-2 gap-y-1">
             <span>
               © {currentYear} {profile.name}. {t('common.rights')}

@@ -7,14 +7,13 @@ import {
   Dialog,
   DialogContent,
   DialogDescription,
-  DialogHeader,
   DialogTitle,
 } from '@/components/ui/dialog'
-import { Input } from '@/components/ui/input'
 import { useI18n } from '@/components/i18n/locale-provider'
 import { handleHomeHashLinkClick } from '@/lib/section-scroll'
 import { normalizeForSearch } from '@/lib/normalize-for-search'
-import { Search } from 'lucide-react'
+import { cn } from '@/lib/utils'
+import { ArrowRight, Search, X } from 'lucide-react'
 import type { SearchIndexItem } from '@/app/api/search-index/route'
 
 type ArticleHit = {
@@ -38,9 +37,66 @@ function groupLabel(group: SearchIndexItem['group'] | 'articles', t: (key: strin
   return t(map[group])
 }
 
+function ResultLink({
+  href,
+  title,
+  description,
+  external,
+  onNavigate,
+}: {
+  href: string
+  title: string
+  description: string
+  external?: boolean
+  onNavigate: () => void
+}) {
+  const pathname = usePathname()
+  const className =
+    'group/item flex items-start gap-3 rounded-xl px-3 py-2.5 transition-colors hover:bg-primary/10'
+
+  const content = (
+    <>
+      <div className="min-w-0 flex-1">
+        <span className="block text-sm font-medium leading-snug group-hover/item:text-primary">{title}</span>
+        <span className="mt-0.5 block line-clamp-1 text-xs text-muted-foreground">{description}</span>
+      </div>
+      <ArrowRight
+        className="mt-0.5 h-4 w-4 shrink-0 text-muted-foreground/50 transition-transform group-hover/item:translate-x-0.5 group-hover/item:text-primary"
+        aria-hidden
+      />
+    </>
+  )
+
+  if (external) {
+    return (
+      <a
+        href={href}
+        target="_blank"
+        rel="noopener noreferrer"
+        className={className}
+        onClick={onNavigate}
+      >
+        {content}
+      </a>
+    )
+  }
+
+  return (
+    <Link
+      href={href}
+      className={className}
+      onClick={(e) => {
+        handleHomeHashLinkClick(e, pathname, href)
+        onNavigate()
+      }}
+    >
+      {content}
+    </Link>
+  )
+}
+
 export function SiteSearchModal({ open, onClose }: SiteSearchModalProps) {
   const { t } = useI18n()
-  const pathname = usePathname()
   const [query, setQuery] = useState('')
   const [indexItems, setIndexItems] = useState<SearchIndexItem[]>([])
   const [articles, setArticles] = useState<ArticleHit[]>([])
@@ -81,88 +137,125 @@ export function SiteSearchModal({ open, onClose }: SiteSearchModalProps) {
     return { index: index.slice(0, 12), articles: articleHits.slice(0, 6) }
   }, [query, indexItems, articles])
 
+  const groupedIndex = useMemo(() => {
+    const groups: Record<SearchIndexItem['group'], SearchIndexItem[]> = {
+      pages: [],
+      projects: [],
+      experience: [],
+    }
+    for (const item of results.index) {
+      groups[item.group].push(item)
+    }
+    return groups
+  }, [results.index])
+
   const hasResults = results.index.length > 0 || results.articles.length > 0
+  const trimmedQuery = query.trim()
 
   return (
     <Dialog open={open} onOpenChange={(next) => !next && onClose()}>
-      <DialogContent className="gap-0 overflow-hidden p-0 sm:max-w-lg">
-        <DialogHeader className="border-b border-border px-4 py-3 text-left">
-          <DialogTitle className="sr-only">{t('siteSearch.openLabel')}</DialogTitle>
-          <DialogDescription className="sr-only">{t('siteSearch.placeholder')}</DialogDescription>
+      <DialogContent className="gap-0 overflow-hidden p-0 sm:max-w-[min(100%-2rem,34rem)] [&>div>button.absolute]:hidden">
+        <div
+          className="pointer-events-none absolute inset-x-0 top-0 z-[1] h-px bg-gradient-to-r from-transparent via-primary/60 to-transparent"
+          aria-hidden
+        />
+
+        <DialogTitle className="sr-only">{t('siteSearch.openLabel')}</DialogTitle>
+        <DialogDescription className="sr-only">{t('siteSearch.placeholder')}</DialogDescription>
+
+        <div className="border-b border-border/50 px-4 py-4 sm:px-5 sm:py-5">
           <div className="relative">
-            <Search className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" aria-hidden />
-            <Input
+            <Search
+              className="pointer-events-none absolute left-3.5 top-1/2 h-[1.125rem] w-[1.125rem] -translate-y-1/2 text-primary/80"
+              aria-hidden
+            />
+            <input
+              type="search"
               value={query}
               onChange={(e) => setQuery(e.target.value)}
               placeholder={t('siteSearch.placeholder')}
-              className="pl-9"
               autoFocus
+              className={cn(
+                'flex h-12 w-full rounded-xl border border-input/80 bg-background/70 pl-10 pr-10 text-base shadow-sm',
+                'transition-[border-color,box-shadow,background-color]',
+                'placeholder:text-muted-foreground/80',
+                'focus-visible:border-primary/45 focus-visible:bg-background focus-visible:outline-none focus-visible:ring-[3px] focus-visible:ring-primary/15'
+              )}
             />
+            <button
+              type="button"
+              onClick={() => (trimmedQuery ? setQuery('') : onClose())}
+              className="absolute right-2 top-1/2 flex h-8 w-8 -translate-y-1/2 items-center justify-center rounded-lg text-muted-foreground transition-colors hover:bg-muted hover:text-foreground"
+              aria-label={trimmedQuery ? t('podcast.clearFilters') : t('common.close')}
+            >
+              <X className="h-4 w-4" aria-hidden />
+            </button>
           </div>
-          <p className="pt-2 text-xs text-muted-foreground">{t('siteSearch.shortcutHint')}</p>
-        </DialogHeader>
 
-        <div className="max-h-[min(60dvh,420px)] overflow-y-auto p-2">
-          {!query.trim() ? null : !hasResults ? (
-            <p className="px-3 py-6 text-center text-sm text-muted-foreground">{t('siteSearch.empty')}</p>
+          <div className="mt-3 flex items-center justify-center gap-2 text-xs text-muted-foreground">
+            <span>{t('siteSearch.shortcutHint')}</span>
+            <kbd className="hidden rounded-md border border-border/70 bg-muted/60 px-1.5 py-0.5 font-mono text-[10px] font-medium text-foreground/80 sm:inline">
+              ⌘K
+            </kbd>
+          </div>
+        </div>
+
+        <div className="min-h-[11rem] max-h-[min(50dvh,380px)] overflow-y-auto px-2 py-3 sm:px-3 sm:py-4">
+          {!trimmedQuery ? (
+            <div className="flex h-full min-h-[9rem] flex-col items-center justify-center px-4 py-6 text-center">
+              <div className="mb-3 flex h-12 w-12 items-center justify-center rounded-full bg-primary/10 text-primary">
+                <Search className="h-5 w-5" aria-hidden />
+              </div>
+              <p className="text-sm font-medium text-foreground">{t('siteSearch.idleTitle')}</p>
+              <p className="mt-1 max-w-xs text-xs leading-relaxed text-muted-foreground">
+                {t('siteSearch.idleHint')}
+              </p>
+            </div>
+          ) : !hasResults ? (
+            <div className="flex min-h-[9rem] flex-col items-center justify-center px-4 py-8 text-center">
+              <p className="text-sm font-medium text-foreground">{t('siteSearch.empty')}</p>
+              <p className="mt-1 text-xs text-muted-foreground">{t('siteSearch.emptyHint')}</p>
+            </div>
           ) : (
             <div className="space-y-4">
-              {results.index.length > 0 ? (
-                <div>
-                  <p className="px-2 pb-1 text-xs font-medium uppercase tracking-wide text-muted-foreground">
-                    {groupLabel('pages', t)}
-                  </p>
-                  <ul className="space-y-0.5">
-                    {results.index.map((item) => (
-                      <li key={item.id}>
-                        {item.href.startsWith('http') ? (
-                          <a
+              {(['pages', 'projects', 'experience'] as const).map((group) =>
+                groupedIndex[group].length > 0 ? (
+                  <div key={group}>
+                    <p className="px-2 pb-1.5 text-[10px] font-semibold uppercase tracking-wider text-muted-foreground">
+                      {groupLabel(group, t)}
+                    </p>
+                    <ul className="space-y-0.5">
+                      {groupedIndex[group].map((item) => (
+                        <li key={item.id}>
+                          <ResultLink
                             href={item.href}
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            className="block rounded-lg px-3 py-2 text-left hover:bg-muted"
-                            onClick={() => onClose()}
-                          >
-                            <span className="block text-sm font-medium">{item.title}</span>
-                            <span className="block text-xs text-muted-foreground line-clamp-1">{item.description}</span>
-                          </a>
-                        ) : (
-                          <Link
-                            href={item.href}
-                            className="block rounded-lg px-3 py-2 text-left hover:bg-muted"
-                            onClick={(e) => {
-                              handleHomeHashLinkClick(e, pathname, item.href)
-                              onClose()
-                            }}
-                          >
-                            <span className="block text-sm font-medium">{item.title}</span>
-                            <span className="block text-xs text-muted-foreground line-clamp-1">{item.description}</span>
-                          </Link>
-                        )}
-                      </li>
-                    ))}
-                  </ul>
-                </div>
-              ) : null}
+                            title={item.title}
+                            description={item.description}
+                            external={item.href.startsWith('http')}
+                            onNavigate={onClose}
+                          />
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                ) : null
+              )}
 
               {results.articles.length > 0 ? (
                 <div>
-                  <p className="px-2 pb-1 text-xs font-medium uppercase tracking-wide text-muted-foreground">
+                  <p className="px-2 pb-1.5 text-[10px] font-semibold uppercase tracking-wider text-muted-foreground">
                     {groupLabel('articles', t)}
                   </p>
                   <ul className="space-y-0.5">
                     {results.articles.map((item) => (
                       <li key={item.link}>
-                        <a
+                        <ResultLink
                           href={item.link}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          className="block rounded-lg px-3 py-2 text-left hover:bg-muted"
-                          onClick={() => onClose()}
-                        >
-                          <span className="block text-sm font-medium">{item.title}</span>
-                          <span className="block text-xs text-muted-foreground line-clamp-1">{item.excerpt}</span>
-                        </a>
+                          title={item.title}
+                          description={item.excerpt}
+                          external
+                          onNavigate={onClose}
+                        />
                       </li>
                     ))}
                   </ul>

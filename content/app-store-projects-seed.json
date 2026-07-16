@@ -2,7 +2,7 @@
   {
     "id": "security-force-residentes",
     "title": "Security Force Residentes",
-    "description": "Security Force Residentes permitirá crear un código QR único para el ingreso a urbanizaciones que trabajen con nosotros.\n\nSíguenos en nuestras redes sociales:\n\nInstagram: https://www.instagram.com/securityforce.ec/\n\nFacebook: https://www.facebook.com/SecurityForce-102928471885156",
+    "description": "App para residentes de urbanizaciones Security Force: genera códigos QR únicos para ingreso seguro y contactless en comunidades residenciales protegidas.",
     "category": "ios",
     "language": "Swift",
     "technologies": [
@@ -24,12 +24,22 @@
         "url": "https://apps.apple.com/ec/app/security-force-residentes/id1621974359",
         "label": "App Store"
       }
-    ]
+    ],
+    "caseStudy": {
+      "problem": "Las urbanizaciones necesitaban un acceso seguro y sin fricción para residentes, con visibilidad en tiempo real para administradores sobre entradas y visitas.",
+      "approach": "Desarrollamos apps nativas iOS (Swift) y Android (Kotlin) con códigos QR únicos por residente, integradas al ecosistema Security Force para guardias y administradores.",
+      "impact": "Ingreso contactless para residentes en urbanizaciones asociadas, reduciendo verificación manual en garitas y dando control centralizado a administradores de propiedades.",
+      "highlights": [
+        "Apps residentes en App Store y Play Store",
+        "Acceso por QR integrado al flujo de seguridad",
+        "Parte de la suite multi-app Security Force"
+      ]
+    }
   },
   {
     "id": "macro-empresas",
     "title": "Macro Empresas",
-    "description": "Banca móvil empresarial (Technisys).",
+    "description": "Banca móvil empresarial de Banco Macro en iOS y Android: operaciones corporativas, seguridad financiera y canales digitales para clientes enterprise (Technisys).",
     "category": "ios",
     "language": "Swift",
     "technologies": [
@@ -52,12 +62,22 @@
         "url": "https://apps.apple.com/us/app/macro-empresas/id1465765093",
         "label": "App Store"
       }
-    ]
+    ],
+    "caseStudy": {
+      "problem": "Los clientes corporativos de Banco Macro necesitaban un canal móvil confiable para operaciones bancarias empresariales en iOS y Android, con requisitos estrictos de seguridad y rendimiento.",
+      "approach": "Entregamos aplicaciones nativas iOS (Swift) y Android (Java) en equipo distribuido, con metodología ágil One Team y arquitectura móvil orientada a producción bancaria.",
+      "impact": "App de banca empresarial en producción para clientes corporativos en ambas plataformas, apoyando la transformación digital de Macro.",
+      "highlights": [
+        "Fintech multiplataforma para un banco líder en Latinoamérica",
+        "Seguridad y flujos bancarios de nivel enterprise",
+        "Equipo Scrum de greenfield a producción"
+      ]
+    }
   },
   {
     "id": "centro-artistico-center-stage",
     "title": "Centro Artístico Center Stage",
-    "description": "App de lifestyle para el centro artístico Center Stage.",
+    "description": "App lifestyle del Centro Artístico Center Stage: información del centro, actividades culturales y experiencias para la comunidad artística.",
     "category": "ios",
     "language": "Swift",
     "technologies": [
@@ -79,12 +99,22 @@
         "url": "https://apps.apple.com/us/app/centro-art%C3%ADstico-center-stage/id1574503847",
         "label": "App Store"
       }
-    ]
+    ],
+    "caseStudy": {
+      "problem": "Center Stage necesitaba comunicar actividades, servicios y experiencias culturales a su comunidad de forma móvil.",
+      "approach": "Creamos la app lifestyle en Swift con información del centro artístico, actividades y contenido para la comunidad.",
+      "impact": "Presencia móvil que conecta al público con las propuestas culturales del centro.",
+      "highlights": [
+        "App lifestyle cultural",
+        "Información de actividades",
+        "Swift en iOS"
+      ]
+    }
   },
   {
     "id": "meniuz",
     "title": "Meniuz",
-    "description": "Descubre menús y ofertas gastronómicas.",
+    "description": "App de pedidos Meniuz para descubrir menús, restaurantes y ofertas gastronómicas con experiencia nativa en iOS y Android.",
     "category": "ios",
     "language": "Swift",
     "technologies": [
@@ -106,12 +136,22 @@
         "url": "https://apps.apple.com/us/app/meniuz/id1563662812",
         "label": "App Store"
       }
-    ]
+    ],
+    "caseStudy": {
+      "problem": "Restaurantes y comensales necesitaban una app para descubrir menús, ofertas y pedir comida de forma ágil.",
+      "approach": "Construimos Meniuz en Swift y Kotlin con catálogo gastronómico, ofertas y flujo de pedidos nativo en iOS y Android.",
+      "impact": "App publicada en ambas tiendas que conecta usuarios con oferta gastronómica local.",
+      "highlights": [
+        "iOS y Android nativos",
+        "Menús y ofertas gastronómicas",
+        "Food & drink en móvil"
+      ]
+    }
   },
   {
     "id": "calcustom",
     "title": "Calcustom",
-    "description": "Utilidad de calendario personalizable.",
+    "description": "Utilidad de calendario personalizable para iPhone, iPad, Mac y Apple Watch: organiza eventos y agenda con experiencia nativa en el ecosistema Apple.",
     "category": "ios",
     "language": "Swift",
     "technologies": [
@@ -136,12 +176,22 @@
         "url": "https://apps.apple.com/us/app/calcustom/id1561896744",
         "label": "App Store"
       }
-    ]
+    ],
+    "caseStudy": {
+      "problem": "Los usuarios del ecosistema Apple buscaban una utilidad de calendario flexible que funcionara en iPhone, iPad, Mac y Apple Watch.",
+      "approach": "Desarrollamos Calcustom en Swift con personalización de agenda, soporte multi-dispositivo y widgets integrados al ecosistema Apple.",
+      "impact": "Utilidad publicada en App Store disponible en iPhone, iPad, Mac y Apple Watch.",
+      "highlights": [
+        "Calendario personalizable",
+        "Multi-dispositivo Apple",
+        "Swift nativo"
+      ]
+    }
   },
   {
     "id": "banco-de-loja",
     "title": "Banco de Loja",
-    "description": "App de referencia para Banco de Loja.",
+    "description": "App de referencia oficial del Banco de Loja: consulta de productos, servicios financieros e información institucional del banco ecuatoriano.",
     "category": "ios",
     "language": "Swift",
     "technologies": [
@@ -163,12 +213,22 @@
         "url": "https://apps.apple.com/ec/app/banco-de-loja/id1396238600?l=en",
         "label": "App Store"
       }
-    ]
+    ],
+    "caseStudy": {
+      "problem": "Banco de Loja necesitaba una app de referencia que centralizara información de productos y servicios para clientes móviles.",
+      "approach": "Implementamos la app iOS en Swift con consulta de información institucional, productos financieros y experiencia nativa para iPhone.",
+      "impact": "Canal de referencia oficial publicado en App Store para usuarios del banco ecuatoriano.",
+      "highlights": [
+        "App de referencia bancaria",
+        "Swift nativo en iOS",
+        "Información institucional centralizada"
+      ]
+    }
   },
   {
     "id": "salud-sa",
     "title": "Salud SA",
-    "description": "App de referencia Salud SA.",
+    "description": "App de referencia Salud SA con información de servicios de salud, consultas institucionales y recursos para usuarios del sector salud ecuatoriano.",
     "category": "ios",
     "language": "Swift",
     "technologies": [
@@ -190,12 +250,22 @@
         "url": "https://apps.apple.com/ec/app/salud-sa/id1276856377?l=en",
         "label": "App Store"
       }
-    ]
+    ],
+    "caseStudy": {
+      "problem": "Salud SA requería un canal móvil de referencia para información de servicios de salud e institucional.",
+      "approach": "Desarrollamos la app iOS en Swift con consulta de servicios, recursos y contenido para usuarios del sector salud.",
+      "impact": "App de referencia publicada que acerca información de Salud SA a usuarios móviles en Ecuador.",
+      "highlights": [
+        "App de referencia en salud",
+        "Información institucional",
+        "Swift nativo"
+      ]
+    }
   },
   {
     "id": "yippy-business",
     "title": "Yippy Business",
-    "description": "Versión business de Yippy.",
+    "description": "Yippy Business: versión empresarial del ecosistema Yippy para compras, ofertas y operación comercial B2B en iOS.",
     "category": "ios",
     "language": "Swift",
     "technologies": [
@@ -217,12 +287,22 @@
         "url": "https://apps.apple.com/us/app/yippy-business/id1549761525",
         "label": "App Store"
       }
-    ]
+    ],
+    "caseStudy": {
+      "problem": "Comercios del ecosistema Yippy necesitaban una versión empresarial para operaciones B2B y ofertas comerciales.",
+      "approach": "Desarrollamos Yippy Business en Swift con flujos de compras, ofertas y operación orientada a negocios.",
+      "impact": "App iOS publicada que extiende Yippy al segmento empresarial.",
+      "highlights": [
+        "Versión B2B de Yippy",
+        "Ofertas y operación comercial",
+        "Shopping empresarial"
+      ]
+    }
   },
   {
     "id": "yippy-cerca-de-ti",
     "title": "Yippy: Cerca de ti",
-    "description": "Compras locales y ofertas cercanas.",
+    "description": "Yippy Cerca de ti conecta compradores con comercios locales: ofertas, tiendas cercanas y shopping en iOS y Android.",
     "category": "ios",
     "language": "Swift",
     "technologies": [
@@ -244,12 +324,22 @@
         "url": "https://apps.apple.com/us/app/yippy-cerca-de-ti/id1506152885",
         "label": "App Store"
       }
-    ]
+    ],
+    "caseStudy": {
+      "problem": "Compradores locales querían descubrir tiendas cercanas, ofertas y shopping desde el móvil.",
+      "approach": "Construimos Yippy en Swift y Java con geolocalización de comercios, ofertas y experiencia de compras locales.",
+      "impact": "App publicada en iOS y Android que conecta usuarios con comercio local.",
+      "highlights": [
+        "Compras locales",
+        "iOS y Android",
+        "Ofertas y tiendas cercanas"
+      ]
+    }
   },
   {
     "id": "vx-nutrition",
     "title": "VX Nutrition",
-    "description": "Lifestyle y nutrición.",
+    "description": "VX Nutrition: app lifestyle de nutrición y bienestar con seguimiento de hábitos saludables para usuarios iOS.",
     "category": "ios",
     "language": "Swift",
     "technologies": [
@@ -271,12 +361,22 @@
         "url": "https://apps.apple.com/es/app/vx-nutrition/id1531573410",
         "label": "App Store"
       }
-    ]
+    ],
+    "caseStudy": {
+      "problem": "Usuarios interesados en nutrición y bienestar buscaban seguimiento de hábitos saludables en móvil.",
+      "approach": "Desarrollamos VX Nutrition en Swift con seguimiento de nutrición, hábitos y experiencia lifestyle.",
+      "impact": "App iOS publicada orientada a bienestar y nutrición personal.",
+      "highlights": [
+        "Nutrición y bienestar",
+        "Seguimiento de hábitos",
+        "Lifestyle en iOS"
+      ]
+    }
   },
   {
     "id": "smartkey-gsm",
     "title": "SmartKey GSM",
-    "description": "Productividad y gestión GSM.",
+    "description": "SmartKey GSM: app de productividad y gestión GSM para operaciones móviles y administración de servicios celulares.",
     "category": "ios",
     "language": "Swift",
     "technologies": [
@@ -292,12 +392,22 @@
     ],
     "releaseDate": "2020-08-12",
     "sortOrder": 20200812,
-    "links": []
+    "links": [],
+    "caseStudy": {
+      "problem": "Equipos de operaciones GSM necesitaban administrar servicios y tareas móviles desde una app dedicada.",
+      "approach": "Desarrollamos SmartKey GSM en Swift con herramientas de productividad y gestión de operaciones celulares.",
+      "impact": "App iOS publicada para administración y productividad en entornos GSM.",
+      "highlights": [
+        "Gestión GSM",
+        "Productividad móvil",
+        "Swift nativo"
+      ]
+    }
   },
   {
     "id": "tasky-be-more-productive",
     "title": "Tasky: Be More Productive",
-    "description": "Tareas y productividad.",
+    "description": "Tasky impulsa la productividad personal: organización de tareas, recordatorios y flujos de trabajo desde iPhone y iPad.",
     "category": "ios",
     "language": "Swift",
     "technologies": [
@@ -320,12 +430,22 @@
         "url": "https://apps.apple.com/us/app/tasky-be-more-productive/id1516001390",
         "label": "App Store"
       }
-    ]
+    ],
+    "caseStudy": {
+      "problem": "Profesionales y estudiantes necesitaban organizar tareas, recordatorios y flujos de trabajo desde iOS.",
+      "approach": "Construimos Tasky en Swift con listas, recordatorios y herramientas de productividad personal.",
+      "impact": "App iOS publicada que ayuda a usuarios a ser más productivos en el día a día.",
+      "highlights": [
+        "Tareas y recordatorios",
+        "Productividad personal",
+        "iPhone e iPad"
+      ]
+    }
   },
   {
     "id": "weathery-beautiful-weather",
     "title": "Weathery: Beautiful Weather",
-    "description": "Clima en iPhone, iPad, Mac e iMessage.",
+    "description": "Weathery ofrece clima elegante en iPhone, iPad, Mac e iMessage: pronósticos visuales y widgets integrados al ecosistema Apple.",
     "category": "ios",
     "language": "Swift",
     "technologies": [
@@ -350,12 +470,22 @@
         "url": "https://apps.apple.com/us/app/weathery-beautiful-weather/id1522632976",
         "label": "App Store"
       }
-    ]
+    ],
+    "caseStudy": {
+      "problem": "Los usuarios del ecosistema Apple querían pronósticos visuales y elegantes en todos sus dispositivos.",
+      "approach": "Desarrollamos Weathery en Swift con widgets, soporte para iPhone, iPad, Mac e iMessage y diseño visual cuidado.",
+      "impact": "App de clima publicada con presencia en múltiples dispositivos Apple.",
+      "highlights": [
+        "Clima en iPhone, iPad y Mac",
+        "Widgets e iMessage",
+        "Diseño visual elegante"
+      ]
+    }
   },
   {
     "id": "gme-driver",
     "title": "GMe Driver: Make money driving",
-    "description": "App para conductores — viajes y ganancias.",
+    "description": "App para conductores GMe: gestiona viajes, ganancias y operación diaria como conductor en la plataforma de movilidad.",
     "category": "ios",
     "language": "Swift",
     "technologies": [
@@ -379,12 +509,22 @@
         "url": "https://apps.apple.com/us/app/gme-driver-make-money-driving/id1482185549",
         "label": "App Store"
       }
-    ]
+    ],
+    "caseStudy": {
+      "problem": "Los conductores de GMe necesitaban gestionar viajes, ganancias y operación diaria desde el móvil.",
+      "approach": "Construimos la app iOS para conductores con flujos de viajes, métricas de ganancias y herramientas operativas.",
+      "impact": "Canal móvil para conductores que sostiene la operación del marketplace de taxis GMe.",
+      "highlights": [
+        "App para conductores",
+        "Gestión de viajes y ganancias",
+        "Operación diaria en iOS"
+      ]
+    }
   },
   {
     "id": "gme-decide-your-taxi-price",
     "title": "GMe: Decide your taxi price",
-    "description": "App de pasajeros — define tu precio de taxi.",
+    "description": "App para pasajeros del ecosistema GMe: negocia y define el precio de tu viaje en taxi con una experiencia centrada en el usuario.",
     "category": "ios",
     "language": "Swift",
     "technologies": [
@@ -408,12 +548,22 @@
         "url": "https://apps.apple.com/us/app/gme-decide-your-taxi-price/id1482189829",
         "label": "App Store"
       }
-    ]
+    ],
+    "caseStudy": {
+      "problem": "Los pasajeros del ecosistema GMe querían más control sobre el precio de sus viajes en taxi.",
+      "approach": "Desarrollamos la app iOS con negociación de tarifas, solicitud de viajes y experiencia centrada en el usuario.",
+      "impact": "App publicada que diferencia GMe con un modelo donde el pasajero define el precio del viaje.",
+      "highlights": [
+        "Modelo de precio definido por el usuario",
+        "App iOS para pasajeros",
+        "Ecosistema de movilidad GMe"
+      ]
+    }
   },
   {
     "id": "bedford-bagel-bakery",
     "title": "Bedford Bagel Bakery",
-    "description": "Pedidos y shopping para la bakery.",
+    "description": "App de pedidos para Bedford Bagel Bakery: catálogo de productos, compras y experiencia de shopping para clientes de la panadería.",
     "category": "ios",
     "language": "Swift",
     "technologies": [
@@ -436,12 +586,22 @@
         "url": "https://apps.apple.com/la/app/bedford-bakery/id1514278000",
         "label": "App Store"
       }
-    ]
+    ],
+    "caseStudy": {
+      "problem": "Bedford Bagel Bakery buscaba digitalizar pedidos y compras para clientes que preferían ordenar desde el teléfono.",
+      "approach": "Desarrollamos la app iOS con catálogo de productos, flujo de pedidos y experiencia de shopping orientada a la panadería.",
+      "impact": "App publicada que facilita pedidos y compras para la base de clientes de la bakery.",
+      "highlights": [
+        "Catálogo y pedidos móviles",
+        "Experiencia de shopping",
+        "App Store para clientes"
+      ]
+    }
   },
   {
     "id": "pagame-easy-way-to-charge",
     "title": "Págame: Easy way to charge",
-    "description": "Cobros y finanzas.",
+    "description": "Págame simplifica cobros y finanzas personales: app iOS para gestionar pagos y flujos financieros de forma ágil.",
     "category": "ios",
     "language": "Swift",
     "technologies": [
@@ -464,12 +624,22 @@
         "url": "https://apps.apple.com/la/app/p%C3%A1game-easy-way-to-charge/id1502119779",
         "label": "App Store"
       }
-    ]
+    ],
+    "caseStudy": {
+      "problem": "Usuarios y pequeños negocios necesitaban simplificar cobros y flujos financieros personales desde el iPhone.",
+      "approach": "Implementamos Págame en Swift con gestión de pagos, cobros y herramientas financieras ágiles.",
+      "impact": "App iOS publicada que facilita cobros y finanzas personales en el día a día.",
+      "highlights": [
+        "Cobros simplificados",
+        "Finanzas personales",
+        "Swift en iOS"
+      ]
+    }
   },
   {
     "id": "scanner-qr",
     "title": "Scanner QR",
-    "description": "Escáner QR.",
+    "description": "Utilidad Scanner QR para iOS: lectura rápida de códigos QR con interfaz simple y experiencia nativa.",
     "category": "ios",
     "language": "Swift",
     "technologies": [
@@ -492,12 +662,22 @@
         "url": "https://apps.apple.com/us/app/scanner-qr/id1427117800",
         "label": "App Store"
       }
-    ]
+    ],
+    "caseStudy": {
+      "problem": "Los usuarios iOS necesitaban una utilidad rápida y confiable para leer códigos QR en el día a día.",
+      "approach": "Desarrollamos Scanner QR en Swift con lectura inmediata, interfaz simple y experiencia nativa.",
+      "impact": "Utilidad publicada en App Store para escaneo QR sin fricción.",
+      "highlights": [
+        "Lectura rápida de QR",
+        "Interfaz minimalista",
+        "Utilidad nativa iOS"
+      ]
+    }
   },
   {
     "id": "clean-now",
     "title": "Clean Now",
-    "description": "Lifestyle.",
+    "description": "App lifestyle Clean Now orientada a hábitos, bienestar y organización personal del día a día.",
     "category": "ios",
     "language": "Swift",
     "technologies": [
@@ -519,12 +699,22 @@
         "url": "https://apps.apple.com/ec/app/cleannow/id1448624210?l=en",
         "label": "App Store"
       }
-    ]
+    ],
+    "caseStudy": {
+      "problem": "Los usuarios buscaban una app simple para organizar hábitos, bienestar y rutinas diarias desde el iPhone.",
+      "approach": "Desarrollamos Clean Now en Swift con flujos de lifestyle, organización personal y experiencia visual clara.",
+      "impact": "Utilidad lifestyle publicada en App Store para gestión del día a día.",
+      "highlights": [
+        "Hábitos y bienestar",
+        "Organización personal",
+        "Experiencia nativa iOS"
+      ]
+    }
   },
   {
     "id": "holy-food",
     "title": "Holy Food",
-    "description": "Libros / contenido Holy Food.",
+    "description": "App de libros y contenido espiritual Holy Food: acceso a material editorial y recursos de bienestar para la comunidad de usuarios.",
     "category": "ios",
     "language": "Swift",
     "technologies": [
@@ -546,12 +736,22 @@
         "url": "https://apps.apple.com/us/app/holy-food/id1378159914",
         "label": "App Store"
       }
-    ]
+    ],
+    "caseStudy": {
+      "problem": "Holy Food buscaba distribuir libros y contenido espiritual a usuarios que consumen material editorial en móvil.",
+      "approach": "Desarrollamos la app iOS con acceso a contenido, navegación de libros y experiencia de bienestar.",
+      "impact": "App publicada que lleva el contenido Holy Food a la audiencia iOS.",
+      "highlights": [
+        "Contenido editorial espiritual",
+        "Libros y recursos en móvil",
+        "Experiencia lifestyle"
+      ]
+    }
   },
   {
     "id": "xtreme-3t-tic-tac-toe",
     "title": "Xtreme 3T Tic Tac Toe",
-    "description": "Juego tres en raya.",
+    "description": "Xtreme 3T Tic Tac Toe: juego clásico de tres en raya con modos y experiencia casual para iOS.",
     "category": "ios",
     "language": "Swift",
     "technologies": [
@@ -573,12 +773,22 @@
         "url": "https://apps.apple.com/ec/app/xtreme-3t-tic-tac-toe/id1376522383?l=en",
         "label": "App Store"
       }
-    ]
+    ],
+    "caseStudy": {
+      "problem": "Jugadores casuales buscaban una versión moderna del clásico tres en raya para iOS.",
+      "approach": "Desarrollamos Xtreme 3T en Swift con modos de juego, interfaz simple y experiencia casual.",
+      "impact": "Juego publicado en App Store para entretenimiento casual en iOS.",
+      "highlights": [
+        "Juego casual clásico",
+        "Modos de tres en raya",
+        "Swift nativo"
+      ]
+    }
   },
   {
     "id": "global-bank",
     "title": "Global Bank",
-    "description": "Banca móvil (Objective-C, Technisys).",
+    "description": "Aplicación de banca móvil Global Bank desarrollada en Objective-C en Technisys, con operaciones financieras para clientes del banco.",
     "category": "ios",
     "language": "Objective-C",
     "technologies": [
@@ -601,12 +811,22 @@
         "url": "https://apps.apple.com/pa/app/global-mobile/id1289218637",
         "label": "App Store"
       }
-    ]
+    ],
+    "caseStudy": {
+      "problem": "Global Bank necesitaba modernizar su canal móvil con operaciones bancarias seguras para clientes iOS.",
+      "approach": "Participé en el desarrollo de la app en Objective-C dentro del equipo Technisys, con flujos financieros y estándares bancarios.",
+      "impact": "Aplicación de banca móvil en producción que soporta operaciones de clientes del banco.",
+      "highlights": [
+        "Objective-C en iOS",
+        "Banca móvil en Technisys",
+        "Operaciones financieras seguras"
+      ]
+    }
   },
   {
     "id": "botca-store",
     "title": "Botca Store",
-    "description": "Tienda y shopping.",
+    "description": "Aplicación de e-commerce Botca Store para navegar el catálogo, realizar compras y gestionar pedidos de la tienda en línea.",
     "category": "ios",
     "language": "Swift",
     "technologies": [
@@ -628,12 +848,22 @@
         "url": "https://apps.apple.com/us/app/botca-store/id6467423858",
         "label": "App Store"
       }
-    ]
+    ],
+    "caseStudy": {
+      "problem": "Botca Store necesitaba una app móvil para que los clientes naveguen el catálogo y completen compras sin fricción.",
+      "approach": "Construimos la app iOS de e-commerce con navegación de productos, carrito y gestión de pedidos.",
+      "impact": "Tienda móvil publicada que extiende las ventas de Botca Store al canal iOS.",
+      "highlights": [
+        "E-commerce en iOS",
+        "Catálogo y pedidos",
+        "Experiencia de compra móvil"
+      ]
+    }
   },
   {
     "id": "on-meet",
     "title": "On-Meet",
-    "description": "Utilidades y seguridad para reuniones.",
+    "description": "App de utilidades On-Meet para reuniones: herramientas de productividad y seguridad orientadas a encuentros profesionales y colaborativos.",
     "category": "ios",
     "language": "Swift",
     "technologies": [
@@ -656,12 +886,22 @@
         "url": "https://apps.apple.com/ec/app/on-meet/id1570201533",
         "label": "App Store"
       }
-    ]
+    ],
+    "caseStudy": {
+      "problem": "Equipos y profesionales buscaban utilidades de productividad y seguridad para reuniones y encuentros.",
+      "approach": "Desarrollamos On-Meet en Swift con herramientas orientadas a reuniones, productividad y controles de seguridad.",
+      "impact": "App iOS publicada que apoya encuentros profesionales con utilidades dedicadas.",
+      "highlights": [
+        "Productividad para reuniones",
+        "Utilidades de seguridad",
+        "Swift nativo"
+      ]
+    }
   },
   {
     "id": "livo-home",
     "title": "Livo Home",
-    "description": "Lifestyle — gestión y hogar.",
+    "description": "App lifestyle Livo Home para gestión de propiedades y hogar: servicios, información residencial y experiencia conectada para propietarios e inquilinos.",
     "category": "ios",
     "language": "Swift",
     "technologies": [
@@ -683,12 +923,22 @@
         "url": "https://apps.apple.com/es/app/livo-home/id1669247260",
         "label": "App Store"
       }
-    ]
+    ],
+    "caseStudy": {
+      "problem": "Propietarios e inquilinos necesitaban una app para gestionar propiedades, servicios y vida residencial.",
+      "approach": "Desarrollamos Livo Home en Swift y Jetpack Compose con información de hogar, servicios y flujos lifestyle conectados.",
+      "impact": "App multiplataforma publicada que centraliza la experiencia residencial para usuarios iOS y Android.",
+      "highlights": [
+        "iOS y Android",
+        "Gestión de propiedades",
+        "Servicios lifestyle conectados"
+      ]
+    }
   },
   {
     "id": "elite-padel-ranking-oficial",
     "title": "Élite Padel: Ranking Oficial",
-    "description": "Ranking oficial de pádel — SwiftUI.",
+    "description": "App iOS con SwiftUI para el ranking oficial de pádel: posiciones, torneos y seguimiento competitivo para jugadores de pádel.",
     "category": "ios",
     "language": "SwiftUI",
     "technologies": [
@@ -712,12 +962,22 @@
         "url": "https://apps.apple.com/jm/app/%C3%A9lite-padel-ranking-oficial/id6742730017",
         "label": "App Store"
       }
-    ]
+    ],
+    "caseStudy": {
+      "problem": "Los jugadores de pádel en iOS requerían una app nativa para consultar el ranking oficial y torneos con buena UX.",
+      "approach": "Desarrollamos la app con SwiftUI enfocada en posiciones, estadísticas y seguimiento competitivo.",
+      "impact": "App iOS publicada que oficializa el seguimiento de rankings para la comunidad de pádel.",
+      "highlights": [
+        "SwiftUI nativo",
+        "Ranking oficial de pádel",
+        "Torneos y estadísticas"
+      ]
+    }
   },
   {
     "id": "padeltrack",
     "title": "PadelTrack",
-    "description": "Seguimiento de pádel — SwiftUI.",
+    "description": "PadelTrack registra partidos, estadísticas y progreso en pádel: app multiplataforma con SwiftUI, Jetpack Compose y Flutter para iOS y Android.",
     "category": "ios",
     "language": "SwiftUI",
     "technologies": [
@@ -741,12 +1001,22 @@
         "url": "https://apps.apple.com/ec/app/padeltrack/id6749497707",
         "label": "App Store"
       }
-    ]
+    ],
+    "caseStudy": {
+      "problem": "Jugadores de pádel necesitaban registrar partidos, estadísticas y progreso en una sola herramienta multiplataforma.",
+      "approach": "Desarrollamos PadelTrack con SwiftUI, Jetpack Compose y Flutter para cubrir iOS y Android con seguimiento deportivo.",
+      "impact": "App publicada que ayuda a la comunidad de pádel a medir rendimiento y evolución en el deporte.",
+      "highlights": [
+        "SwiftUI, Compose y Flutter",
+        "Seguimiento de partidos y stats",
+        "iOS y Android"
+      ]
+    }
   },
   {
     "id": "devlokos-app",
     "title": "DevLokos",
-    "description": "App DevLokos — Flutter (Dart).",
+    "description": "App multiplataforma del podcast DevLokos en Flutter: escucha episodios, explora contenido de la comunidad y accede a recursos para desarrolladores desde iOS y Android.",
     "category": "flutter",
     "language": "Dart",
     "technologies": [
@@ -780,12 +1050,22 @@
         "url": "https://devlokos.com/",
         "label": "Web"
       }
-    ]
+    ],
+    "caseStudy": {
+      "problem": "La audiencia del podcast DevLokos necesitaba escuchar episodios y acceder a contenido de la comunidad desde iOS y Android.",
+      "approach": "Desarrollamos la app en Flutter (Dart) con reproducción de episodios, navegación de contenido y experiencia multiplataforma.",
+      "impact": "App publicada en App Store y Play Store que lleva DevLokos al bolsillo de desarrolladores y oyentes.",
+      "highlights": [
+        "Flutter en iOS y Android",
+        "Episodios y comunidad",
+        "App Store y Play Store"
+      ]
+    }
   },
   {
     "id": "still-waiting",
     "title": "Still Waiting",
-    "description": "Utilidades y lifestyle.",
+    "description": "Still Waiting: utilidad lifestyle multiplataforma en iOS para iPhone, iPad y Mac con experiencia nativa Swift.",
     "category": "ios",
     "language": "Swift",
     "technologies": [
@@ -810,12 +1090,22 @@
         "url": "https://apps.apple.com/us/app/still-waiting/id6757965516",
         "label": "App Store"
       }
-    ]
+    ],
+    "caseStudy": {
+      "problem": "Los usuarios buscaban una utilidad lifestyle ligera disponible en iPhone, iPad y Mac.",
+      "approach": "Desarrollamos Still Waiting en Swift con experiencia multi-dispositivo y flujos de utilidad cotidiana.",
+      "impact": "App publicada en App Store para iPhone, iPad y Mac.",
+      "highlights": [
+        "Multi-dispositivo Apple",
+        "Utilidad lifestyle",
+        "Swift nativo"
+      ]
+    }
   },
   {
     "id": "tayos",
     "title": "Tayos",
-    "description": "App B2B de repuestos automotrices — React Native (iOS y Android).",
+    "description": "App B2B de repuestos automotrices para la distribuidora más grande del Ecuador — catálogo digital con 30.000+ productos, búsqueda rápida y pedidos para talleres y empresas.",
     "image": "/images/tayos-icon.png",
     "category": "ios",
     "language": "TypeScript",
@@ -853,6 +1143,16 @@
         "url": "https://devlokos.com/empresarial",
         "label": "DevLokos Enterprise"
       }
-    ]
+    ],
+    "caseStudy": {
+      "problem": "La distribuidora de repuestos automotrices más grande del Ecuador necesitaba digitalizar la compra B2B de talleres, mecánicas y empresas que dependían de llamadas y mensajes para consultar stock y hacer pedidos.",
+      "approach": "Desarrollamos Tayos en React Native (TypeScript) para iOS y Android con catálogo digital, búsqueda rápida de más de 30.000 productos y flujo de pedidos orientado a clientes profesionales del sector automotriz.",
+      "impact": "Plataforma B2B publicada en App Store y Play Store que agiliza consultas comerciales y pedidos para negocios del sector automotriz en Ecuador.",
+      "highlights": [
+        "Cross-platform React Native en iOS y Android",
+        "Catálogo B2B con 30.000+ productos",
+        "Proyecto DevLokos Enterprise"
+      ]
+    }
   }
 ]

@@ -25,21 +25,21 @@ export function AchievementsSection({ achievements }: { achievements: Achievemen
           </p>
         </ScrollReveal>
 
-        <StaggerContainer className="grid grid-cols-2 gap-x-3 gap-y-5 sm:grid-cols-3 sm:gap-x-6 sm:gap-y-10 lg:grid-cols-4 justify-items-center">
+        <StaggerContainer className="grid grid-cols-2 gap-x-3 gap-y-5 sm:grid-cols-3 sm:gap-x-6 sm:gap-y-10 lg:grid-cols-5 lg:gap-x-4 lg:gap-y-8 justify-items-center">
           {achievements.map((achievement, index) => {
             const frame = (
-              <div className="relative mx-auto h-24 w-36 sm:h-32 sm:w-56">
+              <div className="relative mx-auto h-24 w-36 sm:h-32 sm:w-48 lg:h-28 lg:w-full lg:max-w-[10.5rem]">
                 <Image
                   src={achievement.image}
                   alt={achievement.title}
                   fill
-                  sizes="(max-width: 640px) 176px, 224px"
+                  sizes="(max-width: 640px) 176px, (max-width: 1024px) 192px, 168px"
                   className="rounded-lg object-contain object-center drop-shadow-md"
                 />
               </div>
             )
             const caption = (
-              <span className="mt-2 block max-w-[11rem] sm:max-w-[14rem] text-center text-xs sm:text-sm font-medium text-foreground leading-snug">
+              <span className="mt-2 block max-w-[11rem] text-center text-xs font-medium leading-snug text-foreground sm:max-w-[14rem] sm:text-sm lg:max-w-[11rem] lg:text-xs xl:max-w-[12rem]">
                 {achievement.title}
               </span>
             )
@@ -51,7 +51,7 @@ export function AchievementsSection({ achievements }: { achievements: Achievemen
             )
 
             return (
-              <StaggerItem key={achievement.id} staggerIndex={index} className="w-full max-w-[15rem]">
+              <StaggerItem key={achievement.id} staggerIndex={index} className="w-full max-w-[15rem] lg:max-w-none">
                 {achievement.url ? (
                   <a
                     href={achievement.url}

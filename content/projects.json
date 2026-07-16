@@ -198,7 +198,41 @@
   {
     "id": "devlokos",
     "title": "DevLokos",
-    "description": "Podcast y comunidad DevLokos (app Flutter / iOS y Android).",
+    "description": "Sitio web oficial del podcast y comunidad DevLokos: episodios, blog, recursos para desarrolladores, eventos y presencia digital de la marca — construido con Next.js y desplegado en Vercel.",
+    "image": "/images/devlokos-logo.png",
+    "technologies": [
+      "Next.js",
+      "React",
+      "TypeScript",
+      "Vercel"
+    ],
+    "category": "web",
+    "links": [
+      {
+        "type": "website",
+        "url": "https://devlokos.com/"
+      },
+      {
+        "type": "github",
+        "url": "https://github.com/devlokos"
+      }
+    ],
+    "experience": "DevLokos Enterprise",
+    "platforms": [
+      "Web",
+      "Responsive"
+    ],
+    "tags": [
+      "Podcast",
+      "Community"
+    ],
+    "webFramework": "Next.js",
+    "webHosting": "Vercel"
+  },
+  {
+    "id": "devlokos-app",
+    "title": "DevLokos",
+    "description": "App multiplataforma del podcast DevLokos en Flutter: escucha episodios, explora contenido de la comunidad y accede a recursos para desarrolladores desde iOS y Android.",
     "technologies": [
       "Dart",
       "Flutter"
@@ -229,37 +263,6 @@
       "App"
     ],
     "releaseDate": "2025-10-28"
-  },
-  {
-    "id": "devlokos-web",
-    "title": "DevLokos (Web)",
-    "description": "Sitio web, comunidad y podcast DevLokos (React).",
-    "technologies": [
-      "React",
-      "TypeScript"
-    ],
-    "category": "web",
-    "links": [
-      {
-        "type": "website",
-        "url": "https://devlokos.com/"
-      },
-      {
-        "type": "github",
-        "url": "https://github.com/devlokos"
-      }
-    ],
-    "experience": "DevLokos Enterprise",
-    "platforms": [
-      "Web",
-      "Responsive"
-    ],
-    "tags": [
-      "Podcast",
-      "Community"
-    ],
-    "webFramework": "React",
-    "webHosting": "Vercel"
   },
   {
     "id": "padeltrack",

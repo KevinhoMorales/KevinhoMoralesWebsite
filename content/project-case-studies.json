@@ -1,0 +1,402 @@
+{
+  "ajelist-android": {
+    "problem": "Los negocios que usan AJELIST necesitaban gestionar proveedores y operaciones desde el móvil sin depender de procesos manuales o escritorio.",
+    "approach": "Construimos la app Android en Kotlin con flujos de productividad para administrar proveedores, servicios y tareas operativas del día a día.",
+    "impact": "Herramienta móvil publicada en Play Store que acerca la gestión del negocio al equipo en campo.",
+    "highlights": [
+      "Android nativo con Kotlin",
+      "Gestión de proveedores y servicios",
+      "Productividad operativa en móvil"
+    ]
+  },
+  "anclaideas-android": {
+    "problem": "Anclaideas requería llevar su contenido educativo a Android para que estudiantes y docentes accedan a recursos desde cualquier lugar.",
+    "approach": "Desarrollamos la app Android en Java con navegación de contenido formativo, recursos de aprendizaje y experiencia adaptada a tablets.",
+    "impact": "Plataforma educativa móvil que amplía el alcance del contenido Anclaideas en dispositivos Android.",
+    "highlights": [
+      "Contenido educativo en Android",
+      "Soporte para tablet",
+      "Recursos de aprendizaje accesibles"
+    ]
+  },
+  "banco-de-loja": {
+    "problem": "Banco de Loja necesitaba una app de referencia que centralizara información de productos y servicios para clientes móviles.",
+    "approach": "Implementamos la app iOS en Swift con consulta de información institucional, productos financieros y experiencia nativa para iPhone.",
+    "impact": "Canal de referencia oficial publicado en App Store para usuarios del banco ecuatoriano.",
+    "highlights": [
+      "App de referencia bancaria",
+      "Swift nativo en iOS",
+      "Información institucional centralizada"
+    ]
+  },
+  "bedford-bagel-bakery": {
+    "problem": "Bedford Bagel Bakery buscaba digitalizar pedidos y compras para clientes que preferían ordenar desde el teléfono.",
+    "approach": "Desarrollamos la app iOS con catálogo de productos, flujo de pedidos y experiencia de shopping orientada a la panadería.",
+    "impact": "App publicada que facilita pedidos y compras para la base de clientes de la bakery.",
+    "highlights": [
+      "Catálogo y pedidos móviles",
+      "Experiencia de shopping",
+      "App Store para clientes"
+    ]
+  },
+  "botca-store": {
+    "problem": "Botca Store necesitaba una app móvil para que los clientes naveguen el catálogo y completen compras sin fricción.",
+    "approach": "Construimos la app iOS de e-commerce con navegación de productos, carrito y gestión de pedidos.",
+    "impact": "Tienda móvil publicada que extiende las ventas de Botca Store al canal iOS.",
+    "highlights": [
+      "E-commerce en iOS",
+      "Catálogo y pedidos",
+      "Experiencia de compra móvil"
+    ]
+  },
+  "calcustom": {
+    "problem": "Los usuarios del ecosistema Apple buscaban una utilidad de calendario flexible que funcionara en iPhone, iPad, Mac y Apple Watch.",
+    "approach": "Desarrollamos Calcustom en Swift con personalización de agenda, soporte multi-dispositivo y widgets integrados al ecosistema Apple.",
+    "impact": "Utilidad publicada en App Store disponible en iPhone, iPad, Mac y Apple Watch.",
+    "highlights": [
+      "Calendario personalizable",
+      "Multi-dispositivo Apple",
+      "Swift nativo"
+    ]
+  },
+  "centro-artistico-center-stage": {
+    "problem": "Center Stage necesitaba comunicar actividades, servicios y experiencias culturales a su comunidad de forma móvil.",
+    "approach": "Creamos la app lifestyle en Swift con información del centro artístico, actividades y contenido para la comunidad.",
+    "impact": "Presencia móvil que conecta al público con las propuestas culturales del centro.",
+    "highlights": [
+      "App lifestyle cultural",
+      "Información de actividades",
+      "Swift en iOS"
+    ]
+  },
+  "clean-now": {
+    "problem": "Los usuarios buscaban una app simple para organizar hábitos, bienestar y rutinas diarias desde el iPhone.",
+    "approach": "Desarrollamos Clean Now en Swift con flujos de lifestyle, organización personal y experiencia visual clara.",
+    "impact": "Utilidad lifestyle publicada en App Store para gestión del día a día.",
+    "highlights": [
+      "Hábitos y bienestar",
+      "Organización personal",
+      "Experiencia nativa iOS"
+    ]
+  },
+  "devlokos": {
+    "problem": "DevLokos necesitaba un sitio web que unificara podcast, comunidad, eventos y presencia de marca en un solo canal digital.",
+    "approach": "Construimos el sitio con Next.js y React, desplegado en Vercel, con episodios, blog, recursos para desarrolladores y secciones de comunidad.",
+    "impact": "Plataforma web oficial que centraliza la marca DevLokos y refuerza su alcance como comunidad tecnológica en Ecuador.",
+    "highlights": [
+      "Next.js desplegado en Vercel",
+      "Podcast, blog y comunidad",
+      "Presencia digital unificada"
+    ]
+  },
+  "devlokos-app": {
+    "problem": "La audiencia del podcast DevLokos necesitaba escuchar episodios y acceder a contenido de la comunidad desde iOS y Android.",
+    "approach": "Desarrollamos la app en Flutter (Dart) con reproducción de episodios, navegación de contenido y experiencia multiplataforma.",
+    "impact": "App publicada en App Store y Play Store que lleva DevLokos al bolsillo de desarrolladores y oyentes.",
+    "highlights": [
+      "Flutter en iOS y Android",
+      "Episodios y comunidad",
+      "App Store y Play Store"
+    ]
+  },
+  "elite-padel": {
+    "problem": "La comunidad de pádel necesitaba consultar rankings oficiales y estadísticas competitivas desde Android.",
+    "approach": "Implementamos la app con Jetpack Compose mostrando posiciones, torneos y seguimiento de jugadores.",
+    "impact": "Ranking oficial accesible en Play Store para jugadores y organizadores de pádel.",
+    "highlights": [
+      "Jetpack Compose en Android",
+      "Ranking y estadísticas",
+      "Comunidad de pádel"
+    ]
+  },
+  "elite-padel-ranking-oficial": {
+    "problem": "Los jugadores de pádel en iOS requerían una app nativa para consultar el ranking oficial y torneos con buena UX.",
+    "approach": "Desarrollamos la app con SwiftUI enfocada en posiciones, estadísticas y seguimiento competitivo.",
+    "impact": "App iOS publicada que oficializa el seguimiento de rankings para la comunidad de pádel.",
+    "highlights": [
+      "SwiftUI nativo",
+      "Ranking oficial de pádel",
+      "Torneos y estadísticas"
+    ]
+  },
+  "global-bank": {
+    "problem": "Global Bank necesitaba modernizar su canal móvil con operaciones bancarias seguras para clientes iOS.",
+    "approach": "Participé en el desarrollo de la app en Objective-C dentro del equipo Technisys, con flujos financieros y estándares bancarios.",
+    "impact": "Aplicación de banca móvil en producción que soporta operaciones de clientes del banco.",
+    "highlights": [
+      "Objective-C en iOS",
+      "Banca móvil en Technisys",
+      "Operaciones financieras seguras"
+    ]
+  },
+  "gme-decide-your-taxi-price": {
+    "problem": "Los pasajeros del ecosistema GMe querían más control sobre el precio de sus viajes en taxi.",
+    "approach": "Desarrollamos la app iOS con negociación de tarifas, solicitud de viajes y experiencia centrada en el usuario.",
+    "impact": "App publicada que diferencia GMe con un modelo donde el pasajero define el precio del viaje.",
+    "highlights": [
+      "Modelo de precio definido por el usuario",
+      "App iOS para pasajeros",
+      "Ecosistema de movilidad GMe"
+    ]
+  },
+  "gme-driver": {
+    "problem": "Los conductores de GMe necesitaban gestionar viajes, ganancias y operación diaria desde el móvil.",
+    "approach": "Construimos la app iOS para conductores con flujos de viajes, métricas de ganancias y herramientas operativas.",
+    "impact": "Canal móvil para conductores que sostiene la operación del marketplace de taxis GMe.",
+    "highlights": [
+      "App para conductores",
+      "Gestión de viajes y ganancias",
+      "Operación diaria en iOS"
+    ]
+  },
+  "holy-food": {
+    "problem": "Holy Food buscaba distribuir libros y contenido espiritual a usuarios que consumen material editorial en móvil.",
+    "approach": "Desarrollamos la app iOS con acceso a contenido, navegación de libros y experiencia de bienestar.",
+    "impact": "App publicada que lleva el contenido Holy Food a la audiencia iOS.",
+    "highlights": [
+      "Contenido editorial espiritual",
+      "Libros y recursos en móvil",
+      "Experiencia lifestyle"
+    ]
+  },
+  "js-aprende-android": {
+    "problem": "Principiantes en programación necesitaban tutoriales y recursos de JavaScript accesibles desde Android.",
+    "approach": "Creamos la app educativa en Java con lecciones, recursos y navegación orientada al aprendizaje de JS.",
+    "impact": "Herramienta educativa en Play Store para quienes inician en desarrollo web con JavaScript.",
+    "highlights": [
+      "Educación en JavaScript",
+      "Android nativo en Java",
+      "Recursos para principiantes"
+    ]
+  },
+  "livo-home": {
+    "problem": "Propietarios e inquilinos necesitaban una app para gestionar propiedades, servicios y vida residencial.",
+    "approach": "Desarrollamos Livo Home en Swift y Jetpack Compose con información de hogar, servicios y flujos lifestyle conectados.",
+    "impact": "App multiplataforma publicada que centraliza la experiencia residencial para usuarios iOS y Android.",
+    "highlights": [
+      "iOS y Android",
+      "Gestión de propiedades",
+      "Servicios lifestyle conectados"
+    ]
+  },
+  "meniuz": {
+    "problem": "Restaurantes y comensales necesitaban una app para descubrir menús, ofertas y pedir comida de forma ágil.",
+    "approach": "Construimos Meniuz en Swift y Kotlin con catálogo gastronómico, ofertas y flujo de pedidos nativo en iOS y Android.",
+    "impact": "App publicada en ambas tiendas que conecta usuarios con oferta gastronómica local.",
+    "highlights": [
+      "iOS y Android nativos",
+      "Menús y ofertas gastronómicas",
+      "Food & drink en móvil"
+    ]
+  },
+  "on-meet": {
+    "problem": "Equipos y profesionales buscaban utilidades de productividad y seguridad para reuniones y encuentros.",
+    "approach": "Desarrollamos On-Meet en Swift con herramientas orientadas a reuniones, productividad y controles de seguridad.",
+    "impact": "App iOS publicada que apoya encuentros profesionales con utilidades dedicadas.",
+    "highlights": [
+      "Productividad para reuniones",
+      "Utilidades de seguridad",
+      "Swift nativo"
+    ]
+  },
+  "padeltrack": {
+    "problem": "Jugadores de pádel necesitaban registrar partidos, estadísticas y progreso en una sola herramienta multiplataforma.",
+    "approach": "Desarrollamos PadelTrack con SwiftUI, Jetpack Compose y Flutter para cubrir iOS y Android con seguimiento deportivo.",
+    "impact": "App publicada que ayuda a la comunidad de pádel a medir rendimiento y evolución en el deporte.",
+    "highlights": [
+      "SwiftUI, Compose y Flutter",
+      "Seguimiento de partidos y stats",
+      "iOS y Android"
+    ]
+  },
+  "pagame-easy-way-to-charge": {
+    "problem": "Usuarios y pequeños negocios necesitaban simplificar cobros y flujos financieros personales desde el iPhone.",
+    "approach": "Implementamos Págame en Swift con gestión de pagos, cobros y herramientas financieras ágiles.",
+    "impact": "App iOS publicada que facilita cobros y finanzas personales en el día a día.",
+    "highlights": [
+      "Cobros simplificados",
+      "Finanzas personales",
+      "Swift en iOS"
+    ]
+  },
+  "salud-sa": {
+    "problem": "Salud SA requería un canal móvil de referencia para información de servicios de salud e institucional.",
+    "approach": "Desarrollamos la app iOS en Swift con consulta de servicios, recursos y contenido para usuarios del sector salud.",
+    "impact": "App de referencia publicada que acerca información de Salud SA a usuarios móviles en Ecuador.",
+    "highlights": [
+      "App de referencia en salud",
+      "Información institucional",
+      "Swift nativo"
+    ]
+  },
+  "scanner-qr": {
+    "problem": "Los usuarios iOS necesitaban una utilidad rápida y confiable para leer códigos QR en el día a día.",
+    "approach": "Desarrollamos Scanner QR en Swift con lectura inmediata, interfaz simple y experiencia nativa.",
+    "impact": "Utilidad publicada en App Store para escaneo QR sin fricción.",
+    "highlights": [
+      "Lectura rápida de QR",
+      "Interfaz minimalista",
+      "Utilidad nativa iOS"
+    ]
+  },
+  "security-force-administrador-android": {
+    "problem": "Los administradores de urbanizaciones Security Force necesitaban operar accesos y comunidades desde Android.",
+    "approach": "Construimos la app de administración en Kotlin integrada al ecosistema Security Force con gestión de accesos y residentes.",
+    "impact": "Herramienta Android publicada que centraliza la operación administrativa de comunidades protegidas.",
+    "highlights": [
+      "Administración en Android",
+      "Ecosistema Security Force",
+      "Gestión de accesos"
+    ]
+  },
+  "security-force-administradores-android": {
+    "problem": "Los supervisores de Security Force requerían control de residentes, accesos y configuración de urbanizaciones en móvil.",
+    "approach": "Desarrollamos la app Android en Kotlin con paneles de supervisión y flujos para administradores.",
+    "impact": "App en Play Store que refuerza la operación diaria de administradores en comunidades residenciales.",
+    "highlights": [
+      "Supervisión de accesos",
+      "Configuración de comunidades",
+      "Kotlin en Android"
+    ]
+  },
+  "security-force-garita-android": {
+    "problem": "El personal de garita necesitaba verificar visitantes y controlar entradas de forma rápida en el punto de acceso.",
+    "approach": "Implementamos la app Android para garitas con validación de accesos, registro de visitantes y flujos operativos en tiempo real.",
+    "impact": "Herramienta móvil que agiliza el control en garitas de urbanizaciones Security Force.",
+    "highlights": [
+      "Control en punto de entrada",
+      "Verificación de visitantes",
+      "Operación en tiempo real"
+    ]
+  },
+  "smartkey-gsm": {
+    "problem": "Equipos de operaciones GSM necesitaban administrar servicios y tareas móviles desde una app dedicada.",
+    "approach": "Desarrollamos SmartKey GSM en Swift con herramientas de productividad y gestión de operaciones celulares.",
+    "impact": "App iOS publicada para administración y productividad en entornos GSM.",
+    "highlights": [
+      "Gestión GSM",
+      "Productividad móvil",
+      "Swift nativo"
+    ]
+  },
+  "still-waiting": {
+    "problem": "Los usuarios buscaban una utilidad lifestyle ligera disponible en iPhone, iPad y Mac.",
+    "approach": "Desarrollamos Still Waiting en Swift con experiencia multi-dispositivo y flujos de utilidad cotidiana.",
+    "impact": "App publicada en App Store para iPhone, iPad y Mac.",
+    "highlights": [
+      "Multi-dispositivo Apple",
+      "Utilidad lifestyle",
+      "Swift nativo"
+    ]
+  },
+  "tasky-be-more-productive": {
+    "problem": "Profesionales y estudiantes necesitaban organizar tareas, recordatorios y flujos de trabajo desde iOS.",
+    "approach": "Construimos Tasky en Swift con listas, recordatorios y herramientas de productividad personal.",
+    "impact": "App iOS publicada que ayuda a usuarios a ser más productivos en el día a día.",
+    "highlights": [
+      "Tareas y recordatorios",
+      "Productividad personal",
+      "iPhone e iPad"
+    ]
+  },
+  "vx-nutrition": {
+    "problem": "Usuarios interesados en nutrición y bienestar buscaban seguimiento de hábitos saludables en móvil.",
+    "approach": "Desarrollamos VX Nutrition en Swift con seguimiento de nutrición, hábitos y experiencia lifestyle.",
+    "impact": "App iOS publicada orientada a bienestar y nutrición personal.",
+    "highlights": [
+      "Nutrición y bienestar",
+      "Seguimiento de hábitos",
+      "Lifestyle en iOS"
+    ]
+  },
+  "weathery-beautiful-weather": {
+    "problem": "Los usuarios del ecosistema Apple querían pronósticos visuales y elegantes en todos sus dispositivos.",
+    "approach": "Desarrollamos Weathery en Swift con widgets, soporte para iPhone, iPad, Mac e iMessage y diseño visual cuidado.",
+    "impact": "App de clima publicada con presencia en múltiples dispositivos Apple.",
+    "highlights": [
+      "Clima en iPhone, iPad y Mac",
+      "Widgets e iMessage",
+      "Diseño visual elegante"
+    ]
+  },
+  "xtreme-3t-tic-tac-toe": {
+    "problem": "Jugadores casuales buscaban una versión moderna del clásico tres en raya para iOS.",
+    "approach": "Desarrollamos Xtreme 3T en Swift con modos de juego, interfaz simple y experiencia casual.",
+    "impact": "Juego publicado en App Store para entretenimiento casual en iOS.",
+    "highlights": [
+      "Juego casual clásico",
+      "Modos de tres en raya",
+      "Swift nativo"
+    ]
+  },
+  "yippy-business": {
+    "problem": "Comercios del ecosistema Yippy necesitaban una versión empresarial para operaciones B2B y ofertas comerciales.",
+    "approach": "Desarrollamos Yippy Business en Swift con flujos de compras, ofertas y operación orientada a negocios.",
+    "impact": "App iOS publicada que extiende Yippy al segmento empresarial.",
+    "highlights": [
+      "Versión B2B de Yippy",
+      "Ofertas y operación comercial",
+      "Shopping empresarial"
+    ]
+  },
+  "yippy-cerca-de-ti": {
+    "problem": "Compradores locales querían descubrir tiendas cercanas, ofertas y shopping desde el móvil.",
+    "approach": "Construimos Yippy en Swift y Java con geolocalización de comercios, ofertas y experiencia de compras locales.",
+    "impact": "App publicada en iOS y Android que conecta usuarios con comercio local.",
+    "highlights": [
+      "Compras locales",
+      "iOS y Android",
+      "Ofertas y tiendas cercanas"
+    ]
+  },
+  "yippy-driver-android": {
+    "problem": "Conductores del ecosistema Yippy necesitaban gestionar entregas y viajes desde Android.",
+    "approach": "Desarrollamos Yippy Driver en Java con flujos de operación, entregas y gestión diaria para conductores.",
+    "impact": "App Android publicada que sostiene la logística del marketplace Yippy.",
+    "highlights": [
+      "App para conductores",
+      "Entregas y viajes",
+      "Operación en Android"
+    ]
+  },
+  "tayos": {
+    "problem": "La distribuidora de repuestos automotrices más grande del Ecuador necesitaba digitalizar la compra B2B de talleres, mecánicas y empresas que dependían de llamadas y mensajes para consultar stock y hacer pedidos.",
+    "approach": "Desarrollamos Tayos en React Native (TypeScript) para iOS y Android con catálogo digital, búsqueda rápida de más de 30.000 productos y flujo de pedidos orientado a clientes profesionales del sector automotriz.",
+    "impact": "Plataforma B2B publicada en App Store y Play Store que agiliza consultas comerciales y pedidos para negocios del sector automotriz en Ecuador.",
+    "highlights": [
+      "Cross-platform React Native en iOS y Android",
+      "Catálogo B2B con 30.000+ productos",
+      "Proyecto DevLokos Enterprise"
+    ]
+  },
+  "santo-domingo-pickleball-club": {
+    "problem": "El Santo Domingo Pickleball Club necesitaba una presencia digital profesional para promover el deporte, comunicar entrenamientos y torneos, y facilitar inscripciones a eventos como el Santo Domingo Pickleball Open 2026.",
+    "approach": "Desarrollamos un sitio web responsive con información del club, instalaciones, equipo, galería, cronograma del torneo, formulario de contacto e inscripción, destacando la misión de fomentar una comunidad deportiva inclusiva en Ecuador.",
+    "impact": "Plataforma web publicada que centraliza la oferta del club — entrenamientos, eventos, canchas y registro al torneo — y refuerza el crecimiento del pickleball en Santo Domingo de los Tsáchilas.",
+    "highlights": [
+      "Sitio oficial del club con torneo Open 2026",
+      "Entrenamientos, canchas y comunidad para todos los niveles",
+      "Inscripción, contacto y galería en un solo lugar"
+    ]
+  },
+  "security-force-residentes": {
+    "problem": "Las urbanizaciones necesitaban un acceso seguro y sin fricción para residentes, con visibilidad en tiempo real para administradores sobre entradas y visitas.",
+    "approach": "Desarrollamos apps nativas iOS (Swift) y Android (Kotlin) con códigos QR únicos por residente, integradas al ecosistema Security Force para guardias y administradores.",
+    "impact": "Ingreso contactless para residentes en urbanizaciones asociadas, reduciendo verificación manual en garitas y dando control centralizado a administradores de propiedades.",
+    "highlights": [
+      "Apps residentes en App Store y Play Store",
+      "Acceso por QR integrado al flujo de seguridad",
+      "Parte de la suite multi-app Security Force"
+    ]
+  },
+  "macro-empresas": {
+    "problem": "Los clientes corporativos de Banco Macro necesitaban un canal móvil confiable para operaciones bancarias empresariales en iOS y Android, con requisitos estrictos de seguridad y rendimiento.",
+    "approach": "Entregamos aplicaciones nativas iOS (Swift) y Android (Java) en equipo distribuido, con metodología ágil One Team y arquitectura móvil orientada a producción bancaria.",
+    "impact": "App de banca empresarial en producción para clientes corporativos en ambas plataformas, apoyando la transformación digital de Macro.",
+    "highlights": [
+      "Fintech multiplataforma para un banco líder en Latinoamérica",
+      "Seguridad y flujos bancarios de nivel enterprise",
+      "Equipo Scrum de greenfield a producción"
+    ]
+  }
+}

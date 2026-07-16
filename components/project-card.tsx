@@ -76,7 +76,7 @@ export function ProjectCard({ project, category }: ProjectCardProps) {
           />
           <Badge
             variant="secondary"
-            className="absolute left-1.5 top-1.5 z-[1] rounded-md border-0 bg-background/85 px-1.5 py-0 text-[9px] font-semibold uppercase tracking-wide text-foreground shadow-sm backdrop-blur-sm sm:left-2.5 sm:top-2.5 sm:px-2 sm:py-0.5 sm:text-[10px]"
+            className="absolute left-1.5 top-1.5 z-[1] rounded-md border border-black/10 bg-background/95 px-1.5 py-0 text-[9px] font-semibold uppercase tracking-wide text-foreground shadow-[0_2px_8px_rgba(0,0,0,0.28),0_1px_2px_rgba(0,0,0,0.18)] backdrop-blur-md dark:border-white/15 dark:shadow-[0_2px_10px_rgba(0,0,0,0.55),0_0_0_1px_rgba(255,255,255,0.08)] sm:left-2.5 sm:top-2.5 sm:px-2 sm:py-0.5 sm:text-[10px]"
           >
             {categoryLabel(project.category, t)}
           </Badge>
