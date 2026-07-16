@@ -10,6 +10,7 @@ export interface Experience {
   companyLogo?: string;
   companyFormerName?: string;
   description?: string;
+  roleUrl?: string;
 }
 
 /** Una empresa con uno o más cargos (misma compañía, distintos roles). */
@@ -20,6 +21,7 @@ export interface ExperienceRoleLine {
   endDate?: string;
   current?: boolean;
   description?: string;
+  roleUrl?: string;
 }
 
 export interface MergedExperience {

@@ -25,7 +25,17 @@
     ],
     "tags": [
       "Security"
-    ]
+    ],
+    "caseStudy": {
+      "problem": "Urban communities needed a secure, frictionless way for residents to access gated neighborhoods while giving administrators real-time control over entries.",
+      "approach": "Built native iOS (Swift) and Android (Kotlin) apps sharing a unified access model with unique QR codes per resident, integrated with the Security Force ecosystem for guards and administrators.",
+      "impact": "Enabled contactless entry for residents across partner urbanizations, reducing manual verification at gates and giving property managers centralized visibility.",
+      "highlights": [
+        "Cross-platform resident apps on App Store and Play Store",
+        "QR-based access tied to community security workflows",
+        "Part of a multi-app Security Force product suite"
+      ]
+    }
   },
   {
     "id": "macro-empresas",
@@ -54,7 +64,17 @@
     ],
     "tags": [
       "Finance"
-    ]
+    ],
+    "caseStudy": {
+      "problem": "Banco Macro corporate clients needed a reliable mobile channel for enterprise banking operations across iOS and Android, with strict security and performance requirements.",
+      "approach": "Delivered native iOS (Swift) and Android (Java) applications as part of a distributed team, following agile delivery with a provider–client One Team model and modern mobile architecture practices.",
+      "impact": "Shipped a production enterprise banking app used by corporate customers on both major mobile platforms, supporting Macro's digital transformation initiatives.",
+      "highlights": [
+        "Multi-platform fintech delivery for a major Latin American bank",
+        "Enterprise-grade security and banking workflows",
+        "Collaborative Scrum team from greenfield to production"
+      ]
+    }
   },
   {
     "id": "meniuz",

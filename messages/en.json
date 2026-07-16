@@ -36,7 +36,9 @@
     "cvDialogTitle": "Open CV in a new tab?",
     "cvDialogDescription": "The PDF will open in a new tab so you can view and download it from your browser. It matches the site language: English or Spanish. If the site is in Portuguese, the English CV opens.",
     "cvDialogConfirm": "Open",
-    "cvDialogCancel": "Cancel"
+    "cvDialogCancel": "Cancel",
+    "credentialsLabel": "Recognitions",
+    "sessionizeProfile": "Sessionize profile"
   },
   "homePhotos": {
     "sf": {
@@ -56,26 +58,26 @@
     "kicker": "About Me",
     "title": "Crafting digital experiences with purpose",
     "hYears": "8+ Years",
-    "hYearsDesc": "Shipping mobile apps",
+    "hYearsDesc": "Mobile banking & fintech",
     "hCommunity": "Community",
-    "hCommunityDesc": "DevLokos founder",
+    "hCommunityDesc": "GDG Tsáchilas & DevLokos",
     "hEntrepreneur": "Entrepreneur",
-    "hEntrepreneurDesc": "Startups & own products",
+    "hEntrepreneurDesc": "Startups & Meniuz",
     "hSpeaker": "Speaker",
-    "hSpeakerDesc": "Conference speaker",
+    "hSpeakerDesc": "Sessionize & conferences",
     "hBook": "Author",
-    "hBookDesc": "Tech book in Spanish",
+    "hBookDesc": "Technical book in Spanish",
     "hPassion": "Passion",
-    "hPassionDesc": "Open-source work",
+    "hPassionDesc": "Teaching & education",
     "familyAlt": "My family",
     "myFamily": "My Family",
     "familyBlurb": "They inspire everything I do. Building a better future, one line of code at a time.",
     "partner": "Partner",
     "son": "Son",
     "daughter": "Daughter",
-    "bioP1": "Highly skilled Senior iOS Engineer with over 8 years of experience specializing in high-performance mobile architectures for the fintech and startup sectors. Proven track record in leading distributed engineering teams, scaling applications from MVP to mass-market adoption, and modernizing legacy codebases.",
-    "bioP2": "Passionate community leader and mentor, dedicated to fostering technological growth through Google Developer Groups (GDG) and educational content creation. Committed to code quality, collaborative problem-solving, and continuous learning.",
-    "bioP3": "Podcast host and founder of DevLokos.",
+    "bioP1": "Senior Software Engineer with 8+ years building high-performance mobile banking and fintech platforms. At SoFi Technology Solutions, I architect enterprise mobile solutions—payments, investments, credit cards, and authorization workflows—for financial institutions across Latin America.",
+    "bioP2": "Technical leader, EDteam instructor, and Cursor Ambassador. I mentor engineers through Google Developer Groups (GDG), create hands-on courses, and speak at conferences on mobile architecture, fintech, and AI-powered development.",
+    "bioP3": "Host of the DevLokos podcast and founder of a developer community focused on learning by building. Committed to code quality, collaborative problem-solving, and continuous learning.",
     "motto": "Be DIFFERENT and leave a legacy to the world that everything is possible when you have it in your mind."
   },
   "bookSection": {
@@ -101,6 +103,9 @@
     "companySiteAria": "Official website of {{name}} (opens in new tab)",
     "formerlyKnownAs": "formerly {{name}}",
     "currentRole": "Current",
+    "readMore": "Read more",
+    "readLess": "Read less",
+    "viewProfile": "View profile",
     "employmentType": {
       "fullTime": "Full-time",
       "partTime": "Part-time",
@@ -119,7 +124,64 @@
     "ios": "iOS",
     "android": "Android",
     "web": "Web",
-    "flutter": "Flutter"
+    "flutter": "Flutter",
+    "viewCaseStudy": "Case study",
+    "caseStudyProblem": "Problem",
+    "caseStudyApproach": "Approach",
+    "caseStudyImpact": "Impact",
+    "caseStudyHighlights": "Highlights"
+  },
+  "skillsSection": {
+    "kicker": "Skills",
+    "title": "Tech stack & expertise",
+    "description": "Technologies and practices I use to ship secure, scalable mobile banking and fintech products.",
+    "catMobile": "Mobile",
+    "catArchitecture": "Architecture",
+    "catBackend": "Backend & cloud",
+    "catTools": "Tools & AI",
+    "skillCount": "{{count}} technologies"
+  },
+  "speakingSection": {
+    "kicker": "Speaking",
+    "title": "Talks & workshops",
+    "description": "International speaker on mobile architecture, fintech, AI-powered development, and community building.",
+    "sessionizeCta": "View talks on Sessionize",
+    "calendlyCta": "Book a session",
+    "topicsLabel": "Topics I speak about",
+    "topicMobile": "Mobile architecture & Swift/SwiftUI",
+    "topicFintech": "Fintech & mobile banking at scale",
+    "topicAi": "AI tools & Cursor for developers",
+    "topicCommunity": "Community building & mentorship",
+    "viewConferences": "Browse conference talks"
+  },
+  "learnHubSection": {
+    "kicker": "Learn & Build",
+    "title": "Education & content",
+    "description": "Courses, articles, podcast episodes, and my technical book — all in one place.",
+    "filterAll": "All",
+    "filterCourses": "Courses",
+    "filterWriting": "Writing",
+    "filterPodcast": "Podcast",
+    "filterBook": "Book",
+    "visitLink": "Visit",
+    "visitOnSite": "Explore here"
+  },
+  "githubSection": {
+    "kicker": "Open source",
+    "title": "GitHub highlights",
+    "description": "Selected repositories and experiments I share with the community.",
+    "viewOnGithub": "View on GitHub",
+    "viewProfile": "Full GitHub profile"
+  },
+  "siteSearch": {
+    "placeholder": "Search projects, experience, articles…",
+    "empty": "No results found",
+    "openLabel": "Search site",
+    "shortcutHint": "Press ⌘K to search",
+    "groupProjects": "Projects",
+    "groupExperience": "Experience",
+    "groupArticles": "Articles",
+    "groupPages": "Pages"
   },
   "articles": {
     "kicker": "Articles",

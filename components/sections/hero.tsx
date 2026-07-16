@@ -19,17 +19,20 @@ import {
 import { ArrowDown, MessageCircle, FileText } from 'lucide-react'
 import { useI18n } from '@/components/i18n/locale-provider'
 import { handleHomeHashLinkClick } from '@/lib/section-scroll'
+import { HeroCredentialsStrip } from '@/components/hero-credentials-strip'
 import type { Profile } from '@/types'
+import type { Achievement } from '@/types'
 
 interface HeroProps {
   profile: Profile
+  achievements?: Achievement[]
 }
 
 function openCvInNewTab(href: string): void {
   window.open(href, '_blank', 'noopener,noreferrer')
 }
 
-export function Hero({ profile }: HeroProps) {
+export function Hero({ profile, achievements = [] }: HeroProps) {
   const { t, locale } = useI18n()
   const pathname = usePathname()
   const [cvDialogOpen, setCvDialogOpen] = useState(false)
@@ -139,6 +142,10 @@ export function Hero({ profile }: HeroProps) {
                 </>
               )}
             </div>
+            <HeroCredentialsStrip
+              achievements={achievements}
+              sessionizeUrl={profile.socialLinks?.sessionize}
+            />
           </div>
 
           {/* Avatar oculto en móvil (ya mostrado arriba), visible en desktop */}

@@ -51,6 +51,7 @@
     "startDate": "2024-02",
     "current": true,
     "companyUrl": "https://ed.team/",
+    "roleUrl": "https://ed.team/u/kevinhomorales/cursos-dictados",
     "companyLogo": "/images/edteam-logo.png",
     "description": "At EDteam, I work as a freelance instructor and technical content creator, designing courses, hands-on labs, and real-world projects focused on application development, software architecture, modern backend systems, and AI integration into production-ready products.\n\nI build learning experiences focused on \"learning by building,\" creating practical applications and examples using technologies such as Swift, Kotlin, React, TypeScript, Firebase, Spring Boot, Docker, and cloud services. I also research and adapt emerging technologies for up-to-date educational content, including Generative AI, Agent Platform (Vertex AI), cross-platform development, and modern tools from the Google and Apple ecosystems.\n\nAdditionally, I contribute to curriculum planning, demo project architecture, educational experience optimization, and the creation of industry-oriented technical content for developers and engineering teams."
   },

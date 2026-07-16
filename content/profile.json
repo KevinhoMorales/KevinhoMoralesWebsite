@@ -1,15 +1,15 @@
 {
   "name": "Kevin Morales",
   "title": "Senior Software Engineer",
-  "bio": "You can call me Kevinho. I studied Electronic, Automation, and Control Engineering at the University of the Armed Forces – ESPE.\n\nFor over 7 years, I've worked professionally as an iOS developer, specializing in Swift. I've also built Android apps using Kotlin and Java, and I enjoy diving into UX/UI design during my free time. Some of my apps are published under my own name on the App Store and Play Store, while others have benefited from my contribution behind the scenes.\n\nI'm an active member of the Google Developer Group (GDG) Ecuador, where I regularly teach and mentor others, helping spark interest in the world of software development. I'm a big believer in lifelong learning — one of my favorite mottos is: \"DON'T STOP LEARNING!\"",
-  "shortBio": "Senior Software Engineer at SoFi Technology Solutions · Host of DevLokos · GDG Tsáchilas Organizer · iOS Certified by Meta · Speaker · Cursor Ambassador · GitKraken Ambassador",
+  "bio": "You can call me Kevinho. I studied Electronic, Automation, and Control Engineering at the University of the Armed Forces – ESPE.\n\nI'm a Senior Software Engineer at SoFi Technology Solutions, where I architect and evolve enterprise mobile banking platforms for financial institutions across Latin America. I specialize in Swift, SwiftUI, Kotlin, and scalable mobile architectures for fintech.\n\nBeyond product engineering, I'm an EDteam instructor, Cursor Ambassador, GDG Tsáchilas organizer, international speaker, and host of the DevLokos podcast. I'm a big believer in lifelong learning — one of my favorite mottos is: \"DON'T STOP LEARNING!\"",
+  "shortBio": "Senior Software Engineer at SoFi Technology Solutions · Host of DevLokos · GDG Tsáchilas Organizer · iOS Certified by Meta · Speaker · Cursor Ambassador",
   "education": "Electronic, Automation, and Control Engineering - University of the Armed Forces (ESPE)",
   "cvLinks": {
     "english": "/Kevin-Morales-iOS-Engineer-CV-EN.pdf",
     "spanish": "/Kevin-Morales-iOS-Engineer-CV-ES.pdf"
   },
   "motto": "Be DIFFERENT and leave a legacy to the world that everything is possible when you have it in your mind.",
-  "aboutMe": "Highly skilled Senior iOS Engineer with over 8 years of experience specializing in high-performance mobile architectures for the fintech and startup sectors. Proven track record in leading distributed engineering teams, scaling applications from MVP to mass-market adoption, and modernizing legacy codebases.\n\nPassionate community leader and mentor, dedicated to fostering technological growth through Google Developer Groups (GDG) and educational content creation. Committed to code quality, collaborative problem-solving, and continuous learning.\n\nPodcast host and founder of DevLokos.",
+  "aboutMe": "Senior Software Engineer with 8+ years building high-performance mobile banking and fintech platforms. At SoFi Technology Solutions, I lead architecture and engineering for enterprise mobile banking—payments, investments, credit, and authorization workflows serving millions of users.\n\nTechnical leader, EDteam instructor, and Cursor Ambassador. Active in Google Developer Groups (GDG), mentoring developers and creating educational content. International speaker on Sessionize.\n\nPodcast host and founder of DevLokos.",
   "socialHandle": "kevinhomorales",
   "images": [
     "/images/notion-001-1920-quality-90-fit-scale-down.jpg",

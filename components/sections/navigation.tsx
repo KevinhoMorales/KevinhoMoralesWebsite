@@ -13,6 +13,7 @@ import { useI18n } from '@/components/i18n/locale-provider'
 import { handleHomeHashLinkClick } from '@/lib/section-scroll'
 import { cn } from '@/lib/utils'
 import { ChevronDown, Menu } from 'lucide-react'
+import { SiteSearchTrigger } from '@/components/site-search-modal'
 
 function NavMoreDropdown({
   items,
@@ -114,7 +115,7 @@ export function Navigation() {
   const navMain = useMemo(
     () => [
       { name: t('nav.experience'), href: '/#experience' },
-      { name: t('nav.speaking'), href: '/#conferences' },
+      { name: t('nav.speaking'), href: '/#speaking' },
       { name: t('nav.projects'), href: '/#projects' },
       { name: t('nav.getBook'), href: '/#book' },
     ],
@@ -188,6 +189,9 @@ export function Navigation() {
             />
           </div>
 
+          <span className="inline-flex shrink-0">
+            <SiteSearchTrigger />
+          </span>
           <span className="inline-flex shrink-0">
             <LocaleSwitcher />
           </span>

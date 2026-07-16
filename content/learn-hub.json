@@ -1,0 +1,36 @@
+[
+  {
+    "id": "edteam",
+    "type": "courses",
+    "title": "EDteam",
+    "description": "Hands-on courses on mobile development, architecture, backend systems, and AI integration.",
+    "url": "https://ed.team/u/kevinhomorales/cursos-dictados",
+    "image": "/images/edteam-logo.png"
+  },
+  {
+    "id": "medium",
+    "type": "writing",
+    "title": "Medium",
+    "description": "Technical articles on mobile engineering, fintech, and developer productivity.",
+    "url": "https://medium.com/@kevinhomorales",
+    "image": "/images/profile-main.png"
+  },
+  {
+    "id": "devlokos",
+    "type": "podcast",
+    "title": "DevLokos Podcast",
+    "description": "Conversations with developers and tech leaders from Latin America.",
+    "url": "https://www.youtube.com/@DevLokos",
+    "internalLink": "/#podcast",
+    "image": "/images/devlokos-logo.png"
+  },
+  {
+    "id": "book",
+    "type": "book",
+    "title": "Dominando Kotlin, Swift y Dart",
+    "description": "A practical Spanish-language guide to shipping solid mobile apps.",
+    "url": "https://a.co/d/0j6CE9Gz",
+    "internalLink": "/#book",
+    "image": "/images/book-cover.png"
+  }
+]

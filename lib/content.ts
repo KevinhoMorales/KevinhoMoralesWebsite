@@ -1,6 +1,6 @@
 import * as fs from 'fs';
 import * as path from 'path';
-import type { Profile, Experience, Project, ProjectCategory, Conference, Testimonial, Achievement } from '@/types';
+import type { Profile, Experience, Project, ProjectCategory, Conference, Testimonial, Achievement, SkillCategory, LearnHubItem, GithubRepo } from '@/types';
 import { projectMatchesCategory } from '@/lib/project-category-match';
 import { PROJECT_CATEGORY_PARAMS } from '@/lib/projects-order';
 import { sortConferencesForDisplay } from '@/lib/conference-sort';
@@ -107,6 +107,18 @@ export function getTestimonials(): Testimonial[] {
 
 export function getAchievements(): Achievement[] {
   return readJson<Achievement[]>('achievements.json');
+}
+
+export function getSkills(): SkillCategory[] {
+  return readJson<SkillCategory[]>('skills.json');
+}
+
+export function getLearnHubItems(): LearnHubItem[] {
+  return readJson<LearnHubItem[]>('learn-hub.json');
+}
+
+export function getGithubRepos(): GithubRepo[] {
+  return readJson<GithubRepo[]>('github-repos.json');
 }
 
 export async function getProjectsByCategory(category?: string): Promise<Project[]> {

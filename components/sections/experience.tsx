@@ -1,6 +1,6 @@
 'use client'
 
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { Button } from '@/components/ui/button'
 import { ExperienceBlockCard } from '@/components/experience-block-card'
 import { ExperienceModal } from '@/components/experience-modal'
@@ -11,18 +11,46 @@ import type { MergedExperience } from '@/types'
 
 interface ExperienceProps {
   experiences: MergedExperience[]
-  /** En la home: solo los primeros `previewLimit` bloques; el resto en modal "Ver más" */
+  /** En la home (desktop): primeros N bloques; el resto en modal "Ver más" */
   previewLimit?: number
+  /** En viewports < lg: cuántos bloques mostrar antes de "Ver más" */
+  previewLimitMobile?: number
 }
 
-export function ExperienceSection({ experiences, previewLimit }: ExperienceProps) {
+function useIsLgUp(): boolean {
+  const [isLgUp, setIsLgUp] = useState(false)
+
+  useEffect(() => {
+    const mq = window.matchMedia('(min-width: 1024px)')
+    const update = () => setIsLgUp(mq.matches)
+    update()
+    mq.addEventListener('change', update)
+    return () => mq.removeEventListener('change', update)
+  }, [])
+
+  return isLgUp
+}
+
+export function ExperienceSection({
+  experiences,
+  previewLimit,
+  previewLimitMobile,
+}: ExperienceProps) {
   const { t } = useI18n()
   const [modalOpen, setModalOpen] = useState(false)
+  const isLgUp = useIsLgUp()
+
+  const effectiveLimit =
+    previewLimit != null
+      ? isLgUp
+        ? previewLimit
+        : (previewLimitMobile ?? previewLimit)
+      : undefined
 
   const visible =
-    previewLimit != null ? experiences.slice(0, previewLimit) : experiences
+    effectiveLimit != null ? experiences.slice(0, effectiveLimit) : experiences
   const showSeeMore =
-    previewLimit != null && experiences.length > previewLimit
+    effectiveLimit != null && experiences.length > effectiveLimit
 
   return (
     <section
@@ -38,7 +66,7 @@ export function ExperienceSection({ experiences, previewLimit }: ExperienceProps
           </h2>
         </ScrollReveal>
 
-        <StaggerContainer className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-4 sm:gap-5">
+        <StaggerContainer className="grid grid-cols-1 gap-4 sm:gap-5 md:grid-cols-3">
           {visible.map((block, index) => (
             <StaggerItem key={block.id} delay={index * 0.05} className="w-full min-h-0 h-full">
               <ExperienceBlockCard block={block} />

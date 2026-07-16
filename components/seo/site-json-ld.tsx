@@ -1,9 +1,11 @@
-import { getProfile } from '@/lib/content';
+import { getProfile, getSkills } from '@/lib/content';
+import { BOOK_AMAZON_URL } from '@/lib/book-store-links';
 import { SITE_URL } from '@/lib/site';
 
-/** Person + WebSite para rich results y coherencia con Search / redes. */
+/** Person + WebSite + Book + Podcast for rich results and coherencia con Search / redes. */
 export function SiteJsonLd() {
   const profile = getProfile();
+  const skills = getSkills();
   const sl = profile.socialLinks;
   const sameAs = [
     sl?.linkedin,
@@ -20,6 +22,8 @@ export function SiteJsonLd() {
 
   const description = profile.shortBio ?? profile.bio.slice(0, 280);
 
+  const skillNames = skills.flatMap((cat) => cat.skills);
+
   const person = {
     '@context': 'https://schema.org',
     '@type': 'Person',
@@ -29,6 +33,7 @@ export function SiteJsonLd() {
     jobTitle: profile.title,
     description,
     sameAs,
+    knowsAbout: skillNames.length > 0 ? skillNames : undefined,
   };
 
   const website = {
@@ -44,10 +49,45 @@ export function SiteJsonLd() {
     },
   };
 
+  const book = {
+    '@context': 'https://schema.org',
+    '@type': 'Book',
+    name: 'Dominando Kotlin, Swift y Dart',
+    author: {
+      '@type': 'Person',
+      name: profile.name,
+      url: SITE_URL,
+    },
+    inLanguage: 'es',
+    url: BOOK_AMAZON_URL,
+    description:
+      'A practical Spanish-language guide to shipping solid mobile apps with Kotlin, Swift, and Dart.',
+  };
+
+  const podcast = sl?.youtube
+    ? {
+        '@context': 'https://schema.org',
+        '@type': 'PodcastSeries',
+        name: 'DevLokos',
+        url: sl.youtube,
+        author: {
+          '@type': 'Person',
+          name: profile.name,
+          url: SITE_URL,
+        },
+        webFeed: sl.youtube,
+        description: 'Podcast conversations with developers and tech leaders from Latin America.',
+      }
+    : null;
+
   return (
     <>
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(person) }} />
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(website) }} />
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(book) }} />
+      {podcast ? (
+        <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(podcast) }} />
+      ) : null}
     </>
   );
 }

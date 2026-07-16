@@ -6,3 +6,6 @@ export { CONFERENCE_LOCATION_PLATFORMS } from './conference';
 export type { Testimonial } from './testimonial';
 export type { Achievement } from './achievement';
 export type { WaitlistEntry } from './waitlist';
+export type { SkillCategory } from './skills';
+export type { LearnHubItem, LearnHubItemType } from './learn-hub';
+export type { GithubRepo } from './github-repo';

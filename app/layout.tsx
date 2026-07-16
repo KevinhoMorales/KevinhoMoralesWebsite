@@ -27,19 +27,21 @@ const googleVerification = process.env.NEXT_PUBLIC_GOOGLE_SITE_VERIFICATION;
 export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),
   title: {
-    default: 'Kevin Morales | Mobile & Software Engineer',
+    default: 'Kevin Morales | Senior Software Engineer',
     template: '%s | Kevin Morales',
   },
   description:
-    'Welcome to my personal site! I\'m Kevin Morales – Mobile engineer, community builder, and speaker. Building exceptional mobile experiences with iOS, Android, Flutter, and Web technologies.',
+    'Kevin Morales — Senior Software Engineer at SoFi building mobile banking platforms. Speaker, EDteam instructor, Cursor Ambassador. DevLokos, GDG, fintech & mobile architecture.',
   keywords: [
     'Kevin Morales',
-    'iOS',
+    'Senior Software Engineer',
+    'SoFi',
+    'mobile banking',
     'Swift',
-    'Android',
     'Kotlin',
+    'fintech',
     'DevLokos',
-    'mobile developer',
+    'speaker',
     'Ecuador',
   ],
   authors: [{ name: 'Kevin Morales', url: SITE_URL }],
@@ -48,23 +50,23 @@ export const metadata: Metadata = {
     locale: 'en_US',
     url: SITE_URL,
     siteName: 'Kevin Morales',
-    title: 'Kevin Morales | Mobile & Software Engineer',
+    title: 'Kevin Morales | Senior Software Engineer',
     description:
-      'Welcome to my personal site! I\'m Kevin Morales – Mobile engineer, community builder, and speaker.',
+      'Kevin Morales — Senior Software Engineer at SoFi, mobile banking architect, speaker, and EDteam instructor.',
     images: [
       {
         url: '/images/og-preview.png',
         width: 1200,
         height: 630,
-        alt: 'Kevin Morales - Mobile & Software Engineer',
+        alt: 'Kevin Morales - Senior Software Engineer',
       },
     ],
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'Kevin Morales | Mobile & Software Engineer',
+    title: 'Kevin Morales | Senior Software Engineer',
     description:
-      'Welcome to my personal site! I\'m Kevin Morales – Mobile engineer, community builder, and speaker.',
+      'Kevin Morales — Senior Software Engineer at SoFi, mobile banking architect, speaker, and EDteam instructor.',
     images: ['/images/og-preview.png'],
   },
   robots: { index: true, follow: true },

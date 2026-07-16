@@ -1,0 +1,49 @@
+[
+  {
+    "id": "mobile",
+    "skills": [
+      "Swift",
+      "SwiftUI",
+      "UIKit",
+      "Kotlin",
+      "Java",
+      "Flutter",
+      "Dart",
+      "React Native"
+    ]
+  },
+  {
+    "id": "architecture",
+    "skills": [
+      "MVVM",
+      "Clean Architecture",
+      "Modularization",
+      "GraphQL",
+      "REST APIs",
+      "Performance tuning",
+      "Code quality"
+    ]
+  },
+  {
+    "id": "backend",
+    "skills": [
+      "Firebase",
+      "Spring Boot",
+      "TypeScript",
+      "Docker",
+      "Cloud services",
+      "Vertex AI"
+    ]
+  },
+  {
+    "id": "tools",
+    "skills": [
+      "Cursor",
+      "Xcode",
+      "Android Studio",
+      "Git",
+      "CI/CD",
+      "Generative AI"
+    ]
+  }
+]

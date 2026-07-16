@@ -41,6 +41,7 @@ export function mergeExperienceByCompany(experiences: Experience[]): MergedExper
       endDate: exp.endDate,
       current: exp.current,
       description: exp.description,
+      roleUrl: exp.roleUrl,
     }));
 
     const canonicalId = [...items].sort((a, b) => a.index - b.index)[0].exp.id;
@@ -59,4 +60,15 @@ export function mergeExperienceByCompany(experiences: Experience[]): MergedExper
   });
 
   return groups.sort((a, b) => a.minIndex - b.minIndex).map((g) => g.merged);
+}
+
+/** Prioriza bloques con rol actual para preview en home; mantiene orden del JSON como desempate. */
+export function sortExperienceForPreview(experiences: MergedExperience[]): MergedExperience[] {
+  const order = new Map(experiences.map((block, index) => [block.id, index]))
+  return [...experiences].sort((a, b) => {
+    const aCurrent = a.roles.some((r) => r.current) ? 1 : 0
+    const bCurrent = b.roles.some((r) => r.current) ? 1 : 0
+    if (bCurrent !== aCurrent) return bCurrent - aCurrent
+    return (order.get(a.id) ?? 0) - (order.get(b.id) ?? 0)
+  })
 }

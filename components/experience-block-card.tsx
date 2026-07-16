@@ -1,7 +1,9 @@
 'use client'
 
+import { useState } from 'react'
 import Image from 'next/image'
 import { Badge } from '@/components/ui/badge'
+import { Button } from '@/components/ui/button'
 import { Card, CardContent } from '@/components/ui/card'
 import { useI18n } from '@/components/i18n/locale-provider'
 import { cn } from '@/lib/utils'
@@ -11,6 +13,8 @@ import type { ExperienceRoleLine, MergedExperience } from '@/types'
 type ExperienceBlockCardProps = {
   block: MergedExperience
 }
+
+const DESCRIPTION_COLLAPSE_THRESHOLD = 180
 
 function companyInitials(name: string): string {
   return name
@@ -102,6 +106,37 @@ function CompanyHeader({ block }: { block: MergedExperience }) {
   )
 }
 
+function RoleDescription({ description }: { description: string }) {
+  const { t } = useI18n()
+  const [expanded, setExpanded] = useState(false)
+  const isLong = description.length > DESCRIPTION_COLLAPSE_THRESHOLD
+
+  return (
+    <div className="mt-2">
+      <p
+        className={cn(
+          'text-xs leading-relaxed text-muted-foreground sm:text-sm whitespace-pre-line',
+          isLong && !expanded && 'line-clamp-4'
+        )}
+      >
+        {description}
+      </p>
+      {isLong ? (
+        <Button
+          type="button"
+          variant="link"
+          size="sm"
+          className="h-auto px-0 py-0.5 text-xs text-primary"
+          aria-expanded={expanded}
+          onClick={() => setExpanded((v) => !v)}
+        >
+          {expanded ? t('experience.readLess') : t('experience.readMore')}
+        </Button>
+      ) : null}
+    </div>
+  )
+}
+
 export function ExperienceBlockCard({ block }: ExperienceBlockCardProps) {
   const { t } = useI18n()
 
@@ -124,32 +159,44 @@ export function ExperienceBlockCard({ block }: ExperienceBlockCardProps) {
         </div>
 
         <ol className="relative mt-4 ml-[1.65rem] space-y-4 border-l border-primary/20 pl-4">
-          {block.roles.map((role, ri) => (
-            <li key={`${role.role}-${role.startDate}-${ri}`} className="relative">
-              <span
-                className={cn(
-                  'absolute -left-[calc(1rem+1px)] top-1.5 h-2.5 w-2.5 -translate-x-1/2 rounded-full ring-2 ring-card',
-                  role.current ? 'bg-primary' : 'bg-muted-foreground/40'
-                )}
-                aria-hidden
-              />
-              <p className="font-medium text-sm leading-snug text-foreground">{role.role}</p>
-              <div className="mt-1.5 flex flex-wrap items-center gap-x-2 gap-y-1.5">
-                <span className="inline-flex items-center gap-1 text-xs tabular-nums text-muted-foreground sm:text-[0.8125rem]">
-                  <Calendar className="h-3 w-3 shrink-0" aria-hidden />
-                  {role.startDate} — {role.current ? t('common.present') : role.endDate || '—'}
-                </span>
-                <Badge variant="outline" className="rounded-md text-[10px] font-medium uppercase tracking-wide">
-                  {employmentTypeLabel(role.type, t)}
-                </Badge>
-              </div>
-              {role.description && role.current ? (
-                <p className="mt-2 text-xs leading-relaxed text-muted-foreground line-clamp-4 sm:text-sm">
-                  {role.description}
-                </p>
-              ) : null}
-            </li>
-          ))}
+          {block.roles.map((role, ri) => {
+            const roleKey = `${block.id}-${role.role}-${role.startDate}-${ri}`
+            return (
+              <li key={roleKey} className="relative">
+                <span
+                  className={cn(
+                    'absolute -left-[calc(1rem+1px)] top-1.5 h-2.5 w-2.5 -translate-x-1/2 rounded-full ring-2 ring-card',
+                    role.current ? 'bg-primary' : 'bg-muted-foreground/40'
+                  )}
+                  aria-hidden
+                />
+                <p className="font-medium text-sm leading-snug text-foreground">{role.role}</p>
+                <div className="mt-1.5 flex flex-wrap items-center gap-x-2 gap-y-1.5">
+                  <span className="inline-flex items-center gap-1 text-xs tabular-nums text-muted-foreground sm:text-[0.8125rem]">
+                    <Calendar className="h-3 w-3 shrink-0" aria-hidden />
+                    {role.startDate} — {role.current ? t('common.present') : role.endDate || '—'}
+                  </span>
+                  <Badge variant="outline" className="rounded-md text-[10px] font-medium uppercase tracking-wide">
+                    {employmentTypeLabel(role.type, t)}
+                  </Badge>
+                </div>
+                {role.description ? (
+                  <RoleDescription description={role.description} />
+                ) : null}
+                {role.roleUrl ? (
+                  <a
+                    href={role.roleUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="mt-2 inline-flex items-center gap-1 text-xs font-medium text-primary hover:underline"
+                  >
+                    {t('experience.viewProfile')}
+                    <ExternalLink className="h-3 w-3" aria-hidden />
+                  </a>
+                ) : null}
+              </li>
+            )
+          })}
         </ol>
       </CardContent>
     </Card>

@@ -1,0 +1,23 @@
+[
+  {
+    "id": "portfolio",
+    "name": "KevinhoMoralesWebsite",
+    "description": "Personal portfolio and content site built with Next.js, TypeScript, and Tailwind.",
+    "language": "TypeScript",
+    "url": "https://github.com/kevinhomorales/KevinhoMoralesWebsite"
+  },
+  {
+    "id": "devlokos",
+    "name": "DevLokos",
+    "description": "Community platform and resources for developers in Ecuador and Latin America.",
+    "language": "TypeScript",
+    "url": "https://github.com/kevinhomorales"
+  },
+  {
+    "id": "mobile-samples",
+    "name": "Mobile samples",
+    "description": "Sample apps and experiments with Swift, Kotlin, and Flutter patterns.",
+    "language": "Swift",
+    "url": "https://github.com/kevinhomorales?tab=repositories"
+  }
+]

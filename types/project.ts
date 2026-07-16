@@ -6,6 +6,13 @@ export interface ProjectLink {
   label?: string;
 }
 
+export interface ProjectCaseStudy {
+  problem: string;
+  approach: string;
+  impact: string;
+  highlights?: string[];
+}
+
 export interface Project {
   id: string;
   title: string;
@@ -29,4 +36,5 @@ export interface Project {
   webFramework?: string;
   /** Categoría web: hosting o despliegue (Vercel, Netlify…). */
   webHosting?: string;
+  caseStudy?: ProjectCaseStudy;
 }
