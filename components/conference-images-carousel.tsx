@@ -3,6 +3,7 @@
 import { Presentation } from 'lucide-react'
 import { useEffect, useMemo, useState, type ReactNode } from 'react'
 
+import { Skeleton } from '@/components/ui/skeleton'
 import { storageObjectPathToPublicUrl } from '@/lib/storage-public-url'
 import { cn } from '@/lib/utils'
 
@@ -42,9 +43,15 @@ export function ConferenceImagesCarousel({
   const listKey = useMemo(() => list.join('\0'), [list])
   const [index, setIndex] = useState(0)
   const [failedUrls, setFailedUrls] = useState<Record<string, true>>({})
+  const [loadedUrls, setLoadedUrls] = useState<Record<string, true>>({})
 
   useEffect(() => {
     setFailedUrls({})
+    setLoadedUrls({})
+  }, [listKey])
+
+  useEffect(() => {
+    setIndex(0)
   }, [listKey])
 
   if (list.length === 0) return null
@@ -52,6 +59,12 @@ export function ConferenceImagesCarousel({
   const current = list[Math.min(index, list.length - 1)]
   const showDots = list.length > 1
   const showPlaceholder = Boolean(failedUrls[current])
+  const isLoaded = Boolean(loadedUrls[current])
+  const showSkeleton = !showPlaceholder && !isLoaded
+
+  const markLoaded = (url: string) => {
+    setLoadedUrls((prev) => (prev[url] ? prev : { ...prev, [url]: true }))
+  }
 
   return (
     <div
@@ -70,18 +83,32 @@ export function ConferenceImagesCarousel({
           <Presentation className="h-12 w-12 shrink-0 text-muted-foreground/45 sm:h-14 sm:w-14" aria-hidden />
         </div>
       ) : (
-        /* eslint-disable-next-line @next/next/no-img-element -- paridad con admin; URLs de Storage/GCS */
-        <img
-          key={current}
-          src={current}
-          alt={alt}
-          className="absolute inset-0 h-full w-full object-cover transition-transform duration-500 hover:scale-105"
-          loading="lazy"
-          decoding="async"
-          onError={() => {
-            setFailedUrls((prev) => ({ ...prev, [current]: true }))
-          }}
-        />
+        <>
+          {showSkeleton ? (
+            <Skeleton className="absolute inset-0 h-full w-full rounded-none" aria-hidden />
+          ) : null}
+          {/* eslint-disable-next-line @next/next/no-img-element -- paridad con admin; URLs de Storage/GCS */}
+          <img
+            key={current}
+            src={current}
+            alt={alt}
+            className={cn(
+              'absolute inset-0 h-full w-full object-cover transition-[opacity,transform] duration-500 hover:scale-105',
+              isLoaded ? 'opacity-100' : 'opacity-0'
+            )}
+            loading="lazy"
+            decoding="async"
+            ref={(el) => {
+              if (el?.complete && el.naturalWidth > 0) {
+                markLoaded(current)
+              }
+            }}
+            onLoad={() => markLoaded(current)}
+            onError={() => {
+              setFailedUrls((prev) => ({ ...prev, [current]: true }))
+            }}
+          />
+        </>
       )}
       <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-transparent" />
       {children != null ? (

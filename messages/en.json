@@ -201,7 +201,8 @@
     "kicker": "Podcast",
     "title": "DevLokos Podcast",
     "subtitle": "Conversations with developers, designers, and tech leaders about building great products and growing your career.",
-    "listenYoutube": "Listen on YouTube"
+    "listenYoutube": "Listen on YouTube",
+    "featuredVideoTitle": "Featured DevLokos podcast episode on YouTube"
   },
   "podcast": {
     "withGuest": "With {{guest}}",
@@ -209,6 +210,9 @@
     "all": "All",
     "season1": "Season 1",
     "season2": "Season 2",
+    "season3": "Season 3",
+    "season3ComingSoonTitle": "Season 3 — Coming soon",
+    "season3ComingSoonHint": "New episodes arriving in August. Stay tuned on YouTube.",
     "prev": "Previous",
     "next": "Next",
     "pageOf": "Page {{page}} of {{total}}",

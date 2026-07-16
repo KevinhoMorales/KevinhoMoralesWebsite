@@ -52,7 +52,7 @@ export function Hero({ profile, achievements = [] }: HeroProps) {
     <section
       id="hero"
       data-analytics-section="hero"
-      className="relative isolate min-h-0 flex flex-col justify-center overflow-x-hidden px-4 sm:px-6 md:px-8 lg:px-12 xl:px-24 py-8 sm:py-10 md:py-12 lg:min-h-[52vh] xl:min-h-[48vh]"
+      className="relative isolate flex min-h-0 flex-col justify-center overflow-x-hidden px-4 py-8 sm:px-6 sm:py-10 md:px-8 md:py-12 lg:min-h-[58vh] lg:px-12 lg:py-14 xl:min-h-[62vh] xl:px-24 xl:py-16"
     >
       <div className="pointer-events-none absolute inset-0 -z-10 overflow-hidden" aria-hidden>
         <Image
@@ -60,17 +60,17 @@ export function Hero({ profile, achievements = [] }: HeroProps) {
           alt=""
           fill
           priority
-          className="object-cover object-[center_35%] sm:object-[center_40%] lg:object-center scale-105"
+          className="object-cover object-[center_35%] scale-105 sm:object-[center_40%] lg:object-[72%_42%] xl:object-[68%_40%]"
           sizes="100vw"
         />
         <div className="absolute inset-0 bg-background/65 dark:bg-background/78" />
-        <div className="absolute inset-0 bg-gradient-to-r from-background from-0% via-background/88 via-40% to-background/50 to-100% dark:from-background dark:via-background/92 dark:to-background/58" />
-        <div className="absolute inset-0 bg-gradient-to-t from-background via-background/35 to-transparent dark:from-background dark:via-background/45" />
+        <div className="absolute inset-0 bg-gradient-to-r from-background from-0% via-background/88 via-40% to-background/50 to-100% lg:via-32% lg:to-background/20 dark:from-background dark:via-background/92 dark:lg:to-background/30" />
+        <div className="absolute inset-0 bg-gradient-to-t from-background via-background/35 to-transparent dark:from-background dark:via-background/45 lg:via-background/25" />
         <div className="absolute inset-0 bg-[radial-gradient(ellipse_90%_70%_at_50%_-20%,rgba(13,148,136,0.16),transparent_58%)] dark:bg-[radial-gradient(ellipse_90%_70%_at_50%_-20%,rgba(13,148,136,0.1),transparent_58%)]" />
       </div>
 
-      <div className="relative z-10 max-w-6xl mx-auto w-full">
-        <div className="grid gap-6 lg:grid-cols-[minmax(0,1fr)_minmax(0,1fr)] lg:gap-8 xl:gap-10 items-center min-w-0 w-full">
+      <div className="relative z-10 mx-auto w-full max-w-6xl">
+        <div className="grid w-full min-w-0 items-center gap-6 lg:grid-cols-[minmax(0,1.12fr)_minmax(0,0.88fr)] lg:gap-12 xl:gap-16 xl:grid-cols-[minmax(0,1.08fr)_minmax(0,0.92fr)]">
           {/* Avatar primero en móvil para mejor jerarquía visual */}
           <div className="flex justify-center lg:hidden order-first motion-hero-in">
             <div className="relative">
@@ -87,11 +87,11 @@ export function Hero({ profile, achievements = [] }: HeroProps) {
               </div>
             </div>
           </div>
-          <div className="space-y-4 sm:space-y-6 order-2 min-w-0 motion-hero-stagger">
-            <p className="text-primary font-medium tracking-wide uppercase text-xs sm:text-sm">
+          <div className="order-2 min-w-0 space-y-4 motion-hero-stagger sm:space-y-6 lg:max-w-xl lg:space-y-7 xl:max-w-2xl">
+            <p className="text-xs font-medium uppercase tracking-wide text-primary sm:text-sm lg:tracking-[0.14em]">
               {profile.title || 'Mobile & Software Engineer'}
             </p>
-            <h1 className="text-3xl xs:text-4xl sm:text-4xl md:text-5xl lg:text-[clamp(1.75rem,4vw,3.75rem)] xl:text-6xl font-bold leading-tight text-balance max-lg:break-words lg:whitespace-nowrap min-w-0 w-full">
+            <h1 className="min-w-0 w-full text-3xl font-bold leading-tight text-balance max-lg:break-words xs:text-4xl sm:text-4xl md:text-5xl lg:text-5xl lg:leading-[1.08] lg:whitespace-nowrap xl:text-[3.35rem] 2xl:text-6xl">
               <TypeAnimation
                 key={locale}
                 sequence={[t('hero.hiIm', { name: profile.name || 'Kevin Morales' })]}
@@ -104,7 +104,13 @@ export function Hero({ profile, achievements = [] }: HeroProps) {
               />
             </h1>
 
-            <div className="flex flex-col xs:flex-row flex-wrap gap-2 sm:gap-3 pt-1">
+            {profile.shortBio ? (
+              <p className="hidden max-w-lg text-base leading-relaxed text-muted-foreground lg:block xl:max-w-xl xl:text-lg">
+                {profile.shortBio}
+              </p>
+            ) : null}
+
+            <div className="flex flex-col flex-wrap gap-2 pt-1 xs:flex-row sm:gap-3 lg:gap-3">
               <Button size="default" className="h-9 gap-2 sm:h-10 sm:px-6" asChild>
                 <Link href="/#projects" onClick={(e) => handleHomeHashLinkClick(e, pathname, '/#projects')}>
                   {t('hero.exploreWork')}
@@ -160,16 +166,17 @@ export function Hero({ profile, achievements = [] }: HeroProps) {
           </div>
 
           {/* Avatar oculto en móvil (ya mostrado arriba), visible en desktop */}
-          <div className="hidden lg:flex justify-center xl:justify-end order-2 motion-hero-in motion-hero-delay">
+          <div className="order-2 hidden motion-hero-in motion-hero-delay lg:flex lg:items-center lg:justify-center xl:justify-end">
             <div className="relative">
-              <div className="absolute -inset-3 xl:-inset-4 bg-primary/20 rounded-full blur-3xl" />
-              <div className="relative h-56 w-56 xl:h-64 xl:w-64 rounded-full overflow-hidden border-4 border-primary/25 shadow-xl shadow-black/15 ring-2 ring-background/80 dark:shadow-black/40">
+              <div className="absolute -inset-5 rounded-full bg-primary/15 blur-3xl xl:-inset-6" />
+              <div className="absolute -inset-1 rounded-full bg-gradient-to-br from-primary/35 via-primary/10 to-transparent opacity-80" />
+              <div className="relative h-60 w-60 rounded-full overflow-hidden border-4 border-primary/30 shadow-2xl shadow-black/20 ring-2 ring-background/90 dark:border-primary/25 dark:shadow-black/50 xl:h-[17.5rem] xl:w-[17.5rem] 2xl:h-80 2xl:w-80">
                 <Image
                   src={avatarSrc}
                   alt={profile.name}
                   fill
                   className="object-cover"
-                  sizes="(max-width: 1280px) 224px, 256px"
+                  sizes="(max-width: 1280px) 240px, (max-width: 1536px) 280px, 320px"
                   priority
                 />
               </div>

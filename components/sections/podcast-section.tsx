@@ -2,7 +2,7 @@
 
 import { Button } from '@/components/ui/button'
 import { ScrollReveal } from '@/components/scroll-reveal'
-import { HomePhotoMoment } from '@/components/sections/home-photo-moment'
+import { PodcastFeaturedVideo } from '@/components/podcast-featured-video'
 import { useI18n } from '@/components/i18n/locale-provider'
 import { ExternalLink, Headphones } from 'lucide-react'
 import { PodcastSection } from '@/components/podcast-section'
@@ -39,16 +39,8 @@ export function PodcastSectionUI() {
           </Button>
         </ScrollReveal>
 
-        <div className="grid grid-cols-1 gap-6 lg:grid-cols-2 lg:items-start lg:gap-10">
-          <div className="min-w-0 lg:sticky lg:top-20 lg:self-start">
-            <HomePhotoMoment
-              src="/images/devlokos-studio.jpg"
-              alt={t('homePhotos.podcast.alt')}
-              caption={t('homePhotos.podcast.caption')}
-              variant="fade-right"
-              aspect="wide"
-            />
-          </div>
+        <div className="grid grid-cols-1 gap-6 lg:grid-cols-2 lg:items-start lg:gap-8 xl:gap-10">
+          <PodcastFeaturedVideo className="lg:sticky lg:top-20 lg:self-start" />
 
           <ScrollReveal variant="fade-left" delay={0.15} className="flex min-h-0 min-w-0 flex-1 flex-col">
             <PodcastSection />
