@@ -109,7 +109,7 @@ export function Recommendations({ testimonials }: RecommendationsProps) {
                 return (
                   <article
                     key={`${item.id}-${index}`}
-                    className="motion-reduce:snap-start motion-reduce:snap-always shrink-0 w-[280px] sm:w-[300px] md:w-[360px]"
+                    className="motion-reduce:snap-start motion-reduce:snap-always shrink-0 w-[260px] sm:w-[300px] md:w-[360px]"
                   >
                     {item.linkedinUrl ? (
                       <a

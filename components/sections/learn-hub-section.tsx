@@ -7,6 +7,7 @@ import { usePathname } from 'next/navigation'
 import { AnimatePresence, motion, useReducedMotion } from 'framer-motion'
 import { Badge } from '@/components/ui/badge'
 import { Button } from '@/components/ui/button'
+import { FilterChipRow, filterChipClass } from '@/components/ui/filter-chip-row'
 import { Card, CardContent } from '@/components/ui/card'
 import { ScrollReveal, StaggerContainer, StaggerItem } from '@/components/scroll-reveal'
 import { useI18n } from '@/components/i18n/locale-provider'
@@ -63,17 +64,20 @@ export function LearnHubSection({ items }: LearnHubSectionProps) {
           </p>
         </ScrollReveal>
 
-        <ScrollReveal delay={0.08} className="mb-6 flex flex-wrap gap-2">
-          {(['all', ...FILTERS] as const).map((filter) => (
-            <Button
-              key={filter}
-              size="sm"
-              variant={activeFilter === filter ? 'default' : 'outline'}
-              onClick={() => setActiveFilter(filter)}
-            >
-              {filterLabel(filter)}
-            </Button>
-          ))}
+        <ScrollReveal delay={0.08} className="mb-4 sm:mb-6">
+          <FilterChipRow>
+            {(['all', ...FILTERS] as const).map((filter) => (
+              <Button
+                key={filter}
+                size="sm"
+                variant={activeFilter === filter ? 'default' : 'outline'}
+                onClick={() => setActiveFilter(filter)}
+                className={filterChipClass}
+              >
+                {filterLabel(filter)}
+              </Button>
+            ))}
+          </FilterChipRow>
         </ScrollReveal>
 
         <AnimatePresence mode="popLayout" initial={false}>
@@ -92,7 +96,7 @@ export function LearnHubSection({ items }: LearnHubSectionProps) {
               {filtered.map((item, index) => (
                 <StaggerItem key={item.id} staggerIndex={index} className="h-full">
                   <Card className="h-full border-border/50 bg-card/50 transition-colors hover:border-primary/40">
-                    <CardContent className="flex h-full flex-col gap-3 p-4 sm:p-5">
+                    <CardContent className="flex h-full flex-col gap-3 p-3 sm:p-4 md:p-5">
                       <div className="flex items-start gap-3">
                         {item.image ? (
                           <div className="relative h-12 w-12 shrink-0 overflow-hidden rounded-lg bg-background ring-1 ring-border/60">

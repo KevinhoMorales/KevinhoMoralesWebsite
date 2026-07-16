@@ -1,8 +1,9 @@
 'use client'
 
-import { useMemo, useState } from 'react'
+import { useEffect, useMemo, useState } from 'react'
 import { ScrollReveal, StaggerContainer, StaggerItem } from '@/components/scroll-reveal'
 import { Button } from '@/components/ui/button'
+import { FilterChipRow, filterChipClass } from '@/components/ui/filter-chip-row'
 import { ProjectCard } from '@/components/project-card'
 import { ProjectsModal } from '@/components/projects-modal'
 import { useI18n } from '@/components/i18n/locale-provider'
@@ -26,6 +27,15 @@ export function ProjectsSection({ projects }: ProjectsProps) {
   const { t } = useI18n()
   const [activeCategory, setActiveCategory] = useState<ProjectCategory | 'all'>('all')
   const [modalOpen, setModalOpen] = useState(false)
+  const [previewLimit, setPreviewLimit] = useState(4)
+
+  useEffect(() => {
+    const mq = window.matchMedia('(max-width: 639px)')
+    const update = () => setPreviewLimit(mq.matches ? 3 : 4)
+    update()
+    mq.addEventListener('change', update)
+    return () => mq.removeEventListener('change', update)
+  }, [])
 
   const categories: { id: ProjectCategory | 'all'; label: string }[] = useMemo(
     () => [
@@ -39,8 +49,8 @@ export function ProjectsSection({ projects }: ProjectsProps) {
   )
 
   const { preview: filteredProjects, hasMore } = useMemo(
-    () => pickProjectsPreview(projects, activeCategory),
-    [projects, activeCategory]
+    () => pickProjectsPreview(projects, activeCategory, previewLimit),
+    [projects, activeCategory, previewLimit]
   )
 
   return (
@@ -50,7 +60,7 @@ export function ProjectsSection({ projects }: ProjectsProps) {
       className="py-4 sm:py-5 md:py-6 px-4 sm:px-6 md:px-8 lg:px-12 xl:px-24 bg-secondary/30"
     >
       <div className="max-w-6xl mx-auto">
-        <ScrollReveal className="mb-6 sm:mb-8">
+        <ScrollReveal className="mb-4 sm:mb-6">
           <p className="text-primary font-medium tracking-wide uppercase text-xs sm:text-sm mb-3">{t('projects.kicker')}</p>
           <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold text-balance">
             {t('projects.title')}
@@ -63,22 +73,24 @@ export function ProjectsSection({ projects }: ProjectsProps) {
           </p>
         </ScrollReveal>
 
-        <ScrollReveal delay={0.1} className="flex flex-wrap gap-2 mb-6 sm:mb-8">
-          {categories.map((cat) => {
-            const Icon = categoryIcons[cat.id] || Layers
-            return (
-              <Button
-                key={cat.id}
-                variant={activeCategory === cat.id ? 'default' : 'outline'}
-                size="sm"
-                onClick={() => setActiveCategory(cat.id)}
-                className="gap-2"
-              >
-                <Icon className="h-4 w-4" />
-                {cat.label}
-              </Button>
-            )
-          })}
+        <ScrollReveal delay={0.1} className="mb-4 sm:mb-8">
+          <FilterChipRow>
+            {categories.map((cat) => {
+              const Icon = categoryIcons[cat.id] || Layers
+              return (
+                <Button
+                  key={cat.id}
+                  variant={activeCategory === cat.id ? 'default' : 'outline'}
+                  size="sm"
+                  onClick={() => setActiveCategory(cat.id)}
+                  className={filterChipClass}
+                >
+                  <Icon className="h-4 w-4" />
+                  {cat.label}
+                </Button>
+              )
+            })}
+          </FilterChipRow>
         </ScrollReveal>
 
         {filteredProjects.length === 0 ? (
@@ -86,7 +98,7 @@ export function ProjectsSection({ projects }: ProjectsProps) {
         ) : (
           <StaggerContainer
             key={activeCategory}
-            className="grid grid-cols-1 items-stretch gap-4 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 sm:gap-5"
+            className="grid grid-cols-2 items-stretch gap-3 sm:gap-4 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 lg:gap-5"
           >
             {filteredProjects.map((project, index) => (
                 <StaggerItem key={project.id} delay={index * 0.06} className="h-full">
@@ -101,8 +113,8 @@ export function ProjectsSection({ projects }: ProjectsProps) {
             <Button
               type="button"
               variant="outline"
-              size="lg"
-              className="gap-2 rounded-xl"
+              size="default"
+              className="h-9 gap-2 rounded-xl sm:h-10"
               onClick={() => setModalOpen(true)}
             >
               {t('projects.seeMore')}

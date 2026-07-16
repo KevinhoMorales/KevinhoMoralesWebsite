@@ -51,7 +51,7 @@ export function Hero({ profile, achievements = [] }: HeroProps) {
     <section
       id="hero"
       data-analytics-section="hero"
-      className="min-h-[60vh] sm:min-h-[65vh] lg:min-h-[50vh] xl:min-h-[45vh] flex flex-col justify-center overflow-x-hidden px-4 sm:px-6 md:px-8 lg:px-12 xl:px-24 py-3 sm:py-4 md:py-4"
+      className="min-h-0 flex flex-col justify-center overflow-x-hidden px-4 sm:px-6 md:px-8 lg:px-12 xl:px-24 py-6 sm:py-4 md:py-4 lg:min-h-[50vh] xl:min-h-[45vh]"
     >
       <div className="max-w-6xl mx-auto w-full">
         <div className="grid gap-6 lg:grid-cols-[minmax(0,1fr)_minmax(0,1fr)] lg:gap-8 xl:gap-10 items-center min-w-0 w-full">
@@ -59,13 +59,13 @@ export function Hero({ profile, achievements = [] }: HeroProps) {
           <div className="flex justify-center lg:hidden order-first motion-hero-in">
             <div className="relative">
               <div className="absolute -inset-2 sm:-inset-3 bg-primary/20 rounded-full blur-2xl sm:blur-3xl" />
-              <div className="relative h-32 w-32 xs:h-36 xs:w-36 sm:h-40 sm:w-40 md:h-44 md:w-44 rounded-full overflow-hidden border-4 border-primary/20">
+              <div className="relative h-28 w-28 xs:h-32 xs:w-32 sm:h-40 sm:w-40 md:h-44 md:w-44 rounded-full overflow-hidden border-4 border-primary/20">
                 <Image
                   src={avatarSrc}
                   alt={profile.name}
                   fill
                   className="object-cover"
-                  sizes="(max-width: 375px) 128px, (max-width: 640px) 144px, (max-width: 768px) 160px, 176px"
+                  sizes="(max-width: 375px) 112px, (max-width: 640px) 128px, (max-width: 768px) 160px, 176px"
                   priority
                 />
               </div>
@@ -89,13 +89,13 @@ export function Hero({ profile, achievements = [] }: HeroProps) {
             </h1>
 
             <div className="flex flex-col xs:flex-row flex-wrap gap-2 sm:gap-3 pt-1">
-              <Button size="lg" className="gap-2" asChild>
+              <Button size="default" className="h-9 gap-2 sm:h-10 sm:px-6" asChild>
                 <Link href="/#projects" onClick={(e) => handleHomeHashLinkClick(e, pathname, '/#projects')}>
                   {t('hero.exploreWork')}
                   <ArrowDown className="h-4 w-4" aria-hidden />
                 </Link>
               </Button>
-              <Button variant="outline" size="lg" className="gap-2" asChild>
+              <Button variant="outline" size="default" className="h-9 gap-2 sm:h-10 sm:px-6" asChild>
                 <Link href="/#connect" onClick={(e) => handleHomeHashLinkClick(e, pathname, '/#connect')}>
                   <MessageCircle className="h-4 w-4" aria-hidden />
                   {t('hero.letsTalk')}
@@ -106,8 +106,8 @@ export function Hero({ profile, achievements = [] }: HeroProps) {
                   <Button
                     type="button"
                     variant="outline"
-                    size="lg"
-                    className="gap-2"
+                    size="default"
+                    className="h-9 gap-2 sm:h-10 sm:px-6"
                     onClick={() => setCvDialogOpen(true)}
                   >
                     <FileText className="h-4 w-4" />

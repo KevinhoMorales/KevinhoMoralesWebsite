@@ -7,7 +7,7 @@
     "type": "full-time",
     "startDate": "2026-07",
     "current": true,
-    "companyUrl": "https://www.sofi.com/",
+    "companyUrl": "https://tech.sofi.com",
     "companyLogo": "/images/sofi-tech-solutions-logo.png",
     "description": "Leading the architecture and evolution of enterprise mobile banking platforms for financial institutions across Latin America.\n\nI specialize in designing secure, scalable, and high-performance mobile solutions, delivering strategic banking capabilities such as Payments, Wire Transfers, QR Payments, Investments, Credit Cards, Payroll, Fixed-Term Deposits, E-Checks, and Authorization workflows.\n\nMy role combines software architecture, technical leadership, and engineering excellence. I mentor mobile teams, define architectural standards, lead code quality initiatives, and drive the adoption of modern technologies including Swift, SwiftUI, MVVM, GraphQL, and performance optimization practices to build resilient products that serve millions of users."
   },
@@ -19,7 +19,7 @@
     "startDate": "2023-04",
     "endDate": "2026-07",
     "current": false,
-    "companyUrl": "https://www.sofi.com/",
+    "companyUrl": "https://tech.sofi.com",
     "companyLogo": "/images/sofi-tech-solutions-logo.png"
   },
   {

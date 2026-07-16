@@ -41,7 +41,7 @@ export function About({ profile }: AboutProps) {
           </h2>
         </ScrollReveal>
 
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-y-10 gap-x-0 lg:gap-x-12 xl:gap-x-16 lg:gap-y-8 lg:items-stretch">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-y-6 gap-x-0 sm:gap-y-10 lg:gap-x-12 xl:gap-x-16 lg:gap-y-8 lg:items-stretch">
           <ScrollReveal variant="fade-right" delay={0.1} className="flex min-h-0 flex-col lg:h-full space-y-4 sm:space-y-6">
             <div className="space-y-4 sm:space-y-6">
               <p className="text-base sm:text-lg text-muted-foreground leading-relaxed">
@@ -65,7 +65,7 @@ export function About({ profile }: AboutProps) {
                     <CardContent className="flex h-full flex-col items-center justify-center gap-1 px-2.5 py-3 text-center sm:px-3 sm:py-3.5">
                       <item.icon className="h-5 w-5 shrink-0 text-primary" aria-hidden />
                       <p className="font-semibold text-xs leading-tight sm:text-sm">{item.title}</p>
-                      <p className="min-h-[2.5rem] text-[10px] leading-snug text-muted-foreground sm:min-h-[2.75rem] sm:text-xs">
+                      <p className="min-h-0 text-[10px] leading-snug text-muted-foreground sm:min-h-[2.75rem] sm:text-xs">
                         {item.description}
                       </p>
                     </CardContent>
@@ -80,7 +80,7 @@ export function About({ profile }: AboutProps) {
               <CardContent className="p-0 flex flex-col flex-1 min-h-0">
                 {profile.familyImage ? (
                   <>
-                    <div className="relative flex-1 min-h-[280px] lg:min-h-[360px] overflow-hidden">
+                    <div className="relative flex-1 min-h-[220px] sm:min-h-[280px] lg:min-h-[360px] overflow-hidden">
                       <Image
                         src={profile.familyImage}
                         alt={t('about.familyAlt')}

@@ -54,9 +54,9 @@ export function ArticlesSection() {
               {t('articles.title')}
             </h2>
           </div>
-          <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 sm:gap-6">
+          <div className="grid grid-cols-2 gap-3 sm:grid-cols-2 sm:gap-4 md:grid-cols-3 lg:grid-cols-4 md:gap-6">
             {Array.from({ length: HOME_ARTICLES }).map((_, i) => (
-              <div key={i} className="aspect-[4/3] rounded-lg bg-muted animate-pulse" />
+              <div key={i} className="aspect-[4/3] rounded-lg bg-muted animate-pulse sm:aspect-video" />
             ))}
           </div>
         </div>
@@ -117,7 +117,7 @@ export function ArticlesSection() {
           </Button>
         </ScrollReveal>
 
-        <StaggerContainer className="grid grid-cols-1 gap-4 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 sm:gap-6">
+        <StaggerContainer className="grid grid-cols-2 gap-3 sm:grid-cols-2 sm:gap-4 lg:grid-cols-2 lg:gap-6">
           {displayed.map((article, index) => (
             <StaggerItem key={article.link} delay={index * 0.05}>
             <Card
@@ -129,14 +129,14 @@ export function ArticlesSection() {
                 rel="noopener noreferrer"
                 className="block"
               >
-                <div className="aspect-video bg-secondary relative overflow-hidden">
+                <div className="aspect-[4/3] bg-secondary relative overflow-hidden sm:aspect-video">
                   {article.image ? (
                     <Image
                       src={article.image}
                       alt=""
                       fill
                       className="object-cover group-hover:scale-105 transition-transform duration-300"
-                      sizes="(max-width: 640px) 100vw, (max-width: 768px) 50vw, (max-width: 1024px) 33vw, 25vw"
+                      sizes="(max-width: 640px) 50vw, (max-width: 768px) 50vw, (max-width: 1024px) 33vw, 25vw"
                       unoptimized
                     />
                   ) : (
@@ -145,14 +145,14 @@ export function ArticlesSection() {
                     </div>
                   )}
                 </div>
-                <CardContent className="p-3 sm:p-4">
-                  <h3 className="font-semibold line-clamp-2 group-hover:text-primary transition-colors">
+                <CardContent className="p-2.5 sm:p-3 md:p-4">
+                  <h3 className="text-xs font-semibold line-clamp-2 group-hover:text-primary transition-colors sm:text-sm">
                     {article.title}
                   </h3>
-                  <p className="text-sm text-muted-foreground line-clamp-2 mt-2">
+                  <p className="hidden text-sm text-muted-foreground line-clamp-2 mt-2 sm:block">
                     {article.excerpt}
                   </p>
-                  <p className="text-xs text-muted-foreground mt-3">
+                  <p className="text-[10px] text-muted-foreground mt-1.5 sm:mt-3 sm:text-xs">
                     {new Date(article.publishDate).toLocaleDateString(toBcp47(locale))}
                   </p>
                 </CardContent>

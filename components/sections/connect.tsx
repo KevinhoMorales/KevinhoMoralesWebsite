@@ -20,7 +20,7 @@ interface ConnectProps {
 }
 
 const fieldClass = 'rounded-xl h-11 border-border/80 bg-background/50 shadow-sm'
-const textareaClass = 'rounded-xl min-h-[128px] resize-y border-border/80 bg-background/50 shadow-sm'
+const textareaClass = 'rounded-xl min-h-[100px] sm:min-h-[128px] resize-y border-border/80 bg-background/50 shadow-sm'
 
 export function Connect({ profile }: ConnectProps) {
   const { t } = useI18n()
@@ -87,7 +87,7 @@ export function Connect({ profile }: ConnectProps) {
     <section
       id="connect"
       data-analytics-section="connect"
-      className="relative overflow-hidden py-16 sm:py-20 md:py-24 px-4 sm:px-6 md:px-8 lg:px-12 xl:px-24"
+      className="relative overflow-hidden py-8 sm:py-20 md:py-24 px-4 sm:px-6 md:px-8 lg:px-12 xl:px-24"
     >
       <div
         className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_80%_60%_at_50%_-30%,rgba(13,148,136,0.18),transparent_55%)] dark:bg-[radial-gradient(ellipse_80%_60%_at_50%_-30%,rgba(13,148,136,0.12),transparent_55%)]"
@@ -100,7 +100,7 @@ export function Connect({ profile }: ConnectProps) {
           <p className="text-primary font-semibold tracking-wide uppercase text-xs sm:text-sm mb-3">
             {t('connect.kicker')}
           </p>
-          <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold mb-4 text-balance tracking-tight">
+          <h2 className="text-2xl sm:text-3xl md:text-5xl font-bold mb-4 text-balance tracking-tight">
             {t('connect.title')}
           </h2>
           <p className="text-base sm:text-lg text-muted-foreground max-w-2xl mx-auto leading-relaxed">

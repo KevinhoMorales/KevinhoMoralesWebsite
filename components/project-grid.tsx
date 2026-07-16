@@ -4,6 +4,7 @@ import { useEffect, useMemo, useState } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
 import { Button } from '@/components/ui/button';
+import { FilterChipRow, filterChipClass } from '@/components/ui/filter-chip-row';
 import { useI18n } from '@/components/i18n/locale-provider';
 import type { Project, ProjectCategory } from '@/types';
 import { displayProjectForFilter } from '@/lib/project-display';
@@ -47,32 +48,33 @@ export function ProjectGrid({ projects, initialCategory = 'all' }: ProjectGridPr
 
   return (
     <section>
-      <div className="flex flex-wrap gap-2 mb-6">
+      <FilterChipRow className="mb-4 sm:mb-6">
         {CATEGORIES.map((cat) => (
           <Button
             key={cat.value}
             variant={category === cat.value ? 'default' : 'outline'}
             size="sm"
             onClick={() => setCategory(cat.value)}
+            className={filterChipClass}
           >
             {cat.label}
           </Button>
         ))}
-      </div>
+      </FilterChipRow>
 
       {filtered.length === 0 ? (
         <p className="text-sm text-muted-foreground py-8">{t('projects.emptyCategory')}</p>
       ) : (
-        <div className="grid grid-cols-1 items-stretch gap-6 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
+        <div className="grid grid-cols-2 items-stretch gap-3 sm:gap-4 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 md:gap-6">
           {filtered.map((project) => {
             const shown = displayProjectForFilter(project, category);
             return (
               <article
                 key={project.id}
-                className="group flex h-full flex-col rounded-lg border bg-card p-4 transition-shadow hover:shadow-md"
+                className="group flex h-full flex-col rounded-lg border bg-card p-3 transition-shadow hover:shadow-md sm:p-4"
               >
               {project.image && (
-                <div className="relative mb-4 aspect-video shrink-0 overflow-hidden rounded-md">
+                <div className="relative mb-3 aspect-[4/3] shrink-0 overflow-hidden rounded-md sm:mb-4 sm:aspect-video">
                   <Image
                     src={project.image}
                     alt={project.title}
@@ -84,8 +86,8 @@ export function ProjectGrid({ projects, initialCategory = 'all' }: ProjectGridPr
               )}
               <div className="flex min-h-0 flex-1 flex-col justify-between gap-3">
                 <div className="min-h-0">
-                  <h3 className="line-clamp-2 font-semibold">{project.title}</h3>
-                  <p className="mt-1 text-sm text-muted-foreground line-clamp-2">
+                  <h3 className="line-clamp-1 text-sm font-semibold sm:line-clamp-2">{project.title}</h3>
+                  <p className="mt-1 hidden text-sm text-muted-foreground line-clamp-2 sm:block">
                     {project.description}
                   </p>
                 </div>

@@ -16,7 +16,7 @@ export function AchievementsSection({ achievements }: { achievements: Achievemen
     <section
       id="achievements"
       data-analytics-section="achievements"
-      className="bg-secondary/20 py-10 sm:py-12 md:py-14 px-4 sm:px-6 md:px-8 lg:px-12 xl:px-24"
+      className="bg-secondary/20 py-6 sm:py-10 md:py-14 px-4 sm:px-6 md:px-8 lg:px-12 xl:px-24"
     >
       <div className="max-w-6xl mx-auto">
         <ScrollReveal className="mb-6 sm:mb-8">
@@ -25,10 +25,10 @@ export function AchievementsSection({ achievements }: { achievements: Achievemen
           </p>
         </ScrollReveal>
 
-        <StaggerContainer className="grid grid-cols-2 gap-x-4 gap-y-8 sm:grid-cols-3 sm:gap-x-6 sm:gap-y-10 lg:grid-cols-4 justify-items-center">
+        <StaggerContainer className="grid grid-cols-2 gap-x-3 gap-y-5 sm:grid-cols-3 sm:gap-x-6 sm:gap-y-10 lg:grid-cols-4 justify-items-center">
           {achievements.map((achievement, index) => {
             const frame = (
-              <div className="relative mx-auto h-28 w-44 sm:h-32 sm:w-56">
+              <div className="relative mx-auto h-24 w-36 sm:h-32 sm:w-56">
                 <Image
                   src={achievement.image}
                   alt={achievement.title}

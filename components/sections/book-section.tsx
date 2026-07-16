@@ -16,7 +16,7 @@ export function BookSection() {
     <section
       id="book"
       data-analytics-section="book"
-      className="relative overflow-hidden bg-gradient-to-b from-background via-secondary/20 to-background px-4 py-14 sm:px-6 sm:py-16 md:px-8 md:py-20 lg:px-12 xl:px-24"
+      className="relative overflow-hidden bg-gradient-to-b from-background via-secondary/20 to-background px-4 py-6 sm:px-6 sm:py-14 md:px-8 md:py-20 lg:px-12 xl:px-24"
     >
       <div
         className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_70%_50%_at_70%_20%,rgba(13,148,136,0.12),transparent_55%)] dark:bg-[radial-gradient(ellipse_70%_50%_at_70%_20%,rgba(13,148,136,0.08),transparent_55%)]"
@@ -32,7 +32,7 @@ export function BookSection() {
           <p className="max-w-3xl text-base leading-relaxed text-muted-foreground sm:text-lg">{t('bookSection.subtitle')}</p>
         </ScrollReveal>
 
-        <div className="grid grid-cols-1 items-center gap-8 sm:gap-10 lg:grid-cols-2 lg:gap-12">
+        <div className="grid grid-cols-1 items-center gap-6 sm:gap-8 lg:grid-cols-2 lg:gap-12">
           <ScrollReveal variant="fade-right" delay={0} className="flex justify-center lg:justify-start">
             <Card className="w-full max-w-xl overflow-hidden border-border/50 bg-card/60 shadow-md">
               <CardContent className="p-0">

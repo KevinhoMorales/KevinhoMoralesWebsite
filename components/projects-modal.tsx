@@ -3,6 +3,7 @@
 import { useEffect, useMemo, useState } from 'react'
 import { Button } from '@/components/ui/button'
 import { BrowseListModal } from '@/components/ui/browse-list-modal'
+import { FilterChipRow, filterChipClass } from '@/components/ui/filter-chip-row'
 import { ProjectCard } from '@/components/project-card'
 import { useI18n } from '@/components/i18n/locale-provider'
 import { Globe, Layers, Smartphone } from 'lucide-react'
@@ -66,7 +67,7 @@ export function ProjectsModal({ projects, initialCategory, open, onClose }: Proj
   }, [projects, category, search])
 
   const toolbar = (
-    <div className="flex flex-wrap gap-2">
+    <FilterChipRow>
       {categories.map((cat) => {
         const Icon = categoryIcons[cat.id] || Layers
         return (
@@ -75,14 +76,14 @@ export function ProjectsModal({ projects, initialCategory, open, onClose }: Proj
             variant={category === cat.id ? 'default' : 'outline'}
             size="sm"
             onClick={() => setCategory(cat.id)}
-            className="gap-2"
+            className={filterChipClass}
           >
             <Icon className="h-4 w-4" />
             {cat.label}
           </Button>
         )
       })}
-    </div>
+    </FilterChipRow>
   )
 
   return (
@@ -97,7 +98,7 @@ export function ProjectsModal({ projects, initialCategory, open, onClose }: Proj
       emptyMessage={search.trim() ? t('browseModal.noResults') : t('projects.emptyCategory')}
       isEmpty={filteredProjects.length === 0}
     >
-      <div className="grid grid-cols-1 items-stretch gap-4 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 sm:gap-6">
+      <div className="grid grid-cols-2 items-stretch gap-3 sm:gap-4 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 lg:gap-6">
         {filteredProjects.map((project) => (
           <ProjectCard key={project.id} project={project} category={category} />
         ))}

@@ -6,6 +6,15 @@
   .text-balance {
     text-wrap: balance;
   }
+
+  .scrollbar-none {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+
+  .scrollbar-none::-webkit-scrollbar {
+    display: none;
+  }
 }
 
 /* Hero: animación solo con CSS (no depende de Framer en primer frame). */

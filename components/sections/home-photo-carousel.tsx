@@ -26,7 +26,7 @@ interface HomePhotoCarouselProps {
 }
 
 const aspectClasses: Record<PhotoAspect, string> = {
-  square: 'aspect-square max-h-[min(70vh,520px)]',
+  square: 'aspect-[4/3] max-h-[min(50vh,360px)] sm:aspect-square sm:max-h-[min(70vh,520px)]',
   video: 'aspect-video',
   wide: 'aspect-[1024/651]',
 }
