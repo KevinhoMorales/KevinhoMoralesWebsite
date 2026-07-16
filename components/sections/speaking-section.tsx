@@ -9,6 +9,7 @@ import { Card, CardContent } from '@/components/ui/card'
 import { ScrollReveal } from '@/components/scroll-reveal'
 import { useI18n } from '@/components/i18n/locale-provider'
 import { handleHomeHashLinkClick } from '@/lib/section-scroll'
+import { FilterChipRow } from '@/components/ui/filter-chip-row'
 import { cn } from '@/lib/utils'
 import { ArrowRight, Calendar, ExternalLink, Mic } from 'lucide-react'
 import type { Profile } from '@/types'
@@ -89,20 +90,20 @@ export function SpeakingSection({ profile }: SpeakingSectionProps) {
                 <p className="mb-2 text-[11px] font-semibold uppercase tracking-wide text-muted-foreground">
                   {t('speakingSection.topicsLabel')}
                 </p>
-                <div className="flex flex-wrap gap-1.5">
+                <FilterChipRow className="sm:flex-wrap">
                   {topics.map((topic) => (
                     <Badge
                       key={topic}
                       variant="outline"
                       className={cn(
-                        'rounded-full border-border/60 bg-background/50 px-2.5 py-1 text-[11px] font-normal leading-snug sm:text-xs',
+                        'shrink-0 rounded-full border-border/60 bg-background/50 px-2 py-0.5 text-[10px] font-normal leading-snug sm:px-2.5 sm:py-1 sm:text-xs',
                         'transition-colors hover:border-primary/40 hover:bg-primary/5 hover:text-primary'
                       )}
                     >
                       {topic}
                     </Badge>
                   ))}
-                </div>
+                </FilterChipRow>
                 <Link
                   href="/#conferences"
                   className="mt-3 inline-flex items-center gap-1 text-xs font-medium text-primary hover:underline"

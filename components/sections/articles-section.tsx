@@ -48,7 +48,7 @@ export function ArticlesSection() {
         className="py-4 sm:py-5 md:py-6 px-4 sm:px-6 md:px-8 lg:px-12 xl:px-24"
       >
         <div className="max-w-6xl mx-auto">
-          <div className="mb-8 sm:mb-10">
+          <div className="mb-4 sm:mb-6">
             <p className="text-primary font-medium tracking-wide uppercase text-xs sm:text-sm mb-3 sm:mb-4">{t('articles.kicker')}</p>
             <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold text-balance">
               {t('articles.title')}
@@ -72,7 +72,7 @@ export function ArticlesSection() {
         className="py-4 sm:py-5 md:py-6 px-4 sm:px-6 md:px-8 lg:px-12 xl:px-24 bg-secondary/30"
       >
         <div className="max-w-6xl mx-auto">
-          <div className="mb-8 sm:mb-10">
+          <div className="mb-4 sm:mb-6">
             <p className="text-primary font-medium tracking-wide uppercase text-xs sm:text-sm mb-3 sm:mb-4">{t('articles.kicker')}</p>
             <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold text-balance">
               {t('articles.title')}
@@ -94,7 +94,7 @@ export function ArticlesSection() {
       className="py-4 sm:py-5 md:py-6 px-4 sm:px-6 md:px-8 lg:px-12 xl:px-24 bg-secondary/30"
     >
       <div className="max-w-6xl mx-auto">
-        <ScrollReveal className="flex flex-col sm:flex-row sm:items-end sm:justify-between gap-4 sm:gap-6 mb-8 sm:mb-10">
+        <ScrollReveal className="flex flex-col sm:flex-row sm:items-end sm:justify-between gap-4 sm:gap-6 mb-4 sm:mb-6">
           <div>
             <p className="text-primary font-medium tracking-wide uppercase text-xs sm:text-sm mb-3 sm:mb-4">{t('articles.kicker')}</p>
             <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold text-balance">
@@ -117,7 +117,7 @@ export function ArticlesSection() {
           </Button>
         </ScrollReveal>
 
-        <StaggerContainer className="grid grid-cols-2 gap-3 sm:grid-cols-2 sm:gap-4 lg:grid-cols-2 lg:gap-6">
+        <StaggerContainer className="grid grid-cols-2 gap-3 sm:gap-4 md:grid-cols-3 lg:grid-cols-4 md:gap-6">
           {displayed.map((article, index) => (
             <StaggerItem key={article.link} delay={index * 0.05}>
             <Card
@@ -167,8 +167,8 @@ export function ArticlesSection() {
             <Button
               type="button"
               variant="outline"
-              size="lg"
-              className="gap-2 rounded-xl"
+              size="default"
+              className="h-9 gap-2 rounded-xl sm:h-10"
               onClick={() => setModalOpen(true)}
             >
               {t('articles.seeMore')}

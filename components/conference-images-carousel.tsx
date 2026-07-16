@@ -57,7 +57,7 @@ export function ConferenceImagesCarousel({
     <div
       className={cn(
         'relative overflow-hidden bg-secondary',
-        compact ? 'aspect-video' : 'aspect-video sm:aspect-[16/9]',
+        compact ? 'aspect-video' : 'aspect-[4/3] sm:aspect-video',
         className
       )}
     >

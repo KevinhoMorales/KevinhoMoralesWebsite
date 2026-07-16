@@ -37,7 +37,7 @@ function employmentTypeLabel(type: ExperienceRoleLine['type'], t: (key: string) 
 function CompanyLogo({ block }: { block: MergedExperience }) {
   if (block.companyLogo) {
     return (
-      <div className="relative h-14 w-14 shrink-0 overflow-hidden rounded-xl bg-background/80 ring-1 ring-border/60 shadow-inner">
+      <div className="relative h-11 w-11 shrink-0 overflow-hidden rounded-xl bg-background/80 ring-1 ring-border/60 shadow-inner sm:h-14 sm:w-14">
         <Image
           src={block.companyLogo}
           alt=""
@@ -51,7 +51,7 @@ function CompanyLogo({ block }: { block: MergedExperience }) {
 
   return (
     <div
-      className="flex h-14 w-14 shrink-0 items-center justify-center rounded-xl bg-primary/10 text-sm font-semibold text-primary ring-1 ring-primary/20"
+      className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-primary/10 text-xs font-semibold text-primary ring-1 ring-primary/20 sm:h-14 sm:w-14 sm:text-sm"
       aria-hidden
     >
       {companyInitials(block.company)}
@@ -64,7 +64,7 @@ function CompanyHeader({ block }: { block: MergedExperience }) {
   const hasCurrentRole = block.roles.some((role) => role.current)
 
   const title = (
-    <h3 className="min-w-0 text-base font-semibold leading-snug tracking-tight text-foreground">
+    <h3 className="min-w-0 text-sm font-semibold leading-snug tracking-tight text-foreground sm:text-base">
       <span className="inline-flex items-start gap-1.5">
         <span className="text-balance">{block.company}</span>
         {block.companyUrl ? (
@@ -147,7 +147,7 @@ export function ExperienceBlockCard({ block }: ExperienceBlockCardProps) {
         'transition-[transform,box-shadow,border-color] duration-300 ease-[cubic-bezier(0.22,1,0.36,1)] hover:border-primary/50 hover:shadow-lg hover:shadow-primary/5'
       )}
     >
-      <CardContent className="relative p-4 sm:p-5">
+      <CardContent className="relative p-3 sm:p-4 md:p-5">
         <div
           className="pointer-events-none absolute -right-6 -top-6 h-28 w-28 rounded-full bg-primary/[0.05] blur-2xl"
           aria-hidden

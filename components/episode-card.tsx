@@ -21,13 +21,13 @@ export function EpisodeCard({ episode, onClick }: EpisodeCardProps) {
       onClick={onClick}
       className="group w-full text-left rounded-lg border bg-card overflow-hidden transition-shadow hover:shadow-md focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2"
     >
-      <div className="relative aspect-video">
+      <div className="relative aspect-[4/3] sm:aspect-video">
         <Image
           src={episode.thumbnail}
           alt={episode.episodeTitle}
           fill
           className="object-cover transition-transform group-hover:scale-105"
-          sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
+          sizes="(max-width: 640px) 50vw, (max-width: 1024px) 50vw, 33vw"
           unoptimized
         />
         {episode.duration ? (
@@ -41,14 +41,14 @@ export function EpisodeCard({ episode, onClick }: EpisodeCardProps) {
           </Badge>
         ) : null}
       </div>
-      <div className="p-4 space-y-1">
-        <h3 className="font-semibold line-clamp-2 group-hover:text-primary">
+      <div className="space-y-0.5 p-2.5 sm:space-y-1 sm:p-3 md:p-4">
+        <h3 className="line-clamp-2 text-xs font-semibold group-hover:text-primary sm:text-sm">
           {episode.episodeTitle}
         </h3>
         {episode.guest && (
-          <p className="text-sm text-muted-foreground">{t('podcast.withGuest', { guest: episode.guest })}</p>
+          <p className="hidden text-sm text-muted-foreground sm:block">{t('podcast.withGuest', { guest: episode.guest })}</p>
         )}
-        <p className="text-xs text-muted-foreground">
+        <p className="text-[10px] text-muted-foreground sm:text-xs">
           {new Date(episode.publishDate).toLocaleDateString(toBcp47(locale), {
             year: 'numeric',
             month: 'short',
@@ -56,7 +56,7 @@ export function EpisodeCard({ episode, onClick }: EpisodeCardProps) {
           })}
         </p>
         {episode.description && (
-          <p className="text-sm text-muted-foreground line-clamp-2 mt-2">
+          <p className="hidden text-sm text-muted-foreground line-clamp-2 mt-2 sm:block">
             {episode.description.slice(0, 120)}...
           </p>
         )}

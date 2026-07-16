@@ -44,21 +44,21 @@ export function About({ profile }: AboutProps) {
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-y-6 gap-x-0 sm:gap-y-10 lg:gap-x-12 xl:gap-x-16 lg:gap-y-8 lg:items-stretch">
           <ScrollReveal variant="fade-right" delay={0.1} className="flex min-h-0 flex-col lg:h-full space-y-4 sm:space-y-6">
             <div className="space-y-4 sm:space-y-6">
-              <p className="text-base sm:text-lg text-muted-foreground leading-relaxed">
+              <p className="text-sm sm:text-lg text-muted-foreground leading-relaxed">
                 {t('about.bioP1')}
               </p>
-              <p className="text-base sm:text-lg text-muted-foreground leading-relaxed">
+              <p className="text-sm sm:text-lg text-muted-foreground leading-relaxed">
                 {t('about.bioP2')}
               </p>
-              <p className="text-base sm:text-lg text-muted-foreground leading-relaxed">
+              <p className="text-sm sm:text-lg text-muted-foreground leading-relaxed">
                 {t('about.bioP3')}
               </p>
-              <p className="text-base sm:text-lg text-primary/90 italic">
+              <p className="text-sm sm:text-lg text-primary/90 italic">
                 &ldquo;{t('about.motto')}&rdquo;
               </p>
             </div>
 
-            <StaggerContainer className="mt-auto grid grid-cols-2 md:grid-cols-3 lg:grid-cols-3 gap-3 sm:gap-4 pt-2 sm:pt-4 items-stretch">
+            <StaggerContainer className="mt-auto grid grid-cols-2 md:grid-cols-3 lg:grid-cols-3 gap-2 sm:gap-3 md:gap-4 pt-2 sm:pt-4 items-stretch">
               {highlights.map((item, index) => (
                 <StaggerItem key={`${item.title}-${index}`} delay={index * 0.06} className="h-full w-full">
                   <Card className="h-full bg-card/50 border-border/50 w-full">

@@ -25,7 +25,7 @@ export function GithubSection({ repos, profileUrl }: GithubSectionProps) {
       className="py-4 sm:py-5 md:py-6 px-4 sm:px-6 md:px-8 lg:px-12 xl:px-24"
     >
       <div className="max-w-6xl mx-auto">
-        <ScrollReveal className="mb-6 sm:mb-8">
+        <ScrollReveal className="mb-4 sm:mb-6">
           <p className="text-primary font-medium tracking-wide uppercase text-xs sm:text-sm mb-3 flex items-center gap-2">
             <Github className="h-4 w-4" aria-hidden />
             {t('githubSection.kicker')}
@@ -36,29 +36,29 @@ export function GithubSection({ repos, profileUrl }: GithubSectionProps) {
           </p>
         </ScrollReveal>
 
-        <StaggerContainer className="grid grid-cols-1 gap-4 md:grid-cols-3 sm:gap-6">
+        <StaggerContainer className="grid grid-cols-2 gap-3 sm:gap-4 md:grid-cols-3 md:gap-6">
           {repos.map((repo, index) => (
             <StaggerItem key={repo.id} delay={index * 0.06} className="h-full">
               <Card className="h-full border-border/50 bg-card/50 transition-colors hover:border-primary/40">
-                <CardContent className="flex h-full flex-col gap-3 p-4 sm:p-5">
-                  <div className="flex items-start justify-between gap-2">
-                    <h3 className="font-semibold text-sm sm:text-base leading-snug">{repo.name}</h3>
+                <CardContent className="flex h-full flex-col gap-2 p-2.5 sm:gap-3 sm:p-4 md:p-5">
+                  <div className="flex items-start justify-between gap-1.5 sm:gap-2">
+                    <h3 className="line-clamp-1 text-xs font-semibold leading-snug sm:line-clamp-2 sm:text-sm md:text-base">{repo.name}</h3>
                     {repo.stars != null ? (
-                      <span className="inline-flex shrink-0 items-center gap-1 text-xs text-muted-foreground">
-                        <Star className="h-3.5 w-3.5" aria-hidden />
+                      <span className="inline-flex shrink-0 items-center gap-0.5 text-[10px] text-muted-foreground sm:gap-1 sm:text-xs">
+                        <Star className="h-3 w-3 sm:h-3.5 sm:w-3.5" aria-hidden />
                         {repo.stars}
                       </span>
                     ) : null}
                   </div>
-                  <p className="flex-1 text-sm text-muted-foreground leading-relaxed">{repo.description}</p>
-                  <div className="flex items-center justify-between gap-2 pt-1">
-                    <Badge variant="outline" className="text-xs">
+                  <p className="hidden flex-1 text-sm text-muted-foreground leading-relaxed sm:block">{repo.description}</p>
+                  <div className="flex items-center justify-between gap-1.5 pt-1 sm:gap-2">
+                    <Badge variant="outline" className="text-[10px] sm:text-xs">
                       {repo.language}
                     </Badge>
-                    <Button variant="ghost" size="sm" className="gap-1.5 h-8 px-2" asChild>
+                    <Button variant="ghost" size="sm" className="h-7 gap-1 px-1.5 text-[10px] sm:h-8 sm:px-2 sm:text-xs" asChild>
                       <a href={repo.url} target="_blank" rel="noopener noreferrer">
-                        {t('githubSection.viewOnGithub')}
-                        <ExternalLink className="h-3.5 w-3.5" aria-hidden />
+                        <span className="hidden xs:inline sm:inline">{t('githubSection.viewOnGithub')}</span>
+                        <ExternalLink className="h-3 w-3 sm:h-3.5 sm:w-3.5" aria-hidden />
                       </a>
                     </Button>
                   </div>
@@ -69,8 +69,8 @@ export function GithubSection({ repos, profileUrl }: GithubSectionProps) {
         </StaggerContainer>
 
         {profileUrl ? (
-          <ScrollReveal delay={0.12} className="mt-8 flex justify-center">
-            <Button variant="outline" size="lg" className="gap-2" asChild>
+          <ScrollReveal delay={0.12} className="mt-6 sm:mt-8 flex justify-center">
+            <Button variant="outline" size="default" className="h-9 gap-2 sm:h-10" asChild>
               <a href={profileUrl} target="_blank" rel="noopener noreferrer">
                 <Github className="h-4 w-4" aria-hidden />
                 {t('githubSection.viewProfile')}

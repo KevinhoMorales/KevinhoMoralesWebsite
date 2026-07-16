@@ -23,7 +23,7 @@ export function BookSection() {
         aria-hidden
       />
       <div className="relative mx-auto max-w-6xl">
-        <ScrollReveal className="mb-8 sm:mb-10">
+        <ScrollReveal className="mb-4 sm:mb-6">
           <p className="mb-3 flex items-center gap-2 text-xs font-medium uppercase tracking-wide text-primary sm:mb-4 sm:text-sm">
             <BookOpen className="h-4 w-4 shrink-0" aria-hidden />
             {t('bookSection.kicker')}

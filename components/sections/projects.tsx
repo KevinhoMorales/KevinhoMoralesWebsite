@@ -1,6 +1,6 @@
 'use client'
 
-import { useEffect, useMemo, useState } from 'react'
+import { useMemo, useState } from 'react'
 import { ScrollReveal, StaggerContainer, StaggerItem } from '@/components/scroll-reveal'
 import { Button } from '@/components/ui/button'
 import { FilterChipRow, filterChipClass } from '@/components/ui/filter-chip-row'
@@ -27,15 +27,6 @@ export function ProjectsSection({ projects }: ProjectsProps) {
   const { t } = useI18n()
   const [activeCategory, setActiveCategory] = useState<ProjectCategory | 'all'>('all')
   const [modalOpen, setModalOpen] = useState(false)
-  const [previewLimit, setPreviewLimit] = useState(4)
-
-  useEffect(() => {
-    const mq = window.matchMedia('(max-width: 639px)')
-    const update = () => setPreviewLimit(mq.matches ? 3 : 4)
-    update()
-    mq.addEventListener('change', update)
-    return () => mq.removeEventListener('change', update)
-  }, [])
 
   const categories: { id: ProjectCategory | 'all'; label: string }[] = useMemo(
     () => [
@@ -49,8 +40,8 @@ export function ProjectsSection({ projects }: ProjectsProps) {
   )
 
   const { preview: filteredProjects, hasMore } = useMemo(
-    () => pickProjectsPreview(projects, activeCategory, previewLimit),
-    [projects, activeCategory, previewLimit]
+    () => pickProjectsPreview(projects, activeCategory),
+    [projects, activeCategory]
   )
 
   return (

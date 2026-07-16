@@ -57,21 +57,21 @@ function ConferenceCard({ conf, onOpenDetail }: { conf: Conference; onOpenDetail
             )}
           </ConferenceImagesCarousel>
         )}
-        <CardContent className="flex flex-1 flex-col p-4 sm:p-5">
-          <div className="flex min-h-0 flex-1 flex-col gap-3">
+        <CardContent className="flex flex-1 flex-col p-2.5 sm:p-4 md:p-5">
+          <div className="flex min-h-0 flex-1 flex-col gap-2 sm:gap-3">
             {!hasImages && (
-              <div className="flex gap-2 flex-wrap">
-                <Badge variant="secondary">{confType(conf.type)}</Badge>
-                {conf.country && <Badge variant="outline">{conf.country}</Badge>}
+              <div className="flex gap-1.5 flex-wrap sm:gap-2">
+                <Badge variant="secondary" className="text-[10px] sm:text-xs">{confType(conf.type)}</Badge>
+                {conf.country && <Badge variant="outline" className="text-[10px] sm:text-xs">{conf.country}</Badge>}
               </div>
             )}
             <div>
-              <h3 className="line-clamp-2 font-semibold text-base leading-tight sm:text-lg">{conf.title}</h3>
+              <h3 className="line-clamp-1 text-xs font-semibold leading-tight sm:line-clamp-2 sm:text-base md:text-lg">{conf.title}</h3>
               {conf.topic && (
-                <p className="mt-1 line-clamp-2 text-sm font-medium text-primary">{conf.topic}</p>
+                <p className="mt-1 hidden line-clamp-2 text-sm font-medium text-primary sm:block">{conf.topic}</p>
               )}
             </div>
-            <div className="flex flex-wrap items-center gap-x-4 gap-y-1 text-xs text-muted-foreground">
+            <div className="hidden flex-wrap items-center gap-x-4 gap-y-1 text-xs text-muted-foreground sm:flex">
               {venueLine && (
                 <span className="flex items-center gap-1">
                   <MapPin className="h-3.5 w-3.5 shrink-0" />
@@ -86,7 +86,7 @@ function ConferenceCard({ conf, onOpenDetail }: { conf: Conference; onOpenDetail
               )}
             </div>
             {conf.tags && conf.tags.length > 0 && (
-              <div className="mt-auto flex flex-wrap gap-1.5 pt-1">
+              <div className="mt-auto hidden flex-wrap gap-1.5 pt-1 sm:flex">
                 {conf.tags.map((tag) => (
                   <span
                     key={tag}
@@ -125,7 +125,7 @@ export function ConferencesSection({ conferences }: ConferencesProps) {
     >
       <div className="max-w-6xl mx-auto">
         <div>
-          <ScrollReveal className="mb-6 sm:mb-8">
+          <ScrollReveal className="mb-4 sm:mb-6">
             <p className="text-primary font-medium tracking-wide uppercase text-xs sm:text-sm mb-3">
               {t('conferences.kicker')}
             </p>
@@ -138,7 +138,7 @@ export function ConferencesSection({ conferences }: ConferencesProps) {
             </p>
           </ScrollReveal>
 
-          <StaggerContainer className="grid grid-cols-1 items-stretch gap-4 sm:grid-cols-2 lg:grid-cols-3 sm:gap-6">
+          <StaggerContainer className="grid grid-cols-2 items-stretch gap-3 sm:gap-4 sm:grid-cols-2 lg:grid-cols-3 lg:gap-6">
             {previewConferences.map((conf, index) => (
               <StaggerItem key={conf.id} delay={index * 0.06} className="h-full">
                 <ConferenceCard conf={conf} onOpenDetail={() => setDetailConference(conf)} />
@@ -151,8 +151,8 @@ export function ConferencesSection({ conferences }: ConferencesProps) {
               <Button
                 type="button"
                 variant="outline"
-                size="lg"
-                className="gap-2 rounded-xl"
+                size="default"
+                className="h-9 gap-2 rounded-xl sm:h-10"
                 onClick={() => setModalOpen(true)}
               >
                 {t('conferences.seeMore')}

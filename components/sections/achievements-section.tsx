@@ -19,7 +19,7 @@ export function AchievementsSection({ achievements }: { achievements: Achievemen
       className="bg-secondary/20 py-6 sm:py-10 md:py-14 px-4 sm:px-6 md:px-8 lg:px-12 xl:px-24"
     >
       <div className="max-w-6xl mx-auto">
-        <ScrollReveal className="mb-6 sm:mb-8">
+        <ScrollReveal className="mb-4 sm:mb-6">
           <p className="text-primary font-medium tracking-wide uppercase text-xs sm:text-sm mb-4">
             {t('conferences.achievements')}
           </p>
