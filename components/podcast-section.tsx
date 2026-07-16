@@ -13,13 +13,17 @@ import { MOTION_EASE } from '@/lib/motion';
 import { Headphones, SearchX } from 'lucide-react';
 import type { PodcastEpisode } from '@/lib/youtube';
 
-const EPISODES_PER_PAGE = 6;
+const EPISODES_PER_PAGE_DESKTOP = 6;
+const EPISODES_PER_PAGE_MOBILE = 4;
 /** Episodios en la home (preview); menos tarjetas en móvil sin scroll horizontal */
 const HOME_PREVIEW_EPISODES = 3;
 
 /** Altura estable del listado para que la foto lateral no salte al buscar o paginar. */
 const EPISODES_PANEL_CLASS =
-  'relative min-h-[26rem] sm:min-h-[28rem] lg:min-h-[32rem] transition-[min-height] duration-500 ease-[cubic-bezier(0.22,1,0.36,1)]';
+  'relative flex min-h-[24rem] flex-col sm:min-h-[30rem] lg:min-h-[34rem]';
+
+const PAGINATION_SLOT_CLASS =
+  'flex h-10 shrink-0 items-center justify-center gap-2 pt-4';
 
 interface PodcastSectionProps {
   preview?: boolean;
@@ -35,7 +39,7 @@ function PodcastEmptyState({
   const { t } = useI18n();
 
   return (
-    <div className="flex h-full min-h-[inherit] flex-col items-center justify-center rounded-xl border border-dashed border-border/70 bg-card/30 px-6 py-12 text-center">
+    <div className="flex h-full min-h-0 w-full flex-1 flex-col items-center justify-center rounded-xl border border-dashed border-border/70 bg-card/30 px-4 py-8 text-center sm:px-6 sm:py-12">
       <div className="mb-4 flex h-14 w-14 items-center justify-center rounded-full bg-muted/80">
         <SearchX className="h-7 w-7 text-muted-foreground" aria-hidden />
       </div>
@@ -79,6 +83,16 @@ export function PodcastSection({ preview = false }: PodcastSectionProps) {
   const [season, setSeason] = useState<1 | 2 | 'all'>('all');
   const [page, setPage] = useState(1);
   const [slideDirection, setSlideDirection] = useState(0);
+  const [episodesPerPage, setEpisodesPerPage] = useState(EPISODES_PER_PAGE_DESKTOP);
+
+  useEffect(() => {
+    const mq = window.matchMedia('(max-width: 1023px)');
+    const update = () =>
+      setEpisodesPerPage(mq.matches ? EPISODES_PER_PAGE_MOBILE : EPISODES_PER_PAGE_DESKTOP);
+    update();
+    mq.addEventListener('change', update);
+    return () => mq.removeEventListener('change', update);
+  }, []);
 
   useEffect(() => {
     fetch('/api/episodes')
@@ -96,7 +110,7 @@ export function PodcastSection({ preview = false }: PodcastSectionProps) {
         if (Array.isArray(data)) {
           setEpisodes(data);
           // Precarga las 2 primeras páginas antes del primer cambio de página
-          preloadPodcastThumbnails(data.slice(0, EPISODES_PER_PAGE * 2));
+          preloadPodcastThumbnails(data.slice(0, EPISODES_PER_PAGE_DESKTOP * 2));
         } else {
           setError(t('podcast.errorUnexpected'));
         }
@@ -128,7 +142,7 @@ export function PodcastSection({ preview = false }: PodcastSectionProps) {
     return result;
   }, [episodes, search, season]);
 
-  const totalPages = Math.ceil(filteredEpisodes.length / EPISODES_PER_PAGE);
+  const totalPages = Math.ceil(filteredEpisodes.length / episodesPerPage);
 
   useEffect(() => {
     setPage(1);
@@ -210,16 +224,16 @@ export function PodcastSection({ preview = false }: PodcastSectionProps) {
     : [];
 
   return (
-    <div className="space-y-6">
+    <div className="flex flex-1 flex-col space-y-6">
       {/* Filtros - ocultos en preview */}
       {!preview && (
-        <div className="flex flex-col gap-4 sm:flex-row sm:flex-wrap">
+        <div className="flex flex-col gap-3 sm:flex-row sm:flex-wrap sm:gap-4">
         <input
           type="search"
           placeholder={t('podcast.searchPlaceholder')}
           value={search}
           onChange={(e) => setSearch(e.target.value)}
-          className="flex h-9 w-full max-w-md rounded-md border border-input bg-background px-3 py-1 text-sm shadow-sm transition-colors placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring"
+          className="flex h-8 w-full max-w-md rounded-md border border-input bg-background px-3 py-1 text-xs shadow-sm transition-colors placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring sm:h-9 sm:text-sm"
         />
         <div className="flex flex-wrap gap-2">
           <Button
@@ -249,65 +263,69 @@ export function PodcastSection({ preview = false }: PodcastSectionProps) {
 
       {!preview ? (
         <div className={EPISODES_PANEL_CLASS}>
-          <AnimatePresence mode="wait" initial={false}>
-            {filteredEpisodes.length === 0 ? (
-              <motion.div
-                key="empty"
-                initial={reducedMotion ? false : { opacity: 1, y: 8 }}
-                animate={{ opacity: 1, y: 0 }}
-                exit={reducedMotion ? undefined : { opacity: 1, y: -8 }}
-                transition={
-                  reducedMotion ? { duration: 0 } : { duration: 0.3, ease: MOTION_EASE }
-                }
-                className="h-full min-h-[inherit]"
-              >
-                <PodcastEmptyState hasFilters={hasActiveFilters} onClearFilters={clearFilters} />
-              </motion.div>
-            ) : (
-              <motion.div
-                key="episodes"
-                initial={reducedMotion ? false : { opacity: 1, y: 8 }}
-                animate={{ opacity: 1, y: 0 }}
-                exit={reducedMotion ? undefined : { opacity: 1, y: -8 }}
-                transition={
-                  reducedMotion ? { duration: 0 } : { duration: 0.3, ease: MOTION_EASE }
-                }
-                className="space-y-6"
-              >
-                <PodcastEpisodesPager
-                  episodes={filteredEpisodes}
-                  page={page}
-                  direction={slideDirection}
-                  perPage={EPISODES_PER_PAGE}
-                  onSelectEpisode={setSelectedEpisode}
-                />
+          <div className="flex min-h-0 flex-1 flex-col">
+            <AnimatePresence mode="wait" initial={false}>
+              {filteredEpisodes.length === 0 ? (
+                <motion.div
+                  key="empty"
+                  initial={reducedMotion ? false : { opacity: 1, y: 8 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={reducedMotion ? undefined : { opacity: 1, y: -8 }}
+                  transition={
+                    reducedMotion ? { duration: 0 } : { duration: 0.3, ease: MOTION_EASE }
+                  }
+                  className="flex min-h-0 flex-1"
+                >
+                  <PodcastEmptyState hasFilters={hasActiveFilters} onClearFilters={clearFilters} />
+                </motion.div>
+              ) : (
+                <motion.div
+                  key="episodes"
+                  initial={reducedMotion ? false : { opacity: 1, y: 8 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={reducedMotion ? undefined : { opacity: 1, y: -8 }}
+                  transition={
+                    reducedMotion ? { duration: 0 } : { duration: 0.3, ease: MOTION_EASE }
+                  }
+                  className="min-h-0 flex-1"
+                >
+                  <PodcastEpisodesPager
+                    episodes={filteredEpisodes}
+                    page={page}
+                    direction={slideDirection}
+                    perPage={episodesPerPage}
+                    onSelectEpisode={setSelectedEpisode}
+                  />
+                </motion.div>
+              )}
+            </AnimatePresence>
+          </div>
 
-                {totalPages > 1 ? (
-                  <div className="flex items-center justify-center gap-2 pt-4">
-                    <Button
-                      variant="outline"
-                      size="sm"
-                      onClick={() => goToPage(Math.max(1, page - 1))}
-                      disabled={page <= 1}
-                    >
-                      {t('podcast.prev')}
-                    </Button>
-                    <span className="text-sm text-muted-foreground">
-                      {t('podcast.pageOf', { page: String(page), total: String(totalPages) })}
-                    </span>
-                    <Button
-                      variant="outline"
-                      size="sm"
-                      onClick={() => goToPage(Math.min(totalPages, page + 1))}
-                      disabled={page >= totalPages}
-                    >
-                      {t('podcast.next')}
-                    </Button>
-                  </div>
-                ) : null}
-              </motion.div>
-            )}
-          </AnimatePresence>
+          <div className={PAGINATION_SLOT_CLASS}>
+            {filteredEpisodes.length > 0 && totalPages > 1 ? (
+              <>
+                <Button
+                  variant="outline"
+                  size="sm"
+                  onClick={() => goToPage(Math.max(1, page - 1))}
+                  disabled={page <= 1}
+                >
+                  {t('podcast.prev')}
+                </Button>
+                <span className="text-sm text-muted-foreground">
+                  {t('podcast.pageOf', { page: String(page), total: String(totalPages) })}
+                </span>
+                <Button
+                  variant="outline"
+                  size="sm"
+                  onClick={() => goToPage(Math.min(totalPages, page + 1))}
+                  disabled={page >= totalPages}
+                >
+                  {t('podcast.next')}
+                </Button>
+              </>
+            ) : null}
+          </div>
         </div>
       ) : (
         <div className="grid grid-cols-2 gap-3 sm:gap-4 lg:grid-cols-3 lg:gap-6">

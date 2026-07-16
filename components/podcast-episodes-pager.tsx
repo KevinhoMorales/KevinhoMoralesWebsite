@@ -35,12 +35,10 @@ function EpisodeGridPlaceholder() {
       className="pointer-events-none invisible rounded-lg border border-transparent bg-card overflow-hidden"
       aria-hidden
     >
-      <div className="relative aspect-video" />
-      <div className="space-y-1 p-4">
-        <div className="h-10" />
-        <div className="h-4 w-2/3" />
-        <div className="h-3 w-1/3" />
-        <div className="mt-2 h-8" />
+      <div className="relative aspect-[4/3] sm:aspect-video" />
+      <div className="space-y-1 p-2 sm:p-4">
+        <div className="h-8 sm:h-10" />
+        <div className="h-3 w-2/3" />
       </div>
     </div>
   )
@@ -64,7 +62,7 @@ export function PodcastEpisodesPager({
   }, [episodes, start, perPage])
 
   return (
-    <div className="relative w-full overflow-hidden">
+    <div className="relative h-full min-h-0 w-full overflow-hidden">
       <AnimatePresence initial={false} mode="popLayout" custom={direction}>
         <motion.div
           key={safePage}
@@ -74,7 +72,7 @@ export function PodcastEpisodesPager({
           animate="center"
           exit="exit"
           transition={{ duration: 0.32, ease: [0.32, 0.72, 0, 1] }}
-          className="grid w-full gap-4 sm:grid-cols-2 lg:grid-cols-3 sm:gap-6"
+          className="grid w-full grid-cols-2 items-stretch gap-3 sm:gap-4 lg:grid-cols-3 lg:gap-6"
         >
           {Array.from({ length: slotCount }, (_, index) => {
             const episode = pageEpisodes[index]
