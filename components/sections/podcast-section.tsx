@@ -50,7 +50,7 @@ export function PodcastSectionUI() {
           />
 
           <ScrollReveal variant="fade-left" delay={0.15} className="flex min-h-0 flex-col">
-            <PodcastSection preview />
+            <PodcastSection />
           </ScrollReveal>
         </div>
       </div>

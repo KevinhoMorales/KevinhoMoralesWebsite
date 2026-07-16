@@ -49,6 +49,48 @@
     }
   },
   {
+    "id": "santo-domingo-pickleball-club",
+    "title": "Santo Domingo Pickleball Club",
+    "description": "Sitio web oficial del Santo Domingo Pickleball Club: promueve el pickleball en Ecuador con entrenamientos para todos los niveles, torneos, información de canchas, inscripción al Santo Domingo Pickleball Open 2026 y una comunidad deportiva inclusiva en Santo Domingo de los Tsáchilas.",
+    "image": "/images/santo-domingo-pickleball-club-icon.png",
+    "technologies": [
+      "Next.js",
+      "React",
+      "TypeScript"
+    ],
+    "category": "web",
+    "language": "TypeScript",
+    "links": [
+      {
+        "type": "website",
+        "url": "https://www.santodomingopickleballclub.com/"
+      }
+    ],
+    "experience": "DevLokos Enterprise",
+    "platforms": [
+      "Web",
+      "Responsive"
+    ],
+    "tags": [
+      "Sport",
+      "Pickleball",
+      "Community"
+    ],
+    "releaseDate": "2026-06-01",
+    "sortOrder": 20260601,
+    "webFramework": "Next.js",
+    "caseStudy": {
+      "problem": "El Santo Domingo Pickleball Club necesitaba una presencia digital profesional para promover el deporte, comunicar entrenamientos y torneos, y facilitar inscripciones a eventos como el Santo Domingo Pickleball Open 2026.",
+      "approach": "Desarrollamos un sitio web responsive con información del club, instalaciones, equipo, galería, cronograma del torneo, formulario de contacto e inscripción, destacando la misión de fomentar una comunidad deportiva inclusiva en Ecuador.",
+      "impact": "Plataforma web publicada que centraliza la oferta del club — entrenamientos, eventos, canchas y registro al torneo — y refuerza el crecimiento del pickleball en Santo Domingo de los Tsáchilas.",
+      "highlights": [
+        "Sitio oficial del club con torneo Open 2026",
+        "Entrenamientos, canchas y comunidad para todos los niveles",
+        "Inscripción, contacto y galería en un solo lugar"
+      ]
+    }
+  },
+  {
     "id": "security-force-residentes",
     "title": "Security Force Residentes",
     "description": "Resident security management app",
