@@ -105,7 +105,7 @@ function mergeProjectsFromJson(remote: Project[], local: Project[]): Project[] {
     });
   }
 
-  return [...byId.values()];
+  return Array.from(byId.values());
 }
 
 export function getProfile(): Profile {
