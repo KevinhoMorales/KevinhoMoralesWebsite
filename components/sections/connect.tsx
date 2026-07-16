@@ -71,8 +71,6 @@ export function Connect({ profile }: ConnectProps) {
   const pathname = usePathname()
   const isContactPage = pathname === '/contact'
   const links = profile.socialLinks || {}
-  const hasSchedulingAside = Boolean(links.calendly || links.buymeacoffee)
-  const hasAside = true
 
   const [status, setStatus] = useState<'idle' | 'sending' | 'success' | 'error'>('idle')
   const [result, setResult] = useState('')
@@ -161,14 +159,7 @@ export function Connect({ profile }: ConnectProps) {
           </p>
         </ScrollReveal>
 
-        <div
-          className={cn(
-            'mx-auto w-full',
-            hasAside
-              ? 'grid max-w-5xl items-start gap-6 lg:grid-cols-[minmax(0,1.15fr)_minmax(0,0.85fr)] lg:gap-8 xl:gap-10'
-              : 'max-w-2xl'
-          )}
-        >
+        <div className="mx-auto grid w-full max-w-5xl items-start gap-6 lg:grid-cols-[minmax(0,1.15fr)_minmax(0,0.85fr)] lg:gap-8 xl:gap-10">
           <ScrollReveal variant="scale" className="min-w-0">
             <Card className={cn(cardShellClass, 'gap-0 py-0')}>
               <div
@@ -295,8 +286,7 @@ export function Connect({ profile }: ConnectProps) {
             </Card>
           </ScrollReveal>
 
-          {hasAside ? (
-            <ScrollReveal delay={0.08} variant="scale" className="min-w-0">
+          <ScrollReveal delay={0.08} variant="scale" className="min-w-0">
               <div className="flex flex-col gap-4">
                 {links.calendly ? (
                   <button
@@ -373,7 +363,6 @@ export function Connect({ profile }: ConnectProps) {
                 </Card>
               </div>
             </ScrollReveal>
-          ) : null}
         </div>
       </div>
 
