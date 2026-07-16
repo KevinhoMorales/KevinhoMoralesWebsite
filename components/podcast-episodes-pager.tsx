@@ -57,9 +57,7 @@ export function PodcastEpisodesPager({
   const safePage = Math.min(Math.max(page, 1), totalPages)
   const start = (safePage - 1) * perPage
   const pageEpisodes = episodes.slice(start, start + perPage)
-  const isOnlyPartialPage =
-    episodes.length > 0 && episodes.length <= perPage && pageEpisodes.length < perPage
-  const slotCount = isOnlyPartialPage ? pageEpisodes.length : perPage
+  const slotCount = episodes.length > 0 ? perPage : 0
 
   useLayoutEffect(() => {
     preloadAdjacentPodcastPages(episodes, start, perPage)

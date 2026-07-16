@@ -42,13 +42,17 @@ export function HomePhotoMoment({
       variant={variant}
       className={cn(fillColumn && 'h-full min-h-0', className)}
     >
-      <Card className="h-full gap-0 overflow-hidden border-border/50 bg-card/50 py-0 shadow-sm">
+      <Card className="h-full gap-0 overflow-hidden border-border/50 bg-card/50 py-0 shadow-sm transition-[height] duration-500 ease-[cubic-bezier(0.22,1,0.36,1)]">
         <CardContent className="flex h-full min-h-0 flex-col p-0">
           <div
             className={cn(
               'relative w-full overflow-hidden',
               fillColumn
-                ? cn(aspectClasses[aspect], 'lg:aspect-auto lg:min-h-[220px] lg:flex-1')
+                ? cn(
+                    aspectClasses[aspect],
+                    'lg:aspect-auto lg:min-h-[220px] lg:flex-1',
+                    'transition-[height,min-height,flex-grow] duration-500 ease-[cubic-bezier(0.22,1,0.36,1)]'
+                  )
                 : aspectClasses[aspect]
             )}
           >
