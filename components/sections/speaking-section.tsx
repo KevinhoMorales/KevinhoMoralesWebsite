@@ -50,9 +50,9 @@ export function SpeakingSection({ profile }: SpeakingSectionProps) {
           </p>
         </ScrollReveal>
 
-        <ScrollReveal delay={0.06}>
-          <Card className="overflow-hidden border-border/50 bg-card/50 py-0 shadow-sm">
-            <CardContent className="grid gap-4 p-4 sm:gap-5 sm:p-5 md:grid-cols-[minmax(0,11.5rem)_minmax(0,1fr)] md:items-start md:gap-6">
+        <Card className="overflow-hidden border-border/50 bg-card/50 py-0 shadow-sm">
+          <CardContent className="grid gap-4 p-4 sm:gap-5 sm:p-5 md:grid-cols-[minmax(0,11.5rem)_minmax(0,1fr)] md:items-start md:gap-6">
+            <ScrollReveal variant="fade-right" delay={0}>
               <div className="flex flex-col gap-3">
                 <div className="relative mx-auto h-[4.25rem] w-[7rem] md:mx-0 md:h-[4.5rem] md:w-[7.5rem]">
                   <Image
@@ -82,7 +82,9 @@ export function SpeakingSection({ profile }: SpeakingSectionProps) {
                   ) : null}
                 </div>
               </div>
+            </ScrollReveal>
 
+            <ScrollReveal variant="fade-left" delay={0.12}>
               <div className="min-w-0 md:border-l md:border-border/40 md:pl-6">
                 <p className="mb-2 text-[11px] font-semibold uppercase tracking-wide text-muted-foreground">
                   {t('speakingSection.topicsLabel')}
@@ -110,9 +112,9 @@ export function SpeakingSection({ profile }: SpeakingSectionProps) {
                   <ArrowRight className="h-3.5 w-3.5 shrink-0" aria-hidden />
                 </Link>
               </div>
-            </CardContent>
-          </Card>
-        </ScrollReveal>
+            </ScrollReveal>
+          </CardContent>
+        </Card>
       </div>
     </section>
   )

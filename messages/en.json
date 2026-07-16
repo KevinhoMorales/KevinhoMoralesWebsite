@@ -141,8 +141,7 @@
     "catBackend": "Backend & cloud",
     "catTools": "Tools & AI",
     "skillCount": "{{count}} technologies",
-    "visitOfficial": "Visit official {{name}} site",
-    "marqueeHint": "Tap a skill to open its official site. Hover to pause."
+    "marqueeHint": "Hover to pause."
   },
   "speakingSection": {
     "kicker": "Speaking",

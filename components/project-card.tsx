@@ -52,7 +52,7 @@ export function ProjectCard({ project, category }: ProjectCardProps) {
       <Card
         className={cn(
           'group flex h-full flex-col gap-0 overflow-hidden border-border/50 bg-card/60 py-0',
-          'shadow-sm transition-all duration-300',
+          'shadow-sm transition-[transform,box-shadow] duration-300 ease-[cubic-bezier(0.22,1,0.36,1)]',
           'hover:-translate-y-0.5 hover:border-primary/40 hover:shadow-lg hover:shadow-primary/5'
         )}
       >

@@ -1,42 +1,23 @@
 'use client'
 
-import { motion } from 'framer-motion'
-import type { TargetAndTransition } from 'framer-motion'
-
-type Variant = 'fade-up' | 'fade-in' | 'fade-left' | 'fade-right' | 'scale'
+import { motion, useReducedMotion } from 'framer-motion'
+import {
+  getMotionTransition,
+  getStaggerDelay,
+  MOTION_DURATION,
+  MOTION_VIEWPORT,
+  type MotionVariant,
+  resolveMotionState,
+} from '@/lib/motion'
 
 interface ScrollRevealProps {
   children: React.ReactNode
   className?: string
-  variant?: Variant
+  variant?: MotionVariant
   delay?: number
   duration?: number
   once?: boolean
   amount?: number
-}
-
-/** Opacity stays 1 so SSR / slow JS never leaves blocks invisible (Framer applies initial on server). */
-const variants: Record<Variant, { initial: TargetAndTransition; animate: TargetAndTransition }> = {
-  'fade-up': {
-    initial: { opacity: 1, y: 18 },
-    animate: { opacity: 1, y: 0 },
-  },
-  'fade-in': {
-    initial: { opacity: 1 },
-    animate: { opacity: 1 },
-  },
-  'fade-left': {
-    initial: { opacity: 1, x: -18 },
-    animate: { opacity: 1, x: 0 },
-  },
-  'fade-right': {
-    initial: { opacity: 1, x: 18 },
-    animate: { opacity: 1, x: 0 },
-  },
-  scale: {
-    initial: { opacity: 1, scale: 0.98 },
-    animate: { opacity: 1, scale: 1 },
-  },
 }
 
 export function ScrollReveal({
@@ -44,22 +25,19 @@ export function ScrollReveal({
   className,
   variant = 'fade-up',
   delay = 0,
-  duration = 0.5,
+  duration = MOTION_DURATION.header,
   once = true,
-  amount = 0.2,
+  amount = MOTION_VIEWPORT.amount as number,
 }: ScrollRevealProps) {
-  const { initial, animate } = variants[variant]
+  const reducedMotion = useReducedMotion() ?? false
+  const { initial, animate } = resolveMotionState(reducedMotion, variant)
 
   return (
     <motion.div
       initial={initial}
       whileInView={animate}
-      viewport={{ once, amount }}
-      transition={{
-        duration,
-        delay,
-        ease: [0.25, 0.4, 0.25, 1],
-      }}
+      viewport={{ ...MOTION_VIEWPORT, once, amount }}
+      transition={getMotionTransition(variant, { delay, duration })}
       className={className}
     >
       {children}
@@ -70,7 +48,7 @@ export function ScrollReveal({
 interface StaggerContainerProps {
   children: React.ReactNode
   className?: string
-  /** @deprecated Usa `delay` en cada StaggerItem; se ignora */
+  /** @deprecated Usa `staggerIndex` en cada StaggerItem; se ignora */
   staggerDelay?: number
 }
 
@@ -82,21 +60,30 @@ export function StaggerContainer({ children, className }: StaggerContainerProps)
 interface StaggerItemProps {
   children: React.ReactNode
   className?: string
-  /** Retraso escalonado en segundos (p. ej. index * 0.05). */
+  /** Retraso escalonado en segundos (p. ej. index * 0.06). */
   delay?: number
+  /** Índice para calcular delay automático (`index * STAGGER_STEP`). */
+  staggerIndex?: number
+  variant?: MotionVariant
 }
 
-export function StaggerItem({ children, className, delay = 0 }: StaggerItemProps) {
+export function StaggerItem({
+  children,
+  className,
+  delay = 0,
+  staggerIndex,
+  variant = 'fade-up',
+}: StaggerItemProps) {
+  const reducedMotion = useReducedMotion() ?? false
+  const { initial, animate } = resolveMotionState(reducedMotion, variant)
+  const resolvedDelay = getStaggerDelay(staggerIndex, delay)
+
   return (
     <motion.div
-      initial={{ opacity: 1, y: 16 }}
-      whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true, amount: 'some', margin: '0px 0px -32px 0px' }}
-      transition={{
-        duration: 0.4,
-        delay,
-        ease: [0.25, 0.4, 0.25, 1],
-      }}
+      initial={initial}
+      whileInView={animate}
+      viewport={MOTION_VIEWPORT}
+      transition={getMotionTransition(variant, { delay: resolvedDelay })}
       className={className}
     >
       {children}

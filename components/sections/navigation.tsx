@@ -137,15 +137,26 @@ export function Navigation() {
   )
 
   useEffect(() => {
-    const handleScroll = () => setIsScrolled(window.scrollY > 50)
-    window.addEventListener('scroll', handleScroll)
+    let ticking = false
+
+    const handleScroll = () => {
+      if (ticking) return
+      ticking = true
+      requestAnimationFrame(() => {
+        setIsScrolled(window.scrollY > 50)
+        ticking = false
+      })
+    }
+
+    handleScroll()
+    window.addEventListener('scroll', handleScroll, { passive: true })
     return () => window.removeEventListener('scroll', handleScroll)
   }, [])
 
   return (
     <header
       className={cn(
-        'fixed left-0 right-0 top-0 z-50 overflow-visible transition-all duration-300',
+        'fixed left-0 right-0 top-0 z-50 overflow-visible transition-all duration-500 ease-[cubic-bezier(0.22,1,0.36,1)]',
         isScrolled
           ? 'border-b border-border/50 bg-background/95 shadow-lg shadow-black/5 backdrop-blur-xl'
           : 'border-b border-transparent bg-background/95 backdrop-blur-md'

@@ -33,7 +33,7 @@ export function BookSection() {
         </ScrollReveal>
 
         <div className="grid grid-cols-1 items-center gap-8 sm:gap-10 lg:grid-cols-2 lg:gap-12">
-          <ScrollReveal variant="fade-right" delay={0.08} className="flex justify-center lg:justify-start">
+          <ScrollReveal variant="fade-right" delay={0} className="flex justify-center lg:justify-start">
             <Card className="w-full max-w-xl overflow-hidden border-border/50 bg-card/60 shadow-md">
               <CardContent className="p-0">
                 <Image

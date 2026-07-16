@@ -44,6 +44,7 @@ export function Recommendations({ testimonials }: RecommendationsProps) {
           <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold text-balance">{t('recommendations.title')}</h2>
         </ScrollReveal>
 
+        <ScrollReveal variant="fade-up" delay={0.1}>
         <div
           className={cn(
             'group/carousel relative -mx-4 sm:-mx-6 md:-mx-8',
@@ -132,6 +133,7 @@ export function Recommendations({ testimonials }: RecommendationsProps) {
             </div>
           </div>
         </div>
+        </ScrollReveal>
       </div>
     </section>
   )

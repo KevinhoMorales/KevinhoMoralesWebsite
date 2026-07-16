@@ -144,7 +144,7 @@ export function ExperienceBlockCard({ block }: ExperienceBlockCardProps) {
     <Card
       className={cn(
         'group h-full min-h-[11rem] gap-0 overflow-hidden border-border/50 bg-card/50 py-0',
-        'transition-all duration-300 hover:border-primary/50 hover:shadow-lg hover:shadow-primary/5'
+        'transition-[transform,box-shadow,border-color] duration-300 ease-[cubic-bezier(0.22,1,0.36,1)] hover:border-primary/50 hover:shadow-lg hover:shadow-primary/5'
       )}
     >
       <CardContent className="relative p-4 sm:p-5">

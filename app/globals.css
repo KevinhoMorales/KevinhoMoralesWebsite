@@ -24,8 +24,33 @@
   animation: hero-fade-in 0.55s ease-out both;
 }
 
+.motion-hero-stagger > * {
+  animation: hero-fade-in 0.55s ease-out both;
+}
+
+.motion-hero-stagger > *:nth-child(1) {
+  animation-delay: 0ms;
+}
+
+.motion-hero-stagger > *:nth-child(2) {
+  animation-delay: 80ms;
+}
+
+.motion-hero-stagger > *:nth-child(3) {
+  animation-delay: 160ms;
+}
+
+.motion-hero-stagger > *:nth-child(4) {
+  animation-delay: 240ms;
+}
+
+.motion-hero-delay {
+  animation-delay: 320ms;
+}
+
 @media (prefers-reduced-motion: reduce) {
-  .motion-hero-in {
+  .motion-hero-in,
+  .motion-hero-stagger > * {
     animation: none;
     opacity: 1;
     transform: none;
@@ -111,7 +136,6 @@
     border-color: var(--border);
   }
   html {
-    scroll-behavior: smooth;
     scroll-padding-top: 5rem;
     -webkit-overflow-scrolling: touch;
     overflow-x: clip;

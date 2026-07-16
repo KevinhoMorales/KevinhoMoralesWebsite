@@ -3,50 +3,24 @@
 import { useMemo } from 'react'
 import { ScrollReveal } from '@/components/scroll-reveal'
 import { useI18n } from '@/components/i18n/locale-provider'
-import { getSkillOfficialUrl } from '@/lib/skill-official-urls'
 import { cn } from '@/lib/utils'
-import { ExternalLink } from 'lucide-react'
 import type { SkillCategory } from '@/types'
-
-type SkillItem = {
-  name: string
-  url?: string
-}
 
 type SkillsSectionProps = {
   categories: SkillCategory[]
 }
 
-function SkillPill({ skill, className }: { skill: SkillItem; className?: string }) {
-  const { t } = useI18n()
-  const label = t('skillsSection.visitOfficial', { name: skill.name })
-
-  const pillClass = cn(
-    'inline-flex shrink-0 items-center gap-1.5 rounded-full border border-border/60 bg-background/70 px-3 py-1.5',
-    'text-xs font-medium text-foreground/90 backdrop-blur-sm',
-    'transition-colors duration-200',
-    skill.url
-      ? 'hover:border-primary/50 hover:bg-primary/10 hover:text-primary focus-visible:outline focus-visible:ring-2 focus-visible:ring-ring'
-      : 'cursor-default',
-    className
+function SkillPill({ name }: { name: string }) {
+  return (
+    <span
+      className={cn(
+        'inline-flex shrink-0 items-center rounded-full border border-border/60 bg-background/70 px-3 py-1.5',
+        'text-xs font-medium text-foreground/90 backdrop-blur-sm'
+      )}
+    >
+      {name}
+    </span>
   )
-
-  if (skill.url) {
-    return (
-      <a
-        href={skill.url}
-        target="_blank"
-        rel="noopener noreferrer"
-        className={pillClass}
-        aria-label={label}
-      >
-        {skill.name}
-        <ExternalLink className="h-3 w-3 shrink-0 opacity-60" aria-hidden />
-      </a>
-    )
-  }
-
-  return <span className={pillClass}>{skill.name}</span>
 }
 
 export function SkillsSection({ categories }: SkillsSectionProps) {
@@ -54,12 +28,12 @@ export function SkillsSection({ categories }: SkillsSectionProps) {
 
   const skills = useMemo(() => {
     const seen = new Set<string>()
-    const items: SkillItem[] = []
+    const items: string[] = []
     categories.forEach((category) => {
       category.skills.forEach((name) => {
         if (seen.has(name)) return
         seen.add(name)
-        items.push({ name, url: getSkillOfficialUrl(name) })
+        items.push(name)
       })
     })
     return items
@@ -113,8 +87,8 @@ export function SkillsSection({ categories }: SkillsSectionProps) {
                   'motion-safe:animate-skills-marquee motion-safe:group-hover/skills:[animation-play-state:paused]'
                 )}
               >
-                {loop.map((skill, index) => (
-                  <SkillPill key={`${skill.name}-${index}`} skill={skill} />
+                {loop.map((name, index) => (
+                  <SkillPill key={`${name}-${index}`} name={name} />
                 ))}
               </div>
             </div>
