@@ -1,0 +1,34 @@
+[
+  {
+    "id": "santo-domingo-pickleball-club",
+    "title": "Santo Domingo Pickleball Club",
+    "description": "Sitio web oficial del Santo Domingo Pickleball Club: promueve el pickleball en Ecuador con entrenamientos para todos los niveles, torneos, información de canchas, inscripción al Santo Domingo Pickleball Open 2026 y una comunidad deportiva inclusiva en Santo Domingo de los Tsáchilas.",
+    "image": "/images/santo-domingo-pickleball-club-icon.png",
+    "technologies": [
+      "Next.js",
+      "React",
+      "TypeScript"
+    ],
+    "category": "web",
+    "language": "TypeScript",
+    "links": [
+      {
+        "type": "website",
+        "url": "https://www.santodomingopickleballclub.com/"
+      }
+    ],
+    "experience": "DevLokos Enterprise",
+    "platforms": [
+      "Web",
+      "Responsive"
+    ],
+    "tags": [
+      "Sport",
+      "Pickleball",
+      "Community"
+    ],
+    "releaseDate": "2026-06-01",
+    "sortOrder": 20260601,
+    "webFramework": "Next.js"
+  }
+]

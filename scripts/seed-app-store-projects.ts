@@ -87,6 +87,13 @@ function normalizeRow(raw: Record<string, unknown>): SeedRow | null {
     tags: Array.isArray(raw.tags) ? raw.tags.filter((x): x is string => typeof x === 'string') : undefined,
     language: typeof raw.language === 'string' ? raw.language : undefined,
     releaseDate: typeof raw.releaseDate === 'string' && raw.releaseDate.trim() ? raw.releaseDate.trim() : undefined,
+    image: typeof raw.image === 'string' ? raw.image : undefined,
+    webFramework: typeof raw.webFramework === 'string' ? raw.webFramework : undefined,
+    webHosting: typeof raw.webHosting === 'string' ? raw.webHosting : undefined,
+    caseStudy:
+      raw.caseStudy && typeof raw.caseStudy === 'object'
+        ? (raw.caseStudy as Project['caseStudy'])
+        : undefined,
   };
 }
 
@@ -147,6 +154,10 @@ async function main(): Promise<void> {
     if (rest.tags?.length) payload.tags = rest.tags;
     if (rest.language) payload.language = rest.language;
     if (rest.releaseDate) payload.releaseDate = rest.releaseDate;
+    if (rest.image) payload.image = rest.image;
+    if (rest.webFramework) payload.webFramework = rest.webFramework;
+    if (rest.webHosting) payload.webHosting = rest.webHosting;
+    if (rest.caseStudy) payload.caseStudy = rest.caseStudy;
     return payload;
   }
 

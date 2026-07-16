@@ -59,6 +59,20 @@ function readJson<T>(filename: string): T {
   return JSON.parse(raw) as T;
 }
 
+/** Añade proyectos de JSON que aún no existen en Firestore (p. ej. web recién agregados en deploy). */
+function mergeProjectsFromJson(remote: Project[], local: Project[]): Project[] {
+  if (local.length === 0) return remote;
+  const seen = new Set(remote.map((p) => p.id));
+  const merged = [...remote];
+  for (const project of local) {
+    if (!seen.has(project.id)) {
+      merged.push(project);
+      seen.add(project.id);
+    }
+  }
+  return merged;
+}
+
 export function getProfile(): Profile {
   return readJson<Profile>('profile.json');
 }
@@ -68,17 +82,18 @@ export function getExperience(): Experience[] {
 }
 
 export async function getProjects(): Promise<Project[]> {
+  const jsonProjects = readJson<Project[]>('projects.json');
   if (ssrSkipRemoteFirestoreForProjects()) {
-    return readJson<Project[]>('projects.json');
+    return jsonProjects;
   }
   try {
     const fromDb = await withSsrBudget(adminFetchProjectsSafe());
-    if (fromDb === null) return readJson<Project[]>('projects.json');
-    if (fromDb.length > 0) return fromDb;
-    return readJson<Project[]>('projects.json');
+    if (fromDb === null) return jsonProjects;
+    if (fromDb.length > 0) return mergeProjectsFromJson(fromDb, jsonProjects);
+    return jsonProjects;
   } catch (e) {
     console.error('[content] getProjects:', e);
-    return readJson<Project[]>('projects.json');
+    return jsonProjects;
   }
 }
 
