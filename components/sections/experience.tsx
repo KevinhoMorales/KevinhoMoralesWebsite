@@ -11,24 +11,24 @@ import type { MergedExperience } from '@/types'
 
 interface ExperienceProps {
   experiences: MergedExperience[]
-  /** En la home (desktop): primeros N bloques; el resto en modal "Ver más" */
+  /** En viewports >= md (tablet/desktop): cuántos bloques mostrar antes de "Ver más" */
   previewLimit?: number
-  /** En viewports < lg: cuántos bloques mostrar antes de "Ver más" */
+  /** En viewports < md (móvil): cuántos bloques mostrar antes de "Ver más" */
   previewLimitMobile?: number
 }
 
-function useIsLgUp(): boolean {
-  const [isLgUp, setIsLgUp] = useState(false)
+function useIsMdUp(): boolean {
+  const [isMdUp, setIsMdUp] = useState(false)
 
   useEffect(() => {
-    const mq = window.matchMedia('(min-width: 1024px)')
-    const update = () => setIsLgUp(mq.matches)
+    const mq = window.matchMedia('(min-width: 768px)')
+    const update = () => setIsMdUp(mq.matches)
     update()
     mq.addEventListener('change', update)
     return () => mq.removeEventListener('change', update)
   }, [])
 
-  return isLgUp
+  return isMdUp
 }
 
 export function ExperienceSection({
@@ -38,11 +38,11 @@ export function ExperienceSection({
 }: ExperienceProps) {
   const { t } = useI18n()
   const [modalOpen, setModalOpen] = useState(false)
-  const isLgUp = useIsLgUp()
+  const isMdUp = useIsMdUp()
 
   const effectiveLimit =
     previewLimit != null
-      ? isLgUp
+      ? isMdUp
         ? previewLimit
         : (previewLimitMobile ?? previewLimit)
       : undefined
@@ -66,7 +66,7 @@ export function ExperienceSection({
           </h2>
         </ScrollReveal>
 
-        <StaggerContainer className="grid grid-cols-1 gap-3 sm:gap-4 md:grid-cols-3 md:gap-5">
+        <StaggerContainer className="grid grid-cols-2 items-stretch gap-3 sm:gap-4 md:grid-cols-3 md:gap-5">
           {visible.map((block, index) => (
             <StaggerItem key={block.id} delay={index * 0.05} className="w-full min-h-0 h-full">
               <ExperienceBlockCard block={block} />

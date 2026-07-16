@@ -4,6 +4,7 @@ import { useMemo } from 'react'
 import { ScrollReveal } from '@/components/scroll-reveal'
 import { useI18n } from '@/components/i18n/locale-provider'
 import { cn } from '@/lib/utils'
+import { getSkillIcon } from '@/lib/skill-icons'
 import type { SkillCategory } from '@/types'
 
 type SkillsSectionProps = {
@@ -11,13 +12,16 @@ type SkillsSectionProps = {
 }
 
 function SkillPill({ name }: { name: string }) {
+  const Icon = getSkillIcon(name)
+
   return (
     <span
       className={cn(
-        'inline-flex shrink-0 items-center rounded-full border border-border/60 bg-background/70 px-3 py-1.5',
+        'inline-flex shrink-0 items-center gap-1.5 rounded-full border border-border/60 bg-background/70 px-3 py-1.5',
         'text-xs font-medium text-foreground/90 backdrop-blur-sm'
       )}
     >
+      <Icon className="h-3.5 w-3.5 shrink-0 text-primary" aria-hidden />
       {name}
     </span>
   )

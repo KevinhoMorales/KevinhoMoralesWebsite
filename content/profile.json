@@ -37,5 +37,6 @@
   },
   "profileImageLocal": "/images/profile-main.png",
   "heroImage": "/images/profile-hero.png",
-  "familyImage": "/images/family.png"
+  "familyImage": "/images/family.png",
+  "speakingImage": "/images/kevin-cursor-talk.jpg"
 }

@@ -92,10 +92,10 @@ export function LearnHubSection({ items }: LearnHubSectionProps) {
                 : { duration: 0.35, ease: MOTION_EASE }
             }
           >
-            <StaggerContainer className="grid grid-cols-2 gap-3 sm:gap-4 lg:grid-cols-2 lg:gap-6">
+            <StaggerContainer className="grid grid-cols-2 items-stretch gap-3 sm:gap-4 lg:grid-cols-2 lg:gap-6">
               {filtered.map((item, index) => (
-                <StaggerItem key={item.id} staggerIndex={index} className="h-full">
-                  <Card className="h-full border-border/50 bg-card/50 transition-colors hover:border-primary/40">
+                <StaggerItem key={item.id} staggerIndex={index} className="h-full min-w-0 w-full">
+                  <Card className="h-full gap-0 border-border/50 bg-card/50 py-0 transition-colors hover:border-primary/40">
                     <CardContent className="flex h-full flex-col gap-2 p-2.5 sm:gap-3 sm:p-3 md:p-4 lg:p-5">
                       <div className="flex items-start gap-2 sm:gap-3">
                         {item.image ? (
@@ -111,7 +111,7 @@ export function LearnHubSection({ items }: LearnHubSectionProps) {
                         </div>
                       </div>
                       <p className="hidden flex-1 text-sm text-muted-foreground leading-relaxed sm:block">{item.description}</p>
-                      <div className="pt-0 sm:pt-1">
+                      <div className="mt-auto pt-0 sm:pt-1">
                         {item.internalLink ? (
                           <Button size="sm" className="h-7 w-full gap-1 px-2 text-[10px] sm:h-8 sm:gap-1.5 sm:px-3 sm:text-xs" asChild>
                             <Link

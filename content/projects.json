@@ -1,5 +1,54 @@
 [
   {
+    "id": "tayos",
+    "title": "Tayos",
+    "description": "App B2B de repuestos automotrices para la distribuidora más grande del Ecuador — catálogo digital con 30.000+ productos, búsqueda rápida y pedidos para talleres y empresas.",
+    "image": "/images/tayos-icon.png",
+    "technologies": [
+      "React Native",
+      "TypeScript"
+    ],
+    "category": "ios",
+    "language": "TypeScript",
+    "links": [
+      {
+        "type": "appStore",
+        "url": "https://apps.apple.com/us/app/tayos/id6776895287"
+      },
+      {
+        "type": "playStore",
+        "url": "https://play.google.com/store/apps/details?id=com.devlokos.typescript"
+      },
+      {
+        "type": "website",
+        "url": "https://devlokos.com/empresarial",
+        "label": "DevLokos Enterprise"
+      }
+    ],
+    "experience": "DevLokos Enterprise",
+    "platforms": [
+      "iPhone",
+      "Android"
+    ],
+    "tags": [
+      "Business",
+      "B2B",
+      "Automotive"
+    ],
+    "releaseDate": "2026-05-15",
+    "sortOrder": 20260715,
+    "caseStudy": {
+      "problem": "La distribuidora de repuestos automotrices más grande del Ecuador necesitaba digitalizar la compra B2B de talleres, mecánicas y empresas que dependían de llamadas y mensajes para consultar stock y hacer pedidos.",
+      "approach": "Desarrollamos Tayos en React Native (TypeScript) para iOS y Android con catálogo digital, búsqueda rápida de más de 30.000 productos y flujo de pedidos orientado a clientes profesionales del sector automotriz.",
+      "impact": "Plataforma B2B publicada en App Store y Play Store que agiliza consultas comerciales y pedidos para negocios del sector automotriz en Ecuador.",
+      "highlights": [
+        "Cross-platform React Native en iOS y Android",
+        "Catálogo B2B con 30.000+ productos",
+        "Proyecto DevLokos Enterprise"
+      ]
+    }
+  },
+  {
     "id": "security-force-residentes",
     "title": "Security Force Residentes",
     "description": "Resident security management app",

@@ -1,19 +1,17 @@
 'use client'
 
 import Image from 'next/image'
-import Link from 'next/link'
 import { useI18n } from '@/components/i18n/locale-provider'
 import type { Achievement } from '@/types'
 
 type HeroCredentialsStripProps = {
   achievements: Achievement[]
-  sessionizeUrl?: string
 }
 
 const credentialFrameClass =
   'relative h-12 w-12 shrink-0 overflow-hidden rounded-lg bg-background p-1.5 shadow-md shadow-black/10 ring-1 ring-black/5 transition-[opacity,box-shadow] hover:shadow-lg hover:shadow-black/15 dark:bg-card/70 dark:shadow-black/45 dark:ring-white/10 dark:hover:shadow-black/60 sm:h-14 sm:w-14'
 
-export function HeroCredentialsStrip({ achievements, sessionizeUrl }: HeroCredentialsStripProps) {
+export function HeroCredentialsStrip({ achievements }: HeroCredentialsStripProps) {
   const { t } = useI18n()
   const top = achievements.slice(0, 4)
 
@@ -58,16 +56,6 @@ export function HeroCredentialsStrip({ achievements, sessionizeUrl }: HeroCreden
             </div>
           )
         })}
-        {sessionizeUrl ? (
-          <Link
-            href={sessionizeUrl}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="text-xs font-medium text-primary hover:underline sm:text-sm"
-          >
-            {t('hero.sessionizeProfile')}
-          </Link>
-        ) : null}
       </div>
     </div>
   )

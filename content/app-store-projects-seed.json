@@ -811,5 +811,47 @@
         "label": "App Store"
       }
     ]
+  },
+  {
+    "id": "tayos",
+    "title": "Tayos",
+    "description": "App B2B de repuestos automotrices — React Native (iOS y Android).",
+    "category": "ios",
+    "language": "TypeScript",
+    "technologies": [
+      "React Native",
+      "TypeScript"
+    ],
+    "experience": "DevLokos Enterprise",
+    "platforms": [
+      "iPhone",
+      "Android"
+    ],
+    "tags": [
+      "Business",
+      "B2B",
+      "Automotive",
+      "App Store",
+      "Play Store"
+    ],
+    "releaseDate": "2026-07-15",
+    "sortOrder": 20260715,
+    "links": [
+      {
+        "type": "appStore",
+        "url": "https://apps.apple.com/us/app/tayos/id6776895287",
+        "label": "App Store"
+      },
+      {
+        "type": "playStore",
+        "url": "https://play.google.com/store/apps/details?id=com.devlokos.typescript",
+        "label": "Play Store"
+      },
+      {
+        "type": "website",
+        "url": "https://devlokos.com/empresarial",
+        "label": "DevLokos Enterprise"
+      }
+    ]
   }
 ]

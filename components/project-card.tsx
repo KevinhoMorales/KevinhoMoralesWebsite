@@ -109,7 +109,7 @@ export function ProjectCard({ project, category }: ProjectCardProps) {
             ) : null}
           </div>
 
-          <div className="flex items-center gap-1.5 border-t border-border/40 pt-2 sm:gap-2 sm:pt-2.5">
+          <div className="mt-auto flex items-center gap-1.5 border-t border-border/40 pt-2 sm:gap-2 sm:pt-2.5">
             {hasCaseStudy ? (
               <>
                 <Button

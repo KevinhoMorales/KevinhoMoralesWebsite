@@ -30,7 +30,8 @@
     "startDate": "2025-02",
     "current": true,
     "companyUrl": "https://meniuz.com/",
-    "companyLogo": "/images/meniuz-logo.png"
+    "companyLogo": "/images/meniuz-logo.png",
+    "description": "Founder and Development Team Manager at Meniuz. I lead mobile projects for iOS and Android, focused on building solutions that connect users with the best restaurants, coffee shops, ice cream parlors, and liquor stores in Ecuador.\n\nMeniuz features a comprehensive and updated menu database, driving the digital transformation of the local gastronomy industry. I oversee product strategy, mobile engineering, and team leadership to deliver a platform that helps businesses and diners discover great food experiences across the country."
   },
   {
     "id": "3",
@@ -41,7 +42,8 @@
     "endDate": "2025-10",
     "current": false,
     "companyUrl": "https://meniuz.com/",
-    "companyLogo": "/images/meniuz-logo.png"
+    "companyLogo": "/images/meniuz-logo.png",
+    "description": "As founder and lead mobile engineer, I built Meniuz from the ground up—shipping native iOS and Android apps that connect users with restaurants, coffee shops, ice cream parlors, and liquor stores across Ecuador.\n\nI owned the full mobile stack in Kotlin and Swift, from architecture and API integration to release management and continuous improvement of the menu database that powers the platform's core experience."
   },
   {
     "id": "20",
@@ -63,7 +65,8 @@
     "startDate": "2024-07",
     "current": true,
     "companyUrl": "https://devlokos.com/",
-    "companyLogo": "/images/devlokos-logo.png"
+    "companyLogo": "/images/devlokos-logo.png",
+    "description": "I lead the management and execution of custom software projects focused on empowering local and national businesses. I coordinate multidisciplinary teams to deliver efficient, scalable, and tailor-made technological solutions aligned with each client's specific needs.\n\nMy work combines strategic planning, process monitoring, and constant communication with stakeholders to ensure high-impact and high-quality results—from mobile and web products to enterprise solutions built with modern stacks and agile delivery practices."
   },
   {
     "id": "5",
@@ -74,7 +77,9 @@
     "endDate": "2025-10",
     "current": false,
     "companyUrl": "https://devlokos.com/",
-    "companyLogo": "/images/devlokos-logo.png"
+    "companyLogo": "/images/devlokos-logo.png",
+    "roleUrl": "https://www.youtube.com/@DevLokos",
+    "description": "At DevLokos, I build a community where technology and software development come together. Through the DevLokos Podcast, I host interviews with IT leaders, discuss the latest in technology, and share practical knowledge for developers growing their careers.\n\nI also lead workshops, live sessions, and community initiatives that strengthen Ecuador's tech ecosystem—creating spaces where innovation, collaboration, and continuous learning drive progress."
   },
   {
     "id": "6",
@@ -84,7 +89,8 @@
     "startDate": "2024-08",
     "current": true,
     "companyUrl": "https://gdg.community.dev/gdg-santo-domingo-de-los-tsachilas/",
-    "companyLogo": "/images/google-developers-logo.png"
+    "companyLogo": "/images/google-developers-logo.png",
+    "description": "As Lead Organizer of GDG Santo Domingo de los Tsáchilas, I plan and execute tech events that connect developers with Google technologies, practical workshops, and community networking.\n\nI'm an Android developer and speaker experienced in building mobile applications and sharing knowledge through talks and hands-on sessions. My work focuses on fostering local talent, promoting continuous learning, and growing an inclusive developer community in the Santo Domingo de los Tsáchilas region."
   },
   {
     "id": "7",

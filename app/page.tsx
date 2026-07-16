@@ -31,7 +31,6 @@ import { Recommendations } from '@/components/sections/recommendations';
 import { Connect } from '@/components/sections/connect';
 import { Footer } from '@/components/sections/footer';
 import { HomeSectionAnalytics } from '@/components/home-section-analytics';
-import { HomeSfPhotoSection } from '@/components/sections/home-sf-photo-section';
 
 export const metadata: Metadata = {
   title: 'Senior Software Engineer',
@@ -57,9 +56,8 @@ export default async function Home() {
       <Hero profile={profile} achievements={achievements} />
       <About profile={profile} />
       <SkillsSection categories={skills} />
-      <ExperienceSection experiences={experience} previewLimit={6} previewLimitMobile={3} />
+      <ExperienceSection experiences={experience} previewLimit={3} previewLimitMobile={4} />
       <SpeakingSection profile={profile} />
-      <HomeSfPhotoSection />
       <ProjectsSection projects={projects} />
       <ConferencesSection conferences={conferences} />
       <LearnHubSection items={learnHubItems} />

@@ -50,7 +50,7 @@ export function ExperienceModal({ experiences, open, onClose }: ExperienceModalP
       emptyMessage={t('browseModal.noResults')}
       isEmpty={filteredExperiences.length === 0}
     >
-      <div className="grid grid-cols-1 items-stretch gap-4 sm:grid-cols-2 sm:gap-5">
+      <div className="grid grid-cols-2 items-stretch gap-3 sm:gap-5 md:grid-cols-3">
         {filteredExperiences.map((block) => (
           <ExperienceBlockCard key={block.id} block={block} />
         ))}

@@ -17,6 +17,7 @@ export interface Profile {
   motto?: string;
   aboutMe?: string;
   familyImage?: string;
+  speakingImage?: string;
   images?: string[];
   profileImageLocal?: string;
   heroImage?: string;

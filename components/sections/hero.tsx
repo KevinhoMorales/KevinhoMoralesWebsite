@@ -140,10 +140,7 @@ export function Hero({ profile, achievements = [] }: HeroProps) {
                 </>
               )}
             </div>
-            <HeroCredentialsStrip
-              achievements={achievements}
-              sessionizeUrl={profile.socialLinks?.sessionize}
-            />
+            <HeroCredentialsStrip achievements={achievements} />
           </div>
 
           {/* Avatar oculto en móvil (ya mostrado arriba), visible en desktop */}

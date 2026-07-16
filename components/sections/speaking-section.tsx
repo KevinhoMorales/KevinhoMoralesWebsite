@@ -9,10 +9,11 @@ import { Card, CardContent } from '@/components/ui/card'
 import { ScrollReveal } from '@/components/scroll-reveal'
 import { useI18n } from '@/components/i18n/locale-provider'
 import { handleHomeHashLinkClick } from '@/lib/section-scroll'
-import { FilterChipRow } from '@/components/ui/filter-chip-row'
 import { cn } from '@/lib/utils'
 import { ArrowRight, Calendar, ExternalLink, Mic } from 'lucide-react'
 import type { Profile } from '@/types'
+
+const DEFAULT_SPEAKING_IMAGE = '/images/kevin-cursor-talk.jpg'
 
 type SpeakingSectionProps = {
   profile: Profile
@@ -23,6 +24,7 @@ export function SpeakingSection({ profile }: SpeakingSectionProps) {
   const pathname = usePathname()
   const sessionizeUrl = profile.socialLinks?.sessionize
   const calendlyUrl = profile.socialLinks?.calendly
+  const speakingImage = profile.speakingImage ?? DEFAULT_SPEAKING_IMAGE
 
   const topics = [
     t('speakingSection.topicMobile'),
@@ -46,27 +48,31 @@ export function SpeakingSection({ profile }: SpeakingSectionProps) {
           <h2 className="text-xl sm:text-2xl font-bold text-balance leading-tight">
             {t('speakingSection.title')}
           </h2>
-          <p className="mt-1.5 max-w-2xl text-xs sm:text-sm text-muted-foreground leading-snug">
+          <p className="mt-1.5 max-w-2xl text-xs sm:text-sm text-muted-foreground leading-relaxed text-pretty">
             {t('speakingSection.description')}
           </p>
         </ScrollReveal>
 
-        <Card className="overflow-hidden border-border/50 bg-card/50 py-0 shadow-sm">
-          <CardContent className="grid gap-4 p-4 sm:gap-5 sm:p-5 md:grid-cols-[minmax(0,11.5rem)_minmax(0,1fr)] md:items-start md:gap-6">
-            <ScrollReveal variant="fade-right" delay={0}>
-              <div className="flex flex-col gap-3">
-                <div className="relative mx-auto h-[4.25rem] w-[7rem] md:mx-0 md:h-[4.5rem] md:w-[7.5rem]">
+        <Card className="overflow-x-clip border-border/50 bg-card/50 py-0 shadow-sm">
+          <CardContent className="grid min-w-0 gap-5 p-4 sm:p-5 lg:grid-cols-[minmax(0,12rem)_minmax(0,1fr)_minmax(0,11rem)] lg:items-start lg:gap-8">
+            <ScrollReveal variant="fade-right" delay={0} className="min-w-0 lg:col-start-1 lg:row-start-1">
+              <div className="flex w-full min-w-0 flex-col gap-3">
+                <div className="relative mx-auto h-[4.25rem] w-[7rem] shrink-0 sm:mx-0 sm:h-[4.5rem] sm:w-[7.5rem]">
                   <Image
                     src="/images/sessionize-most-active-speaker-2024.png"
                     alt="Sessionize Most Active Speaker 2024"
                     fill
                     sizes="120px"
-                    className="object-contain object-center md:object-left"
+                    className="object-contain object-center sm:object-left"
                   />
                 </div>
-                <div className="flex flex-col gap-2">
+                <div className="flex w-full min-w-0 flex-col gap-2">
                   {sessionizeUrl ? (
-                    <Button size="sm" asChild className="h-9 w-full justify-center gap-1.5 text-xs">
+                    <Button
+                      size="sm"
+                      asChild
+                      className="h-auto min-h-9 w-full justify-center gap-1.5 whitespace-normal px-3 py-2 text-center text-[11px] leading-snug sm:text-xs"
+                    >
                       <a href={sessionizeUrl} target="_blank" rel="noopener noreferrer">
                         {t('speakingSection.sessionizeCta')}
                         <ExternalLink className="h-3.5 w-3.5 shrink-0" aria-hidden />
@@ -74,7 +80,12 @@ export function SpeakingSection({ profile }: SpeakingSectionProps) {
                     </Button>
                   ) : null}
                   {calendlyUrl ? (
-                    <Button size="sm" variant="outline" asChild className="h-9 w-full justify-center gap-1.5 text-xs">
+                    <Button
+                      size="sm"
+                      variant="outline"
+                      asChild
+                      className="h-auto min-h-9 w-full justify-center gap-1.5 whitespace-normal px-3 py-2 text-center text-[11px] leading-snug sm:text-xs"
+                    >
                       <a href={calendlyUrl} target="_blank" rel="noopener noreferrer">
                         <Calendar className="h-3.5 w-3.5 shrink-0" aria-hidden />
                         {t('speakingSection.calendlyCta')}
@@ -85,28 +96,42 @@ export function SpeakingSection({ profile }: SpeakingSectionProps) {
               </div>
             </ScrollReveal>
 
-            <ScrollReveal variant="fade-left" delay={0.12}>
-              <div className="min-w-0 md:border-l md:border-border/40 md:pl-6">
-                <p className="mb-2 text-[11px] font-semibold uppercase tracking-wide text-muted-foreground">
+            <ScrollReveal variant="fade-up" delay={0.08} className="min-w-0 lg:col-start-3 lg:row-start-1">
+              <div className="border-t border-border/40 pt-5 lg:border-l lg:border-t-0 lg:pl-8 lg:pt-0">
+                <div className="relative mx-auto aspect-[16/10] w-full max-h-56 overflow-hidden rounded-xl bg-muted/40 ring-1 ring-border/50 sm:max-h-none lg:mx-0 lg:aspect-[4/5] lg:max-h-[17.5rem]">
+                  <Image
+                    src={speakingImage}
+                    alt={t('homePhotos.cursor.alt')}
+                    fill
+                    sizes="(max-width: 1023px) 100vw, 176px"
+                    className="object-cover object-center"
+                  />
+                </div>
+              </div>
+            </ScrollReveal>
+
+            <ScrollReveal variant="fade-left" delay={0.12} className="min-w-0 lg:col-start-2 lg:row-start-1">
+              <div className="min-w-0 border-t border-border/40 pt-5 lg:border-l lg:border-t-0 lg:pl-8 lg:pt-0">
+                <p className="mb-2.5 text-[11px] font-semibold uppercase tracking-wide text-muted-foreground">
                   {t('speakingSection.topicsLabel')}
                 </p>
-                <FilterChipRow className="sm:flex-wrap">
+                <div className="flex min-w-0 flex-col gap-2 sm:flex-row sm:flex-wrap">
                   {topics.map((topic) => (
                     <Badge
                       key={topic}
                       variant="outline"
                       className={cn(
-                        'shrink-0 rounded-full border-border/60 bg-background/50 px-2 py-0.5 text-[10px] font-normal leading-snug sm:px-2.5 sm:py-1 sm:text-xs',
+                        'w-full justify-center whitespace-normal rounded-full border-border/60 bg-background/50 px-2.5 py-1.5 text-[11px] font-normal leading-snug sm:w-auto sm:max-w-full sm:justify-start sm:py-1 sm:text-xs',
                         'transition-colors hover:border-primary/40 hover:bg-primary/5 hover:text-primary'
                       )}
                     >
                       {topic}
                     </Badge>
                   ))}
-                </FilterChipRow>
+                </div>
                 <Link
                   href="/#conferences"
-                  className="mt-3 inline-flex items-center gap-1 text-xs font-medium text-primary hover:underline"
+                  className="mt-4 inline-flex items-center gap-1 text-xs font-medium text-primary hover:underline"
                   onClick={(e) => handleHomeHashLinkClick(e, pathname, '/#conferences')}
                 >
                   {t('speakingSection.viewConferences')}

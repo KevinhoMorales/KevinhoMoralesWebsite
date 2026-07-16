@@ -33,7 +33,7 @@ export function About({ profile }: AboutProps) {
       data-analytics-section="about"
       className="py-3 sm:py-4 md:py-6 px-4 sm:px-6 md:px-8 lg:px-12 xl:px-24 bg-secondary/30"
     >
-      <div className="max-w-6xl mx-auto">
+      <div className="mx-auto max-w-6xl min-w-0 w-full">
         <ScrollReveal className="mb-4 sm:mb-6">
           <p className="text-primary font-medium tracking-wide uppercase text-xs sm:text-sm mb-3 sm:mb-4">{t('about.kicker')}</p>
           <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold mb-3 sm:mb-4 text-balance">
@@ -41,31 +41,33 @@ export function About({ profile }: AboutProps) {
           </h2>
         </ScrollReveal>
 
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-y-6 gap-x-0 sm:gap-y-10 lg:gap-x-12 xl:gap-x-16 lg:gap-y-8 lg:items-stretch">
-          <ScrollReveal variant="fade-right" delay={0.1} className="flex min-h-0 flex-col lg:h-full space-y-4 sm:space-y-6">
-            <div className="space-y-4 sm:space-y-6">
-              <p className="text-sm sm:text-lg text-muted-foreground leading-relaxed">
-                {t('about.bioP1')}
-              </p>
-              <p className="text-sm sm:text-lg text-muted-foreground leading-relaxed">
-                {t('about.bioP2')}
-              </p>
-              <p className="text-sm sm:text-lg text-muted-foreground leading-relaxed">
-                {t('about.bioP3')}
-              </p>
-              <p className="text-sm sm:text-lg text-primary/90 italic">
-                &ldquo;{t('about.motto')}&rdquo;
-              </p>
-            </div>
+        <div className="grid w-full min-w-0 grid-cols-1 gap-y-6 sm:gap-y-10 lg:grid-cols-2 lg:items-stretch lg:gap-x-12 lg:gap-y-8 xl:gap-x-16">
+          <div className="flex min-h-0 min-w-0 w-full flex-col space-y-4 sm:space-y-6 lg:h-full">
+            <ScrollReveal variant="fade-up" delay={0.1} className="min-w-0 w-full">
+              <div className="space-y-4 sm:space-y-6">
+                <p className="text-sm sm:text-lg text-muted-foreground leading-relaxed">
+                  {t('about.bioP1')}
+                </p>
+                <p className="text-sm sm:text-lg text-muted-foreground leading-relaxed">
+                  {t('about.bioP2')}
+                </p>
+                <p className="text-sm sm:text-lg text-muted-foreground leading-relaxed">
+                  {t('about.bioP3')}
+                </p>
+                <p className="text-sm sm:text-lg text-primary/90 italic">
+                  &ldquo;{t('about.motto')}&rdquo;
+                </p>
+              </div>
+            </ScrollReveal>
 
-            <StaggerContainer className="mt-auto grid grid-cols-2 md:grid-cols-3 lg:grid-cols-3 gap-2 sm:gap-3 md:gap-4 pt-2 sm:pt-4 items-stretch">
+            <StaggerContainer className="grid w-full min-w-0 grid-cols-2 items-stretch gap-3 sm:gap-3 md:grid-cols-3 md:gap-4 lg:mt-auto lg:grid-cols-3 lg:pt-2 xl:pt-4">
               {highlights.map((item, index) => (
-                <StaggerItem key={`${item.title}-${index}`} delay={index * 0.06} className="h-full w-full">
-                  <Card className="h-full bg-card/50 border-border/50 w-full">
-                    <CardContent className="flex h-full flex-col items-center justify-center gap-1 px-2.5 py-3 text-center sm:px-3 sm:py-3.5">
+                <StaggerItem key={`${item.title}-${index}`} delay={index * 0.06} className="h-full min-w-0 w-full">
+                  <Card className="h-full min-w-0 w-full gap-0 overflow-hidden border-border/50 bg-card/50 py-0">
+                    <CardContent className="flex h-full min-w-0 flex-col items-center justify-center gap-1 px-2.5 py-3 text-center sm:px-3 sm:py-3.5">
                       <item.icon className="h-5 w-5 shrink-0 text-primary" aria-hidden />
-                      <p className="font-semibold text-xs leading-tight sm:text-sm">{item.title}</p>
-                      <p className="min-h-0 text-[10px] leading-snug text-muted-foreground sm:min-h-[2.75rem] sm:text-xs">
+                      <p className="w-full font-semibold text-xs leading-tight sm:text-sm">{item.title}</p>
+                      <p className="min-h-0 w-full text-[10px] leading-snug text-muted-foreground line-clamp-2 sm:min-h-[2.75rem] sm:text-xs sm:line-clamp-none">
                         {item.description}
                       </p>
                     </CardContent>
@@ -73,9 +75,9 @@ export function About({ profile }: AboutProps) {
                 </StaggerItem>
               ))}
             </StaggerContainer>
-          </ScrollReveal>
+          </div>
 
-          <ScrollReveal variant="fade-left" delay={0.2} className="flex min-h-0 h-full w-full lg:pl-0">
+          <ScrollReveal variant="fade-up" delay={0.2} className="flex min-h-0 min-w-0 h-full w-full">
             <Card className="bg-card/50 border-border/50 overflow-hidden flex flex-col flex-1 min-h-0 w-full">
               <CardContent className="p-0 flex flex-col flex-1 min-h-0">
                 {profile.familyImage ? (

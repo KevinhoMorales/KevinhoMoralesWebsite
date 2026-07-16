@@ -98,7 +98,7 @@ export function ProjectsModal({ projects, initialCategory, open, onClose }: Proj
       emptyMessage={search.trim() ? t('browseModal.noResults') : t('projects.emptyCategory')}
       isEmpty={filteredProjects.length === 0}
     >
-      <div className="grid grid-cols-2 items-stretch gap-3 sm:gap-4 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 lg:gap-6">
+      <div className="grid grid-cols-2 items-stretch gap-3 sm:gap-4 md:grid-cols-4 md:gap-6">
         {filteredProjects.map((project) => (
           <ProjectCard key={project.id} project={project} category={category} />
         ))}

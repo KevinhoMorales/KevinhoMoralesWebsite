@@ -2,7 +2,7 @@ import type { Project, ProjectCategory } from '@/types'
 import { orderProjectsForDisplay } from '@/lib/projects-order'
 import { projectMatchesCategory } from '@/lib/project-category-match'
 
-const DEFAULT_HOME_LIMIT = 5
+const DEFAULT_HOME_LIMIT = 4
 
 /**
  * Home preview: up to `limit` proyectos del filtro, ya ordenados por fecha (más reciente primero).

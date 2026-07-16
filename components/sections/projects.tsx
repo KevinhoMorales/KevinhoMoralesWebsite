@@ -27,6 +27,7 @@ export function ProjectsSection({ projects }: ProjectsProps) {
   const { t } = useI18n()
   const [activeCategory, setActiveCategory] = useState<ProjectCategory | 'all'>('all')
   const [modalOpen, setModalOpen] = useState(false)
+  const [previewLimit] = useState(4)
 
   const categories: { id: ProjectCategory | 'all'; label: string }[] = useMemo(
     () => [
@@ -40,8 +41,8 @@ export function ProjectsSection({ projects }: ProjectsProps) {
   )
 
   const { preview: filteredProjects, hasMore } = useMemo(
-    () => pickProjectsPreview(projects, activeCategory),
-    [projects, activeCategory]
+    () => pickProjectsPreview(projects, activeCategory, previewLimit),
+    [projects, activeCategory, previewLimit]
   )
 
   return (
@@ -89,10 +90,10 @@ export function ProjectsSection({ projects }: ProjectsProps) {
         ) : (
           <StaggerContainer
             key={activeCategory}
-            className="grid grid-cols-2 items-stretch gap-3 sm:gap-4 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 lg:gap-5"
+            className="grid grid-cols-2 items-stretch gap-3 sm:gap-4 md:grid-cols-4 md:gap-5"
           >
             {filteredProjects.map((project, index) => (
-                <StaggerItem key={project.id} delay={index * 0.06} className="h-full">
+                <StaggerItem key={project.id} delay={index * 0.06} className="h-full min-w-0 w-full">
                   <ProjectCard project={project} category={activeCategory} />
                 </StaggerItem>
               ))}
