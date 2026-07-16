@@ -1,4 +1,6 @@
 import { Skeleton } from '@/components/ui/skeleton'
+import { SECTION_PADDING, SECTION_PADDING_X, SECTION_PADDING_Y_LOOSE } from '@/lib/section-layout'
+import { cn } from '@/lib/utils'
 
 function SectionHeaderSkeleton({
   titleWidth = 'w-56',
@@ -18,7 +20,7 @@ function SectionHeaderSkeleton({
 
 function HeroSkeleton() {
   return (
-    <section className="relative isolate overflow-hidden px-4 py-8 sm:px-6 sm:py-10 md:px-8 md:py-12 lg:min-h-[58vh] lg:px-12 lg:py-14 xl:min-h-[62vh] xl:px-24 xl:py-16">
+    <section className="relative isolate overflow-hidden px-4 py-6 sm:px-6 sm:py-8 md:px-8 md:py-10 lg:min-h-[58vh] lg:px-12 lg:py-10 xl:min-h-[62vh] xl:px-24 xl:py-12">
       <div className="pointer-events-none absolute inset-0 -z-10 bg-muted/25" aria-hidden>
         <div className="absolute inset-0 bg-gradient-to-r from-background/95 via-background/80 to-background/55 dark:from-background dark:via-background/90 dark:to-background/60" />
         <div className="absolute inset-0 bg-gradient-to-t from-background via-background/30 to-transparent" />
@@ -61,7 +63,7 @@ function HeroSkeleton() {
 
 function AboutSkeleton() {
   return (
-    <section className="bg-secondary/30 px-4 py-3 sm:px-6 sm:py-4 md:px-8 md:py-6 lg:px-12 xl:px-24">
+    <section className={cn(SECTION_PADDING, 'bg-secondary/30')}>
       <div className="mx-auto max-w-6xl space-y-4 sm:space-y-6">
         <SectionHeaderSkeleton titleWidth="w-64 sm:w-80" withSubtitle={false} />
         <div className="grid grid-cols-1 gap-y-6 sm:gap-y-10 lg:grid-cols-2 lg:items-stretch lg:gap-x-12 xl:gap-x-16">
@@ -95,7 +97,7 @@ function AboutSkeleton() {
 
 function SkillsSkeleton() {
   return (
-    <section className="px-4 py-2 sm:px-6 sm:py-3 md:px-8 lg:px-12 xl:px-24">
+    <section className={SECTION_PADDING}>
       <div className="mx-auto max-w-6xl space-y-2 sm:space-y-3">
         <div className="flex items-baseline justify-between gap-4">
           <Skeleton className="h-5 w-36 sm:w-44" />
@@ -151,7 +153,7 @@ function SectionSkeleton({
   bgClass?: string
 }) {
   return (
-    <section className={`px-4 py-4 sm:px-6 sm:py-5 md:px-8 lg:px-12 xl:px-24 ${bgClass}`}>
+    <section className={cn(SECTION_PADDING_X, SECTION_PADDING_Y_LOOSE, bgClass)}>
       <div className="mx-auto max-w-6xl space-y-4 sm:space-y-6">
         <SectionHeaderSkeleton />
         {withFilters ? (

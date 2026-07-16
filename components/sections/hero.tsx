@@ -52,7 +52,7 @@ export function Hero({ profile, achievements = [] }: HeroProps) {
     <section
       id="hero"
       data-analytics-section="hero"
-      className="relative isolate flex min-h-0 flex-col justify-center overflow-x-hidden px-4 py-8 sm:px-6 sm:py-10 md:px-8 md:py-12 lg:min-h-[58vh] lg:px-12 lg:py-14 xl:min-h-[62vh] xl:px-24 xl:py-16"
+      className="relative isolate flex min-h-0 flex-col justify-center overflow-x-hidden px-4 py-6 sm:px-6 sm:py-8 md:px-8 md:py-10 lg:min-h-[58vh] lg:px-12 lg:py-10 xl:min-h-[62vh] xl:px-24 xl:py-12"
     >
       <div className="pointer-events-none absolute inset-0 -z-10 overflow-hidden" aria-hidden>
         <Image

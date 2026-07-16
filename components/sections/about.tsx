@@ -5,6 +5,8 @@ import { useMemo } from 'react'
 import { Card, CardContent } from '@/components/ui/card'
 import { ScrollReveal, StaggerContainer, StaggerItem } from '@/components/scroll-reveal'
 import { useI18n } from '@/components/i18n/locale-provider'
+import { SECTION_PADDING } from '@/lib/section-layout'
+import { cn } from '@/lib/utils'
 import { Heart, Code, Users, Mic, BookOpen, Rocket } from 'lucide-react'
 import type { Profile } from '@/types'
 
@@ -31,7 +33,7 @@ export function About({ profile }: AboutProps) {
     <section
       id="about"
       data-analytics-section="about"
-      className="py-3 sm:py-4 md:py-6 px-4 sm:px-6 md:px-8 lg:px-12 xl:px-24 bg-secondary/30"
+      className={cn(SECTION_PADDING, 'bg-secondary/30')}
     >
       <div className="mx-auto max-w-6xl min-w-0 w-full">
         <ScrollReveal className="mb-4 sm:mb-6">

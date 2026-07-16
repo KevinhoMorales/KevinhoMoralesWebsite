@@ -8,6 +8,8 @@ import { Card, CardContent } from '@/components/ui/card'
 import { ScrollReveal } from '@/components/scroll-reveal'
 import { useI18n } from '@/components/i18n/locale-provider'
 import { BOOK_SECTION_PROMO_PATH } from '@/lib/book-cover-path'
+import { SECTION_PADDING_X, SECTION_PADDING_Y_LOOSE } from '@/lib/section-layout'
+import { cn } from '@/lib/utils'
 
 export function BookSection() {
   const { t } = useI18n()
@@ -16,7 +18,11 @@ export function BookSection() {
     <section
       id="book"
       data-analytics-section="book"
-      className="relative overflow-hidden bg-gradient-to-b from-background via-secondary/20 to-background px-4 py-6 sm:px-6 sm:py-14 md:px-8 md:py-20 lg:px-12 xl:px-24"
+      className={cn(
+        'relative overflow-hidden bg-gradient-to-b from-background via-secondary/20 to-background',
+        SECTION_PADDING_X,
+        SECTION_PADDING_Y_LOOSE
+      )}
     >
       <div
         className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_70%_50%_at_70%_20%,rgba(13,148,136,0.12),transparent_55%)] dark:bg-[radial-gradient(ellipse_70%_50%_at_70%_20%,rgba(13,148,136,0.08),transparent_55%)]"

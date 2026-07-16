@@ -6,6 +6,7 @@ import { ExperienceBlockCard } from '@/components/experience-block-card'
 import { ExperienceModal } from '@/components/experience-modal'
 import { ScrollReveal, StaggerContainer, StaggerItem } from '@/components/scroll-reveal'
 import { useI18n } from '@/components/i18n/locale-provider'
+import { SECTION_PADDING } from '@/lib/section-layout'
 import { ArrowRight } from 'lucide-react'
 import type { MergedExperience } from '@/types'
 
@@ -56,7 +57,7 @@ export function ExperienceSection({
     <section
       id="experience"
       data-analytics-section="experience"
-      className="py-4 sm:py-5 md:py-6 px-4 sm:px-6 md:px-8 lg:px-12 xl:px-24"
+      className={SECTION_PADDING}
     >
       <div className="max-w-6xl mx-auto">
         <ScrollReveal className="mb-4 sm:mb-6">

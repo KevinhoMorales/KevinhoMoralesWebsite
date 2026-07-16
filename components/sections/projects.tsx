@@ -7,6 +7,8 @@ import { FilterChipRow, filterChipClass } from '@/components/ui/filter-chip-row'
 import { ProjectCard } from '@/components/project-card'
 import { ProjectsModal } from '@/components/projects-modal'
 import { useI18n } from '@/components/i18n/locale-provider'
+import { SECTION_PADDING } from '@/lib/section-layout'
+import { cn } from '@/lib/utils'
 import { Globe, Layers, Smartphone, ArrowRight } from 'lucide-react'
 import { pickProjectsPreview } from '@/lib/projects-preview'
 import type { Project, ProjectCategory } from '@/types'
@@ -49,7 +51,7 @@ export function ProjectsSection({ projects }: ProjectsProps) {
     <section
       id="projects"
       data-analytics-section="projects"
-      className="py-4 sm:py-5 md:py-6 px-4 sm:px-6 md:px-8 lg:px-12 xl:px-24 bg-secondary/30"
+      className={cn(SECTION_PADDING, 'bg-secondary/30')}
     >
       <div className="max-w-6xl mx-auto">
         <ScrollReveal className="mb-4 sm:mb-6">

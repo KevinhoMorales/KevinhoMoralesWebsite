@@ -8,6 +8,8 @@ import { ScrollReveal, StaggerContainer, StaggerItem } from '@/components/scroll
 import { Button } from '@/components/ui/button'
 import { useI18n } from '@/components/i18n/locale-provider'
 import { toBcp47 } from '@/lib/i18n/bcp47'
+import { SECTION_PADDING } from '@/lib/section-layout'
+import { cn } from '@/lib/utils'
 import { ArrowRight, ExternalLink, FileText } from 'lucide-react'
 
 /** Request one extra item to know if the RSS feed has more than we show on the home. */
@@ -45,7 +47,7 @@ export function ArticlesSection() {
       <section
         id="articles"
         data-analytics-section="articles"
-        className="py-4 sm:py-5 md:py-6 px-4 sm:px-6 md:px-8 lg:px-12 xl:px-24"
+        className={SECTION_PADDING}
       >
         <div className="max-w-6xl mx-auto">
           <div className="mb-4 sm:mb-6">
@@ -69,7 +71,7 @@ export function ArticlesSection() {
       <section
         id="articles"
         data-analytics-section="articles"
-        className="py-4 sm:py-5 md:py-6 px-4 sm:px-6 md:px-8 lg:px-12 xl:px-24 bg-secondary/30"
+        className={cn(SECTION_PADDING, 'bg-secondary/30')}
       >
         <div className="max-w-6xl mx-auto">
           <div className="mb-4 sm:mb-6">
@@ -91,7 +93,7 @@ export function ArticlesSection() {
     <section
       id="articles"
       data-analytics-section="articles"
-      className="py-4 sm:py-5 md:py-6 px-4 sm:px-6 md:px-8 lg:px-12 xl:px-24 bg-secondary/30"
+      className={cn(SECTION_PADDING, 'bg-secondary/30')}
     >
       <div className="max-w-6xl mx-auto">
         <ScrollReveal className="flex flex-col sm:flex-row sm:items-end sm:justify-between gap-4 sm:gap-6 mb-4 sm:mb-6">

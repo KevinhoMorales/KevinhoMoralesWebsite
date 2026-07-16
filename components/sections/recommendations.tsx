@@ -7,6 +7,7 @@ import { ScrollReveal } from '@/components/scroll-reveal'
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar'
 import { Quote } from 'lucide-react'
 import type { Testimonial } from '@/types'
+import { SECTION_PADDING } from '@/lib/section-layout'
 import { cn } from '@/lib/utils'
 
 interface RecommendationsProps {
@@ -34,7 +35,7 @@ export function Recommendations({ testimonials }: RecommendationsProps) {
     <section
       id="recommendations"
       data-analytics-section="recommendations"
-      className="overflow-x-hidden py-4 sm:py-5 md:py-6 px-4 sm:px-6 md:px-8 lg:px-12 xl:px-24"
+      className={cn('overflow-x-hidden', SECTION_PADDING)}
     >
       <div className="max-w-6xl mx-auto">
         <ScrollReveal className="mb-4 sm:mb-6 text-center">

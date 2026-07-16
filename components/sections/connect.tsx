@@ -1,6 +1,6 @@
 'use client'
 
-import { useState } from 'react'
+import { useState, type ReactNode } from 'react'
 import { usePathname } from 'next/navigation'
 import { Button } from '@/components/ui/button'
 import { ScrollReveal } from '@/components/scroll-reveal'
@@ -36,6 +36,7 @@ import { openCalendlyPopup } from '@/components/calendly-widget'
 import { useI18n } from '@/components/i18n/locale-provider'
 import { cn } from '@/lib/utils'
 import { getPublicWeb3FormsAccessKey } from '@/lib/web3forms-submit'
+import { SECTION_PADDING_X, SECTION_PADDING_Y_CONNECT_HOME } from '@/lib/section-layout'
 import type { Profile } from '@/types'
 
 interface ConnectProps {
@@ -57,7 +58,87 @@ const textareaClass = cn(
 )
 
 const cardShellClass =
-  'relative overflow-hidden rounded-2xl border-border/50 bg-card/70 shadow-xl shadow-black/5 backdrop-blur-xl dark:shadow-black/25'
+  'relative overflow-hidden rounded-2xl border border-border/50 bg-card/70 shadow-xl shadow-black/5 backdrop-blur-xl dark:shadow-black/25'
+
+const asideCardContentClass = 'p-5 sm:p-6'
+
+const asideIconWrapClass = 'flex h-11 w-11 shrink-0 items-center justify-center rounded-xl ring-1'
+
+const asideTitleClass = 'text-lg font-semibold leading-tight sm:text-xl'
+
+const asideBodyClass = 'text-sm leading-relaxed text-muted-foreground'
+
+type ConnectAsideCardProps = {
+  icon: ReactNode
+  iconWrapClassName: string
+  title: string
+  body: string
+  onClick?: () => void
+  cta?: { label: string; className: string }
+  cardHoverClassName?: string
+  children?: ReactNode
+}
+
+function ConnectAsideCard({
+  icon,
+  iconWrapClassName,
+  title,
+  body,
+  onClick,
+  cta,
+  cardHoverClassName,
+  children,
+}: ConnectAsideCardProps) {
+  const interactive = Boolean(onClick)
+
+  return (
+    <Card
+      className={cn(
+        cardShellClass,
+        'gap-0 py-0',
+        interactive &&
+          cn(
+            'group cursor-pointer transition-[border-color,transform,box-shadow] hover:-translate-y-0.5 hover:shadow-2xl',
+            cardHoverClassName
+          )
+      )}
+      onClick={onClick}
+      onKeyDown={
+        interactive
+          ? (e) => {
+              if (e.key === 'Enter' || e.key === ' ') {
+                e.preventDefault()
+                onClick?.()
+              }
+            }
+          : undefined
+      }
+      role={interactive ? 'button' : undefined}
+      tabIndex={interactive ? 0 : undefined}
+    >
+      <div
+        className="pointer-events-none absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-primary/50 to-transparent"
+        aria-hidden
+      />
+      <CardContent className={asideCardContentClass}>
+        <div className="flex items-start gap-3 sm:gap-4">
+          <div className={cn(asideIconWrapClass, iconWrapClassName)}>{icon}</div>
+          <div className="flex min-w-0 flex-1 flex-col gap-1">
+            <h3 className={asideTitleClass}>{title}</h3>
+            <p className={asideBodyClass}>{body}</p>
+            {cta ? (
+              <span className={cn('inline-flex items-center gap-1 pt-2 text-sm font-medium', cta.className)}>
+                {cta.label}
+                <Send className="h-3.5 w-3.5 rotate-[-45deg]" aria-hidden />
+              </span>
+            ) : null}
+          </div>
+        </div>
+        {children ? <div className="mt-4 border-t border-border/40 pt-4">{children}</div> : null}
+      </CardContent>
+    </Card>
+  )
+}
 
 const helpTopicKeys = [
   'connect.helpTopicMobile',
@@ -133,8 +214,9 @@ export function Connect({ profile }: ConnectProps) {
       id="connect"
       data-analytics-section="connect"
       className={cn(
-        'relative overflow-hidden px-4 sm:px-6 md:px-8 lg:px-12 xl:px-24',
-        isContactPage ? 'py-10 sm:py-16 md:py-20' : 'py-8 sm:py-20 md:py-24'
+        'relative overflow-hidden',
+        SECTION_PADDING_X,
+        isContactPage ? 'py-8 sm:py-12 md:py-16' : SECTION_PADDING_Y_CONNECT_HOME
       )}
     >
       <div
@@ -159,9 +241,9 @@ export function Connect({ profile }: ConnectProps) {
           </p>
         </ScrollReveal>
 
-        <div className="mx-auto grid w-full max-w-5xl items-start gap-6 lg:grid-cols-[minmax(0,1.15fr)_minmax(0,0.85fr)] lg:gap-8 xl:gap-10">
-          <ScrollReveal variant="scale" className="min-w-0">
-            <Card className={cn(cardShellClass, 'gap-0 py-0')}>
+        <div className="mx-auto grid w-full max-w-5xl items-stretch gap-4 sm:gap-5 lg:grid-cols-[minmax(0,1.12fr)_minmax(0,0.88fr)] lg:gap-6 xl:gap-8">
+          <ScrollReveal variant="scale" className="flex h-full min-w-0 w-full">
+            <Card className={cn(cardShellClass, 'h-full w-full gap-0 py-0')}>
               <div
                 className="pointer-events-none absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-primary/70 to-transparent"
                 aria-hidden
@@ -286,83 +368,55 @@ export function Connect({ profile }: ConnectProps) {
             </Card>
           </ScrollReveal>
 
-          <ScrollReveal delay={0.08} variant="scale" className="min-w-0">
-              <div className="flex flex-col gap-4">
-                {links.calendly ? (
-                  <button
-                    type="button"
-                    onClick={() => setCalendlyDialogOpen(true)}
-                    className={cn(
-                      cardShellClass,
-                      'group w-full border-border/50 p-5 text-left transition-[border-color,transform,box-shadow]',
-                      'hover:-translate-y-0.5 hover:border-[#0069ff]/35 hover:shadow-2xl hover:shadow-[#0069ff]/10 sm:p-6'
-                    )}
-                  >
-                    <div className="flex items-start gap-4">
-                      <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-[#0069ff]/15 text-[#0069ff] ring-1 ring-[#0069ff]/20">
-                        <Calendar className="h-5 w-5" aria-hidden />
-                      </div>
-                      <div className="min-w-0 space-y-1">
-                        <h3 className="text-base font-semibold sm:text-lg">{t('connect.asideTitle')}</h3>
-                        <p className="text-sm leading-relaxed text-muted-foreground">{t('connect.asideBody')}</p>
-                        <span className="inline-flex items-center gap-1 pt-2 text-sm font-medium text-[#0069ff] transition-colors group-hover:text-[#0052cc]">
-                          {t('connect.calendlyCta')}
-                          <Send className="h-3.5 w-3.5 rotate-[-45deg]" aria-hidden />
-                        </span>
-                      </div>
-                    </div>
-                  </button>
-                ) : null}
+          <ScrollReveal delay={0.08} variant="scale" className="flex h-full min-w-0 w-full">
+            <div className="flex h-full w-full flex-col gap-4 sm:gap-5">
+              {links.calendly ? (
+                <ConnectAsideCard
+                  icon={<Calendar className="h-5 w-5" aria-hidden />}
+                  iconWrapClassName="bg-[#0069ff]/15 text-[#0069ff] ring-[#0069ff]/20"
+                  cardHoverClassName="hover:border-[#0069ff]/35 hover:shadow-[#0069ff]/10"
+                  title={t('connect.asideTitle')}
+                  body={t('connect.asideBody')}
+                  onClick={() => setCalendlyDialogOpen(true)}
+                  cta={{
+                    label: t('connect.calendlyCta'),
+                    className: 'text-[#0069ff] transition-colors group-hover:text-[#0052cc]',
+                  }}
+                />
+              ) : null}
 
-                {links.buymeacoffee ? (
-                  <button
-                    type="button"
-                    onClick={() => setBmcModalOpen(true)}
-                    className={cn(
-                      cardShellClass,
-                      'group w-full border-border/50 p-5 text-left transition-[border-color,transform,box-shadow]',
-                      'hover:-translate-y-0.5 hover:border-amber-500/30 hover:shadow-2xl hover:shadow-amber-500/10 sm:p-6'
-                    )}
-                  >
-                    <div className="flex items-start gap-4">
-                      <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-amber-500/15 text-amber-600 ring-1 ring-amber-500/20 dark:text-amber-400">
-                        <Coffee className="h-5 w-5" aria-hidden />
-                      </div>
-                      <div className="min-w-0 space-y-1">
-                        <h3 className="text-base font-semibold sm:text-lg">{t('connect.bmcTitle')}</h3>
-                        <p className="text-sm leading-relaxed text-muted-foreground">{t('connect.bmcBody')}</p>
-                        <span className="inline-flex items-center gap-1 pt-2 text-sm font-medium text-amber-600 transition-colors group-hover:text-amber-500 dark:text-amber-400">
-                          {t('connect.bmc')}
-                          <Send className="h-3.5 w-3.5 rotate-[-45deg]" aria-hidden />
-                        </span>
-                      </div>
-                    </div>
-                  </button>
-                ) : null}
+              {links.buymeacoffee ? (
+                <ConnectAsideCard
+                  icon={<Coffee className="h-5 w-5" aria-hidden />}
+                  iconWrapClassName="bg-amber-500/15 text-amber-600 ring-amber-500/20 dark:text-amber-400"
+                  cardHoverClassName="hover:border-amber-500/30 hover:shadow-amber-500/10"
+                  title={t('connect.bmcTitle')}
+                  body={t('connect.bmcBody')}
+                  onClick={() => setBmcModalOpen(true)}
+                  cta={{
+                    label: t('connect.bmc'),
+                    className: 'text-amber-600 transition-colors group-hover:text-amber-500 dark:text-amber-400',
+                  }}
+                />
+              ) : null}
 
-                <Card className={cn(cardShellClass, 'gap-0 py-0')}>
-                  <CardContent className="p-5 sm:p-6">
-                    <div className="mb-4 flex items-start gap-3">
-                      <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-primary/10 text-primary ring-1 ring-primary/15">
-                        <Lightbulb className="h-4 w-4" aria-hidden />
-                      </div>
-                      <div className="min-w-0 space-y-1">
-                        <h3 className="text-base font-semibold sm:text-lg">{t('connect.helpTitle')}</h3>
-                        <p className="text-sm leading-relaxed text-muted-foreground">{t('connect.helpBody')}</p>
-                      </div>
-                    </div>
-                    <ul className="space-y-2.5">
-                      {helpTopicKeys.map((key) => (
-                        <li key={key} className="flex items-start gap-2.5 text-sm text-foreground/90">
-                          <CheckCircle2 className="mt-0.5 h-4 w-4 shrink-0 text-primary" aria-hidden />
-                          <span>{t(key)}</span>
-                        </li>
-                      ))}
-                    </ul>
-                  </CardContent>
-                </Card>
-              </div>
-            </ScrollReveal>
+              <ConnectAsideCard
+                icon={<Lightbulb className="h-5 w-5" aria-hidden />}
+                iconWrapClassName="bg-primary/10 text-primary ring-primary/15"
+                title={t('connect.helpTitle')}
+                body={t('connect.helpBody')}
+              >
+                <ul className="space-y-2.5">
+                  {helpTopicKeys.map((key) => (
+                    <li key={key} className="flex items-start gap-2.5 text-sm text-foreground/90">
+                      <CheckCircle2 className="mt-0.5 h-4 w-4 shrink-0 text-primary" aria-hidden />
+                      <span>{t(key)}</span>
+                    </li>
+                  ))}
+                </ul>
+              </ConnectAsideCard>
+            </div>
+          </ScrollReveal>
         </div>
       </div>
 

@@ -6,6 +6,7 @@ import { PodcastFeaturedVideo } from '@/components/podcast-featured-video'
 import { useI18n } from '@/components/i18n/locale-provider'
 import { ExternalLink, Headphones } from 'lucide-react'
 import { PodcastSection } from '@/components/podcast-section'
+import { SECTION_PADDING } from '@/lib/section-layout'
 
 export function PodcastSectionUI() {
   const { t } = useI18n()
@@ -13,7 +14,7 @@ export function PodcastSectionUI() {
     <section
       id="podcast"
       data-analytics-section="podcast"
-      className="py-4 sm:py-5 md:py-6 px-4 sm:px-6 md:px-8 lg:px-12 xl:px-24"
+      className={SECTION_PADDING}
     >
       <div className="max-w-6xl mx-auto">
         <ScrollReveal className="flex flex-col sm:flex-row sm:items-end sm:justify-between gap-4 sm:gap-6 mb-4 sm:mb-6">

@@ -3,6 +3,8 @@
 import Image from 'next/image'
 import { ScrollReveal, StaggerContainer, StaggerItem } from '@/components/scroll-reveal'
 import { useI18n } from '@/components/i18n/locale-provider'
+import { SECTION_PADDING_X, SECTION_PADDING_Y_LOOSE } from '@/lib/section-layout'
+import { cn } from '@/lib/utils'
 import type { Achievement } from '@/types'
 
 export function AchievementsSection({ achievements }: { achievements: Achievement[] }) {
@@ -16,7 +18,7 @@ export function AchievementsSection({ achievements }: { achievements: Achievemen
     <section
       id="achievements"
       data-analytics-section="achievements"
-      className="bg-secondary/20 py-6 sm:py-10 md:py-14 px-4 sm:px-6 md:px-8 lg:px-12 xl:px-24"
+      className={cn('bg-secondary/20', SECTION_PADDING_X, SECTION_PADDING_Y_LOOSE)}
     >
       <div className="max-w-6xl mx-auto">
         <ScrollReveal className="mb-4 sm:mb-6">

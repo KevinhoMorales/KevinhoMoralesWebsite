@@ -140,8 +140,7 @@
     "catArchitecture": "Architecture",
     "catBackend": "Backend & cloud",
     "catTools": "Tools & AI",
-    "skillCount": "{{count}} technologies",
-    "marqueeHint": "Hover to pause."
+    "skillCount": "{{count}} technologies"
   },
   "speakingSection": {
     "kicker": "Speaking",
@@ -202,7 +201,11 @@
     "title": "DevLokos Podcast",
     "subtitle": "Conversations with developers, designers, and tech leaders about building great products and growing your career.",
     "listenYoutube": "Listen on YouTube",
-    "featuredVideoTitle": "Featured DevLokos podcast episode on YouTube"
+    "featuredVideoTitle": "Featured DevLokos podcast episode on YouTube",
+    "storyKicker": "The DevLokos story",
+    "storyP1": "DevLokos started as a side project to open the mic to developers, designers, and tech leaders across Latin America — long-form conversations about building products, growing careers, and learning in public.",
+    "storyP2": "What began as sporadic recordings became a community: meetups, resources, and a podcast that now spans multiple seasons on YouTube and Spotify.",
+    "storyP3": "Today it is one of the spaces where I share lessons from fintech, mobile engineering, and community — always with the same idea: learn by building and never stop learning."
   },
   "podcast": {
     "withGuest": "With {{guest}}",

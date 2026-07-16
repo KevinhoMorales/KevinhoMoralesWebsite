@@ -14,6 +14,7 @@ import { CONFERENCE_BADGE_OVERLAY_CLASS } from '@/lib/conference-ui'
 import { formatConferenceVenueLine } from '@/lib/conference-location-platform'
 import { getConferenceTagClassName } from '@/lib/conference-tag-styles'
 import { cn } from '@/lib/utils'
+import { SECTION_PADDING } from '@/lib/section-layout'
 import type { Conference } from '@/types'
 
 interface ConferencesProps {
@@ -121,7 +122,7 @@ export function ConferencesSection({ conferences }: ConferencesProps) {
     <section
       id="conferences"
       data-analytics-section="conferences"
-      className="py-4 sm:py-5 md:py-6 px-4 sm:px-6 md:px-8 lg:px-12 xl:px-24 bg-secondary/30"
+      className={cn(SECTION_PADDING, 'bg-secondary/30')}
     >
       <div className="max-w-6xl mx-auto">
         <div>

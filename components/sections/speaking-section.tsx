@@ -9,6 +9,7 @@ import { Card, CardContent } from '@/components/ui/card'
 import { ScrollReveal } from '@/components/scroll-reveal'
 import { useI18n } from '@/components/i18n/locale-provider'
 import { handleHomeHashLinkClick } from '@/lib/section-scroll'
+import { SECTION_PADDING } from '@/lib/section-layout'
 import { cn } from '@/lib/utils'
 import { ArrowRight, Calendar, ExternalLink, Mic } from 'lucide-react'
 import type { Profile } from '@/types'
@@ -37,7 +38,7 @@ export function SpeakingSection({ profile }: SpeakingSectionProps) {
     <section
       id="speaking"
       data-analytics-section="speaking"
-      className="py-3 sm:py-4 px-4 sm:px-6 md:px-8 lg:px-12 xl:px-24"
+      className={SECTION_PADDING}
     >
       <div className="max-w-6xl mx-auto">
         <ScrollReveal className="mb-3 sm:mb-4">

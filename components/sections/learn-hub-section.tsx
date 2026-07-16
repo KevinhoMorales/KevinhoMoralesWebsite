@@ -8,6 +8,8 @@ import { Card, CardContent } from '@/components/ui/card'
 import { ScrollReveal, StaggerContainer, StaggerItem } from '@/components/scroll-reveal'
 import { useI18n } from '@/components/i18n/locale-provider'
 import { handleHomeHashLinkClick } from '@/lib/section-scroll'
+import { SECTION_PADDING } from '@/lib/section-layout'
+import { cn } from '@/lib/utils'
 import { ArrowRight, ExternalLink, GraduationCap } from 'lucide-react'
 import type { LearnHubItem } from '@/types'
 
@@ -25,7 +27,7 @@ export function LearnHubSection({ items }: LearnHubSectionProps) {
     <section
       id="learn"
       data-analytics-section="learn"
-      className="py-4 sm:py-5 md:py-6 px-4 sm:px-6 md:px-8 lg:px-12 xl:px-24 bg-secondary/20"
+      className={cn(SECTION_PADDING, 'bg-secondary/20')}
     >
       <div className="max-w-6xl mx-auto">
         <ScrollReveal className="mb-4 sm:mb-6">
