@@ -816,6 +816,7 @@
     "id": "tayos",
     "title": "Tayos",
     "description": "App B2B de repuestos automotrices — React Native (iOS y Android).",
+    "image": "/images/tayos-icon.png",
     "category": "ios",
     "language": "TypeScript",
     "technologies": [

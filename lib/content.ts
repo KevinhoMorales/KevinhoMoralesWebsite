@@ -59,18 +59,53 @@ function readJson<T>(filename: string): T {
   return JSON.parse(raw) as T;
 }
 
-/** Añade proyectos de JSON que aún no existen en Firestore (p. ej. web recién agregados en deploy). */
+function isNonEmptyString(value: unknown): value is string {
+  return typeof value === 'string' && value.trim().length > 0;
+}
+
+/** Fusiona Firestore con `projects.json`: añade faltantes y enriquece image, links, caseStudy, etc. */
 function mergeProjectsFromJson(remote: Project[], local: Project[]): Project[] {
   if (local.length === 0) return remote;
-  const seen = new Set(remote.map((p) => p.id));
-  const merged = [...remote];
-  for (const project of local) {
-    if (!seen.has(project.id)) {
-      merged.push(project);
-      seen.add(project.id);
+
+  const byId = new Map(remote.map((project) => [project.id, project]));
+
+  for (const localProject of local) {
+    const existing = byId.get(localProject.id);
+    if (!existing) {
+      byId.set(localProject.id, localProject);
+      continue;
     }
+
+    const links =
+      (localProject.links?.length ?? 0) >= (existing.links?.length ?? 0)
+        ? localProject.links
+        : existing.links;
+
+    byId.set(localProject.id, {
+      ...existing,
+      title: localProject.title || existing.title,
+      description: isNonEmptyString(localProject.description)
+        ? localProject.description
+        : existing.description,
+      image: localProject.image || existing.image,
+      technologies: localProject.technologies?.length
+        ? localProject.technologies
+        : existing.technologies,
+      category: localProject.category || existing.category,
+      links: links ?? existing.links,
+      sortOrder: localProject.sortOrder ?? existing.sortOrder,
+      experience: localProject.experience || existing.experience,
+      platforms: localProject.platforms?.length ? localProject.platforms : existing.platforms,
+      tags: localProject.tags?.length ? localProject.tags : existing.tags,
+      language: localProject.language || existing.language,
+      releaseDate: localProject.releaseDate || existing.releaseDate,
+      webFramework: localProject.webFramework || existing.webFramework,
+      webHosting: localProject.webHosting || existing.webHosting,
+      caseStudy: localProject.caseStudy ?? existing.caseStudy,
+    });
   }
-  return merged;
+
+  return [...byId.values()];
 }
 
 export function getProfile(): Profile {
