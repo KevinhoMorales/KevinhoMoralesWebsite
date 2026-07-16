@@ -24,14 +24,13 @@ import {
   CheckCircle2,
   Clock,
   Coffee,
+  Lightbulb,
   Loader2,
   Mail,
   MessageSquare,
   Send,
   User,
 } from 'lucide-react'
-import { FaLinkedinIn } from 'react-icons/fa'
-import { SiGithub, SiInstagram, SiMedium, SiX, SiYoutube } from 'react-icons/si'
 import { BuyMeACoffeeModal } from '@/components/buymeacoffee-modal'
 import { openCalendlyPopup } from '@/components/calendly-widget'
 import { useI18n } from '@/components/i18n/locale-provider'
@@ -57,16 +56,15 @@ const textareaClass = cn(
   'focus-visible:border-primary/45 focus-visible:ring-[3px] focus-visible:ring-primary/15'
 )
 
-const socialIconConfig = [
-  { name: 'LinkedIn', icon: FaLinkedinIn, key: 'linkedin' as const },
-  { name: 'X', icon: SiX, key: 'twitter' as const },
-  { name: 'GitHub', icon: SiGithub, key: 'github' as const },
-  { name: 'YouTube', icon: SiYoutube, key: 'youtube' as const },
-  { name: 'Instagram', icon: SiInstagram, key: 'instagram' as const },
-]
-
 const cardShellClass =
   'relative overflow-hidden rounded-2xl border-border/50 bg-card/70 shadow-xl shadow-black/5 backdrop-blur-xl dark:shadow-black/25'
+
+const helpTopicKeys = [
+  'connect.helpTopicMobile',
+  'connect.helpTopicSpeaking',
+  'connect.helpTopicPodcast',
+  'connect.helpTopicMentoring',
+] as const
 
 export function Connect({ profile }: ConnectProps) {
   const { t } = useI18n()
@@ -74,11 +72,7 @@ export function Connect({ profile }: ConnectProps) {
   const isContactPage = pathname === '/contact'
   const links = profile.socialLinks || {}
   const hasSchedulingAside = Boolean(links.calendly || links.buymeacoffee)
-  const socialLinks = socialIconConfig
-    .map(({ name, icon, key }) => ({ name, icon, href: links[key] }))
-    .filter((item): item is { name: string; icon: typeof FaLinkedinIn; href: string } => Boolean(item.href))
-  const hasSocialAside = socialLinks.length > 0 || links.medium
-  const hasAside = hasSchedulingAside || hasSocialAside
+  const hasAside = true
 
   const [status, setStatus] = useState<'idle' | 'sending' | 'success' | 'error'>('idle')
   const [result, setResult] = useState('')
@@ -356,42 +350,27 @@ export function Connect({ profile }: ConnectProps) {
                   </button>
                 ) : null}
 
-                {hasSocialAside ? (
-                  <Card className={cn(cardShellClass, 'gap-0 py-0')}>
-                    <CardContent className="p-5 sm:p-6">
-                      <p className="mb-4 text-[10px] font-medium uppercase tracking-wider text-muted-foreground sm:text-xs">
-                        {t('connect.socialLabel')}
-                      </p>
-                      <div className="flex flex-wrap gap-2.5">
-                        {socialLinks.map(({ name, icon: Icon, href }) => (
-                          <a
-                            key={name}
-                            href={href}
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            title={name}
-                            aria-label={name}
-                            className="flex h-10 w-10 items-center justify-center rounded-xl border border-border/60 bg-background/50 text-foreground transition-[transform,border-color,background-color] hover:scale-105 hover:border-primary/30 hover:bg-primary/10"
-                          >
-                            <Icon className="h-4 w-4" />
-                          </a>
-                        ))}
-                        {links.medium ? (
-                          <a
-                            href={links.medium}
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            title="Medium"
-                            aria-label="Medium"
-                            className="flex h-10 w-10 items-center justify-center rounded-xl border border-border/60 bg-background/50 text-foreground transition-[transform,border-color,background-color] hover:scale-105 hover:border-primary/30 hover:bg-primary/10"
-                          >
-                            <SiMedium className="h-4 w-4" />
-                          </a>
-                        ) : null}
+                <Card className={cn(cardShellClass, 'gap-0 py-0')}>
+                  <CardContent className="p-5 sm:p-6">
+                    <div className="mb-4 flex items-start gap-3">
+                      <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-primary/10 text-primary ring-1 ring-primary/15">
+                        <Lightbulb className="h-4 w-4" aria-hidden />
                       </div>
-                    </CardContent>
-                  </Card>
-                ) : null}
+                      <div className="min-w-0 space-y-1">
+                        <h3 className="text-base font-semibold sm:text-lg">{t('connect.helpTitle')}</h3>
+                        <p className="text-sm leading-relaxed text-muted-foreground">{t('connect.helpBody')}</p>
+                      </div>
+                    </div>
+                    <ul className="space-y-2.5">
+                      {helpTopicKeys.map((key) => (
+                        <li key={key} className="flex items-start gap-2.5 text-sm text-foreground/90">
+                          <CheckCircle2 className="mt-0.5 h-4 w-4 shrink-0 text-primary" aria-hidden />
+                          <span>{t(key)}</span>
+                        </li>
+                      ))}
+                    </ul>
+                  </CardContent>
+                </Card>
               </div>
             </ScrollReveal>
           ) : null}
