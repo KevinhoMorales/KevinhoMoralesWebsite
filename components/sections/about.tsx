@@ -42,28 +42,30 @@ export function About({ profile }: AboutProps) {
         </ScrollReveal>
 
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-y-10 gap-x-0 lg:gap-x-12 xl:gap-x-16 lg:gap-y-8 lg:items-stretch">
-          <ScrollReveal variant="fade-right" delay={0.1} className="flex min-h-0 flex-col space-y-4 sm:space-y-6">
-            <p className="text-base sm:text-lg text-muted-foreground leading-relaxed">
-              {t('about.bioP1')}
-            </p>
-            <p className="text-base sm:text-lg text-muted-foreground leading-relaxed">
-              {t('about.bioP2')}
-            </p>
-            <p className="text-base sm:text-lg text-muted-foreground leading-relaxed">
-              {t('about.bioP3')}
-            </p>
-            <p className="text-base sm:text-lg text-primary/90 italic">
-              &ldquo;{t('about.motto')}&rdquo;
-            </p>
+          <ScrollReveal variant="fade-right" delay={0.1} className="flex min-h-0 flex-col lg:h-full space-y-4 sm:space-y-6">
+            <div className="space-y-4 sm:space-y-6">
+              <p className="text-base sm:text-lg text-muted-foreground leading-relaxed">
+                {t('about.bioP1')}
+              </p>
+              <p className="text-base sm:text-lg text-muted-foreground leading-relaxed">
+                {t('about.bioP2')}
+              </p>
+              <p className="text-base sm:text-lg text-muted-foreground leading-relaxed">
+                {t('about.bioP3')}
+              </p>
+              <p className="text-base sm:text-lg text-primary/90 italic">
+                &ldquo;{t('about.motto')}&rdquo;
+              </p>
+            </div>
 
-            <StaggerContainer className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-3 gap-3 sm:gap-4 pt-4 sm:pt-6 items-start">
+            <StaggerContainer className="mt-auto grid grid-cols-2 md:grid-cols-3 lg:grid-cols-3 gap-3 sm:gap-4 pt-2 sm:pt-4 items-stretch">
               {highlights.map((item, index) => (
-                <StaggerItem key={`${item.title}-${index}`} delay={index * 0.06} className="min-h-0 w-full">
-                  <Card className="bg-card/50 border-border/50 w-full">
-                    <CardContent className="px-2.5 py-3 sm:px-3 sm:py-3.5 text-center flex flex-col gap-1">
-                      <item.icon className="h-5 w-5 sm:h-5 sm:w-5 text-primary mx-auto shrink-0" />
-                      <p className="font-semibold text-xs sm:text-sm leading-tight">{item.title}</p>
-                      <p className="text-[10px] sm:text-xs text-muted-foreground leading-snug">
+                <StaggerItem key={`${item.title}-${index}`} delay={index * 0.06} className="h-full w-full">
+                  <Card className="h-full bg-card/50 border-border/50 w-full">
+                    <CardContent className="flex h-full flex-col items-center justify-center gap-1 px-2.5 py-3 text-center sm:px-3 sm:py-3.5">
+                      <item.icon className="h-5 w-5 shrink-0 text-primary" aria-hidden />
+                      <p className="font-semibold text-xs leading-tight sm:text-sm">{item.title}</p>
+                      <p className="min-h-[2.5rem] text-[10px] leading-snug text-muted-foreground sm:min-h-[2.75rem] sm:text-xs">
                         {item.description}
                       </p>
                     </CardContent>
@@ -73,7 +75,7 @@ export function About({ profile }: AboutProps) {
             </StaggerContainer>
           </ScrollReveal>
 
-          <ScrollReveal variant="fade-left" delay={0.2} className="flex min-h-0 w-full lg:pl-0">
+          <ScrollReveal variant="fade-left" delay={0.2} className="flex min-h-0 h-full w-full lg:pl-0">
             <Card className="bg-card/50 border-border/50 overflow-hidden flex flex-col flex-1 min-h-0 w-full">
               <CardContent className="p-0 flex flex-col flex-1 min-h-0">
                 {profile.familyImage ? (

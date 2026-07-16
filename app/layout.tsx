@@ -5,6 +5,7 @@ import { cookies, headers } from 'next/headers';
 import './globals.css';
 import { AnalyticsPageViewsBoundary } from '@/components/analytics-page-views-boundary';
 import { ThemeProvider } from '@/components/theme-provider';
+import { themeInitScriptContent } from '@/lib/theme-default';
 import { FirebaseAnalytics } from '@/components/firebase-analytics';
 import { CalendlyWidget } from '@/components/calendly-widget';
 import { HashScroll } from '@/components/hash-scroll';
@@ -101,6 +102,9 @@ export default async function RootLayout({
   return (
     <html lang={initialLocale} suppressHydrationWarning>
       <head>
+        <script
+          dangerouslySetInnerHTML={{ __html: themeInitScriptContent() }}
+        />
         <link
           href="https://assets.calendly.com/assets/external/widget.css"
           rel="stylesheet"

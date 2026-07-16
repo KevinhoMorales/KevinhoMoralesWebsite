@@ -126,6 +126,7 @@
     "web": "Web",
     "flutter": "Flutter",
     "viewCaseStudy": "Case study",
+    "moreTech": "+{{count}}",
     "caseStudyProblem": "Problema",
     "caseStudyApproach": "Enfoque",
     "caseStudyImpact": "Impacto",
@@ -139,7 +140,9 @@
     "catArchitecture": "Arquitectura",
     "catBackend": "Backend y cloud",
     "catTools": "Herramientas e IA",
-    "skillCount": "{{count}} tecnologías"
+    "skillCount": "{{count}} tecnologías",
+    "visitOfficial": "Visitar sitio oficial de {{name}}",
+    "marqueeHint": "Pulsa una skill para abrir su sitio oficial. Pasa el cursor para pausar."
   },
   "speakingSection": {
     "kicker": "Charlas",

@@ -42,7 +42,7 @@ function CompanyLogo({ block }: { block: MergedExperience }) {
           src={block.companyLogo}
           alt=""
           fill
-          className="object-contain scale-110 p-1"
+          className="object-cover"
           sizes="56px"
         />
       </div>

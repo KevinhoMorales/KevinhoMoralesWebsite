@@ -1,8 +1,9 @@
 'use client'
 
-import { useEffect, useLayoutEffect, useRef, useState } from 'react'
+import { useLayoutEffect, useRef, useState } from 'react'
 import { AnimatePresence, motion } from 'framer-motion'
 import { EpisodeCard } from '@/components/episode-card'
+import { preloadAdjacentPodcastPages } from '@/lib/preload-podcast-thumbnails'
 import type { PodcastEpisode } from '@/lib/youtube'
 
 const slideVariants = {
@@ -18,13 +19,6 @@ const slideVariants = {
     x: direction > 0 ? '-100%' : '100%',
     opacity: 0.85,
   }),
-}
-
-function preloadThumbnails(episodes: PodcastEpisode[]) {
-  episodes.forEach((episode) => {
-    const img = new window.Image()
-    img.src = episode.thumbnail
-  })
 }
 
 interface PodcastEpisodesPagerProps {
@@ -43,6 +37,7 @@ export function PodcastEpisodesPager({
   onSelectEpisode,
 }: PodcastEpisodesPagerProps) {
   const containerRef = useRef<HTMLDivElement>(null)
+  const maxHeightRef = useRef(0)
   const [height, setHeight] = useState<number | undefined>(undefined)
 
   const totalPages = Math.max(1, Math.ceil(episodes.length / perPage))
@@ -50,24 +45,8 @@ export function PodcastEpisodesPager({
   const start = (safePage - 1) * perPage
   const pageEpisodes = episodes.slice(start, start + perPage)
 
-  useEffect(() => {
-    const adjacentStarts = [
-      start,
-      start + perPage,
-      start - perPage,
-    ].filter((s) => s >= 0 && s < episodes.length)
-
-    const toPreload: PodcastEpisode[] = []
-    const seen = new Set<string>()
-    adjacentStarts.forEach((s) => {
-      episodes.slice(s, s + perPage).forEach((ep) => {
-        if (!seen.has(ep.videoId)) {
-          seen.add(ep.videoId)
-          toPreload.push(ep)
-        }
-      })
-    })
-    preloadThumbnails(toPreload)
+  useLayoutEffect(() => {
+    preloadAdjacentPodcastPages(episodes, start, perPage)
   }, [episodes, start, perPage])
 
   useLayoutEffect(() => {
@@ -80,7 +59,10 @@ export function PodcastEpisodesPager({
       grids.forEach((grid) => {
         max = Math.max(max, grid.offsetHeight)
       })
-      if (max > 0) setHeight(max)
+      if (max > 0) {
+        maxHeightRef.current = Math.max(maxHeightRef.current, max)
+        setHeight(maxHeightRef.current)
+      }
     }
 
     measure()
@@ -100,7 +82,7 @@ export function PodcastEpisodesPager({
       className="relative w-full overflow-hidden"
       style={height ? { minHeight: height } : undefined}
     >
-      <AnimatePresence initial={false} custom={direction}>
+      <AnimatePresence initial={false} mode="popLayout" custom={direction}>
         <motion.div
           key={safePage}
           custom={direction}
@@ -108,8 +90,8 @@ export function PodcastEpisodesPager({
           initial="enter"
           animate="center"
           exit="exit"
-          transition={{ duration: 0.38, ease: [0.32, 0.72, 0, 1] }}
-          className="absolute inset-x-0 top-0 grid w-full gap-4 sm:grid-cols-2 lg:grid-cols-3 sm:gap-6"
+          transition={{ duration: 0.32, ease: [0.32, 0.72, 0, 1] }}
+          className="grid w-full gap-4 sm:grid-cols-2 lg:grid-cols-3 sm:gap-6"
           data-active-page-grid
         >
           {pageEpisodes.map((episode) => (

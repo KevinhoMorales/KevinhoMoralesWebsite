@@ -86,7 +86,7 @@ export function ProjectsSection({ projects }: ProjectsProps) {
         ) : (
           <StaggerContainer
             key={activeCategory}
-            className="grid grid-cols-1 items-stretch gap-4 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 sm:gap-6"
+            className="grid grid-cols-1 items-stretch gap-4 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 sm:gap-5"
           >
             {filteredProjects.map((project, index) => (
                 <StaggerItem key={project.id} delay={index * 0.06} className="h-full">

@@ -6,10 +6,11 @@ import { usePathname } from 'next/navigation'
 import { Badge } from '@/components/ui/badge'
 import { Button } from '@/components/ui/button'
 import { Card, CardContent } from '@/components/ui/card'
-import { ScrollReveal, StaggerContainer, StaggerItem } from '@/components/scroll-reveal'
+import { ScrollReveal } from '@/components/scroll-reveal'
 import { useI18n } from '@/components/i18n/locale-provider'
 import { handleHomeHashLinkClick } from '@/lib/section-scroll'
-import { Calendar, ExternalLink, Mic } from 'lucide-react'
+import { cn } from '@/lib/utils'
+import { ArrowRight, Calendar, ExternalLink, Mic } from 'lucide-react'
 import type { Profile } from '@/types'
 
 type SpeakingSectionProps = {
@@ -33,79 +34,85 @@ export function SpeakingSection({ profile }: SpeakingSectionProps) {
     <section
       id="speaking"
       data-analytics-section="speaking"
-      className="py-4 sm:py-5 md:py-6 px-4 sm:px-6 md:px-8 lg:px-12 xl:px-24"
+      className="py-3 sm:py-4 px-4 sm:px-6 md:px-8 lg:px-12 xl:px-24"
     >
       <div className="max-w-6xl mx-auto">
-        <ScrollReveal className="mb-6 sm:mb-8">
-          <p className="text-primary font-medium tracking-wide uppercase text-xs sm:text-sm mb-3 flex items-center gap-2">
-            <Mic className="h-4 w-4" aria-hidden />
+        <ScrollReveal className="mb-3 sm:mb-4">
+          <p className="text-primary font-medium tracking-wide uppercase text-[10px] sm:text-xs mb-1 flex items-center gap-1.5">
+            <Mic className="h-3.5 w-3.5" aria-hidden />
             {t('speakingSection.kicker')}
           </p>
-          <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold text-balance">{t('speakingSection.title')}</h2>
-          <p className="mt-3 max-w-2xl text-sm sm:text-base text-muted-foreground leading-relaxed">
+          <h2 className="text-xl sm:text-2xl font-bold text-balance leading-tight">
+            {t('speakingSection.title')}
+          </h2>
+          <p className="mt-1.5 max-w-2xl text-xs sm:text-sm text-muted-foreground leading-snug">
             {t('speakingSection.description')}
           </p>
         </ScrollReveal>
 
-        <div className="grid grid-cols-1 gap-6 lg:grid-cols-[minmax(0,1fr)_minmax(0,1.2fr)] lg:gap-8">
-          <ScrollReveal variant="fade-right" delay={0.08}>
-            <Card className="h-full border-border/50 bg-card/50">
-              <CardContent className="flex h-full flex-col gap-4 p-5 sm:p-6">
-                <div className="relative mx-auto h-24 w-40 sm:h-28 sm:w-48">
+        <ScrollReveal delay={0.06}>
+          <Card className="overflow-hidden border-border/50 bg-card/50 py-0 shadow-sm">
+            <CardContent className="grid gap-4 p-4 sm:gap-5 sm:p-5 md:grid-cols-[minmax(0,11.5rem)_minmax(0,1fr)] md:items-start md:gap-6">
+              <div className="flex flex-col gap-3">
+                <div className="relative mx-auto h-[4.25rem] w-[7rem] md:mx-0 md:h-[4.5rem] md:w-[7.5rem]">
                   <Image
                     src="/images/sessionize-most-active-speaker-2024.png"
                     alt="Sessionize Most Active Speaker 2024"
                     fill
-                    sizes="192px"
-                    className="object-contain"
+                    sizes="120px"
+                    className="object-contain object-center md:object-left"
                   />
                 </div>
-                <div className="flex flex-col gap-2 sm:flex-row sm:flex-wrap">
+                <div className="flex flex-col gap-2">
                   {sessionizeUrl ? (
-                    <Button asChild className="gap-2">
+                    <Button size="sm" asChild className="h-9 w-full justify-center gap-1.5 text-xs">
                       <a href={sessionizeUrl} target="_blank" rel="noopener noreferrer">
                         {t('speakingSection.sessionizeCta')}
-                        <ExternalLink className="h-4 w-4" aria-hidden />
+                        <ExternalLink className="h-3.5 w-3.5 shrink-0" aria-hidden />
                       </a>
                     </Button>
                   ) : null}
                   {calendlyUrl ? (
-                    <Button variant="outline" asChild className="gap-2">
+                    <Button size="sm" variant="outline" asChild className="h-9 w-full justify-center gap-1.5 text-xs">
                       <a href={calendlyUrl} target="_blank" rel="noopener noreferrer">
-                        <Calendar className="h-4 w-4" aria-hidden />
+                        <Calendar className="h-3.5 w-3.5 shrink-0" aria-hidden />
                         {t('speakingSection.calendlyCta')}
                       </a>
                     </Button>
                   ) : null}
                 </div>
-              </CardContent>
-            </Card>
-          </ScrollReveal>
+              </div>
 
-          <ScrollReveal variant="fade-left" delay={0.12}>
-            <div>
-              <p className="mb-3 text-sm font-medium text-foreground">{t('speakingSection.topicsLabel')}</p>
-              <StaggerContainer className="flex flex-wrap gap-2">
-                {topics.map((topic, index) => (
-                  <StaggerItem key={topic} delay={index * 0.05}>
-                    <Badge variant="outline" className="rounded-lg px-3 py-1.5 text-xs sm:text-sm">
+              <div className="min-w-0 md:border-l md:border-border/40 md:pl-6">
+                <p className="mb-2 text-[11px] font-semibold uppercase tracking-wide text-muted-foreground">
+                  {t('speakingSection.topicsLabel')}
+                </p>
+                <div className="flex flex-wrap gap-1.5">
+                  {topics.map((topic) => (
+                    <Badge
+                      key={topic}
+                      variant="outline"
+                      className={cn(
+                        'rounded-full border-border/60 bg-background/50 px-2.5 py-1 text-[11px] font-normal leading-snug sm:text-xs',
+                        'transition-colors hover:border-primary/40 hover:bg-primary/5 hover:text-primary'
+                      )}
+                    >
                       {topic}
                     </Badge>
-                  </StaggerItem>
-                ))}
-              </StaggerContainer>
-              <p className="mt-4 text-sm text-muted-foreground">
+                  ))}
+                </div>
                 <Link
                   href="/#conferences"
-                  className="text-primary hover:underline"
+                  className="mt-3 inline-flex items-center gap-1 text-xs font-medium text-primary hover:underline"
                   onClick={(e) => handleHomeHashLinkClick(e, pathname, '/#conferences')}
                 >
                   {t('speakingSection.viewConferences')}
+                  <ArrowRight className="h-3.5 w-3.5 shrink-0" aria-hidden />
                 </Link>
-              </p>
-            </div>
-          </ScrollReveal>
-        </div>
+              </div>
+            </CardContent>
+          </Card>
+        </ScrollReveal>
       </div>
     </section>
   )

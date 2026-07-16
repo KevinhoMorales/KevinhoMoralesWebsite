@@ -1,19 +1,32 @@
 'use client'
 
-import { useState } from 'react'
+import { useMemo, useState } from 'react'
 import Image from 'next/image'
 import { Card, CardContent } from '@/components/ui/card'
 import { Badge } from '@/components/ui/badge'
 import { Button } from '@/components/ui/button'
 import { ProjectDetailModal } from '@/components/project-detail-modal'
 import { useI18n } from '@/components/i18n/locale-provider'
+import { cn } from '@/lib/utils'
 import { ExternalLink, FileText, Smartphone } from 'lucide-react'
 import type { Project, ProjectCategory } from '@/types'
 import { displayProjectForFilter } from '@/lib/project-display'
 
+const MAX_VISIBLE_TECH = 3
+
 type ProjectCardProps = {
   project: Project
   category: ProjectCategory | 'all'
+}
+
+function categoryLabel(category: ProjectCategory, t: (key: string) => string): string {
+  const map: Record<ProjectCategory, string> = {
+    ios: 'projects.ios',
+    android: 'projects.android',
+    web: 'projects.web',
+    flutter: 'projects.flutter',
+  }
+  return t(map[category])
 }
 
 export function ProjectCard({ project, category }: ProjectCardProps) {
@@ -23,62 +36,109 @@ export function ProjectCard({ project, category }: ProjectCardProps) {
   const mainLink = shown.links[0]?.url || '#'
   const hasCaseStudy = Boolean(project.caseStudy)
 
+  const { visibleTech, hiddenTechCount } = useMemo(() => {
+    const tech = shown.technologies
+    if (tech.length <= MAX_VISIBLE_TECH) {
+      return { visibleTech: tech, hiddenTechCount: 0 }
+    }
+    return {
+      visibleTech: tech.slice(0, MAX_VISIBLE_TECH),
+      hiddenTechCount: tech.length - MAX_VISIBLE_TECH,
+    }
+  }, [shown.technologies])
+
   return (
     <>
-      <Card className="flex h-full flex-col bg-card/50 border-border/50 overflow-hidden group hover:border-primary/50 transition-colors">
-        <div className="aspect-video shrink-0 bg-secondary relative overflow-hidden">
+      <Card
+        className={cn(
+          'group flex h-full flex-col gap-0 overflow-hidden border-border/50 bg-card/60 py-0',
+          'shadow-sm transition-all duration-300',
+          'hover:-translate-y-0.5 hover:border-primary/40 hover:shadow-lg hover:shadow-primary/5'
+        )}
+      >
+        <div className="relative aspect-[5/4] shrink-0 overflow-hidden bg-muted/50">
           {project.image ? (
             <Image
               src={project.image}
               alt={project.title}
               fill
-              className="object-cover"
+              className="object-cover object-center transition-transform duration-500 group-hover:scale-[1.03]"
               sizes="(max-width: 640px) 100vw, (max-width: 768px) 50vw, (max-width: 1024px) 33vw, 25vw"
             />
           ) : (
-            <div className="absolute inset-0 bg-gradient-to-br from-primary/20 to-primary/5 flex items-center justify-center">
-              <Smartphone className="h-12 w-12 text-primary/50" />
+            <div className="absolute inset-0 flex items-center justify-center bg-gradient-to-br from-primary/15 via-muted/30 to-background">
+              <Smartphone className="h-10 w-10 text-primary/40" aria-hidden />
             </div>
           )}
-          <div className="absolute inset-0 bg-background/80 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center gap-2 p-3">
-            {hasCaseStudy ? (
-              <Button variant="secondary" size="sm" className="gap-2" onClick={() => setCaseStudyOpen(true)}>
-                <FileText className="h-4 w-4" aria-hidden />
-                {t('projects.viewCaseStudy')}
-              </Button>
-            ) : (
-              <Button variant="secondary" size="sm" className="gap-2" asChild>
-                <a href={mainLink} target="_blank" rel="noopener noreferrer">
-                  {t('projects.viewProject')} <ExternalLink className="h-4 w-4" />
-                </a>
-              </Button>
-            )}
-          </div>
+          <div
+            className="pointer-events-none absolute inset-0 bg-gradient-to-t from-card/90 via-card/10 to-transparent"
+            aria-hidden
+          />
+          <Badge
+            variant="secondary"
+            className="absolute left-2.5 top-2.5 z-[1] rounded-md border-0 bg-background/85 px-2 py-0.5 text-[10px] font-semibold uppercase tracking-wide text-foreground shadow-sm backdrop-blur-sm"
+          >
+            {categoryLabel(project.category, t)}
+          </Badge>
         </div>
-        <CardContent className="flex flex-1 flex-col justify-between gap-3 p-4 sm:p-6 sm:gap-4">
-          <div className="min-h-0">
-            <h3 className="line-clamp-2 font-semibold text-base sm:text-lg mb-1 sm:mb-2 group-hover:text-primary transition-colors">
+
+        <CardContent className="flex flex-1 flex-col gap-3 p-3.5 sm:p-4">
+          <div className="min-h-0 flex-1 space-y-1.5">
+            <h3 className="line-clamp-2 text-sm font-semibold leading-snug tracking-tight transition-colors group-hover:text-primary sm:text-base">
               {project.title}
             </h3>
-            <p className="text-xs sm:text-sm text-muted-foreground leading-relaxed line-clamp-2">
+            <p className="line-clamp-2 min-h-[2.5rem] text-xs leading-relaxed text-muted-foreground sm:text-sm">
               {project.description}
             </p>
           </div>
-          <div className="mt-auto flex flex-wrap items-center gap-2 pt-1">
-            {shown.technologies.map((tech) => (
-              <Badge key={tech} variant="secondary" className="text-xs bg-primary/10 text-primary">
+
+          <div className="flex flex-wrap items-center gap-1.5">
+            {visibleTech.map((tech) => (
+              <Badge
+                key={tech}
+                variant="outline"
+                className="rounded-full border-border/60 bg-background/60 px-2 py-0 text-[10px] font-normal sm:text-[11px]"
+              >
                 {tech}
               </Badge>
             ))}
+            {hiddenTechCount > 0 ? (
+              <Badge variant="outline" className="rounded-full px-2 py-0 text-[10px] text-muted-foreground">
+                {t('projects.moreTech', { count: String(hiddenTechCount) })}
+              </Badge>
+            ) : null}
+          </div>
+
+          <div className="flex items-center gap-2 border-t border-border/40 pt-2.5">
             {hasCaseStudy ? (
               <Button
                 type="button"
-                variant="link"
                 size="sm"
-                className="h-auto px-0 text-xs text-primary"
+                variant="secondary"
+                className="h-8 flex-1 gap-1.5 text-xs"
                 onClick={() => setCaseStudyOpen(true)}
               >
+                <FileText className="h-3.5 w-3.5 shrink-0" aria-hidden />
                 {t('projects.viewCaseStudy')}
+              </Button>
+            ) : (
+              <Button size="sm" variant="secondary" className="h-8 flex-1 gap-1.5 text-xs" asChild>
+                <a href={mainLink} target="_blank" rel="noopener noreferrer">
+                  {t('projects.viewProject')}
+                  <ExternalLink className="h-3.5 w-3.5 shrink-0" aria-hidden />
+                </a>
+              </Button>
+            )}
+            {hasCaseStudy && mainLink !== '#' ? (
+              <Button size="sm" variant="outline" className="h-8 shrink-0 px-2.5" asChild>
+                <a
+                  href={mainLink}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  aria-label={t('projects.viewProject')}
+                >
+                  <ExternalLink className="h-3.5 w-3.5" aria-hidden />
+                </a>
               </Button>
             ) : null}
           </div>

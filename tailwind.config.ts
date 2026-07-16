@@ -50,11 +50,16 @@ const config: Config = {
           "0%": { transform: "translateX(0)" },
           "100%": { transform: "translateX(-50%)" },
         },
+        "skills-marquee": {
+          "0%": { transform: "translateX(0)" },
+          "100%": { transform: "translateX(-50%)" },
+        },
       },
       animation: {
         "typing-cursor": "typing-cursor 1s step-end infinite",
         shimmer: "shimmer 4s ease-in-out infinite",
         "testimonials-marquee": "testimonials-marquee 45s linear infinite",
+        "skills-marquee": "skills-marquee 38s linear infinite",
       },
     },
   },

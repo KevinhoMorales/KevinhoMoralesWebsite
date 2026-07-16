@@ -4,6 +4,7 @@ import { useEffect, useState, useMemo, useCallback } from 'react';
 import { PodcastEpisodesPager } from './podcast-episodes-pager';
 import { EpisodeCard } from './episode-card';
 import { normalizeForSearch } from '@/lib/normalize-for-search';
+import { preloadPodcastThumbnails } from '@/lib/preload-podcast-thumbnails';
 import { EpisodeModal } from './episode-modal';
 import { Button } from '@/components/ui/button';
 import { useI18n } from '@/components/i18n/locale-provider';
@@ -45,6 +46,8 @@ export function PodcastSection({ preview = false }: PodcastSectionProps) {
       .then((data) => {
         if (Array.isArray(data)) {
           setEpisodes(data);
+          // Precarga las 2 primeras páginas antes del primer cambio de página
+          preloadPodcastThumbnails(data.slice(0, EPISODES_PER_PAGE * 2));
         } else {
           setError(t('podcast.errorUnexpected'));
         }
