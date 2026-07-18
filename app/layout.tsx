@@ -7,6 +7,7 @@ import { AnalyticsPageViewsBoundary } from '@/components/analytics-page-views-bo
 import { ThemeProvider } from '@/components/theme-provider';
 import { themeInitScriptContent } from '@/lib/theme-default';
 import { FirebaseAnalytics } from '@/components/firebase-analytics';
+import { UmamiAnalytics } from '@/components/umami-analytics';
 import { CalendlyWidget } from '@/components/calendly-widget';
 import { HashScroll } from '@/components/hash-scroll';
 import { Navigation } from '@/components/sections/navigation';
@@ -116,6 +117,7 @@ export default async function RootLayout({
           <ThemeProvider>
             <WaitlistRoot>
               <FirebaseAnalytics />
+              <UmamiAnalytics />
               <Analytics />
               <AnalyticsPageViewsBoundary />
               <CalendlyWidget />
