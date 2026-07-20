@@ -369,6 +369,16 @@
       "Proyecto DevLokos Enterprise"
     ]
   },
+  "orion-solar-group": {
+    "problem": "Orion Solar Group necesitaba una presencia digital profesional para captar clientes en Ecuador, comunicar el ahorro real en la factura eléctrica y diferenciarse como instalador de confianza con más de 500 proyectos realizados.",
+    "approach": "Desarrollamos un sitio web responsive con React y Vite, desplegado en Vercel, con servicios para hogar y empresa, testimonios, casos de éxito, FAQ, formularios de cotización y mensajes claros sobre evaluación gratuita y seguimiento post-instalación.",
+    "impact": "Plataforma web publicada que centraliza la propuesta comercial de Orion Solar Group, facilita solicitudes de cotización y refuerza su posicionamiento en energía solar residencial e industrial en Ecuador.",
+    "highlights": [
+      "Cotización en línea y evaluación gratuita",
+      "Servicios para hogar, retail e industria",
+      "Más de 500 instalaciones en Ecuador"
+    ]
+  },
   "santo-domingo-pickleball-club": {
     "problem": "El Santo Domingo Pickleball Club necesitaba una presencia digital profesional para promover el deporte, comunicar entrenamientos y torneos, y facilitar inscripciones a eventos como el Santo Domingo Pickleball Open 2026.",
     "approach": "Desarrollamos un sitio web responsive con información del club, instalaciones, equipo, galería, cronograma del torneo, formulario de contacto e inscripción, destacando la misión de fomentar una comunidad deportiva inclusiva en Ecuador.",
