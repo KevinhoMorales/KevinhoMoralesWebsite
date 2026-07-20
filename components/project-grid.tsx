@@ -7,7 +7,8 @@ import { Button } from '@/components/ui/button';
 import { FilterChipRow, filterChipClass } from '@/components/ui/filter-chip-row';
 import { useI18n } from '@/components/i18n/locale-provider';
 import type { Project, ProjectCategory } from '@/types';
-import { displayProjectForFilter } from '@/lib/project-display';
+import { Badge } from '@/components/ui/badge';
+import { displayProjectForFilter, getProjectPlatformBadges, type PlatformBadge } from '@/lib/project-display';
 import { projectMatchesCategory } from '@/lib/project-category-match';
 
 interface ProjectGridProps {
@@ -34,6 +35,15 @@ export function ProjectGrid({ projects, initialCategory = 'all' }: ProjectGridPr
     ],
     [t]
   );
+
+  function platformLabel(badge: PlatformBadge): string {
+    const map: Record<PlatformBadge, string> = {
+      ios: t('projects.ios'),
+      android: t('projects.android'),
+      web: t('projects.web'),
+    };
+    return map[badge];
+  }
 
   function linkLabel(type: string, label?: string): string {
     if (label) return label;
@@ -68,6 +78,7 @@ export function ProjectGrid({ projects, initialCategory = 'all' }: ProjectGridPr
         <div className="grid grid-cols-2 items-stretch gap-3 sm:gap-4 md:grid-cols-4 md:gap-6">
           {filtered.map((project) => {
             const shown = displayProjectForFilter(project, category);
+            const platformBadges = getProjectPlatformBadges(project);
             return (
               <article
                 key={project.id}
@@ -82,6 +93,17 @@ export function ProjectGrid({ projects, initialCategory = 'all' }: ProjectGridPr
                     className="object-cover transition-transform group-hover:scale-105"
                     sizes="(max-width: 640px) 100vw, (max-width: 768px) 50vw, (max-width: 1024px) 33vw, 25vw"
                   />
+                  <div className="absolute left-1.5 top-1.5 z-[1] flex flex-wrap gap-1 sm:left-2 sm:top-2">
+                    {platformBadges.map((badge) => (
+                      <Badge
+                        key={badge}
+                        variant="outline"
+                        className="rounded-md border border-black/12 bg-white px-1.5 py-0 text-[9px] font-semibold uppercase tracking-wide text-neutral-900 shadow-sm sm:text-[10px]"
+                      >
+                        {platformLabel(badge)}
+                      </Badge>
+                    ))}
+                  </div>
                 </div>
               )}
               <div className="flex min-h-0 flex-1 flex-col justify-between gap-3">

@@ -357,9 +357,8 @@
     "title": "PadelTrack",
     "description": "Padel sports tracking app",
     "technologies": [
-      "SwiftUI",
-      "Jetpack Compose",
-      "Dart"
+      "Dart",
+      "Flutter"
     ],
     "category": "flutter",
     "links": [

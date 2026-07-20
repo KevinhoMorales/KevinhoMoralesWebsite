@@ -64,7 +64,7 @@ function isNonEmptyString(value: unknown): value is string {
 }
 
 /** Proyectos duplicados u obsoletos que no deben mostrarse (p. ej. `devlokos-web` sin imagen). */
-const EXCLUDED_PROJECT_IDS = new Set(['devlokos-web']);
+const EXCLUDED_PROJECT_IDS = new Set(['devlokos-web', 'elite-padel-ranking-oficial']);
 
 function getProjectDescriptionOverrides(): Record<string, string> {
   try {

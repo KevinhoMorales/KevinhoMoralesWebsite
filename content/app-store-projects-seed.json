@@ -936,45 +936,6 @@
     }
   },
   {
-    "id": "elite-padel-ranking-oficial",
-    "title": "Élite Padel: Ranking Oficial",
-    "description": "App iOS con SwiftUI para el ranking oficial de pádel: posiciones, torneos y seguimiento competitivo para jugadores de pádel.",
-    "category": "ios",
-    "language": "SwiftUI",
-    "technologies": [
-      "SwiftUI"
-    ],
-    "experience": "DevLokos Enterprise",
-    "platforms": [
-      "iPhone",
-      "iPad"
-    ],
-    "tags": [
-      "Sport",
-      "Padel",
-      "App Store"
-    ],
-    "releaseDate": "2025-02-01",
-    "sortOrder": 20250201,
-    "links": [
-      {
-        "type": "appStore",
-        "url": "https://apps.apple.com/jm/app/%C3%A9lite-padel-ranking-oficial/id6742730017",
-        "label": "App Store"
-      }
-    ],
-    "caseStudy": {
-      "problem": "Los jugadores de pádel en iOS requerían una app nativa para consultar el ranking oficial y torneos con buena UX.",
-      "approach": "Desarrollamos la app con SwiftUI enfocada en posiciones, estadísticas y seguimiento competitivo.",
-      "impact": "App iOS publicada que oficializa el seguimiento de rankings para la comunidad de pádel.",
-      "highlights": [
-        "SwiftUI nativo",
-        "Ranking oficial de pádel",
-        "Torneos y estadísticas"
-      ]
-    }
-  },
-  {
     "id": "padeltrack",
     "title": "PadelTrack",
     "description": "PadelTrack registra partidos, estadísticas y progreso en pádel: app multiplataforma con SwiftUI, Jetpack Compose y Flutter para iOS y Android.",

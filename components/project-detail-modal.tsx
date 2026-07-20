@@ -12,6 +12,7 @@ import { Badge } from '@/components/ui/badge'
 import { Button } from '@/components/ui/button'
 import { useI18n } from '@/components/i18n/locale-provider'
 import { ExternalLink, Smartphone } from 'lucide-react'
+import { displayProjectForFilter } from '@/lib/project-display'
 import type { Project } from '@/types'
 
 type ProjectDetailModalProps = {
@@ -25,7 +26,8 @@ export function ProjectDetailModal({ project, open, onClose }: ProjectDetailModa
   const cs = project?.caseStudy
   if (!project || !cs) return null
 
-  const mainLink = project.links[0]?.url
+  const shown = displayProjectForFilter(project, 'all')
+  const mainLink = shown.links[0]?.url
 
   return (
     <Dialog open={open} onOpenChange={(next) => !next && onClose()}>
@@ -48,7 +50,7 @@ export function ProjectDetailModal({ project, open, onClose }: ProjectDetailModa
             </DialogHeader>
 
             <div className="flex flex-wrap gap-2">
-              {project.technologies.map((tech) => (
+              {shown.technologies.map((tech) => (
                 <Badge key={tech} variant="secondary" className="bg-primary/10 text-primary">
                   {tech}
                 </Badge>

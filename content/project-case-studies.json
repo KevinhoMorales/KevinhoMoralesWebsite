@@ -109,16 +109,6 @@
       "Torneos y estadísticas competitivas"
     ]
   },
-  "elite-padel-ranking-oficial": {
-    "problem": "Los jugadores de pádel en iOS requerían una app nativa para consultar el ranking oficial y torneos con buena UX.",
-    "approach": "Desarrollamos la app con SwiftUI enfocada en posiciones, estadísticas y seguimiento competitivo.",
-    "impact": "App iOS publicada que oficializa el seguimiento de rankings para la comunidad de pádel.",
-    "highlights": [
-      "SwiftUI nativo",
-      "Ranking oficial de pádel",
-      "Torneos y estadísticas"
-    ]
-  },
   "global-bank": {
     "problem": "Global Bank necesitaba modernizar su canal móvil con operaciones bancarias seguras para clientes iOS.",
     "approach": "Participé en el desarrollo de la app en Objective-C dentro del equipo Technisys, con flujos financieros y estándares bancarios.",
@@ -201,12 +191,12 @@
   },
   "padeltrack": {
     "problem": "Jugadores de pádel necesitaban registrar partidos, estadísticas y progreso en una sola herramienta multiplataforma.",
-    "approach": "Desarrollamos PadelTrack con SwiftUI, Jetpack Compose y Flutter para cubrir iOS y Android con seguimiento deportivo.",
+    "approach": "Desarrollamos PadelTrack en Flutter (Dart) para iOS y Android con seguimiento deportivo de partidos y estadísticas.",
     "impact": "App publicada que ayuda a la comunidad de pádel a medir rendimiento y evolución en el deporte.",
     "highlights": [
-      "SwiftUI, Compose y Flutter",
+      "Flutter multiplataforma en iOS y Android",
       "Seguimiento de partidos y stats",
-      "iOS y Android"
+      "Dart + Flutter"
     ]
   },
   "pagame-easy-way-to-charge": {
