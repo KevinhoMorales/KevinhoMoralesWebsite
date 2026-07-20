@@ -1,5 +1,54 @@
 [
   {
+    "id": "saints",
+    "title": "SAINTS",
+    "description": "App multiplataforma en Flutter del Saints Wellness Club®: comunidad de running en Santo Domingo, Ecuador, con el lema Run & Have Fun! Conecta corredores con entrenamientos, trail, eventos, carreras como Saints Trail y 8K Tenka Run, bienestar y la vida social del club desde iOS y Android.",
+    "image": "/images/saints-icon.png",
+    "technologies": [
+      "Dart",
+      "Flutter"
+    ],
+    "category": "flutter",
+    "language": "Dart",
+    "links": [
+      {
+        "type": "appStore",
+        "url": "https://apps.apple.com/us/app/saints/id6792610093"
+      },
+      {
+        "type": "playStore",
+        "url": "https://play.google.com/store/apps/details?id=com.devlokos.runningdart"
+      },
+      {
+        "type": "other",
+        "url": "https://www.instagram.com/saintsclub593/",
+        "label": "Instagram"
+      }
+    ],
+    "experience": "DevLokos Enterprise",
+    "platforms": [
+      "iPhone",
+      "Android"
+    ],
+    "tags": [
+      "Sport",
+      "Running",
+      "Community"
+    ],
+    "releaseDate": "2026-07-01",
+    "sortOrder": 20260701,
+    "caseStudy": {
+      "problem": "Saints Wellness Club® — comunidad de running en Santo Domingo con más de 2.000 seguidores — necesitaba una app móvil para centralizar eventos, carreras, trail y bienestar, y mantener conectados a sus corredores más allá de Instagram.",
+      "approach": "Desarrollamos SAINTS en Flutter (Dart) para iOS y Android con información del club, calendario de eventos (Saints Trail, 8K Tenka Run, Fun Run, She Moves), contenido de bienestar y experiencia alineada al lema Run & Have Fun!",
+      "impact": "App publicada en App Store y Play Store que lleva la comunidad Saints al móvil y refuerza su presencia como club de running, trail y eventos en Ecuador.",
+      "highlights": [
+        "Flutter multiplataforma en iOS y Android",
+        "Comunidad de running y trail en Santo Domingo",
+        "Eventos, carreras y bienestar del Saints Wellness Club®"
+      ]
+    }
+  },
+  {
     "id": "tayos",
     "title": "Tayos",
     "description": "App B2B de repuestos automotrices para la distribuidora más grande del Ecuador — catálogo digital con 30.000+ productos, búsqueda rápida y pedidos para talleres y empresas.",

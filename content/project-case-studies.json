@@ -379,6 +379,16 @@
       "Más de 500 instalaciones en Ecuador"
     ]
   },
+  "saints": {
+    "problem": "Saints Wellness Club® — comunidad de running en Santo Domingo con más de 2.000 seguidores — necesitaba una app móvil para centralizar eventos, carreras, trail y bienestar, y mantener conectados a sus corredores más allá de Instagram.",
+    "approach": "Desarrollamos SAINTS en Flutter (Dart) para iOS y Android con información del club, calendario de eventos (Saints Trail, 8K Tenka Run, Fun Run, She Moves), contenido de bienestar y experiencia alineada al lema Run & Have Fun!",
+    "impact": "App publicada en App Store y Play Store que lleva la comunidad Saints al móvil y refuerza su presencia como club de running, trail y eventos en Ecuador.",
+    "highlights": [
+      "Flutter multiplataforma en iOS y Android",
+      "Comunidad de running y trail en Santo Domingo",
+      "Eventos, carreras y bienestar del Saints Wellness Club®"
+    ]
+  },
   "santo-domingo-pickleball-club": {
     "problem": "El Santo Domingo Pickleball Club necesitaba una presencia digital profesional para promover el deporte, comunicar entrenamientos y torneos, y facilitar inscripciones a eventos como el Santo Domingo Pickleball Open 2026.",
     "approach": "Desarrollamos un sitio web responsive con información del club, instalaciones, equipo, galería, cronograma del torneo, formulario de contacto e inscripción, destacando la misión de fomentar una comunidad deportiva inclusiva en Ecuador.",
