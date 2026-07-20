@@ -381,7 +381,9 @@
     "tags": [
       "Sport",
       "Padel"
-    ]
+    ],
+    "releaseDate": "2025-12-01",
+    "sortOrder": 20251201
   },
   {
     "id": "banco-de-loja",
@@ -500,11 +502,13 @@
     "links": [
       {
         "type": "appStore",
-        "url": "https://apps.apple.com/jm/app/%C3%A9lite-padel-ranking-oficial/id6742730017"
+        "url": "https://apps.apple.com/jm/app/%C3%A9lite-padel-ranking-oficial/id6742730017",
+        "releaseDate": "2025-02-01"
       },
       {
         "type": "playStore",
-        "url": "https://play.google.com/store/apps/details?id=com.kevinhomorales.padelhubjetpackcompose"
+        "url": "https://play.google.com/store/apps/details?id=com.kevinhomorales.padelhubjetpackcompose",
+        "releaseDate": "2025-09-01"
       }
     ],
     "experience": "DevLokos Enterprise",
@@ -517,6 +521,8 @@
       "Sport",
       "Padel"
     ],
+    "releaseDate": "2025-09-01",
+    "sortOrder": 20250901,
     "caseStudy": {
       "problem": "La comunidad de pádel de Élite Padel Santo Domingo necesitaba consultar rankings oficiales, estadísticas y torneos desde iOS y Android con una experiencia nativa en cada plataforma.",
       "approach": "Desarrollamos la app con SwiftUI en iOS y Jetpack Compose en Android, enfocada en posiciones, estadísticas competitivas y seguimiento de torneos para jugadores de pádel.",
