@@ -489,12 +489,19 @@
   {
     "id": "elite-padel",
     "title": "Élite Padel: Ranking Oficial",
-    "description": "Official padel ranking app",
+    "description": "App oficial de ranking de Élite Padel Santo Domingo: consulta posiciones, estadísticas y torneos de la comunidad de pádel en Ecuador. Desarrollada nativamente con SwiftUI en iOS y Jetpack Compose en Android.",
+    "image": "/images/elite-padel-icon.png",
     "technologies": [
+      "SwiftUI",
       "Jetpack Compose"
     ],
-    "category": "android",
+    "category": "ios",
+    "language": "SwiftUI",
     "links": [
+      {
+        "type": "appStore",
+        "url": "https://apps.apple.com/jm/app/%C3%A9lite-padel-ranking-oficial/id6742730017"
+      },
       {
         "type": "playStore",
         "url": "https://play.google.com/store/apps/details?id=com.kevinhomorales.padelhubjetpackcompose"
@@ -502,11 +509,23 @@
     ],
     "experience": "DevLokos Enterprise",
     "platforms": [
+      "iPhone",
+      "iPad",
       "Android"
     ],
     "tags": [
-      "Sports",
+      "Sport",
       "Padel"
-    ]
+    ],
+    "caseStudy": {
+      "problem": "La comunidad de pádel de Élite Padel Santo Domingo necesitaba consultar rankings oficiales, estadísticas y torneos desde iOS y Android con una experiencia nativa en cada plataforma.",
+      "approach": "Desarrollamos la app con SwiftUI en iOS y Jetpack Compose en Android, enfocada en posiciones, estadísticas competitivas y seguimiento de torneos para jugadores de pádel.",
+      "impact": "Ranking oficial publicado en App Store y Play Store que centraliza la competencia de pádel para la comunidad de Santo Domingo.",
+      "highlights": [
+        "SwiftUI en iOS y Jetpack Compose en Android",
+        "Ranking oficial de pádel",
+        "Torneos y estadísticas competitivas"
+      ]
+    }
   }
 ]

@@ -100,13 +100,13 @@
     ]
   },
   "elite-padel": {
-    "problem": "La comunidad de pádel necesitaba consultar rankings oficiales y estadísticas competitivas desde Android.",
-    "approach": "Implementamos la app con Jetpack Compose mostrando posiciones, torneos y seguimiento de jugadores.",
-    "impact": "Ranking oficial accesible en Play Store para jugadores y organizadores de pádel.",
+    "problem": "La comunidad de pádel de Élite Padel Santo Domingo necesitaba consultar rankings oficiales, estadísticas y torneos desde iOS y Android con una experiencia nativa en cada plataforma.",
+    "approach": "Desarrollamos la app con SwiftUI en iOS y Jetpack Compose en Android, enfocada en posiciones, estadísticas competitivas y seguimiento de torneos para jugadores de pádel.",
+    "impact": "Ranking oficial publicado en App Store y Play Store que centraliza la competencia de pádel para la comunidad de Santo Domingo.",
     "highlights": [
-      "Jetpack Compose en Android",
-      "Ranking y estadísticas",
-      "Comunidad de pádel"
+      "SwiftUI en iOS y Jetpack Compose en Android",
+      "Ranking oficial de pádel",
+      "Torneos y estadísticas competitivas"
     ]
   },
   "elite-padel-ranking-oficial": {
