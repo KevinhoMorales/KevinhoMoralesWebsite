@@ -359,6 +359,16 @@
       "Proyecto DevLokos Enterprise"
     ]
   },
+  "la-casa-del-turbo-ecuador": {
+    "problem": "La Casa del Turbo Ecuador necesitaba un back office web para centralizar la operación diaria — inventario, pedidos y seguimiento comercial — sin depender de procesos manuales o herramientas dispersas.",
+    "approach": "Desarrollamos un panel interno en React y Vite, desplegado en Vercel, con autenticación, dashboard y flujos de gestión pensados para el equipo que opera turbos automotrices en Ecuador.",
+    "impact": "Back office publicado que da al equipo un canal único para administrar la operación y acelera la digitalización del negocio automotriz.",
+    "highlights": [
+      "Panel interno con login y dashboard",
+      "Gestión operativa de turbos automotrices",
+      "React + Vite desplegado en Vercel"
+    ]
+  },
   "orion-solar-group": {
     "problem": "Orion Solar Group necesitaba una presencia digital profesional para captar clientes en Ecuador, comunicar el ahorro real en la factura eléctrica y diferenciarse como instalador de confianza con más de 500 proyectos realizados.",
     "approach": "Desarrollamos un sitio web responsive con React y Vite, desplegado en Vercel, con servicios para hogar y empresa, testimonios, casos de éxito, FAQ, formularios de cotización y mensajes claros sobre evaluación gratuita y seguimiento post-instalación.",

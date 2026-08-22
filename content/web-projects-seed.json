@@ -45,6 +45,50 @@
     }
   },
   {
+    "id": "la-casa-del-turbo-ecuador",
+    "title": "La Casa del Turbo Ecuador",
+    "description": "Back office web de La Casa del Turbo Ecuador: panel interno para gestionar operación, inventario y procesos comerciales de turbos automotrices. Acceso autenticado al dashboard para el equipo, construido con React y Vite y desplegado en Vercel.",
+    "image": "/images/la-casa-del-turbo-ecuador-icon.png",
+    "technologies": [
+      "React",
+      "TypeScript",
+      "Vite",
+      "Vercel"
+    ],
+    "category": "web",
+    "language": "TypeScript",
+    "links": [
+      {
+        "type": "website",
+        "url": "https://www.lacasadelturboecuador.com/"
+      }
+    ],
+    "experience": "DevLokos Enterprise",
+    "platforms": [
+      "Web",
+      "Responsive"
+    ],
+    "tags": [
+      "Automotive",
+      "Back Office",
+      "Business"
+    ],
+    "releaseDate": "2026-08-01",
+    "sortOrder": 20260801,
+    "webFramework": "React",
+    "webHosting": "Vercel",
+    "caseStudy": {
+      "problem": "La Casa del Turbo Ecuador necesitaba un back office web para centralizar la operación diaria — inventario, pedidos y seguimiento comercial — sin depender de procesos manuales o herramientas dispersas.",
+      "approach": "Desarrollamos un panel interno en React y Vite, desplegado en Vercel, con autenticación, dashboard y flujos de gestión pensados para el equipo que opera turbos automotrices en Ecuador.",
+      "impact": "Back office publicado que da al equipo un canal único para administrar la operación y acelera la digitalización del negocio automotriz.",
+      "highlights": [
+        "Panel interno con login y dashboard",
+        "Gestión operativa de turbos automotrices",
+        "React + Vite desplegado en Vercel"
+      ]
+    }
+  },
+  {
     "id": "orion-solar-group",
     "title": "Orion Solar Group",
     "description": "Sitio web corporativo de Orion Solar Group: empresa de energía solar en Ecuador con más de 500 instalaciones. Presenta instalación de paneles, mantenimiento y monitoreo, consultoría energética y soluciones para empresas, con cotización en línea, testimonios y estimación de ahorro en la factura eléctrica para hogares y negocios.",

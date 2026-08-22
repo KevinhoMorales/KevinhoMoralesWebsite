@@ -15,6 +15,7 @@
   "gme-driver": "App para conductores GMe: gestiona viajes, ganancias y operación diaria como conductor en la plataforma de movilidad.",
   "holy-food": "App de libros y contenido espiritual Holy Food: acceso a material editorial y recursos de bienestar para la comunidad de usuarios.",
   "js-aprende-android": "App educativa JS Aprende para Android: tutoriales, recursos y contenido de aprendizaje de JavaScript para desarrolladores principiantes.",
+  "la-casa-del-turbo-ecuador": "Back office web de La Casa del Turbo Ecuador: panel interno para gestionar operación, inventario y procesos comerciales de turbos automotrices. Acceso autenticado al dashboard para el equipo, construido con React y Vite y desplegado en Vercel.",
   "livo-home": "App lifestyle Livo Home para gestión de propiedades y hogar: servicios, información residencial y experiencia conectada para propietarios e inquilinos.",
   "macro-empresas": "Banca móvil empresarial de Banco Macro en iOS y Android: operaciones corporativas, seguridad financiera y canales digitales para clientes enterprise (Technisys).",
   "meniuz": "App de pedidos Meniuz para descubrir menús, restaurantes y ofertas gastronómicas con experiencia nativa en iOS y Android.",
