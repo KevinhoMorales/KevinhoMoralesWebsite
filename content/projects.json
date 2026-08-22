@@ -38,7 +38,7 @@
   },
   {
     "id": "gailos",
-    "title": "Gailos",
+    "title": "Gailos Express",
     "description": "Plataforma web Gailos Express para pedir comida a domicilio: explora negocios aprobados, menús digitales, confirma el pedido y sigue la entrega. Sin registro obligatorio, construida con Next.js y desplegada en Vercel.",
     "image": "/images/gailos-icon.png",
     "technologies": [
