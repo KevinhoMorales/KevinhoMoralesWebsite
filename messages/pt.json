@@ -121,6 +121,7 @@
     "emptyCategory": "Não há projetos nesta categoria.",
     "all": "Todos",
     "viewProject": "Ver projeto",
+    "openPlatform": "Abrir {{platform}}",
     "ios": "iOS",
     "android": "Android",
     "web": "Web",

@@ -121,6 +121,7 @@
     "emptyCategory": "No projects in this category yet.",
     "all": "All",
     "viewProject": "View Project",
+    "openPlatform": "Open {{platform}}",
     "ios": "iOS",
     "android": "Android",
     "web": "Web",

@@ -119,6 +119,16 @@
       "Operaciones financieras seguras"
     ]
   },
+  "gailos": {
+    "problem": "Negocios de comida y usuarios necesitaban un canal simple para descubrir menús digitales y pedir a domicilio sin fricción ni registro obligatorio.",
+    "approach": "Desarrollamos Gailos Express en Next.js, desplegado en Vercel: catálogo público de establecimientos aprobados, menús digitales, checkout y seguimiento de entrega en una experiencia web.",
+    "impact": "Plataforma publicada en gailos.com que centraliza descubrimiento de negocios, pedidos y tracking de entrega.",
+    "highlights": [
+      "Menús digitales y pedido a domicilio",
+      "Exploración sin registro obligatorio",
+      "Next.js desplegado en Vercel"
+    ]
+  },
   "gme-decide-your-taxi-price": {
     "problem": "Los pasajeros del ecosistema GMe querían más control sobre el precio de sus viajes en taxi.",
     "approach": "Desarrollamos la app iOS con negociación de tarifas, solicitud de viajes y experiencia centrada en el usuario.",
@@ -351,12 +361,12 @@
   },
   "tayos": {
     "problem": "La distribuidora de repuestos automotrices más grande del Ecuador necesitaba digitalizar la compra B2B de talleres, mecánicas y empresas que dependían de llamadas y mensajes para consultar stock y hacer pedidos.",
-    "approach": "Desarrollamos Tayos en React Native (TypeScript) para iOS y Android con catálogo digital, búsqueda rápida de más de 30.000 productos y flujo de pedidos orientado a clientes profesionales del sector automotriz.",
-    "impact": "Plataforma B2B publicada en App Store y Play Store que agiliza consultas comerciales y pedidos para negocios del sector automotriz en Ecuador.",
+    "approach": "Desarrollamos Tayos en React Native (TypeScript) para iOS y Android, y un sitio web en Next.js (tayos.co) con registro, login, catálogo, búsqueda inteligente y flujo de pedidos para clientes profesionales del sector automotriz.",
+    "impact": "Plataforma B2B publicada en App Store, Play Store y web que agiliza consultas comerciales y pedidos para negocios del sector automotriz en Ecuador.",
     "highlights": [
-      "Cross-platform React Native en iOS y Android",
-      "Catálogo B2B con 30.000+ productos",
-      "Proyecto DevLokos Enterprise"
+      "iOS, Android y web (tayos.co)",
+      "Catálogo B2B con 65.000+ productos",
+      "Búsqueda inteligente y pedidos sin llamadas"
     ]
   },
   "la-casa-del-turbo-ecuador": {
@@ -377,6 +387,16 @@
       "Cotización en línea y evaluación gratuita",
       "Servicios para hogar, retail e industria",
       "Más de 500 instalaciones en Ecuador"
+    ]
+  },
+  "sacon-importadora": {
+    "problem": "Sacón Importadora necesitaba un canal digital para vender electrodomésticos y productos de hogar sin depender solo de la venta presencial o mayorista.",
+    "approach": "Estamos construyendo un e-commerce web con catálogo, ficha de producto y flujo de compra, pensado para la operación de una importadora de línea blanca y artículos para el hogar.",
+    "impact": "Proyecto web en curso: la tienda online ampliará el alcance comercial de Sacón Importadora cuando se publique.",
+    "highlights": [
+      "E-commerce web de importadora",
+      "Catálogo de electrodomésticos y hogar",
+      "URL pública pendiente"
     ]
   },
   "saints": {

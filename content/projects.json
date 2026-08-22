@@ -1,5 +1,86 @@
 [
   {
+    "id": "sacon-importadora",
+    "title": "Sacón Importadora",
+    "description": "E-commerce web de Sacón Importadora: catálogo y venta en línea de electrodomésticos y productos para el hogar de la importadora. Sitio en desarrollo; URL pública pendiente.",
+    "image": "/images/sacon-importadora-icon.png",
+    "technologies": [
+      "Next.js",
+      "React",
+      "TypeScript"
+    ],
+    "category": "web",
+    "language": "TypeScript",
+    "links": [],
+    "experience": "DevLokos Enterprise",
+    "platforms": [
+      "Web",
+      "Responsive"
+    ],
+    "tags": [
+      "E-commerce",
+      "Retail",
+      "Business"
+    ],
+    "releaseDate": "2026-08-22",
+    "sortOrder": 20260823,
+    "webFramework": "Next.js",
+    "caseStudy": {
+      "problem": "Sacón Importadora necesitaba un canal digital para vender electrodomésticos y productos de hogar sin depender solo de la venta presencial o mayorista.",
+      "approach": "Estamos construyendo un e-commerce web con catálogo, ficha de producto y flujo de compra, pensado para la operación de una importadora de línea blanca y artículos para el hogar.",
+      "impact": "Proyecto web en curso: la tienda online ampliará el alcance comercial de Sacón Importadora cuando se publique.",
+      "highlights": [
+        "E-commerce web de importadora",
+        "Catálogo de electrodomésticos y hogar",
+        "URL pública pendiente"
+      ]
+    }
+  },
+  {
+    "id": "gailos",
+    "title": "Gailos",
+    "description": "Plataforma web Gailos Express para pedir comida a domicilio: explora negocios aprobados, menús digitales, confirma el pedido y sigue la entrega. Sin registro obligatorio, construida con Next.js y desplegada en Vercel.",
+    "image": "/images/gailos-icon.png",
+    "technologies": [
+      "Next.js",
+      "React",
+      "TypeScript",
+      "Vercel"
+    ],
+    "category": "web",
+    "language": "TypeScript",
+    "links": [
+      {
+        "type": "website",
+        "url": "https://www.gailos.com/"
+      }
+    ],
+    "experience": "DevLokos Enterprise",
+    "platforms": [
+      "Web",
+      "Responsive"
+    ],
+    "tags": [
+      "Food & Drink",
+      "Delivery",
+      "Business"
+    ],
+    "releaseDate": "2026-08-22",
+    "sortOrder": 20260822,
+    "webFramework": "Next.js",
+    "webHosting": "Vercel",
+    "caseStudy": {
+      "problem": "Negocios de comida y usuarios necesitaban un canal simple para descubrir menús digitales y pedir a domicilio sin fricción ni registro obligatorio.",
+      "approach": "Desarrollamos Gailos Express en Next.js, desplegado en Vercel: catálogo público de establecimientos aprobados, menús digitales, checkout y seguimiento de entrega en una experiencia web.",
+      "impact": "Plataforma publicada en gailos.com que centraliza descubrimiento de negocios, pedidos y tracking de entrega.",
+      "highlights": [
+        "Menús digitales y pedido a domicilio",
+        "Exploración sin registro obligatorio",
+        "Next.js desplegado en Vercel"
+      ]
+    }
+  },
+  {
     "id": "la-casa-del-turbo-ecuador",
     "title": "La Casa del Turbo Ecuador",
     "description": "Back office web de La Casa del Turbo Ecuador: panel interno para gestionar operación, inventario y procesos comerciales de turbos automotrices. Acceso autenticado al dashboard para el equipo, construido con React y Vite y desplegado en Vercel.",
@@ -90,11 +171,12 @@
   {
     "id": "tayos",
     "title": "Tayos",
-    "description": "App B2B de repuestos automotrices para la distribuidora más grande del Ecuador — catálogo digital con 30.000+ productos, búsqueda rápida y pedidos para talleres y empresas.",
+    "description": "Plataforma B2B de repuestos automotrices para empresas del sector: catálogo con más de 65.000 productos, búsqueda inteligente, pedidos sin llamadas y registro exclusivo para talleres. Disponible en iOS, Android y en la web tayos.co.",
     "image": "/images/tayos-icon.png",
     "technologies": [
       "React Native",
-      "TypeScript"
+      "TypeScript",
+      "Next.js"
     ],
     "category": "ios",
     "language": "TypeScript",
@@ -109,14 +191,14 @@
       },
       {
         "type": "website",
-        "url": "https://devlokos.com/empresarial",
-        "label": "DevLokos Enterprise"
+        "url": "https://www.tayos.co/"
       }
     ],
     "experience": "DevLokos Enterprise",
     "platforms": [
       "iPhone",
-      "Android"
+      "Android",
+      "Web"
     ],
     "tags": [
       "Business",
@@ -125,14 +207,15 @@
     ],
     "releaseDate": "2026-05-15",
     "sortOrder": 20260715,
+    "webFramework": "Next.js",
     "caseStudy": {
       "problem": "La distribuidora de repuestos automotrices más grande del Ecuador necesitaba digitalizar la compra B2B de talleres, mecánicas y empresas que dependían de llamadas y mensajes para consultar stock y hacer pedidos.",
-      "approach": "Desarrollamos Tayos en React Native (TypeScript) para iOS y Android con catálogo digital, búsqueda rápida de más de 30.000 productos y flujo de pedidos orientado a clientes profesionales del sector automotriz.",
-      "impact": "Plataforma B2B publicada en App Store y Play Store que agiliza consultas comerciales y pedidos para negocios del sector automotriz en Ecuador.",
+      "approach": "Desarrollamos Tayos en React Native (TypeScript) para iOS y Android, y un sitio web en Next.js (tayos.co) con registro, login, catálogo, búsqueda inteligente y flujo de pedidos para clientes profesionales del sector automotriz.",
+      "impact": "Plataforma B2B publicada en App Store, Play Store y web que agiliza consultas comerciales y pedidos para negocios del sector automotriz en Ecuador.",
       "highlights": [
-        "Cross-platform React Native en iOS y Android",
-        "Catálogo B2B con 30.000+ productos",
-        "Proyecto DevLokos Enterprise"
+        "iOS, Android y web (tayos.co)",
+        "Catálogo B2B con 65.000+ productos",
+        "Búsqueda inteligente y pedidos sin llamadas"
       ]
     }
   },

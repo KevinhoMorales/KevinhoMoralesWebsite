@@ -12,7 +12,11 @@ import { Badge } from '@/components/ui/badge'
 import { Button } from '@/components/ui/button'
 import { useI18n } from '@/components/i18n/locale-provider'
 import { ExternalLink, Smartphone } from 'lucide-react'
-import { displayProjectForFilter } from '@/lib/project-display'
+import {
+  displayProjectForFilter,
+  getProjectPlatformBadges,
+  getProjectPlatformLink,
+} from '@/lib/project-display'
 import type { Project } from '@/types'
 
 type ProjectDetailModalProps = {
@@ -27,7 +31,17 @@ export function ProjectDetailModal({ project, open, onClose }: ProjectDetailModa
   if (!project || !cs) return null
 
   const shown = displayProjectForFilter(project, 'all')
-  const mainLink = shown.links[0]?.url
+  const platformBadges = getProjectPlatformBadges(project)
+  const platformLinks = platformBadges
+    .map((badge) => {
+      const href = getProjectPlatformLink(project, badge)
+      if (!href) return null
+      const label =
+        badge === 'ios' ? t('projects.ios') : badge === 'android' ? t('projects.android') : t('projects.web')
+      return { badge, href, label }
+    })
+    .filter((item): item is { badge: typeof platformBadges[number]; href: string; label: string } => item !== null)
+  const mainLink = platformLinks[0]?.href ?? shown.links[0]?.url
 
   return (
     <Dialog open={open} onOpenChange={(next) => !next && onClose()}>
@@ -82,7 +96,18 @@ export function ProjectDetailModal({ project, open, onClose }: ProjectDetailModa
               ) : null}
             </div>
 
-            {mainLink ? (
+            {platformLinks.length > 0 ? (
+              <div className="flex flex-wrap gap-2">
+                {platformLinks.map((item) => (
+                  <Button key={item.badge} className="gap-2" variant="secondary" asChild>
+                    <a href={item.href} target="_blank" rel="noopener noreferrer">
+                      {t('projects.openPlatform', { platform: item.label })}
+                      <ExternalLink className="h-4 w-4" aria-hidden />
+                    </a>
+                  </Button>
+                ))}
+              </div>
+            ) : mainLink ? (
               <Button className="gap-2" asChild>
                 <a href={mainLink} target="_blank" rel="noopener noreferrer">
                   {t('projects.viewProject')}

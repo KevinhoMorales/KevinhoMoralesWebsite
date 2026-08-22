@@ -9,13 +9,14 @@ export function projectMatchesCategory(project: Project, category: ProjectCatego
   const cat = project.category;
   const hasApp = project.links?.some((l) => l.type === 'appStore');
   const hasPlay = project.links?.some((l) => l.type === 'playStore');
+  const hasWebPlatform = project.platforms?.some((p) => p.toLowerCase() === 'web') ?? false;
   switch (category) {
     case 'ios':
       return cat === 'ios' || cat === 'flutter' || Boolean(hasApp);
     case 'android':
       return cat === 'android' || cat === 'flutter' || Boolean(hasPlay);
     case 'web':
-      return cat === 'web';
+      return cat === 'web' || hasWebPlatform;
     case 'flutter':
       return cat === 'flutter';
     default:

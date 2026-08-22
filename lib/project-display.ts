@@ -7,6 +7,7 @@ const WEB_LINK_TYPES: ProjectLink['type'][] = ['website', 'github', 'other'];
 const ANDROID_LEAN_TECH = new Set(['Kotlin', 'Java', 'Jetpack Compose']);
 const IOS_LEAN_TECH = new Set(['Swift', 'SwiftUI', 'Objective-C', 'Objective C']);
 const FLUTTER_TECH = new Set(['Dart', 'Flutter']);
+const WEB_LEAN_TECH = new Set(['Next.js', 'Vite', 'Vercel', 'Netlify']);
 const MOBILE_TECH = new Set<string>([
   ...Array.from(ANDROID_LEAN_TECH),
   ...Array.from(IOS_LEAN_TECH),
@@ -63,9 +64,9 @@ function webTechnologies(technologies: string[], language?: string): string[] {
 function technologiesForMode(technologies: string[], mode: ProjectCategory, language?: string): string[] {
   let out: string[];
   if (mode === 'ios') {
-    out = technologies.filter((t) => !ANDROID_LEAN_TECH.has(t) && !FLUTTER_TECH.has(t));
+    out = technologies.filter((t) => !ANDROID_LEAN_TECH.has(t) && !FLUTTER_TECH.has(t) && !WEB_LEAN_TECH.has(t));
   } else if (mode === 'android') {
-    out = technologies.filter((t) => !IOS_LEAN_TECH.has(t) && !FLUTTER_TECH.has(t));
+    out = technologies.filter((t) => !IOS_LEAN_TECH.has(t) && !FLUTTER_TECH.has(t) && !WEB_LEAN_TECH.has(t));
   } else if (mode === 'web') {
     return webTechnologies(technologies, language);
   } else {
@@ -131,7 +132,8 @@ export function getProjectPlatformBadges(project: Project): PlatformBadge[] {
   const badges: PlatformBadge[] = [];
   if (hasLinkType(project, 'appStore')) badges.push('ios');
   if (hasLinkType(project, 'playStore')) badges.push('android');
-  if (badges.length === 0 && hasLinkType(project, 'website')) {
+  const hasWebPlatform = project.platforms?.some((p) => p.toLowerCase() === 'web') ?? false;
+  if (hasWebPlatform || (badges.length === 0 && hasLinkType(project, 'website'))) {
     badges.push('web');
   }
 
@@ -141,6 +143,19 @@ export function getProjectPlatformBadges(project: Project): PlatformBadge[] {
   }
 
   return badges;
+}
+
+const PLATFORM_LINK_TYPE: Record<PlatformBadge, ProjectLink['type']> = {
+  ios: 'appStore',
+  android: 'playStore',
+  web: 'website',
+};
+
+/** App Store, Play Store o web según el badge de plataforma. */
+export function getProjectPlatformLink(project: Project, badge: PlatformBadge): string | undefined {
+  const type = PLATFORM_LINK_TYPE[badge];
+  const url = project.links?.find((l) => l.type === type)?.url?.trim();
+  return url || undefined;
 }
 
 /**

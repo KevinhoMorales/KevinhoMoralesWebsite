@@ -45,6 +45,87 @@
     }
   },
   {
+    "id": "gailos",
+    "title": "Gailos",
+    "description": "Plataforma web Gailos Express para pedir comida a domicilio: explora negocios aprobados, menús digitales, confirma el pedido y sigue la entrega. Sin registro obligatorio, construida con Next.js y desplegada en Vercel.",
+    "image": "/images/gailos-icon.png",
+    "technologies": [
+      "Next.js",
+      "React",
+      "TypeScript",
+      "Vercel"
+    ],
+    "category": "web",
+    "language": "TypeScript",
+    "links": [
+      {
+        "type": "website",
+        "url": "https://www.gailos.com/"
+      }
+    ],
+    "experience": "DevLokos Enterprise",
+    "platforms": [
+      "Web",
+      "Responsive"
+    ],
+    "tags": [
+      "Food & Drink",
+      "Delivery",
+      "Business"
+    ],
+    "releaseDate": "2026-08-22",
+    "sortOrder": 20260822,
+    "webFramework": "Next.js",
+    "webHosting": "Vercel",
+    "caseStudy": {
+      "problem": "Negocios de comida y usuarios necesitaban un canal simple para descubrir menús digitales y pedir a domicilio sin fricción ni registro obligatorio.",
+      "approach": "Desarrollamos Gailos Express en Next.js, desplegado en Vercel: catálogo público de establecimientos aprobados, menús digitales, checkout y seguimiento de entrega en una experiencia web.",
+      "impact": "Plataforma publicada en gailos.com que centraliza descubrimiento de negocios, pedidos y tracking de entrega.",
+      "highlights": [
+        "Menús digitales y pedido a domicilio",
+        "Exploración sin registro obligatorio",
+        "Next.js desplegado en Vercel"
+      ]
+    }
+  },
+  {
+    "id": "sacon-importadora",
+    "title": "Sacón Importadora",
+    "description": "E-commerce web de Sacón Importadora: catálogo y venta en línea de electrodomésticos y productos para el hogar de la importadora. Sitio en desarrollo; URL pública pendiente.",
+    "image": "/images/sacon-importadora-icon.png",
+    "technologies": [
+      "Next.js",
+      "React",
+      "TypeScript"
+    ],
+    "category": "web",
+    "language": "TypeScript",
+    "links": [],
+    "experience": "DevLokos Enterprise",
+    "platforms": [
+      "Web",
+      "Responsive"
+    ],
+    "tags": [
+      "E-commerce",
+      "Retail",
+      "Business"
+    ],
+    "releaseDate": "2026-08-22",
+    "sortOrder": 20260823,
+    "webFramework": "Next.js",
+    "caseStudy": {
+      "problem": "Sacón Importadora necesitaba un canal digital para vender electrodomésticos y productos de hogar sin depender solo de la venta presencial o mayorista.",
+      "approach": "Estamos construyendo un e-commerce web con catálogo, ficha de producto y flujo de compra, pensado para la operación de una importadora de línea blanca y artículos para el hogar.",
+      "impact": "Proyecto web en curso: la tienda online ampliará el alcance comercial de Sacón Importadora cuando se publique.",
+      "highlights": [
+        "E-commerce web de importadora",
+        "Catálogo de electrodomésticos y hogar",
+        "URL pública pendiente"
+      ]
+    }
+  },
+  {
     "id": "la-casa-del-turbo-ecuador",
     "title": "La Casa del Turbo Ecuador",
     "description": "Back office web de La Casa del Turbo Ecuador: panel interno para gestionar operación, inventario y procesos comerciales de turbos automotrices. Acceso autenticado al dashboard para el equipo, construido con React y Vite y desplegado en Vercel.",

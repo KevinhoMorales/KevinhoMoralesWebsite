@@ -1066,18 +1066,20 @@
   {
     "id": "tayos",
     "title": "Tayos",
-    "description": "App B2B de repuestos automotrices para la distribuidora más grande del Ecuador — catálogo digital con 30.000+ productos, búsqueda rápida y pedidos para talleres y empresas.",
+    "description": "Plataforma B2B de repuestos automotrices para empresas del sector: catálogo con más de 65.000 productos, búsqueda inteligente, pedidos sin llamadas y registro exclusivo para talleres. Disponible en iOS, Android y en la web tayos.co.",
     "image": "/images/tayos-icon.png",
     "category": "ios",
     "language": "TypeScript",
     "technologies": [
       "React Native",
-      "TypeScript"
+      "TypeScript",
+      "Next.js"
     ],
     "experience": "DevLokos Enterprise",
     "platforms": [
       "iPhone",
-      "Android"
+      "Android",
+      "Web"
     ],
     "tags": [
       "Business",
@@ -1101,18 +1103,17 @@
       },
       {
         "type": "website",
-        "url": "https://devlokos.com/empresarial",
-        "label": "DevLokos Enterprise"
+        "url": "https://www.tayos.co/"
       }
     ],
     "caseStudy": {
       "problem": "La distribuidora de repuestos automotrices más grande del Ecuador necesitaba digitalizar la compra B2B de talleres, mecánicas y empresas que dependían de llamadas y mensajes para consultar stock y hacer pedidos.",
-      "approach": "Desarrollamos Tayos en React Native (TypeScript) para iOS y Android con catálogo digital, búsqueda rápida de más de 30.000 productos y flujo de pedidos orientado a clientes profesionales del sector automotriz.",
-      "impact": "Plataforma B2B publicada en App Store y Play Store que agiliza consultas comerciales y pedidos para negocios del sector automotriz en Ecuador.",
+      "approach": "Desarrollamos Tayos en React Native (TypeScript) para iOS y Android, y un sitio web en Next.js (tayos.co) con registro, login, catálogo, búsqueda inteligente y flujo de pedidos para clientes profesionales del sector automotriz.",
+      "impact": "Plataforma B2B publicada en App Store, Play Store y web que agiliza consultas comerciales y pedidos para negocios del sector automotriz en Ecuador.",
       "highlights": [
-        "Cross-platform React Native en iOS y Android",
-        "Catálogo B2B con 30.000+ productos",
-        "Proyecto DevLokos Enterprise"
+        "iOS, Android y web (tayos.co)",
+        "Catálogo B2B con 65.000+ productos",
+        "Búsqueda inteligente y pedidos sin llamadas"
       ]
     }
   }

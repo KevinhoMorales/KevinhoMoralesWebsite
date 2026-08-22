@@ -10,7 +10,12 @@ import { useI18n } from '@/components/i18n/locale-provider'
 import { cn } from '@/lib/utils'
 import { ExternalLink, FileText, Smartphone } from 'lucide-react'
 import type { Project, ProjectCategory } from '@/types'
-import { displayProjectForFilter, getProjectPlatformBadges, type PlatformBadge } from '@/lib/project-display'
+import {
+  displayProjectForFilter,
+  getProjectPlatformBadges,
+  getProjectPlatformLink,
+  type PlatformBadge,
+} from '@/lib/project-display'
 
 const MAX_VISIBLE_TECH = 3
 
@@ -29,7 +34,10 @@ function categoryLabel(category: PlatformBadge, t: (key: string) => string): str
 }
 
 const platformBadgeClassName =
-  'rounded-md border border-black/12 bg-white px-1.5 py-0 text-[9px] font-semibold uppercase tracking-wide text-neutral-900 shadow-[0_2px_8px_rgba(0,0,0,0.28),0_1px_2px_rgba(0,0,0,0.18)] dark:border-black/12 dark:bg-white dark:text-neutral-900 dark:shadow-[0_2px_10px_rgba(0,0,0,0.45),0_0_0_1px_rgba(0,0,0,0.06)] sm:px-2 sm:py-0.5 sm:text-[10px]'
+  'rounded-md border border-black/12 bg-white px-1.5 py-0 text-[9px] font-semibold uppercase tracking-wide text-neutral-900 shadow-[0_2px_8px_rgba(0,0,0,0.28),0_1px_2px_rgba(0,0,0,0.18)] transition-colors dark:border-black/12 dark:bg-white dark:text-neutral-900 dark:shadow-[0_2px_10px_rgba(0,0,0,0.45),0_0_0_1px_rgba(0,0,0,0.06)] sm:px-2 sm:py-0.5 sm:text-[10px]'
+
+const platformBadgeLinkClassName =
+  'cursor-pointer hover:bg-neutral-100 hover:border-black/20 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/50'
 
 export function ProjectCard({ project, category }: ProjectCardProps) {
   const { t } = useI18n()
@@ -78,11 +86,31 @@ export function ProjectCard({ project, category }: ProjectCardProps) {
             aria-hidden
           />
           <div className="absolute left-1.5 top-1.5 z-[1] flex flex-wrap gap-1 sm:left-2.5 sm:top-2.5 sm:gap-1.5">
-            {platformBadges.map((badge) => (
-              <Badge key={badge} variant="outline" className={platformBadgeClassName}>
-                {categoryLabel(badge, t)}
-              </Badge>
-            ))}
+            {platformBadges.map((badge) => {
+              const href = getProjectPlatformLink(project, badge)
+              const label = categoryLabel(badge, t)
+              const badgeEl = (
+                <Badge
+                  variant="outline"
+                  className={cn(platformBadgeClassName, href && platformBadgeLinkClassName)}
+                >
+                  {label}
+                </Badge>
+              )
+              if (!href) return <span key={badge}>{badgeEl}</span>
+              return (
+                <a
+                  key={badge}
+                  href={href}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  aria-label={t('projects.openPlatform', { platform: label })}
+                  onClick={(e) => e.stopPropagation()}
+                >
+                  {badgeEl}
+                </a>
+              )
+            })}
           </div>
         </div>
 

@@ -8,7 +8,12 @@ import { FilterChipRow, filterChipClass } from '@/components/ui/filter-chip-row'
 import { useI18n } from '@/components/i18n/locale-provider';
 import type { Project, ProjectCategory } from '@/types';
 import { Badge } from '@/components/ui/badge';
-import { displayProjectForFilter, getProjectPlatformBadges, type PlatformBadge } from '@/lib/project-display';
+import {
+  displayProjectForFilter,
+  getProjectPlatformBadges,
+  getProjectPlatformLink,
+  type PlatformBadge,
+} from '@/lib/project-display';
 import { projectMatchesCategory } from '@/lib/project-category-match';
 
 interface ProjectGridProps {
@@ -94,15 +99,31 @@ export function ProjectGrid({ projects, initialCategory = 'all' }: ProjectGridPr
                     sizes="(max-width: 640px) 100vw, (max-width: 768px) 50vw, (max-width: 1024px) 33vw, 25vw"
                   />
                   <div className="absolute left-1.5 top-1.5 z-[1] flex flex-wrap gap-1 sm:left-2 sm:top-2">
-                    {platformBadges.map((badge) => (
-                      <Badge
-                        key={badge}
-                        variant="outline"
-                        className="rounded-md border border-black/12 bg-white px-1.5 py-0 text-[9px] font-semibold uppercase tracking-wide text-neutral-900 shadow-sm sm:text-[10px]"
-                      >
-                        {platformLabel(badge)}
-                      </Badge>
-                    ))}
+                    {platformBadges.map((badge) => {
+                      const href = getProjectPlatformLink(project, badge);
+                      const label = platformLabel(badge);
+                      const badgeEl = (
+                        <Badge
+                          variant="outline"
+                          className="rounded-md border border-black/12 bg-white px-1.5 py-0 text-[9px] font-semibold uppercase tracking-wide text-neutral-900 shadow-sm transition-colors sm:text-[10px] data-[linked=true]:cursor-pointer data-[linked=true]:hover:bg-neutral-100"
+                          data-linked={href ? 'true' : undefined}
+                        >
+                          {label}
+                        </Badge>
+                      );
+                      if (!href) return <span key={badge}>{badgeEl}</span>;
+                      return (
+                        <a
+                          key={badge}
+                          href={href}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          aria-label={t('projects.openPlatform', { platform: label })}
+                        >
+                          {badgeEl}
+                        </a>
+                      );
+                    })}
                   </div>
                 </div>
               )}
