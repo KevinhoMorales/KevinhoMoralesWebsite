@@ -8,6 +8,7 @@ import { Card, CardContent } from '@/components/ui/card'
 import { useI18n } from '@/components/i18n/locale-provider'
 import { cn } from '@/lib/utils'
 import { Calendar, ExternalLink } from 'lucide-react'
+import { formatExperienceDate } from '@/lib/experience-dates'
 import type { ExperienceRoleLine, MergedExperience } from '@/types'
 
 type ExperienceBlockCardProps = {
@@ -37,12 +38,19 @@ function employmentTypeLabel(type: ExperienceRoleLine['type'], t: (key: string) 
 function CompanyLogo({ block }: { block: MergedExperience }) {
   if (block.companyLogo) {
     return (
-      <div className="relative h-9 w-9 shrink-0 overflow-hidden rounded-lg bg-background/80 ring-1 ring-border/60 shadow-inner sm:h-14 sm:w-14 sm:rounded-xl">
+      <div
+        className={cn(
+          'relative h-9 w-9 shrink-0 overflow-hidden rounded-lg ring-1 shadow-inner sm:h-14 sm:w-14 sm:rounded-xl',
+          block.companyLogo.includes('spacexai')
+            ? 'bg-black ring-white/10'
+            : 'bg-background/80 ring-border/60'
+        )}
+      >
         <Image
           src={block.companyLogo}
           alt=""
           fill
-          className="object-cover"
+          className={block.companyLogo.includes('spacexai') ? 'object-contain' : 'object-cover'}
           sizes="56px"
         />
       </div>
@@ -138,7 +146,7 @@ function RoleDescription({ description }: { description: string }) {
 }
 
 export function ExperienceBlockCard({ block }: ExperienceBlockCardProps) {
-  const { t } = useI18n()
+  const { t, locale } = useI18n()
 
   return (
     <Card
@@ -175,7 +183,10 @@ export function ExperienceBlockCard({ block }: ExperienceBlockCardProps) {
                 <div className="mt-1 flex flex-wrap items-center gap-x-1.5 gap-y-1 sm:mt-1.5 sm:gap-x-2 sm:gap-y-1.5">
                   <span className="inline-flex items-center gap-1 text-[10px] tabular-nums text-muted-foreground sm:text-xs md:text-[0.8125rem]">
                     <Calendar className="h-3 w-3 shrink-0" aria-hidden />
-                    {role.startDate} — {role.current ? t('common.present') : role.endDate || '—'}
+                    {formatExperienceDate(role.startDate, locale) ?? role.startDate} —{' '}
+                    {role.current
+                      ? t('common.present')
+                      : formatExperienceDate(role.endDate, locale) ?? role.endDate ?? '—'}
                   </span>
                   <Badge variant="outline" className="rounded-md text-[10px] font-medium uppercase tracking-wide">
                     {employmentTypeLabel(role.type, t)}

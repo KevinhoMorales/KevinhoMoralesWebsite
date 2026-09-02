@@ -76,7 +76,7 @@
     "son": "Son",
     "daughter": "Daughter",
     "bioP1": "Senior Software Engineer with 8+ years building high-performance mobile banking and fintech platforms. At SoFi Tech Solutions, I architect enterprise mobile solutions—payments, investments, credit cards, and authorization workflows—for financial institutions across Latin America.",
-    "bioP2": "Technical leader, EDteam instructor, and Cursor Ambassador. I mentor engineers through Google Developer Groups (GDG), create hands-on courses, and speak at conferences on mobile architecture, fintech, and AI-powered development.",
+    "bioP2": "Technical leader, EDteam instructor, and SpaceXAI Ambassador for Ecuador. After nearly a year as Cursor Ambassador, this new chapter is about AI, software, community, and education. I mentor engineers through Google Developer Groups (GDG), create hands-on courses, and speak at conferences on mobile architecture, fintech, and AI-powered development.",
     "bioP3": "Host of the DevLokos podcast and founder of a developer community focused on learning by building. Committed to code quality, collaborative problem-solving, and continuous learning.",
     "motto": "Be DIFFERENT and leave a legacy to the world that everything is possible when you have it in your mind."
   },
@@ -99,6 +99,7 @@
   "experience": {
     "kicker": "Experience",
     "title": "Where I've worked",
+    "chapterNote": "After nearly a year as Cursor Ambassador, a new chapter starts today: SpaceXAI Ambassador.",
     "seeMore": "See more",
     "companySiteAria": "Official website of {{name}} (opens in new tab)",
     "formerlyKnownAs": "formerly {{name}}",

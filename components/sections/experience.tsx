@@ -65,6 +65,9 @@ export function ExperienceSection({
           <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold text-balance">
             {t('experience.title')}
           </h2>
+          <p className="mt-3 max-w-2xl text-sm leading-relaxed text-muted-foreground sm:mt-4 sm:text-base">
+            {t('experience.chapterNote')}
+          </p>
         </ScrollReveal>
 
         <StaggerContainer className="grid grid-cols-2 items-stretch gap-3 sm:gap-4 md:grid-cols-3 md:gap-5">

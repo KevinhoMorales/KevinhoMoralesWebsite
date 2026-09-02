@@ -33,7 +33,7 @@ export const metadata: Metadata = {
     template: '%s | Kevin Morales',
   },
   description:
-    'Kevin Morales — Senior Software Engineer at SoFi building mobile banking platforms. Speaker, EDteam instructor, Cursor Ambassador. DevLokos, GDG, fintech & mobile architecture.',
+    'Kevin Morales — Senior Software Engineer at SoFi building mobile banking platforms. Speaker, EDteam instructor, SpaceXAI Ambassador. DevLokos, GDG, fintech & mobile architecture.',
   keywords: [
     'Kevin Morales',
     'Senior Software Engineer',
@@ -44,6 +44,7 @@ export const metadata: Metadata = {
     'fintech',
     'DevLokos',
     'speaker',
+    'SpaceXAI Ambassador',
     'Ecuador',
   ],
   authors: [{ name: 'Kevin Morales', url: SITE_URL }],
@@ -54,7 +55,7 @@ export const metadata: Metadata = {
     siteName: 'Kevin Morales',
     title: 'Kevin Morales | Senior Software Engineer',
     description:
-      'Kevin Morales — Senior Software Engineer at SoFi, mobile banking architect, speaker, and EDteam instructor.',
+      'Kevin Morales — Senior Software Engineer at SoFi, SpaceXAI Ambassador, mobile banking architect, speaker, and EDteam instructor.',
     images: [
       {
         url: '/images/og-preview.png',
@@ -68,7 +69,7 @@ export const metadata: Metadata = {
     card: 'summary_large_image',
     title: 'Kevin Morales | Senior Software Engineer',
     description:
-      'Kevin Morales — Senior Software Engineer at SoFi, mobile banking architect, speaker, and EDteam instructor.',
+      'Kevin Morales — Senior Software Engineer at SoFi, SpaceXAI Ambassador, mobile banking architect, speaker, and EDteam instructor.',
     images: ['/images/og-preview.png'],
   },
   robots: { index: true, follow: true },

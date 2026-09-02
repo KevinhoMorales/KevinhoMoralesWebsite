@@ -35,7 +35,7 @@ import { HomeSectionAnalytics } from '@/components/home-section-analytics';
 export const metadata: Metadata = {
   title: 'Senior Software Engineer',
   description:
-    'Kevin Morales — Senior Software Engineer at SoFi building mobile banking platforms. Speaker, EDteam instructor, Cursor Ambassador. DevLokos, GDG, fintech & mobile architecture.',
+    'Kevin Morales — Senior Software Engineer at SoFi building mobile banking platforms. Speaker, EDteam instructor, SpaceXAI Ambassador. DevLokos, GDG, fintech & mobile architecture.',
   ...withCanonical('/'),
 };
 
