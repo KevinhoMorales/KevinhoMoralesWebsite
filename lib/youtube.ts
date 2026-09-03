@@ -19,7 +19,7 @@ export interface PodcastEpisode {
   publishDate: string;
   duration: string;
   description: string;
-  season: 1 | 2;
+  season: 1 | 2 | 3;
   spotifyUrl?: string;
 }
 
@@ -39,12 +39,19 @@ function parseDuration(iso8601: string): string {
 function parseEpisodeFromTitle(fullTitle: string): {
   episodeTitle: string;
   guest: string;
-  season: 1 | 2;
+  season: 1 | 2 | 3;
 } {
   const parts = fullTitle.split('||').map((p) => p.trim());
   const episodeTitle = parts[1] || fullTitle;
   const guest = parts[2] || '';
-  const season = fullTitle.includes('S2') ? 2 : fullTitle.includes('S1') ? 1 : 2;
+  let season: 1 | 2 | 3 = 1;
+  if (/\bS3\b/i.test(fullTitle) || /temporada\s*3/i.test(fullTitle)) {
+    season = 3;
+  } else if (/\bS2\b/i.test(fullTitle) || /temporada\s*2/i.test(fullTitle)) {
+    season = 2;
+  } else if (/\bS1\b/i.test(fullTitle) || /temporada\s*1/i.test(fullTitle)) {
+    season = 1;
+  }
   return { episodeTitle, guest, season };
 }
 

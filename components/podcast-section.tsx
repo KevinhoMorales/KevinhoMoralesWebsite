@@ -10,7 +10,7 @@ import { EpisodeModal } from './episode-modal';
 import { Button } from '@/components/ui/button';
 import { useI18n } from '@/components/i18n/locale-provider';
 import { MOTION_EASE } from '@/lib/motion';
-import { Headphones, Search, SearchX, Sparkles, X } from 'lucide-react';
+import { Headphones, Search, SearchX, X } from 'lucide-react';
 import { FilterChipRow, filterChipClass } from '@/components/ui/filter-chip-row';
 import { cn } from '@/lib/utils';
 import type { PodcastEpisode } from '@/lib/youtube';
@@ -29,30 +29,6 @@ const PAGINATION_SLOT_CLASS =
 
 interface PodcastSectionProps {
   preview?: boolean;
-}
-
-function PodcastComingSoonState() {
-  const { t } = useI18n();
-
-  return (
-    <div className="flex h-full min-h-0 w-full flex-1 flex-col items-center justify-center rounded-xl border border-dashed border-primary/25 bg-primary/5 px-4 py-10 text-center sm:px-6 sm:py-12">
-      <div className="mb-4 flex h-14 w-14 items-center justify-center rounded-full bg-primary/15">
-        <Sparkles className="h-7 w-7 text-primary" aria-hidden />
-      </div>
-      <p className="text-base font-semibold text-foreground">{t('podcast.season3ComingSoonTitle')}</p>
-      <p className="mt-2 max-w-sm text-sm text-muted-foreground">{t('podcast.season3ComingSoonHint')}</p>
-      <Button type="button" size="sm" className="mt-6 gap-1.5" asChild>
-        <a
-          href="https://www.youtube.com/@DevLokos/podcasts"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Headphones className="h-4 w-4" aria-hidden />
-          {t('podcastUi.listenYoutube')}
-        </a>
-      </Button>
-    </div>
-  );
 }
 
 function PodcastEmptyState({
@@ -161,7 +137,7 @@ export function PodcastSection({ preview = false }: PodcastSectionProps) {
       );
     }
 
-    if (season !== 'all' && season !== 3) {
+    if (season !== 'all') {
       result = result.filter((ep) => ep.season === season);
     }
 
@@ -188,8 +164,7 @@ export function PodcastSection({ preview = false }: PodcastSectionProps) {
     setSeason('all');
   }, []);
 
-  const isSeason3ComingSoon = season === 3;
-  const hasActiveFilters = Boolean(search.trim()) || (season !== 'all' && season !== 3);
+  const hasActiveFilters = Boolean(search.trim()) || season !== 'all';
 
   if (loading) {
     return (
@@ -333,20 +308,7 @@ export function PodcastSection({ preview = false }: PodcastSectionProps) {
           <div className={cn(EPISODES_PANEL_CLASS, 'mt-4 sm:mt-5')}>
             <div className="flex min-h-0 flex-1 flex-col">
               <AnimatePresence mode="wait" initial={false}>
-                {isSeason3ComingSoon ? (
-                  <motion.div
-                    key="season3-coming-soon"
-                    initial={reducedMotion ? false : { opacity: 1, y: 8 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    exit={reducedMotion ? undefined : { opacity: 1, y: -8 }}
-                    transition={
-                      reducedMotion ? { duration: 0 } : { duration: 0.3, ease: MOTION_EASE }
-                    }
-                    className="flex min-h-0 flex-1"
-                  >
-                    <PodcastComingSoonState />
-                  </motion.div>
-                ) : filteredEpisodes.length === 0 ? (
+                {filteredEpisodes.length === 0 ? (
                   <motion.div
                     key="empty"
                     initial={reducedMotion ? false : { opacity: 1, y: 8 }}
@@ -383,7 +345,7 @@ export function PodcastSection({ preview = false }: PodcastSectionProps) {
             </div>
 
             <div className={PAGINATION_SLOT_CLASS}>
-              {!isSeason3ComingSoon && filteredEpisodes.length > 0 && totalPages > 1 ? (
+              {filteredEpisodes.length > 0 && totalPages > 1 ? (
                 <>
                   <Button
                     variant="outline"

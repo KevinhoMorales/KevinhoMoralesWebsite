@@ -13,7 +13,7 @@ const credentialFrameClass =
 
 export function HeroCredentialsStrip({ achievements }: HeroCredentialsStripProps) {
   const { t } = useI18n()
-  const top = achievements.slice(0, 4)
+  const top = achievements.slice(0, 5)
 
   if (top.length === 0) return null
 

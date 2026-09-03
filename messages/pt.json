@@ -216,8 +216,6 @@
     "season1": "Temporada 1",
     "season2": "Temporada 2",
     "season3": "Temporada 3",
-    "season3ComingSoonTitle": "Temporada 3 — Em breve",
-    "season3ComingSoonHint": "Novos episódios em agosto. Fique de olho no YouTube!",
     "prev": "Anterior",
     "next": "Próxima",
     "pageOf": "Página {{page}} de {{total}}",
@@ -303,8 +301,48 @@
     "helpTopicPodcast": "Convidados do podcast e colaborações",
     "helpTopicMentoring": "Mentoria e comunidade",
     "asideTitle": "Agende uma call",
-    "asideBody": "Escolha um horário no Calendly para uma videchamada objetiva.",
-    "calendlyCta": "Abrir Calendly"
+    "asideBody": "Call intro gratuita — 30 minutos, uma vez. Se depois quiser mais profundidade, veja as mentorias acima.",
+    "calendlyCta": "Agendar 30 min grátis"
+  },
+  "mentorships": {
+    "kicker": "Mentorias",
+    "title": "Cresça com sessões guiadas",
+    "description": "Opções simples para pessoas, grupos pequenos e times no Equador. Preços em USD. Os cards são só informativos por agora — quando quiser, use Enviar mensagem abaixo.",
+    "popular": "Mais pedida",
+    "uiOnlyHint": "Sem checkout aqui. Me escreva abaixo se isso faz sentido para você.",
+    "intro": {
+      "title": "Call intro gratuita",
+      "badge": "Uma vez · 30 min",
+      "body": "Uma conversa curta para ver se fazemos match. Mais tempo juntos fica nos planos de mentoria.",
+      "hint": "Agende em Contato ↓"
+    },
+    "oneOnOne": {
+      "title": "1 a 1",
+      "duration": "60 minutos · online",
+      "price": "$40",
+      "description": "Sessão pessoal para carreira, arquitetura mobile, entrevistas ou desenvolvimento com IA.",
+      "h1": "Agenda alinhada aos seus objetivos",
+      "h2": "Código, arquitetura ou soft skills",
+      "h3": "Próximos passos claros ao final"
+    },
+    "group": {
+      "title": "Grupo pequeno",
+      "duration": "90 minutos · 3–6 pessoas",
+      "price": "$25",
+      "description": "Por pessoa. Ótimo para amigos ou um grupo de estudo de mobile ou ferramentas de IA.",
+      "h1": "Sessão de aprendizado compartilhado",
+      "h2": "Perguntas e exemplos ao vivo",
+      "h3": "Notas que o grupo pode reutilizar"
+    },
+    "enterprise": {
+      "title": "Para empresas",
+      "duration": "2 horas · workshop de time",
+      "price": "A partir de $180",
+      "description": "Workshop ou office hours para o time — Swift, Kotlin, fintech mobile ou fluxos com IA.",
+      "h1": "Temas alinhados ao seu stack",
+      "h2": "Demos práticas para o time",
+      "h3": "Resumo de follow-up para leads"
+    }
   },
   "footer": {
     "at": "@"

@@ -28,6 +28,7 @@ import { ConferencesSection } from '@/components/sections/conferences';
 import { LearnHubSection } from '@/components/sections/learn-hub-section';
 import { GithubSection } from '@/components/sections/github-section';
 import { Recommendations } from '@/components/sections/recommendations';
+import { MentorshipsSection } from '@/components/sections/mentorships';
 import { Connect } from '@/components/sections/connect';
 import { Footer } from '@/components/sections/footer';
 import { HomeSectionAnalytics } from '@/components/home-section-analytics';
@@ -67,6 +68,7 @@ export default async function Home() {
       <BookSection />
       <AchievementsSection achievements={achievements} />
       <Recommendations testimonials={testimonials} />
+      <MentorshipsSection />
       <Connect profile={profile} />
       <Footer profile={profile} />
     </main>

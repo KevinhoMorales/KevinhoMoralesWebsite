@@ -216,8 +216,6 @@
     "season1": "Season 1",
     "season2": "Season 2",
     "season3": "Season 3",
-    "season3ComingSoonTitle": "Season 3 — Coming soon",
-    "season3ComingSoonHint": "New episodes arriving in August. Stay tuned on YouTube.",
     "prev": "Previous",
     "next": "Next",
     "pageOf": "Page {{page}} of {{total}}",
@@ -303,8 +301,48 @@
     "helpTopicPodcast": "Podcast guests & collaborations",
     "helpTopicMentoring": "Mentoring & community",
     "asideTitle": "Book a call",
-    "asideBody": "Pick a time on Calendly if you prefer a quick video chat.",
-    "calendlyCta": "Open Calendly"
+    "asideBody": "Free intro call — 30 minutes, one time. If you need more depth afterward, check the mentorship options above.",
+    "calendlyCta": "Book free 30 min"
+  },
+  "mentorships": {
+    "kicker": "Mentorships",
+    "title": "Grow with guided sessions",
+    "description": "Simple options for individuals, small groups, and teams in Ecuador. Prices in USD. Mentorship cards are informational for now — when you're ready, use Send a message below.",
+    "popular": "Most booked",
+    "uiOnlyHint": "No checkout here. Write me below if this fits what you need.",
+    "intro": {
+      "title": "Free intro call",
+      "badge": "Once · 30 min",
+      "body": "A short first conversation to see if we click. More time together is covered by the mentorship plans.",
+      "hint": "Book it in Connect ↓"
+    },
+    "oneOnOne": {
+      "title": "1-on-1",
+      "duration": "60 minutes · online",
+      "price": "$40",
+      "description": "Personal session for career, mobile architecture, interviews, or AI-assisted development.",
+      "h1": "Agenda tailored to your goals",
+      "h2": "Code, architecture, or soft skills",
+      "h3": "Clear next steps after the call"
+    },
+    "group": {
+      "title": "Small group",
+      "duration": "90 minutes · 3–6 people",
+      "price": "$25",
+      "description": "Per person. Great for friends or a study cohort learning mobile or AI tooling together.",
+      "h1": "Shared learning session",
+      "h2": "Q&A and live examples",
+      "h3": "Notes you can reuse as a group"
+    },
+    "enterprise": {
+      "title": "For companies",
+      "duration": "2 hours · team workshop",
+      "price": "From $180",
+      "description": "Workshop or office hours for your engineering team — Swift, Kotlin, fintech mobile, or AI workflows.",
+      "h1": "Topics aligned to your stack",
+      "h2": "Practical demos for the team",
+      "h3": "Follow-up summary for leads"
+    }
   },
   "footer": {
     "at": "@"
