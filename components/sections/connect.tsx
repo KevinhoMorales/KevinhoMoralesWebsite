@@ -5,7 +5,6 @@ import Image from 'next/image'
 import { usePathname } from 'next/navigation'
 import { Button } from '@/components/ui/button'
 import { ScrollReveal } from '@/components/scroll-reveal'
-import { Card, CardContent } from '@/components/ui/card'
 import { Input } from '@/components/ui/input'
 import { Textarea } from '@/components/ui/textarea'
 import { Label } from '@/components/ui/label'
@@ -58,86 +57,56 @@ const textareaClass = cn(
   'focus-visible:border-primary/45 focus-visible:ring-[3px] focus-visible:ring-primary/15'
 )
 
-const cardShellClass =
-  'relative overflow-hidden rounded-2xl border border-border/50 bg-card/70 shadow-xl shadow-black/5 backdrop-blur-xl dark:shadow-black/25'
+const panelClass =
+  'relative overflow-hidden rounded-3xl border border-border/50 bg-card/70 shadow-2xl shadow-black/5 backdrop-blur-xl dark:shadow-black/30'
 
-const asideCardContentClass = 'p-5 sm:p-6'
-
-const asideIconWrapClass = 'flex h-11 w-11 shrink-0 items-center justify-center rounded-xl ring-1'
-
-const asideTitleClass = 'text-lg font-semibold leading-tight sm:text-xl'
-
-const asideBodyClass = 'text-sm leading-relaxed text-muted-foreground'
-
-type ConnectAsideCardProps = {
+type QuickActionProps = {
   icon: ReactNode
   iconWrapClassName: string
   title: string
   body: string
-  onClick?: () => void
-  cta?: { label: string; className: string }
-  cardHoverClassName?: string
-  children?: ReactNode
+  ctaLabel: string
+  ctaClassName: string
+  onClick: () => void
 }
 
-function ConnectAsideCard({
+/** Acción secundaria ligera (sin tarjeta propia) dentro del panel de contacto. */
+function QuickAction({
   icon,
   iconWrapClassName,
   title,
   body,
+  ctaLabel,
+  ctaClassName,
   onClick,
-  cta,
-  cardHoverClassName,
-  children,
-}: ConnectAsideCardProps) {
-  const interactive = Boolean(onClick)
-
+}: QuickActionProps) {
   return (
-    <Card
-      className={cn(
-        cardShellClass,
-        'gap-0 py-0',
-        interactive &&
-          cn(
-            'group cursor-pointer transition-[border-color,transform,box-shadow] hover:-translate-y-0.5 hover:shadow-2xl',
-            cardHoverClassName
-          )
-      )}
+    <button
+      type="button"
       onClick={onClick}
-      onKeyDown={
-        interactive
-          ? (e) => {
-              if (e.key === 'Enter' || e.key === ' ') {
-                e.preventDefault()
-                onClick?.()
-              }
-            }
-          : undefined
-      }
-      role={interactive ? 'button' : undefined}
-      tabIndex={interactive ? 0 : undefined}
+      className="group flex w-full items-start gap-3 rounded-2xl p-3 text-left transition-colors hover:bg-foreground/[0.04] focus-visible:outline-none focus-visible:ring-[3px] focus-visible:ring-primary/20 sm:p-4"
     >
-      <div
-        className="pointer-events-none absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-primary/50 to-transparent"
+      <span
+        className={cn(
+          'flex h-10 w-10 shrink-0 items-center justify-center rounded-xl ring-1',
+          iconWrapClassName
+        )}
         aria-hidden
-      />
-      <CardContent className={asideCardContentClass}>
-        <div className="flex items-start gap-3 sm:gap-4">
-          <div className={cn(asideIconWrapClass, iconWrapClassName)}>{icon}</div>
-          <div className="flex min-w-0 flex-1 flex-col gap-1">
-            <h3 className={asideTitleClass}>{title}</h3>
-            <p className={asideBodyClass}>{body}</p>
-            {cta ? (
-              <span className={cn('inline-flex items-center gap-1 pt-2 text-sm font-medium', cta.className)}>
-                {cta.label}
-                <Send className="h-3.5 w-3.5 rotate-[-45deg]" aria-hidden />
-              </span>
-            ) : null}
-          </div>
-        </div>
-        {children ? <div className="mt-4 border-t border-border/40 pt-4">{children}</div> : null}
-      </CardContent>
-    </Card>
+      >
+        {icon}
+      </span>
+      <span className="flex min-w-0 flex-1 flex-col gap-1">
+        <span className="text-base font-semibold leading-tight">{title}</span>
+        <span className="text-sm leading-relaxed text-muted-foreground">{body}</span>
+        <span className={cn('inline-flex items-center gap-1 pt-1 text-sm font-medium', ctaClassName)}>
+          {ctaLabel}
+          <Send
+            className="h-3.5 w-3.5 rotate-[-45deg] transition-transform group-hover:translate-x-0.5"
+            aria-hidden
+          />
+        </span>
+      </span>
+    </button>
   )
 }
 
@@ -243,15 +212,61 @@ export function Connect({ profile }: ConnectProps) {
           </p>
         </ScrollReveal>
 
-        <div className="mx-auto grid w-full max-w-5xl items-stretch gap-4 sm:gap-5 lg:grid-cols-[minmax(0,1.12fr)_minmax(0,0.88fr)] lg:gap-6 xl:gap-8">
-          <ScrollReveal variant="scale" className="flex h-full min-w-0 w-full">
-            <div className="flex h-full w-full flex-col gap-4 sm:gap-5">
-              <Card className={cn(cardShellClass, 'w-full flex-1 gap-0 py-0')}>
+        <ScrollReveal variant="scale" className="mx-auto w-full max-w-5xl">
+          <div className={panelClass}>
+            <div
+              className="pointer-events-none absolute inset-x-0 top-0 z-10 h-px bg-gradient-to-r from-transparent via-primary/70 to-transparent"
+              aria-hidden
+            />
+            <div className="grid md:grid-cols-[minmax(0,0.85fr)_minmax(0,1.15fr)] lg:grid-cols-[minmax(0,0.9fr)_minmax(0,1.1fr)]">
+              {/* Columna intro: foto + temas */}
+              <div className="relative isolate flex min-h-0 flex-col justify-end overflow-hidden border-b border-border/40 md:border-b-0 md:border-r">
+                {contactImage ? (
+                  <div className="relative aspect-square w-full md:absolute md:inset-0 md:aspect-auto">
+                    <Image
+                      src={contactImage}
+                      alt={t('connect.photoAlt')}
+                      fill
+                      className="object-cover object-[40%_30%] md:object-[38%_30%]"
+                      sizes="(max-width: 768px) 100vw, 440px"
+                    />
+                    <div
+                      className="pointer-events-none absolute inset-0 bg-gradient-to-t from-card via-card/40 to-transparent md:via-card/35"
+                      aria-hidden
+                    />
+                    <div
+                      className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_90%_60%_at_20%_110%,rgba(13,148,136,0.28),transparent_60%)]"
+                      aria-hidden
+                    />
+                  </div>
+                ) : null}
                 <div
-                  className="pointer-events-none absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-primary/70 to-transparent"
-                  aria-hidden
-                />
-                <CardContent className="space-y-6 p-5 sm:p-6 md:p-7">
+                  className={cn(
+                    'relative z-10 p-5 sm:p-6 md:p-7',
+                    contactImage && '-mt-28 sm:-mt-32 md:mt-0 md:pt-48'
+                  )}
+                >
+                  <div className="mb-3 flex items-center gap-2">
+                    <span className="flex h-8 w-8 items-center justify-center rounded-lg bg-primary/15 text-primary ring-1 ring-primary/25">
+                      <Lightbulb className="h-4 w-4" aria-hidden />
+                    </span>
+                    <h3 className="text-lg font-semibold leading-tight sm:text-xl">{t('connect.helpTitle')}</h3>
+                  </div>
+                  <p className="mb-4 text-sm leading-relaxed text-muted-foreground">{t('connect.helpBody')}</p>
+                  <ul className="grid gap-2.5 sm:grid-cols-2 md:grid-cols-1">
+                    {helpTopicKeys.map((key) => (
+                      <li key={key} className="flex items-start gap-2.5 text-sm text-foreground/90">
+                        <CheckCircle2 className="mt-0.5 h-4 w-4 shrink-0 text-primary" aria-hidden />
+                        <span>{t(key)}</span>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              </div>
+
+              {/* Columna formulario + acciones */}
+              <div className="flex min-w-0 flex-col">
+                <div className="space-y-6 p-5 sm:p-6 md:p-7 lg:p-8">
                   <div className="flex flex-wrap items-start justify-between gap-3">
                     <div className="flex items-start gap-3">
                       <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-primary/10 text-primary ring-1 ring-primary/15">
@@ -271,181 +286,139 @@ export function Connect({ profile }: ConnectProps) {
                     </Badge>
                   </div>
 
-                  <form onSubmit={onSubmit} className="space-y-5">
-                    <div className="grid grid-cols-1 gap-5 sm:grid-cols-2">
-                      <div className="min-w-0 space-y-2">
-                        <Label htmlFor="connect-name">{t('connect.name')}</Label>
-                        <div className="relative">
-                          <User
-                            className="pointer-events-none absolute left-3.5 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground"
-                            aria-hidden
-                          />
-                          <Input
-                            id="connect-name"
-                            name="name"
-                            type="text"
-                            required
-                            placeholder={t('connect.namePh')}
-                            disabled={status === 'sending'}
-                            autoComplete="name"
-                            className={fieldClass}
-                          />
-                        </div>
-                      </div>
-                      <div className="min-w-0 space-y-2">
-                        <Label htmlFor="connect-email">{t('connect.email')}</Label>
-                        <div className="relative">
-                          <Mail
-                            className="pointer-events-none absolute left-3.5 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground"
-                            aria-hidden
-                          />
-                          <Input
-                            id="connect-email"
-                            name="email"
-                            type="email"
-                            required
-                            placeholder={t('connect.emailPh')}
-                            disabled={status === 'sending'}
-                            autoComplete="email"
-                            className={fieldClass}
-                          />
-                        </div>
-                      </div>
-                    </div>
-
-                    <div className="space-y-2">
-                      <Label htmlFor="connect-message">{t('connect.message')}</Label>
+                <form onSubmit={onSubmit} className="space-y-5">
+                  <div className="grid grid-cols-1 gap-5 sm:grid-cols-2">
+                    <div className="min-w-0 space-y-2">
+                      <Label htmlFor="connect-name">{t('connect.name')}</Label>
                       <div className="relative">
-                        <MessageSquare
-                          className="pointer-events-none absolute left-3.5 top-3.5 h-4 w-4 text-muted-foreground"
+                        <User
+                          className="pointer-events-none absolute left-3.5 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground"
                           aria-hidden
                         />
-                        <Textarea
-                          id="connect-message"
-                          name="message"
+                        <Input
+                          id="connect-name"
+                          name="name"
+                          type="text"
                           required
-                          placeholder={t('connect.messagePh')}
+                          placeholder={t('connect.namePh')}
                           disabled={status === 'sending'}
-                          className={textareaClass}
+                          autoComplete="name"
+                          className={fieldClass}
                         />
                       </div>
                     </div>
-
-                    {result ? (
-                      <div
-                        className={cn(
-                          'flex items-start gap-2 rounded-xl border px-3.5 py-3 text-sm',
-                          status === 'success'
-                            ? 'border-primary/25 bg-primary/10 text-primary'
-                            : 'border-destructive/25 bg-destructive/10 text-destructive'
-                        )}
-                        role="status"
-                      >
-                        {status === 'success' ? (
-                          <CheckCircle2 className="mt-0.5 h-4 w-4 shrink-0" aria-hidden />
-                        ) : null}
-                        <p>{result}</p>
+                    <div className="min-w-0 space-y-2">
+                      <Label htmlFor="connect-email">{t('connect.email')}</Label>
+                      <div className="relative">
+                        <Mail
+                          className="pointer-events-none absolute left-3.5 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground"
+                          aria-hidden
+                        />
+                        <Input
+                          id="connect-email"
+                          name="email"
+                          type="email"
+                          required
+                          placeholder={t('connect.emailPh')}
+                          disabled={status === 'sending'}
+                          autoComplete="email"
+                          className={fieldClass}
+                        />
                       </div>
-                    ) : null}
+                    </div>
+                  </div>
 
-                    <Button
-                      type="submit"
-                      size="lg"
-                      className="h-12 w-full gap-2 rounded-xl font-semibold shadow-md shadow-primary/15"
-                      disabled={status === 'sending'}
-                    >
-                      {status === 'sending' ? (
-                        <>
-                          <Loader2 className="h-4 w-4 animate-spin" aria-hidden />
-                          {t('connect.sending')}
-                        </>
-                      ) : (
-                        <>
-                          {t('connect.send')}
-                          <Send className="h-4 w-4" aria-hidden />
-                        </>
+                  <div className="space-y-2">
+                    <Label htmlFor="connect-message">{t('connect.message')}</Label>
+                    <div className="relative">
+                      <MessageSquare
+                        className="pointer-events-none absolute left-3.5 top-3.5 h-4 w-4 text-muted-foreground"
+                        aria-hidden
+                      />
+                      <Textarea
+                        id="connect-message"
+                        name="message"
+                        required
+                        placeholder={t('connect.messagePh')}
+                        disabled={status === 'sending'}
+                        className={textareaClass}
+                      />
+                    </div>
+                  </div>
+
+                  {result ? (
+                    <div
+                      className={cn(
+                        'flex items-start gap-2 rounded-xl border px-3.5 py-3 text-sm',
+                        status === 'success'
+                          ? 'border-primary/25 bg-primary/10 text-primary'
+                          : 'border-destructive/25 bg-destructive/10 text-destructive'
                       )}
-                    </Button>
-                  </form>
-                </CardContent>
-              </Card>
+                      role="status"
+                    >
+                      {status === 'success' ? (
+                        <CheckCircle2 className="mt-0.5 h-4 w-4 shrink-0" aria-hidden />
+                      ) : null}
+                      <p>{result}</p>
+                    </div>
+                  ) : null}
 
-              {contactImage ? (
-                <div className={cn(cardShellClass, 'group aspect-[16/10] w-full shrink-0')}>
-                  <Image
-                    src={contactImage}
-                    alt={t('connect.photoAlt')}
-                    fill
-                    className="object-cover object-[center_32%] transition-transform duration-700 ease-out group-hover:scale-[1.03]"
-                    sizes="(max-width: 1024px) 100vw, 600px"
-                  />
-                  <div
-                    className="pointer-events-none absolute inset-0 bg-gradient-to-t from-background/55 via-transparent to-transparent"
-                    aria-hidden
-                  />
-                  <div
-                    className="pointer-events-none absolute inset-0 rounded-2xl ring-1 ring-inset ring-primary/15"
-                    aria-hidden
-                  />
-                  <div
-                    className="pointer-events-none absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-primary/50 to-transparent"
-                    aria-hidden
-                  />
+                  <Button
+                    type="submit"
+                    size="lg"
+                    className="h-12 w-full gap-2 rounded-xl font-semibold shadow-md shadow-primary/15"
+                    disabled={status === 'sending'}
+                  >
+                    {status === 'sending' ? (
+                      <>
+                        <Loader2 className="h-4 w-4 animate-spin" aria-hidden />
+                        {t('connect.sending')}
+                      </>
+                    ) : (
+                      <>
+                        {t('connect.send')}
+                        <Send className="h-4 w-4" aria-hidden />
+                      </>
+                    )}
+                  </Button>
+                </form>
                 </div>
-              ) : null}
+
+                {links.calendly || links.buymeacoffee ? (
+                  <div
+                    className={cn(
+                      'mt-auto grid gap-1 border-t border-border/40 bg-foreground/[0.015] p-2 sm:p-3',
+                      links.calendly && links.buymeacoffee && 'sm:grid-cols-2 md:grid-cols-1 lg:grid-cols-2'
+                    )}
+                  >
+                    {links.calendly ? (
+                      <QuickAction
+                        icon={<Calendar className="h-5 w-5" />}
+                        iconWrapClassName="bg-[#0069ff]/15 text-[#0069ff] ring-[#0069ff]/20"
+                        title={t('connect.asideTitle')}
+                        body={t('connect.asideBody')}
+                        ctaLabel={t('connect.calendlyCta')}
+                        ctaClassName="text-[#0069ff] transition-colors group-hover:text-[#0052cc] dark:text-[#4d94ff] dark:group-hover:text-[#80b3ff]"
+                        onClick={() => setCalendlyDialogOpen(true)}
+                      />
+                    ) : null}
+                    {links.buymeacoffee ? (
+                      <QuickAction
+                        icon={<Coffee className="h-5 w-5" />}
+                        iconWrapClassName="bg-amber-500/15 text-amber-600 ring-amber-500/20 dark:text-amber-400"
+                        title={t('connect.bmcTitle')}
+                        body={t('connect.bmcBody')}
+                        ctaLabel={t('connect.bmc')}
+                        ctaClassName="text-amber-600 transition-colors group-hover:text-amber-500 dark:text-amber-400"
+                        onClick={() => setBmcModalOpen(true)}
+                      />
+                    ) : null}
+                  </div>
+                ) : null}
+              </div>
             </div>
-          </ScrollReveal>
-
-          <ScrollReveal delay={0.08} variant="scale" className="flex h-full min-w-0 w-full">
-            <div className="flex h-full w-full flex-col gap-4 sm:gap-5">
-              {links.calendly ? (
-                <ConnectAsideCard
-                  icon={<Calendar className="h-5 w-5" aria-hidden />}
-                  iconWrapClassName="bg-[#0069ff]/15 text-[#0069ff] ring-[#0069ff]/20"
-                  cardHoverClassName="hover:border-[#0069ff]/35 hover:shadow-[#0069ff]/10"
-                  title={t('connect.asideTitle')}
-                  body={t('connect.asideBody')}
-                  onClick={() => setCalendlyDialogOpen(true)}
-                  cta={{
-                    label: t('connect.calendlyCta'),
-                    className: 'text-[#0069ff] transition-colors group-hover:text-[#0052cc]',
-                  }}
-                />
-              ) : null}
-
-              {links.buymeacoffee ? (
-                <ConnectAsideCard
-                  icon={<Coffee className="h-5 w-5" aria-hidden />}
-                  iconWrapClassName="bg-amber-500/15 text-amber-600 ring-amber-500/20 dark:text-amber-400"
-                  cardHoverClassName="hover:border-amber-500/30 hover:shadow-amber-500/10"
-                  title={t('connect.bmcTitle')}
-                  body={t('connect.bmcBody')}
-                  onClick={() => setBmcModalOpen(true)}
-                  cta={{
-                    label: t('connect.bmc'),
-                    className: 'text-amber-600 transition-colors group-hover:text-amber-500 dark:text-amber-400',
-                  }}
-                />
-              ) : null}
-
-              <ConnectAsideCard
-                icon={<Lightbulb className="h-5 w-5" aria-hidden />}
-                iconWrapClassName="bg-primary/10 text-primary ring-primary/15"
-                title={t('connect.helpTitle')}
-                body={t('connect.helpBody')}
-              >
-                <ul className="space-y-2.5">
-                  {helpTopicKeys.map((key) => (
-                    <li key={key} className="flex items-start gap-2.5 text-sm text-foreground/90">
-                      <CheckCircle2 className="mt-0.5 h-4 w-4 shrink-0 text-primary" aria-hidden />
-                      <span>{t(key)}</span>
-                    </li>
-                  ))}
-                </ul>
-              </ConnectAsideCard>
-            </div>
-          </ScrollReveal>
-        </div>
+          </div>
+        </ScrollReveal>
       </div>
 
       <AlertDialog open={calendlyDialogOpen} onOpenChange={setCalendlyDialogOpen}>
