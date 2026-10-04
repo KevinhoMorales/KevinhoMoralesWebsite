@@ -36,7 +36,8 @@
     "sessionize": "https://sessionize.com/kevinhomorales/"
   },
   "profileImageLocal": "/images/profile-main.png",
-  "heroImage": "/images/profile-hero.png",
+  "heroImage": "/images/kevin-morales-speaker-podium.webp",
+  "contactImage": "/images/profile-hero.png",
   "heroBackground": "/images/hero-background-nyc.jpg",
   "familyImage": "/images/family.png",
   "speakingImage": "/images/kevin-cursor-talk.jpg"

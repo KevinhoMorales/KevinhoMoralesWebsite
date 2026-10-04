@@ -1,6 +1,7 @@
 'use client'
 
 import { useState, type ReactNode } from 'react'
+import Image from 'next/image'
 import { usePathname } from 'next/navigation'
 import { Button } from '@/components/ui/button'
 import { ScrollReveal } from '@/components/scroll-reveal'
@@ -152,6 +153,7 @@ export function Connect({ profile }: ConnectProps) {
   const pathname = usePathname()
   const isContactPage = pathname === '/contact'
   const links = profile.socialLinks || {}
+  const contactImage = profile.contactImage
 
   const [status, setStatus] = useState<'idle' | 'sending' | 'success' | 'error'>('idle')
   const [result, setResult] = useState('')
@@ -243,129 +245,155 @@ export function Connect({ profile }: ConnectProps) {
 
         <div className="mx-auto grid w-full max-w-5xl items-stretch gap-4 sm:gap-5 lg:grid-cols-[minmax(0,1.12fr)_minmax(0,0.88fr)] lg:gap-6 xl:gap-8">
           <ScrollReveal variant="scale" className="flex h-full min-w-0 w-full">
-            <Card className={cn(cardShellClass, 'h-full w-full gap-0 py-0')}>
-              <div
-                className="pointer-events-none absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-primary/70 to-transparent"
-                aria-hidden
-              />
-              <CardContent className="space-y-6 p-5 sm:p-6 md:p-7">
-                <div className="flex flex-wrap items-start justify-between gap-3">
-                  <div className="flex items-start gap-3">
-                    <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-primary/10 text-primary ring-1 ring-primary/15">
-                      <Mail className="h-5 w-5" aria-hidden />
-                    </div>
-                    <div className="min-w-0 space-y-1">
-                      <h3 className="text-lg font-semibold sm:text-xl">{t('connect.formCardTitle')}</h3>
-                      <p className="text-sm leading-relaxed text-muted-foreground">{t('connect.formCardHint')}</p>
-                    </div>
-                  </div>
-                  <Badge
-                    variant="secondary"
-                    className="shrink-0 rounded-full border border-primary/15 bg-primary/10 px-2.5 py-1 text-[10px] font-medium uppercase tracking-wide text-primary sm:text-[11px]"
-                  >
-                    <Clock className="mr-1 inline h-3 w-3" aria-hidden />
-                    24–48h
-                  </Badge>
-                </div>
-
-                <form onSubmit={onSubmit} className="space-y-5">
-                  <div className="grid grid-cols-1 gap-5 sm:grid-cols-2">
-                    <div className="min-w-0 space-y-2">
-                      <Label htmlFor="connect-name">{t('connect.name')}</Label>
-                      <div className="relative">
-                        <User
-                          className="pointer-events-none absolute left-3.5 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground"
-                          aria-hidden
-                        />
-                        <Input
-                          id="connect-name"
-                          name="name"
-                          type="text"
-                          required
-                          placeholder={t('connect.namePh')}
-                          disabled={status === 'sending'}
-                          autoComplete="name"
-                          className={fieldClass}
-                        />
+            <div className="flex h-full w-full flex-col gap-4 sm:gap-5">
+              <Card className={cn(cardShellClass, 'w-full flex-1 gap-0 py-0')}>
+                <div
+                  className="pointer-events-none absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-primary/70 to-transparent"
+                  aria-hidden
+                />
+                <CardContent className="space-y-6 p-5 sm:p-6 md:p-7">
+                  <div className="flex flex-wrap items-start justify-between gap-3">
+                    <div className="flex items-start gap-3">
+                      <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-primary/10 text-primary ring-1 ring-primary/15">
+                        <Mail className="h-5 w-5" aria-hidden />
+                      </div>
+                      <div className="min-w-0 space-y-1">
+                        <h3 className="text-lg font-semibold sm:text-xl">{t('connect.formCardTitle')}</h3>
+                        <p className="text-sm leading-relaxed text-muted-foreground">{t('connect.formCardHint')}</p>
                       </div>
                     </div>
-                    <div className="min-w-0 space-y-2">
-                      <Label htmlFor="connect-email">{t('connect.email')}</Label>
-                      <div className="relative">
-                        <Mail
-                          className="pointer-events-none absolute left-3.5 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground"
-                          aria-hidden
-                        />
-                        <Input
-                          id="connect-email"
-                          name="email"
-                          type="email"
-                          required
-                          placeholder={t('connect.emailPh')}
-                          disabled={status === 'sending'}
-                          autoComplete="email"
-                          className={fieldClass}
-                        />
-                      </div>
-                    </div>
-                  </div>
-
-                  <div className="space-y-2">
-                    <Label htmlFor="connect-message">{t('connect.message')}</Label>
-                    <div className="relative">
-                      <MessageSquare
-                        className="pointer-events-none absolute left-3.5 top-3.5 h-4 w-4 text-muted-foreground"
-                        aria-hidden
-                      />
-                      <Textarea
-                        id="connect-message"
-                        name="message"
-                        required
-                        placeholder={t('connect.messagePh')}
-                        disabled={status === 'sending'}
-                        className={textareaClass}
-                      />
-                    </div>
-                  </div>
-
-                  {result ? (
-                    <div
-                      className={cn(
-                        'flex items-start gap-2 rounded-xl border px-3.5 py-3 text-sm',
-                        status === 'success'
-                          ? 'border-primary/25 bg-primary/10 text-primary'
-                          : 'border-destructive/25 bg-destructive/10 text-destructive'
-                      )}
-                      role="status"
+                    <Badge
+                      variant="secondary"
+                      className="shrink-0 rounded-full border border-primary/15 bg-primary/10 px-2.5 py-1 text-[10px] font-medium uppercase tracking-wide text-primary sm:text-[11px]"
                     >
-                      {status === 'success' ? (
-                        <CheckCircle2 className="mt-0.5 h-4 w-4 shrink-0" aria-hidden />
-                      ) : null}
-                      <p>{result}</p>
-                    </div>
-                  ) : null}
+                      <Clock className="mr-1 inline h-3 w-3" aria-hidden />
+                      24–48h
+                    </Badge>
+                  </div>
 
-                  <Button
-                    type="submit"
-                    size="lg"
-                    className="h-12 w-full gap-2 rounded-xl font-semibold shadow-md shadow-primary/15"
-                    disabled={status === 'sending'}
-                  >
-                    {status === 'sending' ? (
-                      <>
-                        <Loader2 className="h-4 w-4 animate-spin" aria-hidden />
-                        {t('connect.sending')}
-                      </>
-                    ) : (
-                      <>
-                        {t('connect.send')}
-                        <Send className="h-4 w-4" aria-hidden />
-                      </>
-                    )}
-                  </Button>
-                </form>
-              </CardContent>
-            </Card>
+                  <form onSubmit={onSubmit} className="space-y-5">
+                    <div className="grid grid-cols-1 gap-5 sm:grid-cols-2">
+                      <div className="min-w-0 space-y-2">
+                        <Label htmlFor="connect-name">{t('connect.name')}</Label>
+                        <div className="relative">
+                          <User
+                            className="pointer-events-none absolute left-3.5 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground"
+                            aria-hidden
+                          />
+                          <Input
+                            id="connect-name"
+                            name="name"
+                            type="text"
+                            required
+                            placeholder={t('connect.namePh')}
+                            disabled={status === 'sending'}
+                            autoComplete="name"
+                            className={fieldClass}
+                          />
+                        </div>
+                      </div>
+                      <div className="min-w-0 space-y-2">
+                        <Label htmlFor="connect-email">{t('connect.email')}</Label>
+                        <div className="relative">
+                          <Mail
+                            className="pointer-events-none absolute left-3.5 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground"
+                            aria-hidden
+                          />
+                          <Input
+                            id="connect-email"
+                            name="email"
+                            type="email"
+                            required
+                            placeholder={t('connect.emailPh')}
+                            disabled={status === 'sending'}
+                            autoComplete="email"
+                            className={fieldClass}
+                          />
+                        </div>
+                      </div>
+                    </div>
+
+                    <div className="space-y-2">
+                      <Label htmlFor="connect-message">{t('connect.message')}</Label>
+                      <div className="relative">
+                        <MessageSquare
+                          className="pointer-events-none absolute left-3.5 top-3.5 h-4 w-4 text-muted-foreground"
+                          aria-hidden
+                        />
+                        <Textarea
+                          id="connect-message"
+                          name="message"
+                          required
+                          placeholder={t('connect.messagePh')}
+                          disabled={status === 'sending'}
+                          className={textareaClass}
+                        />
+                      </div>
+                    </div>
+
+                    {result ? (
+                      <div
+                        className={cn(
+                          'flex items-start gap-2 rounded-xl border px-3.5 py-3 text-sm',
+                          status === 'success'
+                            ? 'border-primary/25 bg-primary/10 text-primary'
+                            : 'border-destructive/25 bg-destructive/10 text-destructive'
+                        )}
+                        role="status"
+                      >
+                        {status === 'success' ? (
+                          <CheckCircle2 className="mt-0.5 h-4 w-4 shrink-0" aria-hidden />
+                        ) : null}
+                        <p>{result}</p>
+                      </div>
+                    ) : null}
+
+                    <Button
+                      type="submit"
+                      size="lg"
+                      className="h-12 w-full gap-2 rounded-xl font-semibold shadow-md shadow-primary/15"
+                      disabled={status === 'sending'}
+                    >
+                      {status === 'sending' ? (
+                        <>
+                          <Loader2 className="h-4 w-4 animate-spin" aria-hidden />
+                          {t('connect.sending')}
+                        </>
+                      ) : (
+                        <>
+                          {t('connect.send')}
+                          <Send className="h-4 w-4" aria-hidden />
+                        </>
+                      )}
+                    </Button>
+                  </form>
+                </CardContent>
+              </Card>
+
+              {contactImage ? (
+                <div className={cn(cardShellClass, 'group aspect-[16/10] w-full shrink-0')}>
+                  <Image
+                    src={contactImage}
+                    alt={t('connect.photoAlt')}
+                    fill
+                    className="object-cover object-[center_32%] transition-transform duration-700 ease-out group-hover:scale-[1.03]"
+                    sizes="(max-width: 1024px) 100vw, 600px"
+                  />
+                  <div
+                    className="pointer-events-none absolute inset-0 bg-gradient-to-t from-background/55 via-transparent to-transparent"
+                    aria-hidden
+                  />
+                  <div
+                    className="pointer-events-none absolute inset-0 rounded-2xl ring-1 ring-inset ring-primary/15"
+                    aria-hidden
+                  />
+                  <div
+                    className="pointer-events-none absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-primary/50 to-transparent"
+                    aria-hidden
+                  />
+                </div>
+              ) : null}
+            </div>
           </ScrollReveal>
 
           <ScrollReveal delay={0.08} variant="scale" className="flex h-full min-w-0 w-full">

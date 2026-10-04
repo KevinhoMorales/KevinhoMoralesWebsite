@@ -272,6 +272,7 @@
   },
   "connect": {
     "kicker": "Contact",
+    "photoAlt": "Kevin Morales speaking on stage with a microphone at a developer conference",
     "title": "Let's build something amazing together",
     "subtitle": "Whether you have a project in mind, want to collaborate, or just want to say hi—I'd love to hear from you.",
     "name": "Name *",
