@@ -168,7 +168,7 @@ export function Navigation() {
           className="flex min-w-0 shrink-0 items-center gap-2 text-lg font-bold tracking-tight transition-colors hover:text-primary sm:text-xl"
         >
           <Image
-            src="/images/profile-main.png"
+            src="/images/kevin-morales-avatar.webp"
             alt="Kevin Morales"
             width={36}
             height={36}
