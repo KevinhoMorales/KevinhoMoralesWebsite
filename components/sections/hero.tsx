@@ -88,7 +88,7 @@ export function Hero({ profile, achievements = [] }: HeroProps) {
             </div>
           </div>
           <div className="order-2 min-w-0 space-y-4 motion-hero-stagger sm:space-y-6 lg:max-w-xl lg:space-y-7 xl:max-w-2xl">
-            <p className="text-xs font-medium uppercase tracking-wide text-primary sm:text-sm lg:tracking-[0.14em]">
+            <p className="text-xs font-medium leading-snug tracking-wide text-primary sm:text-sm lg:tracking-[0.08em]">
               {profile.title || 'Mobile & Software Engineer'}
             </p>
             <h1 className="min-w-0 w-full text-3xl font-bold leading-tight text-balance max-lg:break-words xs:text-4xl sm:text-4xl md:text-5xl lg:text-5xl lg:leading-[1.08] lg:whitespace-nowrap xl:text-[3.35rem] 2xl:text-6xl">

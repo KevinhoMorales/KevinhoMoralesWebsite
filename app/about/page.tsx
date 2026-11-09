@@ -7,7 +7,7 @@ import { About } from '@/components/sections/about'
 export const metadata: Metadata = {
   title: 'About | Kevin Morales',
   description:
-    'Senior Software Engineer at SoFi, mobile banking architect, EDteam instructor, and international speaker. Fintech, mobile, and developer education.',
+    'Senior iOS Engineer at SoFi Technology Solutions, mobile banking architect, EDteam instructor, Build Ambassador in the SpaceXSI Community, and international speaker. Fintech, mobile, and developer education.',
   ...withCanonical('/about'),
 }
 

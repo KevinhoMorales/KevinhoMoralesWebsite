@@ -1,17 +1,20 @@
 [
   {
     "id": "21",
-    "company": "SpaceXAI",
-    "role": "SpaceXAI Ambassador — Ecuador",
-    "type": "freelance",
+    "company": "SpaceXSI Community",
+    "role": "Build Ambassador",
+    "type": "volunteer",
     "startDate": "2026-09",
     "current": true,
+    "companyUrl": "https://www.linkedin.com/company/spacexsi-community",
     "companyLogo": "/images/spacexai-logo.png",
-    "description": "As SpaceXAI Ambassador for Ecuador, I represent SpaceXAI in the developer community — sharing how AI, software engineering, and new technology can change how we build and learn.\n\nThis chapter follows nearly a year as Cursor Ambassador. The focus stays the same at heart: community, education, and helping engineers adopt better ways of working.\n\nThrough talks, workshops, and DevLokos, I keep creating spaces where people can learn by building."
+    "location": "Hybrid · Santo Domingo de los Tsáchilas",
+    "description": "As a Build Ambassador in Ecuador, part of the SpaceXSI Community, I help developers and professionals discover new ways to build, automate and solve problems with Cursor, Grok Build and Grok Bot. Through DevLokos, I organize events, workshops and community initiatives focused on hands-on learning. I also share my own experience building with these tools to strengthen Ecuador's tech ecosystem and create spaces where innovation, collaboration and AI open new opportunities. Views shared are my own.",
+    "descriptionEs": "Como Build Ambassador en Ecuador, parte de la SpaceXSI Community, ayudo a developers y profesionales a descubrir nuevas formas de construir, automatizar y resolver problemas con Cursor, Grok Build y Grok Bot. A través de DevLokos organizo eventos, talleres e iniciativas comunitarias enfocadas en el aprendizaje práctico. También comparto mi propia experiencia construyendo con estas herramientas para fortalecer el ecosistema tech de Ecuador y crear espacios donde la innovación, la colaboración y la IA abran nuevas oportunidades. Las opiniones compartidas son mías."
   },
   {
     "id": "19",
-    "company": "SoFi Tech Solutions",
+    "company": "SoFi Technology Solutions",
     "companyFormerName": "Galileo Financial Technologies",
     "role": "Senior Software Engineer (IC3)",
     "type": "full-time",
@@ -19,11 +22,13 @@
     "current": true,
     "companyUrl": "https://tech.sofi.com",
     "companyLogo": "/images/sofi-tech-solutions-logo.png",
-    "description": "Leading the architecture and evolution of enterprise mobile banking platforms for financial institutions across Latin America.\n\nI specialize in designing secure, scalable, and high-performance mobile solutions, delivering strategic banking capabilities such as Payments, Wire Transfers, QR Payments, Investments, Credit Cards, Payroll, Fixed-Term Deposits, E-Checks, and Authorization workflows.\n\nMy role combines software architecture, technical leadership, and engineering excellence. I mentor mobile teams, define architectural standards, lead code quality initiatives, and drive the adoption of modern technologies including Swift, SwiftUI, MVVM, GraphQL, and performance optimization practices to build resilient products that serve millions of users."
+    "location": "Remote · Santo Domingo de los Tsáchilas, Ecuador",
+    "skills": ["Swift", "Banking"],
+    "description": "Leads the architecture and evolution of enterprise mobile banking platforms."
   },
   {
     "id": "1",
-    "company": "SoFi Tech Solutions",
+    "company": "SoFi Technology Solutions",
     "role": "Senior iOS Engineer",
     "type": "full-time",
     "startDate": "2023-04",
@@ -37,23 +42,11 @@
     "company": "Meniuz",
     "role": "CEO and Co-Founder",
     "type": "part-time",
-    "startDate": "2025-02",
+    "startDate": "2021-03",
     "current": true,
     "companyUrl": "https://meniuz.com/",
     "companyLogo": "/images/meniuz-logo.png",
     "description": "Founder and Development Team Manager at Meniuz. I lead mobile projects for iOS and Android, focused on building solutions that connect users with the best restaurants, coffee shops, ice cream parlors, and liquor stores in Ecuador.\n\nMeniuz features a comprehensive and updated menu database, driving the digital transformation of the local gastronomy industry. I oversee product strategy, mobile engineering, and team leadership to deliver a platform that helps businesses and diners discover great food experiences across the country."
-  },
-  {
-    "id": "3",
-    "company": "Meniuz",
-    "role": "Sr. Mobile Engineer & Founder",
-    "type": "freelance",
-    "startDate": "2021-04",
-    "endDate": "2025-10",
-    "current": false,
-    "companyUrl": "https://meniuz.com/",
-    "companyLogo": "/images/meniuz-logo.png",
-    "description": "As founder and lead mobile engineer, I built Meniuz from the ground up—shipping native iOS and Android apps that connect users with restaurants, coffee shops, ice cream parlors, and liquor stores across Ecuador.\n\nI owned the full mobile stack in Kotlin and Swift, from architecture and API integration to release management and continuous improvement of the menu database that powers the platform's core experience."
   },
   {
     "id": "20",
@@ -112,7 +105,7 @@
     "current": false,
     "companyUrl": "https://cursor.com/",
     "companyLogo": "/images/cursor-logo.png",
-    "description": "As the Cursor Ambassador for Ecuador, I represented the platform and its vision to integrate artificial intelligence into developers' everyday workflows.\n\nFrom November 2025 to September 2026, I promoted Cursor as an AI-powered development environment and helped professionals write, optimize, and understand code more efficiently.\n\nThrough DevLokos, I led events, workshops, and community initiatives aimed at practical learning and at strengthening Ecuador's tech ecosystem — a chapter that now continues as SpaceXAI Ambassador."
+    "description": "As the Cursor Ambassador for Ecuador, I represented the platform and its vision to integrate artificial intelligence into developers' everyday workflows.\n\nFrom November 2025 to September 2026, I promoted Cursor as an AI-powered development environment and helped professionals write, optimize, and understand code more efficiently.\n\nThrough DevLokos, I led events, workshops, and community initiatives aimed at practical learning and at strengthening Ecuador's tech ecosystem — a chapter that now continues as Build Ambassador in the SpaceXSI Community."
   },
   {
     "id": "8",

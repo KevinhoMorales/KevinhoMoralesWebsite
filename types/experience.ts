@@ -2,7 +2,7 @@ export interface Experience {
   id: string;
   company: string;
   role: string;
-  type: 'full-time' | 'freelance' | 'part-time';
+  type: 'full-time' | 'freelance' | 'part-time' | 'volunteer';
   startDate: string;
   endDate?: string;
   current?: boolean;
@@ -10,7 +10,11 @@ export interface Experience {
   companyLogo?: string;
   companyFormerName?: string;
   description?: string;
+  /** Spanish description when the site locale is `es`. Falls back to `description`. */
+  descriptionEs?: string;
   roleUrl?: string;
+  location?: string;
+  skills?: string[];
 }
 
 /** Una empresa con uno o más cargos (misma compañía, distintos roles). */
@@ -21,7 +25,10 @@ export interface ExperienceRoleLine {
   endDate?: string;
   current?: boolean;
   description?: string;
+  descriptionEs?: string;
   roleUrl?: string;
+  location?: string;
+  skills?: string[];
 }
 
 export interface MergedExperience {

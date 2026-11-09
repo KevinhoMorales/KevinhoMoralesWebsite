@@ -31,8 +31,14 @@ function employmentTypeLabel(type: ExperienceRoleLine['type'], t: (key: string) 
     'full-time': 'fullTime',
     'part-time': 'partTime',
     freelance: 'freelance',
+    volunteer: 'volunteer',
   } as const
   return t(`experience.employmentType.${map[type]}`)
+}
+
+function roleDescriptionText(role: ExperienceRoleLine, locale: string): string | undefined {
+  if (locale === 'es' && role.descriptionEs?.trim()) return role.descriptionEs
+  return role.description
 }
 
 function CompanyLogo({ block }: { block: MergedExperience }) {
@@ -192,8 +198,27 @@ export function ExperienceBlockCard({ block }: ExperienceBlockCardProps) {
                     {employmentTypeLabel(role.type, t)}
                   </Badge>
                 </div>
-                {role.description ? (
-                  <RoleDescription description={role.description} />
+                {role.location ? (
+                  <p className="mt-1 text-[10px] leading-snug text-muted-foreground sm:text-xs">
+                    {role.location}
+                  </p>
+                ) : null}
+                {(() => {
+                  const description = roleDescriptionText(role, locale)
+                  return description ? <RoleDescription description={description} /> : null
+                })()}
+                {role.skills?.length ? (
+                  <div className="mt-2 flex flex-wrap gap-1">
+                    {role.skills.map((skill) => (
+                      <Badge
+                        key={skill}
+                        variant="secondary"
+                        className="rounded-md text-[10px] font-medium"
+                      >
+                        {skill}
+                      </Badge>
+                    ))}
+                  </div>
                 ) : null}
                 {role.roleUrl ? (
                   <a

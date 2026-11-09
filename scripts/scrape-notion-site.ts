@@ -21,13 +21,13 @@ async function scrape(): Promise<void> {
   // Profile - extracted from welcome/bio section
   const profile = {
     name: 'Kevin Morales',
-    title: 'Sr. iOS Engineer',
+    title: 'Senior iOS Engineer | Mobile Tech Lead | Entrepreneur | GDG Tsáchilas Organizer | Meta & Apple Certified',
     bio: `You can call me Kevinho. I studied Electronic, Automation, and Control Engineering at the University of the Armed Forces – ESPE.
 
 For over 7 years, I've worked professionally as an iOS developer, specializing in Swift. I've also built Android apps using Kotlin and Java, and I enjoy diving into UX/UI design during my free time. Some of my apps are published under my own name on the App Store and Play Store, while others have benefited from my contribution behind the scenes.
 
 I'm an active member of the Google Developer Group (GDG) Ecuador, where I regularly teach and mentor others, helping spark interest in the world of software development. I'm a big believer in lifelong learning — one of my favorite mottos is: "DON'T STOP LEARNING!"`,
-    shortBio: 'Sr. iOS Engineer at Galileo Financial Technologies. Host of DevLokos podcast. GDG Tsáchilas community lead.',
+    shortBio: 'Senior iOS Engineer | Mobile Tech Lead | Entrepreneur | GDG Tsáchilas Organizer | Meta & Apple Certified',
     education: 'Electronic, Automation, and Control Engineering - University of the Armed Forces (ESPE)',
     cvLinks: {
       english: 'https://kevinhomorales.notion.site/website',
@@ -52,12 +52,13 @@ I'm also the host of the DevLokos podcast and the community lead for GDG Tsáchi
 
   // Experience - from work experience section
   const experience = [
-    { id: '1', company: 'Galileo Financial Technologies', role: 'Sr. iOS Engineer', type: 'full-time' as const, startDate: '2023-04', endDate: undefined, current: true, companyUrl: 'https://www.galileo-ft.com/', companyLogo: '/images/galileo-logo.png' },
+    { id: '21', company: 'SpaceXSI Community', role: 'Build Ambassador', type: 'volunteer' as const, startDate: '2026-09', endDate: undefined, current: true, companyUrl: 'https://www.linkedin.com/company/spacexsi-community', companyLogo: '/images/spacexai-logo.png' },
+    { id: '1', company: 'SoFi Technology Solutions', role: 'Senior Software Engineer (IC3)', type: 'full-time' as const, startDate: '2026-07', endDate: undefined, current: true, companyUrl: 'https://tech.sofi.com', companyLogo: '/images/sofi-tech-solutions-logo.png', companyFormerName: 'Galileo Financial Technologies' },
     { id: '2', company: 'DevLokos', role: 'Host/Founder', type: 'freelance' as const, startDate: '2024-07', endDate: undefined, current: true, companyUrl: 'https://devlokos.com/', companyLogo: '/images/devlokos-logo.png' },
     { id: '3', company: 'Technisys', role: 'iOS Engineer', type: 'full-time' as const, startDate: '2021-03', endDate: '2023-03', current: false, companyUrl: 'https://www.linkedin.com/company/technisys/', companyLogo: '/images/technisys-logo.png' },
     { id: '4', company: 'Nearsure', role: 'iOS Developer', type: 'freelance' as const, startDate: '2021-11', endDate: undefined, current: true, companyUrl: 'https://www.linkedin.com/company/nearsure/', companyLogo: '/images/nearsure-logo.png' },
     { id: '5', company: 'Google Developers', role: 'Community Lead', type: 'freelance' as const, startDate: '2021-07', endDate: undefined, current: true, companyUrl: 'https://www.linkedin.com/showcase/googledevelopers/', companyLogo: '/images/google-developers-logo.png' },
-    { id: '6', company: 'Meniuz', role: 'iOS Developer', type: 'freelance' as const, startDate: '2021-11', endDate: undefined, current: true, companyUrl: 'https://www.linkedin.com/company/meniuz/', companyLogo: '/images/meniuz-logo.png' },
+    { id: '6', company: 'Meniuz', role: 'CEO and Co-Founder', type: 'part-time' as const, startDate: '2021-03', endDate: undefined, current: true, companyUrl: 'https://www.linkedin.com/company/meniuz/', companyLogo: '/images/meniuz-logo.png' },
     { id: '7', company: 'Bayteq', role: 'iOS Developer', type: 'full-time' as const, startDate: '2020-09', endDate: '2021-02', current: false, companyUrl: 'https://www.linkedin.com/company/bayteq/', companyLogo: '/images/bayteq-logo.png' },
     { id: '8', company: 'GMe', role: 'iOS Developer', type: 'freelance' as const, startDate: '2019-09', endDate: '2020-06', current: false, companyUrl: 'https://www.linkedin.com/company/nearsure/', companyLogo: '/images/gme-logo.png' },
     { id: '9', company: 'Kevin Morales (Freelance)', role: 'iOS Developer', type: 'freelance' as const, startDate: '2016-01', endDate: '2019-09', current: false, companyUrl: 'https://www.linkedin.com/in/kevinhomorales/', companyLogo: '/images/kevin-morales-logo.png' },

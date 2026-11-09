@@ -29,22 +29,24 @@ const googleVerification = process.env.NEXT_PUBLIC_GOOGLE_SITE_VERIFICATION;
 export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),
   title: {
-    default: 'Kevin Morales | Senior Software Engineer',
+    default: 'Kevin Morales | Senior iOS Engineer',
     template: '%s | Kevin Morales',
   },
   description:
-    'Kevin Morales — Senior Software Engineer at SoFi building mobile banking platforms. Speaker, EDteam instructor, SpaceXAI Ambassador. DevLokos, GDG, fintech & mobile architecture.',
+    'Kevin Morales — Senior iOS Engineer and Mobile Tech Lead at SoFi Technology Solutions. Build Ambassador in the SpaceXSI Community, speaker, EDteam instructor. DevLokos, GDG, fintech & mobile architecture.',
   keywords: [
     'Kevin Morales',
-    'Senior Software Engineer',
-    'SoFi',
+    'Senior iOS Engineer',
+    'Mobile Tech Lead',
+    'SoFi Technology Solutions',
     'mobile banking',
     'Swift',
     'Kotlin',
     'fintech',
     'DevLokos',
     'speaker',
-    'SpaceXAI Ambassador',
+    'Build Ambassador',
+    'SpaceXSI Community',
     'Ecuador',
   ],
   authors: [{ name: 'Kevin Morales', url: SITE_URL }],
@@ -53,23 +55,23 @@ export const metadata: Metadata = {
     locale: 'en_US',
     url: SITE_URL,
     siteName: 'Kevin Morales',
-    title: 'Kevin Morales | Senior Software Engineer',
+    title: 'Kevin Morales | Senior iOS Engineer',
     description:
-      'Kevin Morales — Senior Software Engineer at SoFi, SpaceXAI Ambassador, mobile banking architect, speaker, and EDteam instructor.',
+      'Kevin Morales — Senior iOS Engineer at SoFi Technology Solutions, Build Ambassador in the SpaceXSI Community, mobile banking architect, speaker, and EDteam instructor.',
     images: [
       {
         url: '/images/og-preview.png',
         width: 1200,
         height: 630,
-        alt: 'Kevin Morales - Senior Software Engineer',
+        alt: 'Kevin Morales - Senior iOS Engineer',
       },
     ],
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'Kevin Morales | Senior Software Engineer',
+    title: 'Kevin Morales | Senior iOS Engineer',
     description:
-      'Kevin Morales — Senior Software Engineer at SoFi, SpaceXAI Ambassador, mobile banking architect, speaker, and EDteam instructor.',
+      'Kevin Morales — Senior iOS Engineer at SoFi Technology Solutions, Build Ambassador in the SpaceXSI Community, mobile banking architect, speaker, and EDteam instructor.',
     images: ['/images/og-preview.png'],
   },
   robots: { index: true, follow: true },
