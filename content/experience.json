@@ -1,64 +1,53 @@
 [
   {
-    "id": "21",
-    "company": "SpaceXSI Community",
-    "role": "Build Ambassador",
-    "type": "volunteer",
-    "startDate": "2026-09",
-    "current": true,
-    "companyUrl": "https://www.linkedin.com/company/spacexsi-community",
-    "companyLogo": "/images/spacexai-logo.png",
-    "location": "Hybrid · Santo Domingo de los Tsáchilas",
-    "description": "As a Build Ambassador in Ecuador, part of the SpaceXSI Community, I help developers and professionals discover new ways to build, automate and solve problems with Cursor, Grok Build and Grok Bot. Through DevLokos, I organize events, workshops and community initiatives focused on hands-on learning. I also share my own experience building with these tools to strengthen Ecuador's tech ecosystem and create spaces where innovation, collaboration and AI open new opportunities. Views shared are my own.",
-    "descriptionEs": "Como Build Ambassador en Ecuador, parte de la SpaceXSI Community, ayudo a developers y profesionales a descubrir nuevas formas de construir, automatizar y resolver problemas con Cursor, Grok Build y Grok Bot. A través de DevLokos organizo eventos, talleres e iniciativas comunitarias enfocadas en el aprendizaje práctico. También comparto mi propia experiencia construyendo con estas herramientas para fortalecer el ecosistema tech de Ecuador y crear espacios donde la innovación, la colaboración y la IA abran nuevas oportunidades. Las opiniones compartidas son mías."
-  },
-  {
     "id": "19",
-    "company": "SoFi Technology Solutions",
-    "companyFormerName": "Galileo Financial Technologies",
-    "role": "Senior Software Engineer (IC3)",
+    "company": "SoFi Tech Solutions",
+    "role": "Senior Software Engineer",
     "type": "full-time",
     "startDate": "2026-07",
     "current": true,
     "companyUrl": "https://tech.sofi.com",
     "companyLogo": "/images/sofi-tech-solutions-logo.png",
-    "location": "Remote · Santo Domingo de los Tsáchilas, Ecuador",
+    "location": "Santo Domingo de los Tsáchilas, Ecuador · Remote",
     "skills": ["Swift", "Banking"],
     "description": "Leads the architecture and evolution of enterprise mobile banking platforms."
   },
   {
-    "id": "1",
-    "company": "SoFi Technology Solutions",
-    "role": "Senior iOS Engineer",
-    "type": "full-time",
-    "startDate": "2023-04",
-    "endDate": "2026-07",
-    "current": false,
-    "companyUrl": "https://tech.sofi.com",
-    "companyLogo": "/images/sofi-tech-solutions-logo.png"
+    "id": "21",
+    "company": "SpaceXSI Community",
+    "role": "Build Ambassador",
+    "type": "self-employed",
+    "startDate": "2026-09",
+    "current": true,
+    "companyUrl": "https://www.linkedin.com/company/spacexsi-community",
+    "companyLogo": "/images/spacexai-logo.png",
+    "location": "Santo Domingo de los Tsáchilas, Ecuador · Hybrid",
+    "description": "As a Build Ambassador in Ecuador, part of the SpaceXSI Community, I help developers and professionals discover new ways to build, automate and solve problems with Cursor, Grok Build and Grok Bot. Through DevLokos, I organize events, workshops and community initiatives focused on hands-on learning. I also share my own experience building with these tools to strengthen Ecuador's tech ecosystem and create spaces where innovation, collaboration and AI open new opportunities. Views shared are my own.",
+    "descriptionEs": "Como Build Ambassador en Ecuador, parte de la SpaceXSI Community, ayudo a developers y profesionales a descubrir nuevas formas de construir, automatizar y resolver problemas con Cursor, Grok Build y Grok Bot. A través de DevLokos organizo eventos, talleres e iniciativas comunitarias enfocadas en el aprendizaje práctico. También comparto mi propia experiencia construyendo con estas herramientas para fortalecer el ecosistema tech de Ecuador y crear espacios donde la innovación, la colaboración y la IA abran nuevas oportunidades. Las opiniones compartidas son mías."
   },
   {
     "id": "2",
     "company": "Meniuz",
     "role": "CEO and Co-Founder",
     "type": "part-time",
-    "startDate": "2021-03",
+    "startDate": "2025-02",
     "current": true,
     "companyUrl": "https://meniuz.com/",
     "companyLogo": "/images/meniuz-logo.png",
+    "location": "Santo Domingo de los Tsáchilas, Ecuador · Remote",
     "description": "Founder and Development Team Manager at Meniuz. I lead mobile projects for iOS and Android, focused on building solutions that connect users with the best restaurants, coffee shops, ice cream parlors, and liquor stores in Ecuador.\n\nMeniuz features a comprehensive and updated menu database, driving the digital transformation of the local gastronomy industry. I oversee product strategy, mobile engineering, and team leadership to deliver a platform that helps businesses and diners discover great food experiences across the country."
   },
   {
-    "id": "20",
-    "company": "EDteam",
-    "role": "Instructor",
-    "type": "freelance",
-    "startDate": "2024-02",
-    "current": true,
-    "companyUrl": "https://ed.team/",
-    "roleUrl": "https://ed.team/u/kevinhomorales/cursos-dictados",
-    "companyLogo": "/images/edteam-logo.png",
-    "description": "At EDteam, I work as a freelance instructor and technical content creator, designing courses, hands-on labs, and real-world projects focused on application development, software architecture, modern backend systems, and AI integration into production-ready products.\n\nI build learning experiences focused on \"learning by building,\" creating practical applications and examples using technologies such as Swift, Kotlin, React, TypeScript, Firebase, Spring Boot, Docker, and cloud services. I also research and adapt emerging technologies for up-to-date educational content, including Generative AI, Agent Platform (Vertex AI), cross-platform development, and modern tools from the Google and Apple ecosystems.\n\nAdditionally, I contribute to curriculum planning, demo project architecture, educational experience optimization, and the creation of industry-oriented technical content for developers and engineering teams."
+    "id": "3",
+    "company": "Meniuz",
+    "role": "Sr. Mobile Engineer",
+    "type": "self-employed",
+    "startDate": "2021-04",
+    "endDate": "2025-10",
+    "current": false,
+    "companyUrl": "https://meniuz.com/",
+    "companyLogo": "/images/meniuz-logo.png",
+    "description": "As founder and lead mobile engineer, I built Meniuz from the ground up—shipping native iOS and Android apps that connect users with restaurants, coffee shops, ice cream parlors, and liquor stores across Ecuador.\n\nI owned the full mobile stack in Kotlin and Swift, from architecture and API integration to release management and continuous improvement of the menu database that powers the platform's core experience."
   },
   {
     "id": "4",
@@ -69,19 +58,21 @@
     "current": true,
     "companyUrl": "https://devlokos.com/",
     "companyLogo": "/images/devlokos-logo.png",
+    "location": "Santo Domingo de los Tsáchilas, Ecuador · Hybrid",
     "description": "I lead the management and execution of custom software projects focused on empowering local and national businesses. I coordinate multidisciplinary teams to deliver efficient, scalable, and tailor-made technological solutions aligned with each client's specific needs.\n\nMy work combines strategic planning, process monitoring, and constant communication with stakeholders to ensure high-impact and high-quality results—from mobile and web products to enterprise solutions built with modern stacks and agile delivery practices."
   },
   {
     "id": "5",
     "company": "DevLokos",
-    "role": "Content Creator & Community",
-    "type": "freelance",
+    "role": "Content Creator",
+    "type": "self-employed",
     "startDate": "2024-03",
     "endDate": "2025-10",
     "current": false,
     "companyUrl": "https://devlokos.com/",
     "companyLogo": "/images/devlokos-logo.png",
     "roleUrl": "https://www.youtube.com/@DevLokos",
+    "location": "Santo Domingo de los Tsáchilas, Ecuador · Hybrid",
     "description": "At DevLokos, I build a community where technology and software development come together. Through the DevLokos Podcast, I host interviews with IT leaders, discuss the latest in technology, and share practical knowledge for developers growing their careers.\n\nI also lead workshops, live sessions, and community initiatives that strengthen Ecuador's tech ecosystem—creating spaces where innovation, collaboration, and continuous learning drive progress."
   },
   {
@@ -93,52 +84,46 @@
     "current": true,
     "companyUrl": "https://gdg.community.dev/gdg-santo-domingo-de-los-tsachilas/",
     "companyLogo": "/images/google-developers-logo.png",
+    "location": "Santo Domingo de los Tsáchilas, Ecuador · Hybrid",
     "description": "As Lead Organizer of GDG Santo Domingo de los Tsáchilas, I plan and execute tech events that connect developers with Google technologies, practical workshops, and community networking.\n\nI'm an Android developer and speaker experienced in building mobile applications and sharing knowledge through talks and hands-on sessions. My work focuses on fostering local talent, promoting continuous learning, and growing an inclusive developer community in the Santo Domingo de los Tsáchilas region."
+  },
+  {
+    "id": "20",
+    "company": "EDteam",
+    "role": "Instructor",
+    "type": "freelance",
+    "startDate": "2024-02",
+    "current": true,
+    "companyUrl": "https://ed.team/",
+    "roleUrl": "https://ed.team/u/kevinhomorales/cursos-dictados",
+    "companyLogo": "/images/edteam-logo.png",
+    "location": "Santo Domingo de los Tsáchilas, Ecuador · Remote",
+    "description": "At EDteam, I work as a freelance instructor and technical content creator, designing courses, hands-on labs, and real-world projects focused on application development, software architecture, modern backend systems, and AI integration into production-ready products.\n\nI build learning experiences focused on \"learning by building,\" creating practical applications and examples using technologies such as Swift, Kotlin, React, TypeScript, Firebase, Spring Boot, Docker, and cloud services. I also research and adapt emerging technologies for up-to-date educational content, including Generative AI, Agent Platform (Vertex AI), cross-platform development, and modern tools from the Google and Apple ecosystems.\n\nAdditionally, I contribute to curriculum planning, demo project architecture, educational experience optimization, and the creation of industry-oriented technical content for developers and engineering teams."
   },
   {
     "id": "7",
     "company": "Cursor",
-    "role": "Cursor Ambassador — Ecuador",
-    "type": "freelance",
+    "role": "Ambassador",
+    "type": "self-employed",
     "startDate": "2025-11",
     "endDate": "2026-09",
     "current": false,
     "companyUrl": "https://cursor.com/",
     "companyLogo": "/images/cursor-logo.png",
+    "location": "Quito, Pichincha, Ecuador · Remote",
     "description": "As the Cursor Ambassador for Ecuador, I represented the platform and its vision to integrate artificial intelligence into developers' everyday workflows.\n\nFrom November 2025 to September 2026, I promoted Cursor as an AI-powered development environment and helped professionals write, optimize, and understand code more efficiently.\n\nThrough DevLokos, I led events, workshops, and community initiatives aimed at practical learning and at strengthening Ecuador's tech ecosystem — a chapter that now continues as Build Ambassador in the SpaceXSI Community."
   },
   {
-    "id": "8",
-    "company": "Nearsure",
-    "role": "iOS Technical Interviewer",
-    "type": "freelance",
-    "startDate": "2021-11",
-    "endDate": "2024-02",
-    "current": false,
-    "companyUrl": "https://www.nearsure.com/",
-    "companyLogo": "/images/nearsure-logo.png"
-  },
-  {
-    "id": "9",
-    "company": "Technisys",
-    "role": "Senior Software Engineer (IC3)",
+    "id": "1",
+    "company": "Galileo Financial Technologies",
+    "role": "Senior iOS Engineer",
     "type": "full-time",
-    "startDate": "2022-11",
-    "endDate": "2023-04",
+    "startDate": "2023-04",
+    "endDate": "2026-07",
     "current": false,
-    "companyUrl": "https://www.technisys.com/",
-    "companyLogo": "/images/technisys-logo.png"
-  },
-  {
-    "id": "10",
-    "company": "Technisys",
-    "role": "Mobile Developer",
-    "type": "full-time",
-    "startDate": "2021-04",
-    "endDate": "2022-11",
-    "current": false,
-    "companyUrl": "https://www.technisys.com/",
-    "companyLogo": "/images/technisys-logo.png"
+    "companyUrl": "https://www.galileo-ft.com/",
+    "companyLogo": "/images/galileo-logo.png",
+    "location": "Santo Domingo de los Tsáchilas, Ecuador · Remote"
   },
   {
     "id": "11",
@@ -149,7 +134,44 @@
     "endDate": "2024-09",
     "current": false,
     "companyUrl": "https://gdg.community.dev/gdg-guayaquil/",
-    "companyLogo": "/images/google-developers-logo.png"
+    "companyLogo": "/images/google-developers-logo.png",
+    "location": "Santo Domingo de los Tsáchilas, Ecuador"
+  },
+  {
+    "id": "8",
+    "company": "Nearsure",
+    "role": "iOS Technical Interviewer",
+    "type": "freelance",
+    "startDate": "2021-11",
+    "endDate": "2024-02",
+    "current": false,
+    "companyUrl": "https://www.nearsure.com/",
+    "companyLogo": "/images/nearsure-logo.png",
+    "location": "Santo Domingo de los Tsáchilas, Ecuador · Remote"
+  },
+  {
+    "id": "9",
+    "company": "Technisys",
+    "role": "Senior Software Engineer IC3",
+    "type": "full-time",
+    "startDate": "2022-11",
+    "endDate": "2023-04",
+    "current": false,
+    "companyUrl": "https://www.technisys.com/",
+    "companyLogo": "/images/technisys-logo.png",
+    "location": "Santo Domingo de los Tsáchilas, Ecuador · Remote"
+  },
+  {
+    "id": "10",
+    "company": "Technisys",
+    "role": "Mobile Developer",
+    "type": "full-time",
+    "startDate": "2021-04",
+    "endDate": "2022-11",
+    "current": false,
+    "companyUrl": "https://www.technisys.com/",
+    "companyLogo": "/images/technisys-logo.png",
+    "location": "Santo Domingo de los Tsáchilas, Ecuador · Remote"
   },
   {
     "id": "12",
@@ -160,18 +182,20 @@
     "endDate": "2021-04",
     "current": false,
     "companyUrl": "https://www.technisys.com/",
-    "companyLogo": "/images/technisys-logo.png"
+    "companyLogo": "/images/technisys-logo.png",
+    "location": "Santo Domingo de los Tsáchilas, Ecuador · Remote"
   },
   {
     "id": "13",
     "company": "Yippy",
-    "role": "Co-Founder & Project Lead",
-    "type": "freelance",
+    "role": "Co-Founder",
+    "type": "self-employed",
     "startDate": "2020-04",
     "endDate": "2022-02",
     "current": false,
     "companyUrl": "https://www.yippy.store/",
-    "companyLogo": "/images/kevin-morales-logo.png"
+    "companyLogo": "/images/kevin-morales-logo.png",
+    "location": "Santo Domingo de los Tsáchilas, Ecuador"
   },
   {
     "id": "14",
@@ -182,49 +206,94 @@
     "endDate": "2021-02",
     "current": false,
     "companyUrl": "https://www.bayteq.com/",
-    "companyLogo": "/images/bayteq-logo.png"
+    "companyLogo": "/images/bayteq-logo.png",
+    "location": "Santo Domingo de los Tsáchilas, Ecuador"
   },
   {
     "id": "15",
-    "company": "Kevin Morales (Freelance)",
+    "company": "Freelance",
     "role": "iOS Developer",
     "type": "freelance",
     "startDate": "2020-06",
     "endDate": "2020-08",
     "current": false,
-    "companyUrl": "https://www.kevinhmorales.com/",
-    "companyLogo": "/images/kevin-morales-logo.png"
+    "companyLogo": "/images/kevin-morales-logo.png",
+    "location": "Santo Domingo de los Tsáchilas, Ecuador"
   },
   {
     "id": "16",
     "company": "GMe",
-    "role": "iOS & Android Developer",
+    "role": "iOS and Android Developer",
     "type": "full-time",
     "startDate": "2019-09",
     "endDate": "2020-06",
     "current": false,
     "companyUrl": "https://www.linkedin.com/company/gme-ec/",
-    "companyLogo": "/images/gme-logo.png"
+    "companyLogo": "/images/gme-logo.png",
+    "location": "Guayaquil, Ecuador"
   },
   {
     "id": "17",
-    "company": "Kevin Morales (Freelance)",
+    "company": "Freelance",
     "role": "iOS & Android Developer",
     "type": "freelance",
     "startDate": "2015-02",
     "endDate": "2019-09",
     "current": false,
-    "companyUrl": "https://www.kevinhmorales.com/",
-    "companyLogo": "/images/kevin-morales-logo.png"
+    "companyLogo": "/images/kevin-morales-logo.png",
+    "location": "Quito, Ecuador"
   },
   {
     "id": "18",
     "company": "MOLNext",
-    "role": "Co-Founder & iOS Developer",
+    "role": "Co-Founder",
     "type": "part-time",
     "startDate": "2018-01",
     "endDate": "2018-08",
     "current": false,
-    "companyLogo": "/images/kevin-morales-logo.png"
+    "companyLogo": "/images/kevin-morales-logo.png",
+    "location": "Quito, Pichincha, Ecuador"
+  },
+  {
+    "id": "22",
+    "company": "MOLNext",
+    "role": "iOS Developer",
+    "type": "freelance",
+    "startDate": "2018-01",
+    "endDate": "2018-08",
+    "current": false,
+    "companyLogo": "/images/kevin-morales-logo.png",
+    "location": "Quito, Pichincha, Ecuador"
+  },
+  {
+    "id": "23",
+    "company": "Suárez Salas Constructores S.A.",
+    "role": "Assistant Administrative",
+    "type": "part-time",
+    "startDate": "2013-02",
+    "endDate": "2018-02",
+    "current": false,
+    "location": "Quito, Ecuador"
+  },
+  {
+    "id": "24",
+    "company": "Geofilters for World",
+    "role": "Geofilters Designer for Snapchat",
+    "type": "self-employed",
+    "startDate": "2016-06",
+    "endDate": "2017-10",
+    "current": false,
+    "location": "Quito, Pichincha, Ecuador"
+  },
+  {
+    "id": "25",
+    "company": "Vail Resorts",
+    "role": "Banquet Server",
+    "type": "full-time",
+    "startDate": "2016-02",
+    "endDate": "2016-04",
+    "current": false,
+    "companyLogo": "/images/vail-resorts-logo.png",
+    "location": "Breckenridge, USA"
   }
 ]

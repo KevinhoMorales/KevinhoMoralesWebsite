@@ -32,6 +32,7 @@ function employmentTypeLabel(type: ExperienceRoleLine['type'], t: (key: string) 
     'part-time': 'partTime',
     freelance: 'freelance',
     volunteer: 'volunteer',
+    'self-employed': 'selfEmployed',
   } as const
   return t(`experience.employmentType.${map[type]}`)
 }

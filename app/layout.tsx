@@ -33,12 +33,12 @@ export const metadata: Metadata = {
     template: '%s | Kevin Morales',
   },
   description:
-    'Kevin Morales — Senior iOS Engineer and Mobile Tech Lead at SoFi Technology Solutions. Build Ambassador in the SpaceXSI Community, speaker, EDteam instructor. DevLokos, GDG, fintech & mobile architecture.',
+    'Kevin Morales — Senior iOS Engineer and Mobile Tech Lead at SoFi Tech Solutions. Build Ambassador in the SpaceXSI Community, speaker, EDteam instructor. DevLokos, GDG, fintech & mobile architecture.',
   keywords: [
     'Kevin Morales',
     'Senior iOS Engineer',
     'Mobile Tech Lead',
-    'SoFi Technology Solutions',
+    'SoFi Tech Solutions',
     'mobile banking',
     'Swift',
     'Kotlin',
@@ -57,7 +57,7 @@ export const metadata: Metadata = {
     siteName: 'Kevin Morales',
     title: 'Kevin Morales | Senior iOS Engineer',
     description:
-      'Kevin Morales — Senior iOS Engineer at SoFi Technology Solutions, Build Ambassador in the SpaceXSI Community, mobile banking architect, speaker, and EDteam instructor.',
+      'Kevin Morales — Senior iOS Engineer at SoFi Tech Solutions, Build Ambassador in the SpaceXSI Community, mobile banking architect, speaker, and EDteam instructor.',
     images: [
       {
         url: '/images/og-preview.png',
@@ -71,7 +71,7 @@ export const metadata: Metadata = {
     card: 'summary_large_image',
     title: 'Kevin Morales | Senior iOS Engineer',
     description:
-      'Kevin Morales — Senior iOS Engineer at SoFi Technology Solutions, Build Ambassador in the SpaceXSI Community, mobile banking architect, speaker, and EDteam instructor.',
+      'Kevin Morales — Senior iOS Engineer at SoFi Tech Solutions, Build Ambassador in the SpaceXSI Community, mobile banking architect, speaker, and EDteam instructor.',
     images: ['/images/og-preview.png'],
   },
   robots: { index: true, follow: true },

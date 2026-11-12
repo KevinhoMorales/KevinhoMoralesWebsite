@@ -2,7 +2,7 @@ export interface Experience {
   id: string;
   company: string;
   role: string;
-  type: 'full-time' | 'freelance' | 'part-time' | 'volunteer';
+  type: 'full-time' | 'freelance' | 'part-time' | 'volunteer' | 'self-employed';
   startDate: string;
   endDate?: string;
   current?: boolean;
